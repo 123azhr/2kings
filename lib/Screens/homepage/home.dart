@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/homepage/components/search.dart';
 import 'package:housecontractors/Screens/homepage/components/workers.dart';
 import 'package:housecontractors/Screens/homepage/components/stories.dart';
+import 'package:housecontractors/helper/size_configuration.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Column(
       children: [
-        SizedBox(
-          height: 10,
-        ),
+        SizedBox(height: getProportionateScreenHeight(10)),
         ListTile(
           visualDensity: VisualDensity(horizontal: 4, vertical: -4),
           leading: Image.asset(
@@ -48,23 +48,21 @@ class HomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               textDirection: TextDirection.ltr,
               children: [
-                const SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: getProportionateScreenHeight(10)),
                 Text(
                   "Stories",
                   style: Theme.of(context).textTheme.displaySmall,
                 ),
-                const Divider(
-                  height: 20,
+                Divider(
+                  height: getProportionateScreenHeight(20),
                   thickness: 0.1,
                   indent: 0,
                   endIndent: 0,
                   color: Colors.black,
                 ),
                 Stories(),
-                const Divider(
-                  height: 20,
+                Divider(
+                  height: getProportionateScreenHeight(20),
                   thickness: 0.05,
                   indent: 0,
                   endIndent: 0,
@@ -74,16 +72,16 @@ class HomePage extends StatelessWidget {
                   "Workers",
                   style: Theme.of(context).textTheme.displaySmall,
                 ),
-                const Divider(
-                  height: 20,
+                Divider(
+                  height: getProportionateScreenHeight(20),
                   thickness: 0.05,
                   indent: 0,
                   endIndent: 0,
                   color: Colors.black,
                 ),
                 const Workers(),
-                const Divider(
-                  height: 20,
+                Divider(
+                  height: getProportionateScreenHeight(20),
                   thickness: 0.05,
                   indent: 0,
                   endIndent: 0,
