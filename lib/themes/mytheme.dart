@@ -7,15 +7,15 @@ class MyTheme {
       colorScheme: const ColorScheme(
           brightness: Brightness.light,
           primary: Color.fromARGB(255, 70, 69, 58),
-          onPrimary: Color.fromARGB(255, 0, 0, 0),
-          secondary: Color.fromARGB(255, 15, 15, 15),
+          onPrimary: Color.fromARGB(255, 230, 235, 64),
+          secondary: Color.fromARGB(255, 227, 220, 27),
           onSecondary: Color.fromARGB(255, 40, 40, 36),
           error: Color.fromARGB(255, 221, 8, 8),
           onError: Color.fromARGB(255, 255, 0, 0),
           background: Color.fromARGB(255, 255, 255, 255),
           onBackground: Color.fromARGB(255, 35, 35, 35),
-          surface: Color.fromARGB(255, 42, 42, 42),
-          onSurface: Color.fromARGB(255, 0, 0, 0)),
+          surface: Color.fromARGB(255, 255, 210, 32),
+          onSurface: Color.fromARGB(255, 164, 206, 12)),
       // Define the default font family.
       fontFamily: 'Georgia',
 

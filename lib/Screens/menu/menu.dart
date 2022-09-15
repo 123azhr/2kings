@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/login.dart';
+import 'package:housecontractors/Screens/profile/profileView.dart';
 
 import '../../helper/size_configuration.dart';
 
@@ -30,23 +31,25 @@ class Menu extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         textDirection: TextDirection.ltr,
         children: [
-          ListTile(
-            visualDensity: VisualDensity(horizontal: 4, vertical: -4),
-            leading: CircleAvatar(
-              child: ClipOval(
-                child: Image.network(
-                  "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-                  fit: BoxFit.fill,
-                  height: 100,
-                  width: 100,
+          InkWell(
+            child: ListTile(
+              leading: CircleAvatar(
+                child: ClipOval(
+                  child: Image.network(
+                    "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+                    fit: BoxFit.fill,
+                    height: 100,
+                    width: 100,
+                  ),
                 ),
               ),
+              title: Text("Muhammad Azhar"),
+              subtitle: Text("see your profile"),
             ),
-            title: Text("Muhammad Azhar"),
-            subtitle: Text("see your profile"),
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ProfileView())),
           ),
           const Divider(
-            height: 20,
             thickness: 0.05,
             indent: 0,
             endIndent: 0,
@@ -60,7 +63,6 @@ class Menu extends StatelessWidget {
             title: Text("Edit Profile"),
           ),
           const Divider(
-            height: 20,
             thickness: 0.05,
             indent: 0,
             endIndent: 0,
@@ -82,7 +84,6 @@ class Menu extends StatelessWidget {
             ),
           ),
           const Divider(
-            height: 20,
             thickness: 0.05,
             indent: 0,
             endIndent: 0,

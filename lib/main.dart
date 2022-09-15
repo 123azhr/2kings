@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: "HouseContractors",
       theme: MyTheme.Mytheme(),
-      home: ProfileView(),
+      home: MainPage(),
     );
   }
 }

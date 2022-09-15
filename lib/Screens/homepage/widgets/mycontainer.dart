@@ -19,7 +19,7 @@ class MyContainer extends StatelessWidget {
     if (img != null) {
       return img;
     } else {
-      return const AssetImage("assets/images/logo-white-full.png");
+      return const AssetImage("assets/images/logo-black-full.png");
     }
   }
 
@@ -27,8 +27,8 @@ class MyContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(getProportionateScreenWidth(20)))),
+          borderRadius: BorderRadius.all(
+              Radius.circular(getProportionateScreenWidth(20)))),
       child: Container(
           height: height,
           width: width,
