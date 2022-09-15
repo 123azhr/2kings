@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:housecontractors/helper/size_configuration.dart';
 
 class MyContainer extends StatelessWidget {
   const MyContainer({
@@ -24,20 +25,25 @@ class MyContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: height,
-        width: width,
-        decoration: BoxDecoration(
-          color: (color != null) ? Colors.white : color,
-          image: DecorationImage(
-            image: imageFunc(image),
+    return Card(
+      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(getProportionateScreenWidth(20)))),
+      child: Container(
+          height: height,
+          width: width,
+          decoration: BoxDecoration(
+            color: (color != null) ? Colors.white : color,
+            image: DecorationImage(
+              image: imageFunc(image),
+            ),
+            border: Border.all(),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(20),
+            ),
           ),
-          border: Border.all(),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(20),
-          ),
-        ),
-        child: child);
+          child: child),
+    );
   }
 }
 /*Column(

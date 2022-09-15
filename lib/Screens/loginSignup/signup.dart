@@ -7,8 +7,13 @@ import 'package:housecontractors/Screens/loginSignup/login.dart';
 import 'mytextfield.dart';
 
 class Signup extends StatelessWidget {
-  const Signup({Key? key}) : super(key: key);
+  Signup({Key? key}) : super(key: key);
 
+  final TextEditingController emailController = TextEditingController();
+
+  final TextEditingController passController = TextEditingController();
+
+  final TextEditingController cpassController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -25,6 +30,7 @@ class Signup extends StatelessWidget {
           height: (MediaQuery.of(context).size.height) / 30,
         ),
         MyTextField(
+          controller: emailController,
           width: 300,
           radius: 20,
           hintText: "Email",
@@ -34,6 +40,7 @@ class Signup extends StatelessWidget {
           height: 30,
         ),
         MyTextField(
+          controller: passController,
           width: 300,
           radius: 20,
           hintText: "Password",
@@ -43,6 +50,7 @@ class Signup extends StatelessWidget {
           height: 30,
         ),
         MyTextField(
+          controller: cpassController,
           width: 300,
           radius: 20,
           hintText: "Confirm Password",

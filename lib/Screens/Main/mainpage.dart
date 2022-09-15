@@ -4,6 +4,7 @@ import 'package:housecontractors/Screens/newsfeed/newsfeed.dart';
 import 'package:housecontractors/Screens/notifications/notifications.dart';
 import 'package:housecontractors/Screens/orders/orders.dart';
 
+import '../../helper/size_configuration.dart';
 import '../homepage/home.dart';
 
 class MainPage extends StatefulWidget {
@@ -28,15 +29,15 @@ class _MainPageState extends State<MainPage> {
       _selectedIndex = index;
     });
   }
-
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return SafeArea(
       child: Scaffold(
         body: Center(
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
         bottomNavigationBar: BottomNavigationBar(
-          items: [
+          items: const [
             BottomNavigationBarItem(
               label: "Home",
               icon: Icon(Icons.home_filled),

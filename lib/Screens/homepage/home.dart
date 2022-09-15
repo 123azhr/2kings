@@ -10,91 +10,97 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Column(
-      children: [
-        SizedBox(height: getProportionateScreenHeight(10)),
-        ListTile(
-          visualDensity: VisualDensity(horizontal: 4, vertical: -4),
-          leading: Image.asset(
-            "assets/images/logo-black-half.png",
-            fit: BoxFit.fitWidth,
+    return Scaffold(
+      appBar: AppBar(
+        leading: Image.asset(
+          "assets/images/logo-black-half.png",
+          fit: BoxFit.fitWidth,
+        ),
+        title: Text(
+          "Home",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: getProportionateScreenWidth(20),
           ),
-          title: Text("Home"),
-          trailing: IconButton(
+        ),
+        actions: [
+          IconButton(
             onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => Search()),
               );
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.search_rounded,
             ),
+          )
+        ],
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
+      body: Column(
+        children: [
+          SizedBox(
+            height: getProportionateScreenHeight(5),
           ),
-        ),
-        const Divider(
-          height: 20,
-          thickness: 0.2,
-          indent: 0,
-          endIndent: 0,
-          color: Colors.black,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(
-            left: 8,
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 2,
+            ),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                textDirection: TextDirection.ltr,
+                children: [
+                  SizedBox(height: getProportionateScreenHeight(0)),
+                  Text(
+                    "Stories",
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                  Divider(
+                    height: getProportionateScreenHeight(20),
+                    thickness: 0.1,
+                    indent: 0,
+                    endIndent: 0,
+                    color: Colors.black,
+                  ),
+                  const Stories(),
+                  Divider(
+                    height: getProportionateScreenHeight(20),
+                    thickness: 0.05,
+                    indent: 0,
+                    endIndent: 0,
+                    color: Colors.black,
+                  ),
+                  Text(
+                    "Home Services",
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                  Divider(
+                    height: getProportionateScreenHeight(20),
+                    thickness: 0.05,
+                    indent: 0,
+                    endIndent: 0,
+                    color: Colors.black,
+                  ),
+                  Workers(),
+                  Card(
+                    child: Container(
+                      height: getProportionateScreenHeight(160),
+                      width: getProportionateScreenWidth(500),
+                      child: const Text("Hire a Contractor"),
+                      padding: EdgeInsets.all(getProportionateScreenHeight(10)),
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(getProportionateScreenWidth(20)))),
+                  ),
+                ]),
           ),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              textDirection: TextDirection.ltr,
-              children: [
-                SizedBox(height: getProportionateScreenHeight(10)),
-                Text(
-                  "Stories",
-                  style: Theme.of(context).textTheme.displaySmall,
-                ),
-                Divider(
-                  height: getProportionateScreenHeight(20),
-                  thickness: 0.1,
-                  indent: 0,
-                  endIndent: 0,
-                  color: Colors.black,
-                ),
-                Stories(),
-                Divider(
-                  height: getProportionateScreenHeight(20),
-                  thickness: 0.05,
-                  indent: 0,
-                  endIndent: 0,
-                  color: Colors.black,
-                ),
-                Text(
-                  "Workers",
-                  style: Theme.of(context).textTheme.displaySmall,
-                ),
-                Divider(
-                  height: getProportionateScreenHeight(20),
-                  thickness: 0.05,
-                  indent: 0,
-                  endIndent: 0,
-                  color: Colors.black,
-                ),
-                const Workers(),
-                Divider(
-                  height: getProportionateScreenHeight(20),
-                  thickness: 0.05,
-                  indent: 0,
-                  endIndent: 0,
-                  color: Colors.black,
-                ),
-              ]),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
-/*
-      color: Theme.of(context).colorScheme.background,
-      child: Image.asset('assets/images/logo-black-full.png',
-          fit: BoxFit.scaleDown),
-          */

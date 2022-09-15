@@ -5,7 +5,11 @@ import '../Main/mainpage.dart';
 import 'mytextfield.dart';
 
 class Login extends StatelessWidget {
-  const Login({Key? key}) : super(key: key);
+  Login({Key? key}) : super(key: key);
+
+  final TextEditingController emailController = TextEditingController();
+
+  final TextEditingController passController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +27,7 @@ class Login extends StatelessWidget {
           height: (MediaQuery.of(context).size.height) / 30,
         ),
         MyTextField(
+          controller: emailController,
           width: 300,
           radius: 20,
           hintText: "Email",
@@ -32,6 +37,7 @@ class Login extends StatelessWidget {
           height: 30,
         ),
         MyTextField(
+          controller: passController,
           width: 300,
           radius: 20,
           hintText: "Password",

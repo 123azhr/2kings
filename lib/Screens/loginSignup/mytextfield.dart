@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
 
 class MyTextField extends StatelessWidget {
-  const MyTextField({
-    Key? key,
+   MyTextField({
     this.hintText = "",
     this.height,
     required this.width,
     this.color,
     required this.radius,
-  }) : super(key: key);
+    required this.controller
+  }) : super();
+
   final String? hintText;
   final double? height;
   final double width;
   final Color? color;
   final double radius;
+  TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: width,
       height: height,
       child: TextFormField(
+        controller: controller,
         textAlign: TextAlign.start,
         decoration: InputDecoration(
           fillColor: (color != null) ? color : Colors.white,

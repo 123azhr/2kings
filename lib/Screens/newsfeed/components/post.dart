@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:housecontractors/helper/size_configuration.dart';
 
 class Post extends StatelessWidget {
   const Post({Key? key}) : super(key: key);
@@ -10,10 +11,13 @@ class Post extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           ListTile(
-            leading: ClipOval(
+            leading: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(100)),
               child: Image.network(
-                "https://scontent.fkhi2-3.fna.fbcdn.net/v/t39.30808-6/295854415_3148830022097963_3614660864564168800_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeFTrxgtUzCI8CBdoTVjjk01Nh0WRNPb8pY2HRZE09vyllY0Q4P_gYMH5GT5JaGhm2tJENjahhepJy4vQOrSL9L7&_nc_ohc=vqY_ENQJ7scAX8gzz3s&_nc_ht=scontent.fkhi2-3.fna&oh=00_AT-U5RqZ-EHobpJ9YIZf7-oIygawqig234plBUDCHTfPgQ&oe=6301B971",
-                fit: BoxFit.contain,
+                "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+                fit: BoxFit.cover,
+                width: getProportionateScreenWidth(40),
+                height: getProportionateScreenWidth(40),
               ),
             ),
             title: Text("Muhammmad Azhar"),
@@ -44,32 +48,52 @@ class Post extends StatelessWidget {
             }),
           ),
           SizedBox(
-            height: 10,
+            height: getProportionateScreenHeight(10),
           ),
           Image.network(
-            "https://scontent.fkhi2-3.fna.fbcdn.net/v/t39.30808-6/295854415_3148830022097963_3614660864564168800_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeFTrxgtUzCI8CBdoTVjjk01Nh0WRNPb8pY2HRZE09vyllY0Q4P_gYMH5GT5JaGhm2tJENjahhepJy4vQOrSL9L7&_nc_ohc=vqY_ENQJ7scAX8gzz3s&_nc_ht=scontent.fkhi2-3.fna&oh=00_AT-U5RqZ-EHobpJ9YIZf7-oIygawqig234plBUDCHTfPgQ&oe=6301B971",
+            "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
             fit: BoxFit.contain,
           ),
           Container(
             height: 15,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Icon(Icons.thumb_up),
-              Text("Like"),
-              VerticalDivider(
-                  color: Colors.black,
-                  thickness: 1,
-                  width: 2,
-                  endIndent: 0,
-                  indent: 0),
-              Icon(Icons.comment),
-              Text("Comment"),
-            ],
+          Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(50)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.thumb_up),
+                    SizedBox(
+                      width: getProportionateScreenWidth(10),
+                    ),
+                    Text("Like"),
+                  ],
+                ),
+                Container(
+                  width: 1,
+                  height: getProportionateScreenHeight(20),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.2),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Icon(Icons.comment),
+                    SizedBox(
+                      width: getProportionateScreenWidth(10),
+                    ),
+                    Text("Comment"),
+                  ],
+                ),
+              ],
+            ),
           ),
           SizedBox(
-            height: 10,
+            height: getProportionateScreenHeight(10),
           )
         ],
       ),

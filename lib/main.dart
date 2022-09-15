@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:housecontractors/Screens/profile/profileView.dart';
 import 'package:housecontractors/themes/mytheme.dart';
 import 'Screens/Main/mainpage.dart';
 import 'firebase_options.dart';
+import 'helper/size_configuration.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +27,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: "HouseContractors",
       theme: MyTheme.Mytheme(),
-      home: MainPage(),
+      home: ProfileView(),
     );
   }
 }
