@@ -31,6 +31,7 @@ class ProfileView extends StatelessWidget {
               ),
             ]),
         body: SingleChildScrollView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.manual,
           scrollDirection: Axis.vertical,
           child: SizedBox(
             height: 800,
@@ -55,26 +56,58 @@ class ProfileView extends StatelessWidget {
                   height: getProportionateScreenHeight(80),
                   padding: EdgeInsets.all(getProportionateScreenHeight(8)),
                   child: GridView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
                         crossAxisSpacing: getProportionateScreenWidth(0),
                         mainAxisSpacing: getProportionateScreenHeight(0),
                         mainAxisExtent: getProportionateScreenHeight(20),
                         childAspectRatio: 150 / 220),
-                    itemCount: 10,
+                    itemCount: 9,
                     itemBuilder: (context, index) => const Text("electrician"),
-                    shrinkWrap: true,
                   ),
+                ),
+                ListView.builder(
+                  itemCount: 6,
+                  itemBuilder: (context, int index) => Post(),
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                 ),
                 SizedBox(
-                  height: getProportionateScreenHeight(520),
-                  child: ListView.builder(
-                    itemCount: 6,
-                    itemBuilder: (context, int index) => Post(),
-                  ),
-                ),
+                  height: 65,
+                )
               ],
             ),
+          ),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          child: Row(
+            children: [
+              Container(
+                height: 50,
+                width: getProportionateScreenWidth(375 / 2),
+                color: Colors.amber,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.call),
+                    Text("Call"),
+                  ],
+                ),
+              ),
+              Container(
+                height: 50,
+                width: getProportionateScreenWidth(375 / 2),
+                color: Color.fromARGB(255, 172, 255, 7),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.chat),
+                    Text("Chat"),
+                  ],
+                ),
+              )
+            ],
           ),
         ),
       ),

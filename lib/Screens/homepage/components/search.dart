@@ -13,15 +13,6 @@ class Search extends StatelessWidget {
           elevation: 0,
           backgroundColor: Colors.transparent,
           centerTitle: true,
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Image.asset(
-              "assets/images/logo-black-half.png",
-              fit: BoxFit.fitWidth,
-            ),
-          ),
           title: TextFormField(controller: _searchController),
           actions: [
             GestureDetector(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:housecontractors/Screens/profile/editProfile.dart';
 import 'package:housecontractors/Screens/profile/profileView.dart';
 import 'package:housecontractors/themes/mytheme.dart';
 import 'Screens/Main/mainpage.dart';
@@ -27,7 +28,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: "HouseContractors",
       theme: MyTheme.Mytheme(),
-      home: MainPage(),
+      home: EditProfilePage(),
     );
   }
 }

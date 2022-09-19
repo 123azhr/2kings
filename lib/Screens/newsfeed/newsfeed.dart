@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:housecontractors/Screens/homepage/widgets/mycontainer.dart';
+import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
 import 'package:housecontractors/Screens/newsfeed/components/post.dart';
 
 import '../../helper/size_configuration.dart';
@@ -8,6 +10,7 @@ class Newsfeed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _postController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         leading: Image.asset(
@@ -25,16 +28,44 @@ class Newsfeed extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: ListView.builder(
+      body: SingleChildScrollView(
+        physics: const ScrollPhysics(),
         scrollDirection: Axis.vertical,
-        itemCount: 6,
-        itemBuilder: (context, int index) => Post(),
+        child: Column(
+          children: [
+            ListTile(
+              leading: CircleAvatar(
+                child: ClipOval(
+                  child: Image.network(
+                    "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+                    fit: BoxFit.fill,
+                    height: getProportionateScreenHeight(80),
+                  ),
+                ),
+              ),
+              title: MyTextField(
+                  hintText: "Share your skills",
+                  height: 40,
+                  width: 100,
+                  radius: 20,
+                  controller: _postController),
+              trailing: const Icon(
+                Icons.image_rounded,
+                size: 30,
+              ),
+            ),
+            SizedBox(
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: 6,
+                itemBuilder: (context, int index) => const Post(),
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
-/* ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: 2,
-          itemBuilder: (BuildContext context, int index) => Post(),
-        ),*/
