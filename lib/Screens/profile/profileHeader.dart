@@ -38,12 +38,24 @@ class ProfileHeader extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              Text(
-                "email@example.com",
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w300,
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "email@example.com",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                  Text(
+                    "0305-56181354",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

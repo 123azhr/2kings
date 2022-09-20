@@ -28,3 +28,11 @@ double getProportionateScreenWidth(double inputWidth) {
   // 375 is the layout width that designer use
   return (inputWidth / 375.0) * screenWidth;
 }
+
+double setHeight(double inputHeight) {
+  return ((SizeConfig.screenHeight - kToolbarHeight) / 100) * inputHeight;
+}
+
+double setWidth(double inputWidth) {
+  return ((SizeConfig.screenWidth) / 100) * inputWidth;
+}

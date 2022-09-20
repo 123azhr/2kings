@@ -146,7 +146,7 @@ class EditProfilePage extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: getProportionateScreenHeight(340),
+              height: getProportionateScreenHeight(390),
               width: getProportionateScreenWidth(400),
               child: Card(
                 color: Color.fromARGB(255, 255, 210, 32),
@@ -157,7 +157,13 @@ class EditProfilePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                child: MyProfileFields(),
+                child: MyProfileFields(
+                  contact: "0359-8645318",
+                  email: "azhar@gmail.com",
+                  gender: "Male",
+                  name: "Muhammad Azhar",
+                  password: "*******",
+                ),
               ),
             ),
           ],
