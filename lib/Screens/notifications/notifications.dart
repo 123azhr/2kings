@@ -16,7 +16,7 @@ class Notifications extends StatelessWidget {
           "Notifications",
           style: TextStyle(
             color: Colors.black,
-            fontSize: getProportionateScreenWidth(20),
+            fontSize: (kToolbarHeight / 100) * 40,
           ),
         ),
         centerTitle: true,

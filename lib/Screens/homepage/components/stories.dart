@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:housecontractors/Screens/homepage/widgets/mycontainer.dart';
+import 'package:housecontractors/widgets/mycontainer.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 
 class Stories extends StatelessWidget {

@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/menu/menu.dart';
 import 'package:housecontractors/Screens/newsfeed/newsfeed.dart';
 import 'package:housecontractors/Screens/notifications/notifications.dart';
-import 'package:housecontractors/Screens/orders/orders.dart';
+import 'package:housecontractors/Screens/orders/activeOrders.dart';
 
 import '../../helper/size_configuration.dart';
 import '../homepage/home.dart';
+import '../orders/MyOrders.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class _MainPageState extends State<MainPage> {
     HomePage(),
     Notifications(),
     Newsfeed(),
-    Orders(),
+    MyOrders(),
     Menu(),
   ];
   @override
@@ -29,6 +30,7 @@ class _MainPageState extends State<MainPage> {
       _selectedIndex = index;
     });
   }
+
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return SafeArea(

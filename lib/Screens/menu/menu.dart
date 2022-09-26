@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/login.dart';
+import 'package:housecontractors/Screens/profile/editProfile.dart';
 import 'package:housecontractors/Screens/profile/profileView.dart';
 
 import '../../helper/size_configuration.dart';
@@ -61,6 +62,12 @@ class Menu extends StatelessWidget {
               child: Icon(Icons.edit_rounded),
             ),
             title: Text("Edit Profile"),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => EditProfilePage(),
+              ),
+            ),
           ),
           const Divider(
             thickness: 0.05,

@@ -1,29 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
-import 'package:housecontractors/helper/size_configuration.dart';
 
-class Search extends StatelessWidget {
-  Search({Key? key}) : super(key: key);
-  final TextEditingController _searchController = TextEditingController();
+class SearchHome extends StatelessWidget {
+  SearchHome({super.key});
+  TextEditingController _searchController = TextEditingController();
   _searchPeople(TextEditingController search) {}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          centerTitle: true,
-          title: TextFormField(controller: _searchController),
-          actions: [
-            GestureDetector(
-              child: Icon(
-                Icons.search_rounded,
-              ),
-              onTap: () {
-                _searchPeople(_searchController);
-              },
+        iconTheme: IconThemeData(color: Colors.black),
+        title: TextFormField(
+            style: TextStyle(fontSize: 20), controller: _searchController),
+        leading: IconButton(
+          color: Colors.black,
+          onPressed: () {},
+          icon: const Icon(
+            Icons.arrow_back,
+          ),
+        ),
+        actions: [
+          IconButton(
+            color: Colors.black,
+            onPressed: () {
+              _searchPeople(_searchController);
+            },
+            icon: const Icon(
+              Icons.search,
             ),
-          ]),
+          ),
+        ],
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
       body: ListView.builder(
           itemCount: 1,
           itemBuilder: (context, index) {

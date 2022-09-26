@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:housecontractors/Screens/homepage/Chat/chatMenu.dart';
 import 'package:housecontractors/Screens/orders/viewInventoryLog.dart';
 import 'package:housecontractors/Screens/orders/viewServicesLog.dart';
 import 'package:housecontractors/Screens/profile/profileHeader.dart';
 import '../../helper/size_configuration.dart';
+import '../../widgets/chatCallBottomBar.dart';
 
 class Logs extends StatelessWidget {
   const Logs({super.key});
@@ -119,36 +121,7 @@ class Logs extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: BottomAppBar(
-        child: Row(
-          children: [
-            Container(
-              height: 50,
-              width: getProportionateScreenWidth(375 / 2),
-              color: Colors.amber,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.call),
-                  Text("Call"),
-                ],
-              ),
-            ),
-            Container(
-              height: 50,
-              width: getProportionateScreenWidth(375 / 2),
-              color: Color.fromARGB(255, 172, 255, 7),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.chat),
-                  Text("Chat"),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
+      bottomNavigationBar: bottomCallChat(),
     );
   }
 }

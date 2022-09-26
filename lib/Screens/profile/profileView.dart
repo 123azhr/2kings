@@ -3,6 +3,8 @@ import 'package:housecontractors/Screens/newsfeed/components/post.dart';
 import 'package:housecontractors/Screens/profile/profileHeader.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 
+import '../../widgets/chatCallBottomBar.dart';
+
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
   @override
@@ -80,36 +82,7 @@ class ProfileView extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: BottomAppBar(
-          child: Row(
-            children: [
-              Container(
-                height: 50,
-                width: getProportionateScreenWidth(375 / 2),
-                color: Colors.amber,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.call),
-                    Text("Call"),
-                  ],
-                ),
-              ),
-              Container(
-                height: 50,
-                width: getProportionateScreenWidth(375 / 2),
-                color: Color.fromARGB(255, 172, 255, 7),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.chat),
-                    Text("Chat"),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
+        bottomNavigationBar: bottomCallChat(),
       ),
     );
   }

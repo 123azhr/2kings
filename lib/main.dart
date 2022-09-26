@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:housecontractors/Screens/homepage/Chat/Inbox.dart';
+import 'package:housecontractors/Screens/homepage/Chat/chatMenu.dart';
+import 'package:housecontractors/Screens/homepage/home.dart';
 import 'package:housecontractors/Screens/orders/logs.dart';
 import 'package:housecontractors/Screens/profile/editProfile.dart';
 import 'package:housecontractors/Screens/profile/profileView.dart';
@@ -27,9 +30,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "HouseContractors",
-      theme: MyTheme.Mytheme(),
-      home: Logs(),
-    );
+        title: "HouseContractors", theme: MyTheme.Mytheme(), home: MainPage());
   }
 }

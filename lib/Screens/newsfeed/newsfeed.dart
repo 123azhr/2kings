@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:housecontractors/Screens/homepage/widgets/mycontainer.dart';
+import 'package:housecontractors/widgets/mycontainer.dart';
 import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
 import 'package:housecontractors/Screens/newsfeed/components/post.dart';
 

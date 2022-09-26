@@ -4,6 +4,7 @@ import 'myProfileFields.dart';
 
 class EditProfilePage extends StatelessWidget {
   const EditProfilePage({super.key});
+  //function
   Widget changeProfileImageBottomSheet() {
     return Container(
       decoration: BoxDecoration(
@@ -80,6 +81,7 @@ class EditProfilePage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
           title: Text(
             "Edit Profile",
             style: TextStyle(
