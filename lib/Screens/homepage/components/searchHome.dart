@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class SearchHome extends StatelessWidget {
   SearchHome({super.key});
   TextEditingController _searchController = TextEditingController();
-  _searchPeople(TextEditingController search) {}
+  _searchPeople(TextEditingController search) {
+    
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,13 +13,6 @@ class SearchHome extends StatelessWidget {
         iconTheme: IconThemeData(color: Colors.black),
         title: TextFormField(
             style: TextStyle(fontSize: 20), controller: _searchController),
-        leading: IconButton(
-          color: Colors.black,
-          onPressed: () {},
-          icon: const Icon(
-            Icons.arrow_back,
-          ),
-        ),
         actions: [
           IconButton(
             color: Colors.black,
@@ -36,26 +31,39 @@ class SearchHome extends StatelessWidget {
       body: ListView.builder(
           itemCount: 1,
           itemBuilder: (context, index) {
-            return SearchTile();
+            return SearchTile(
+              title: "Areeb",
+              subtitle: "Electrician",
+              image: NetworkImage(
+                "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+              ),
+            );
           }),
     );
   }
 }
 
 class SearchTile extends StatelessWidget {
-  const SearchTile({
+  SearchTile({
     Key? key,
+    required this.title,
+    required this.subtitle,
+    this.image,
   }) : super(key: key);
+  final String title;
+  final String subtitle;
+  final ImageProvider<Object>? image;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text("Areeb Uz Zaman"),
-      subtitle: Text("Lorem Ipsum check Lorem ipsum check"),
+      title: Text(title),
+      subtitle: Text(subtitle),
       leading: CircleAvatar(
-        backgroundImage: NetworkImage(
-          "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        backgroundImage: AssetImage(
+          "assets/images/logo-black-half.png",
         ),
+        foregroundImage: image,
       ),
       trailing: PopupMenuButton(itemBuilder: (context) {
         return [

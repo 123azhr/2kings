@@ -72,38 +72,60 @@ class _chatMenuState extends State<chatMenu> {
               backgroundColor: Colors.transparent,
             ),
       body: ListView.builder(
-          itemCount: 2,
+          itemCount: 1,
           itemBuilder: (context, index) {
-            return chatMenuTile();
+            return chatMenuTile(
+              title: "Areeb",
+              subtitle: "Electrician",
+              image: NetworkImage(
+                "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+              ),
+            );
           }),
     );
   }
 }
 
 class chatMenuTile extends StatelessWidget {
-  const chatMenuTile({
+  chatMenuTile({
     Key? key,
+    required this.title,
+    required this.subtitle,
+    this.image,
   }) : super(key: key);
+  final String title;
+  final String subtitle;
+  final ImageProvider<Object>? image;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text("Areeb Uz Zaman"),
-      subtitle: Text("Last Message"),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Inbox(
+                    title: title,
+                  )),
+        );
+      },
+      title: Text(title),
+      subtitle: Text(subtitle),
       leading: CircleAvatar(
-        backgroundImage: NetworkImage(
-          "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        backgroundImage: AssetImage(
+          "assets/images/logo-black-half.png",
         ),
+        foregroundImage: image,
       ),
       trailing: PopupMenuButton(itemBuilder: (context) {
         return [
           PopupMenuItem<int>(
             value: 0,
-            child: Text("Delete this chat"),
+            child: Text("Remove this notification"),
           ),
           PopupMenuItem<int>(
             value: 1,
-            child: Text("Turn off notification "),
+            child: Text("Turn off notification about this."),
           ),
           PopupMenuItem<int>(
             value: 2,
@@ -119,7 +141,6 @@ class chatMenuTile extends StatelessWidget {
           print("report menu is selected.");
         }
       }),
-      onTap: () => Inbox(title: "Hassam Nusrat"),
     );
   }
 }

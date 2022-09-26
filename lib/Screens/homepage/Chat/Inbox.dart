@@ -1,10 +1,13 @@
+import 'dart:isolate';
+
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
 import 'package:housecontractors/widgets/mycontainer.dart';
 
 import '../../../helper/size_configuration.dart';
 import '../../../widgets/myAppBar.dart';
-import 'messages.dart';
+import 'myMessages.dart';
+import 'oppositeMessages.dart';
 
 class Inbox extends StatelessWidget {
   Inbox({super.key, required this.title});
@@ -16,15 +19,10 @@ class Inbox extends StatelessWidget {
     SizeConfig().init(context);
     return Scaffold(
       appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
           elevation: 0,
           backgroundColor: Colors.transparent,
           centerTitle: true,
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(Icons.arrow_back, color: Colors.black),
-          ),
           title: Text(
             "$title",
             style: TextStyle(
@@ -38,14 +36,19 @@ class Inbox extends StatelessWidget {
               onPressed: () {},
             ),
           ]),
-      body: ListView.builder(
-        itemCount: 6,
-        shrinkWrap: true,
-        itemBuilder: (context, index) => Padding(
-          padding: EdgeInsets.only(left: 180),
-          child: Messages(text: "hellow"),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView.builder(
+          itemCount: 1,
+          itemBuilder: (context, index) => isOpposite
+              ? OppositeMessages(
+                  text: "hello ",
+                )
+              : MyMessages(
+                  text: "hello946354351318315313581",
+                ),
+          reverse: true,
         ),
-        reverse: true,
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.only(
