@@ -6,7 +6,8 @@ import 'package:housecontractors/helper/size_configuration.dart';
 import '../../widgets/chatCallBottomBar.dart';
 
 class ProfileView extends StatelessWidget {
-  const ProfileView({super.key});
+  const ProfileView({super.key, required this.title});
+  final String title;
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -39,7 +40,7 @@ class ProfileView extends StatelessWidget {
             height: 800,
             child: ListView(
               children: [
-                ProfileHeader(),
+                ProfileHeader(title: title),
                 Divider(
                   thickness: 1,
                 ),
@@ -71,7 +72,7 @@ class ProfileView extends StatelessWidget {
                 ),
                 ListView.builder(
                   itemCount: 6,
-                  itemBuilder: (context, int index) => Post(),
+                  itemBuilder: (context, int index) => Post(title: title),
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                 ),

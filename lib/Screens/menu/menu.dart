@@ -6,8 +6,8 @@ import 'package:housecontractors/Screens/profile/profileView.dart';
 import '../../helper/size_configuration.dart';
 
 class Menu extends StatelessWidget {
-  const Menu({Key? key}) : super(key: key);
-
+  const Menu({Key? key, required this.title}) : super(key: key);
+  final String title;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,8 +47,12 @@ class Menu extends StatelessWidget {
               title: Text("Muhammad Azhar"),
               subtitle: Text("see your profile"),
             ),
-            onTap: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ProfileView())),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ProfileView(
+                          title: title,
+                        ))),
           ),
           const Divider(
             thickness: 0.05,

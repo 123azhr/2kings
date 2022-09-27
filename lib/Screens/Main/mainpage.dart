@@ -22,7 +22,7 @@ class _MainPageState extends State<MainPage> {
     Notifications(),
     Newsfeed(),
     MyOrders(),
-    Menu(),
+    Menu(title: "Azhar"),
   ];
   @override
   void _onItemTapped(int index) {

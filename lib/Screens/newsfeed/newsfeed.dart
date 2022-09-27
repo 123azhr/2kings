@@ -58,7 +58,7 @@ class Newsfeed extends StatelessWidget {
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
                 itemCount: 6,
-                itemBuilder: (context, int index) => const Post(),
+                itemBuilder: (context, int index) => Post(title: "Haziq Ahmed"),
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
               ),

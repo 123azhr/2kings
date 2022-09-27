@@ -5,7 +5,9 @@ import 'package:housecontractors/helper/size_configuration.dart';
 class ProfileHeader extends StatelessWidget {
   ProfileHeader({
     Key? key,
+    required this.title,
   }) : super(key: key);
+  final String title;
   double starRating = 3.6;
   @override
   Widget build(BuildContext context) {
@@ -30,9 +32,10 @@ class ProfileHeader extends StatelessWidget {
           padding: EdgeInsets.only(left: getProportionateScreenWidth(15)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Muhammad Azhar",
+                title,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               ),
               SizedBox(

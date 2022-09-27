@@ -7,8 +7,8 @@ import '../../helper/size_configuration.dart';
 import '../../widgets/chatCallBottomBar.dart';
 
 class Logs extends StatelessWidget {
-  const Logs({super.key});
-
+  const Logs({super.key, required this.title});
+  final String title;
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -27,7 +27,7 @@ class Logs extends StatelessWidget {
       ),
       body: Column(
         children: [
-          ProfileHeader(),
+          ProfileHeader(title: title,),
           Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: setWidth(2), vertical: setHeight(0)),

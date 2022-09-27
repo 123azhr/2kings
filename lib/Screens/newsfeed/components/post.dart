@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:housecontractors/Screens/profile/profileView.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 
 class Post extends StatelessWidget {
-  const Post({Key? key}) : super(key: key);
-
+  const Post({Key? key, required this.title}) : super(key: key);
+  
+  final String title;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -14,14 +16,23 @@ class Post extends StatelessWidget {
           ListTile(
             leading: ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(100)),
-              child: Image.network(
-                "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-                fit: BoxFit.cover,
-                width: getProportionateScreenWidth(40),
-                height: getProportionateScreenWidth(40),
+              child: GestureDetector(
+                onTap: () =>  Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ProfileView(
+                    title: title,
+                  )),
+        ),
+                child: Image.network(
+                  "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+                  fit: BoxFit.cover,
+                  width: getProportionateScreenWidth(40),
+                  height: getProportionateScreenWidth(40),
+                ),
               ),
             ),
-            title: Text("Muhammmad Azhar"),
+            title: Text(title),
             subtitle: Text("10 Aug"),
             trailing: PopupMenuButton(itemBuilder: (context) {
               return [
