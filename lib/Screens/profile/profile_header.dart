@@ -22,7 +22,7 @@ class ProfileHeader extends StatelessWidget {
             child: ClipOval(
               child: Image.network(
                 "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
                 height: getProportionateScreenHeight(80),
               ),
             ),
@@ -39,7 +39,7 @@ class ProfileHeader extends StatelessWidget {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               ),
               SizedBox(
-                height: 10,
+                height: 5,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

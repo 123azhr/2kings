@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:housecontractors/Screens/homepage/workers/workers_list.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 
-class Workers extends StatelessWidget {
-  Workers({Key? key}) : super(key: key);
+class HomeServices extends StatelessWidget {
+  HomeServices({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,42 +18,42 @@ class Workers extends StatelessWidget {
           ),
           shrinkWrap: true,
           children: [
-            WorkerTile(
+            WorkerSlide(
               assetImagePath: 'assets/images/logo-black-half.png',
               title: "Plumber",
               onTap: () {},
             ),
-            WorkerTile(
+            WorkerSlide(
               assetImagePath: 'assets/images/logo-black-half.png',
               title: "Welder",
               onTap: () {},
             ),
-            WorkerTile(
+            WorkerSlide(
               assetImagePath: 'assets/images/logo-black-half.png',
               title: "AC Service",
               onTap: () {},
             ),
-            WorkerTile(
+            WorkerSlide(
               assetImagePath: 'assets/images/logo-black-half.png',
               title: "Plumber",
               onTap: () {},
             ),
-            WorkerTile(
+            WorkerSlide(
               assetImagePath: 'assets/images/logo-black-half.png',
               title: "Welder",
               onTap: () {},
             ),
-            WorkerTile(
+            WorkerSlide(
               assetImagePath: 'assets/images/logo-black-half.png',
               title: "AC Service",
               onTap: () {},
             ),
-            WorkerTile(
+            WorkerSlide(
               assetImagePath: 'assets/images/logo-black-half.png',
               title: "Welder",
               onTap: () {},
             ),
-            WorkerTile(
+            WorkerSlide(
               assetImagePath: 'assets/images/logo-black-half.png',
               title: "AC Service",
               onTap: () {},
@@ -62,25 +63,27 @@ class Workers extends StatelessWidget {
   }
 }
 
-class WorkerTile extends StatelessWidget {
+class WorkerSlide extends StatelessWidget {
   final String? _assetImagePath, _title;
-  final void Function()? _onTap;
 
-  const WorkerTile(
+  const WorkerSlide(
       {Key? key, String? assetImagePath, String? title, void Function()? onTap})
       : _assetImagePath = assetImagePath,
         _title = title,
-        _onTap = onTap,
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-              Radius.circular(getProportionateScreenWidth(20)))),
-      child: GestureDetector(
-        onTap: _onTap,
+    return GestureDetector(
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => WorkersList(),
+          )),
+      child: Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+                Radius.circular(getProportionateScreenWidth(20)))),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,

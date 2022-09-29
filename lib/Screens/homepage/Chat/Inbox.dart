@@ -1,13 +1,8 @@
-import 'dart:isolate';
-
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
-import 'package:housecontractors/widgets/mycontainer.dart';
-
 import '../../../helper/size_configuration.dart';
-import '../../../widgets/myAppBar.dart';
-import 'myMessages.dart';
-import 'oppositeMessages.dart';
+import 'my_messages.dart';
+import 'opposite_messages.dart';
 
 class Inbox extends StatelessWidget {
   Inbox({super.key, required this.title});

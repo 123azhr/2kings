@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:housecontractors/Screens/orders/logs.dart';
 
 class ActiveOrders extends StatelessWidget {
   const ActiveOrders({
     Key? key,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -15,8 +15,13 @@ class ActiveOrders extends StatelessWidget {
         textDirection: TextDirection.ltr,
         children: [
           ListTile(
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Logs(title: "Hassam Nusrat"),
+                )),
             leading: Icon(Icons.area_chart),
-            title: Text("Hassam's house",
+            title: Text("Hassam Nusrat",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
             subtitle: Column(
               mainAxisAlignment: MainAxisAlignment.start,

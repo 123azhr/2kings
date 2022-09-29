@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../helper/size_configuration.dart';
-import '../../widgets/bottomModalSheet.dart';
+import '../../widgets/bottom_modal_sheet.dart';
 
 class MyProfileFields extends StatelessWidget {
   MyProfileFields({

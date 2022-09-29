@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:housecontractors/Screens/homepage/Chat/Inbox.dart';
-import 'package:housecontractors/Screens/homepage/Chat/chatMenu.dart';
-import 'package:housecontractors/Screens/homepage/home.dart';
-import 'package:housecontractors/Screens/orders/logs.dart';
-import 'package:housecontractors/Screens/profile/editProfile.dart';
-import 'package:housecontractors/Screens/profile/profileView.dart';
 import 'package:housecontractors/themes/mytheme.dart';
-import 'Screens/Main/mainpage.dart';
+import 'Screens/Main/dashboard.dart';
+import 'Screens/orders/viewInventoryLog.dart';
 import 'firebase_options.dart';
-import 'helper/size_configuration.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +24,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: "HouseContractors", theme: MyTheme.Mytheme(), home: MainPage());
+      title: "HouseContractors",
+      theme: MyTheme.Mytheme(),
+      home: Dashboard(),
+    );
   }
 }

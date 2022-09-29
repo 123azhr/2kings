@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/homepage/Chat/Inbox.dart';
-import 'package:housecontractors/widgets/myAppBar.dart';
 
 class chatMenu extends StatefulWidget {
   const chatMenu({super.key});

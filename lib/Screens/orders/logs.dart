@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:housecontractors/Screens/homepage/Chat/chatMenu.dart';
+import 'package:housecontractors/Screens/homepage/Chat/chat_menu.dart';
 import 'package:housecontractors/Screens/orders/viewInventoryLog.dart';
 import 'package:housecontractors/Screens/orders/viewServicesLog.dart';
-import 'package:housecontractors/Screens/profile/profileHeader.dart';
+import 'package:housecontractors/Screens/profile/profile_header.dart';
 import '../../helper/size_configuration.dart';
-import '../../widgets/chatCallBottomBar.dart';
+import '../../widgets/chat_call_bottom_bar.dart';
 
 class Logs extends StatelessWidget {
   const Logs({super.key, required this.title});
@@ -27,7 +27,9 @@ class Logs extends StatelessWidget {
       ),
       body: Column(
         children: [
-          ProfileHeader(title: title,),
+          ProfileHeader(
+            title: title,
+          ),
           Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: setWidth(2), vertical: setHeight(0)),
@@ -39,7 +41,7 @@ class Logs extends StatelessWidget {
                   color: Colors.black,
                 ),
                 Text(
-                  "View Inventory Logs",
+                  "Inventory Logs",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: setHeight(2.5),
@@ -80,7 +82,7 @@ class Logs extends StatelessWidget {
                   color: Colors.black,
                 ),
                 Text(
-                  "View Services Logs",
+                  "Services Logs",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: setHeight(2.5),

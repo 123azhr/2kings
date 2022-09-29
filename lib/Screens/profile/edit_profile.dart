@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../helper/size_configuration.dart';
-import 'myProfileFields.dart';
+import 'my_profile_fields.dart';
 
 class EditProfilePage extends StatelessWidget {
   const EditProfilePage({super.key});

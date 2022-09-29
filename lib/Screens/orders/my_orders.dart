@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:housecontractors/Screens/orders/activeOrders.dart';
-import 'package:housecontractors/Screens/orders/pendingOrders.dart';
+import 'package:housecontractors/Screens/orders/active_orders.dart';
+import 'package:housecontractors/Screens/orders/pending_orders.dart';
 
 import '../../helper/size_configuration.dart';
-import 'completedOrders.dart';
+import 'completed_orders.dart';
 
 class MyOrders extends StatefulWidget {
   const MyOrders({Key? key}) : super(key: key);

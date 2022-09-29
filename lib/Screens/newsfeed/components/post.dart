@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:housecontractors/Screens/profile/profileView.dart';
+import 'package:housecontractors/Screens/profile/profile_view.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 
 class Post extends StatelessWidget {

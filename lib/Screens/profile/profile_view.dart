@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/newsfeed/components/post.dart';
-import 'package:housecontractors/Screens/profile/profileHeader.dart';
+import 'package:housecontractors/Screens/profile/profile_header.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 
-import '../../widgets/chatCallBottomBar.dart';
+import '../../widgets/chat_call_bottom_bar.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key, required this.title});

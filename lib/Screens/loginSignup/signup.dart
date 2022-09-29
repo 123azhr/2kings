@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:housecontractors/Screens/Main/mainpage.dart';
+import 'package:housecontractors/Screens/Main/dashboard.dart';
 import 'package:housecontractors/Screens/loginSignup/login.dart';
 import 'mytextfield.dart';
 
@@ -104,7 +104,7 @@ class Signup extends StatelessWidget {
             onPressed: () {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => MainPage()),
+                MaterialPageRoute(builder: (context) => Dashboard()),
               );
             },
             child: Text("Signup"),

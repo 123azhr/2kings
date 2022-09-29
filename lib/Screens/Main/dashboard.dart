@@ -2,20 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/menu/menu.dart';
 import 'package:housecontractors/Screens/newsfeed/newsfeed.dart';
 import 'package:housecontractors/Screens/notifications/notifications.dart';
-import 'package:housecontractors/Screens/orders/activeOrders.dart';
-
 import '../../helper/size_configuration.dart';
 import '../homepage/home.dart';
-import '../orders/MyOrders.dart';
+import '../orders/my_orders.dart';
 
-class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+class Dashboard extends StatefulWidget {
+  const Dashboard({Key? key}) : super(key: key);
 
   @override
-  State<MainPage> createState() => _MainPageState();
+  State<Dashboard> createState() => _DashboardState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _DashboardState extends State<Dashboard> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(),
