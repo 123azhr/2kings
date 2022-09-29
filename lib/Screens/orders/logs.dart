@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:housecontractors/Screens/homepage/Chat/chat_menu.dart';
+import 'package:housecontractors/Screens/Chat/chat_menu.dart';
 import 'package:housecontractors/Screens/orders/viewInventoryLog.dart';
 import 'package:housecontractors/Screens/orders/viewServicesLog.dart';
-import 'package:housecontractors/Screens/profile/profile_header.dart';
+import 'package:housecontractors/components/profile_header.dart';
 import '../../helper/size_configuration.dart';
 import '../../widgets/chat_call_bottom_bar.dart';
 

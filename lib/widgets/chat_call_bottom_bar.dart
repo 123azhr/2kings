@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../Screens/homepage/Chat/chat_menu.dart';
+import '../Screens/Chat/chat_menu.dart';
 import '../helper/size_configuration.dart';
 
 class bottomCallChat extends StatelessWidget {

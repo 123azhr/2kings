@@ -12,8 +12,7 @@ class ProfileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(getProportionateScreenWidth(10.0)),
-      color: Colors.amber.shade300,
+      color: Color.fromARGB(255, 255, 255, 255),
       child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         SizedBox(
           height: getProportionateScreenHeight(60),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
-import '../../../helper/size_configuration.dart';
+import '../../helper/size_configuration.dart';
 import 'my_messages.dart';
 import 'opposite_messages.dart';
 

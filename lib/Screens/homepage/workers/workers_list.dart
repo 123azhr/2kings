@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:housecontractors/helper/size_configuration.dart';
 import 'Worker_list_tile.dart';
 
 class WorkersList extends StatefulWidget {
-  const WorkersList({super.key});
-
+  const WorkersList(
+      {super.key, required this.workerName, required this.serviceName});
+  final String workerName;
+  final String serviceName;
   @override
   State<WorkersList> createState() => _WorkersListState();
 }
@@ -51,9 +52,9 @@ class _WorkersListState extends State<WorkersList> {
           : AppBar(
               iconTheme: IconThemeData(color: Colors.black),
               title: Text(
-                "Electrician",
+                widget.serviceName,
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Color.fromARGB(255, 0, 0, 0),
                   fontSize: (kToolbarHeight / 100) * 40,
                 ),
               ),
@@ -78,11 +79,25 @@ class _WorkersListState extends State<WorkersList> {
         itemCount: 12,
         itemBuilder: (context, index) {
           if (isShowAll) {
-            return WorkerTile(
-              title: "Electrician Name",
+            return Column(
+              children: [
+                WorkerTile(
+                  rating: 5,
+                  serviceName: widget.serviceName,
+                  workerName: widget.workerName,
+                ),
+                Divider(
+                  thickness: 0.2,
+                  color: Colors.black,
+                )
+              ],
             );
           } else {
-            return WorkerTile(title: "Electrician Name");
+            return WorkerTile(
+              serviceName: widget.serviceName,
+              workerName: widget.workerName,
+              rating: 5,
+            );
           }
         },
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../helper/size_configuration.dart';
+import '../../helper/size_configuration.dart';
 
 class OppositeMessages extends StatelessWidget {
   const OppositeMessages({

@@ -105,44 +105,42 @@ class ViewInventoryLogs extends StatelessWidget {
         child: Column(
           children: [
             SingleChildScrollView(
-              child: SizedBox(
-                child: Column(
-                  children: [
-                    InventoryTableHeader(),
-                    Table(
-                      border: TableBorder.all(),
-                      columnWidths: const <int, TableColumnWidth>{
-                        0: FixedColumnWidth(30),
-                        1: FixedColumnWidth(130),
-                      },
-                      defaultVerticalAlignment:
-                          TableCellVerticalAlignment.middle,
-                      children: <TableRow>[
-                        addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                        addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                        addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                        addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                        addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                        addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                        addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                        addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                        addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                        addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                        addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                        addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                        addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                        addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                        addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                        addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                        addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                        addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                        addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                        addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                        addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                      ],
-                    ),
-                  ],
-                ),
+              child: Column(
+                children: [
+                  const InventoryTableHeader(),
+                  Table(
+                    border: TableBorder.all(),
+                    columnWidths: const <int, TableColumnWidth>{
+                      0: FixedColumnWidth(30),
+                      1: FixedColumnWidth(130),
+                    },
+                    defaultVerticalAlignment:
+                        TableCellVerticalAlignment.middle,
+                    children: <TableRow>[
+                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
+                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
+                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
+                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
+                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
+                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
+                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
+                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
+                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
+                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
+                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
+                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
+                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
+                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
+                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
+                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
+                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
+                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
+                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
+                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
+                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
+                    ],
+                  ),
+                ],
               ),
             ),
           ],

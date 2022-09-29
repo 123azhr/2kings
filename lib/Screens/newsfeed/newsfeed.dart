@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/widgets/mycontainer.dart';
 import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
-import 'package:housecontractors/Screens/newsfeed/components/post.dart';
+import 'package:housecontractors/components/Post/post.dart';
 
 import '../../helper/size_configuration.dart';
 

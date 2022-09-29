@@ -78,7 +78,7 @@ class WorkerSlide extends StatelessWidget {
       onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => WorkersList(),
+            builder: (context) => WorkersList(workerName: "Arsalan",serviceName: "Electrician"),
           )),
       child: Card(
         shape: RoundedRectangleBorder(

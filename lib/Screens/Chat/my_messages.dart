@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../helper/size_configuration.dart';
+import '../../helper/size_configuration.dart';
 
 class MyMessages extends StatelessWidget {
   const MyMessages({super.key, required this.text});

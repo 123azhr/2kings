@@ -3,7 +3,7 @@ import 'package:housecontractors/Screens/homepage/components/homeservices.dart';
 import 'package:housecontractors/Screens/homepage/components/stories.dart';
 import 'package:housecontractors/Screens/homepage/components/searchHome.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
-import 'Chat/chat_menu.dart';
+import '../Chat/chat_menu.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
