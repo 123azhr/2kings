@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../helper/size_configuration.dart';
+import 'open_comments.dart';
 import 'open_post.dart';
 
 class Comments extends StatelessWidget {
@@ -15,7 +16,7 @@ class Comments extends StatelessWidget {
       onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => OpenPost(),
+            builder: (context) => OpenComments(),
           )),
       child: Row(
         children: [

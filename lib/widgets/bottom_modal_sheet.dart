@@ -23,7 +23,6 @@ customBottomModalSheet({
           ),
         ),
         child: Container(
-          
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
             borderRadius: BorderRadius.only(
@@ -62,29 +61,14 @@ customBottomModalSheet({
                     ),
                   ],
                 ),
-
                 MyTextField(
                   width: SizeConfig.screenWidth,
                   height: 50,
                   radius: 20,
-                  icon: Icons.arrow_right,
+                  leading: Icon(Icons.arrow_right),
                   controller: controller!,
                   hintText: hintText,
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.end,
-                //   children: [
-                //     BuildSmallButton(
-                //       text: "CANCEL",
-                //       onPressed: onCancel,
-                //     ),
-                //     SizedBox(width: getProportionateScreenWidth(10)),
-                //     BuildSmallButton(
-                //       text: "SAVE",
-                //       onPressed: onSave,
-                //     ),
-                //   ],
-                // ),
               ],
             ),
           ),

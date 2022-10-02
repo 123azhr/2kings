@@ -15,14 +15,13 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
-    HomePage(),
-    Notifications(),
+  static final List<Widget> _widgetOptions = <Widget>[
+    const HomePage(),
+    const Notifications(),
     Newsfeed(),
-    MyOrders(),
-    Menu(title: "Azhar"),
+    const MyOrders(),
+    const Menu(title: "Azhar"),
   ];
-  @override
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;

@@ -1,0 +1,43 @@
+import 'package:flutter/material.dart';
+import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
+import 'package:housecontractors/helper/size_configuration.dart';
+
+class OpenComments extends StatelessWidget {
+  OpenComments({super.key});
+  TextEditingController commentController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+          body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: kToolbarHeight,
+            ),
+            Container(
+              color: Colors.amber,
+              height: setHeight(88),
+              child: ListView(
+                shrinkWrap: true,
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              height: setHeight(7.5),
+              child: MyTextField(
+                  width: setWidth(
+                    99,
+                  ),
+                  hintText: "Comment your view",
+                  leading: Icon(Icons.send_sharp),
+                  radius: getProportionateScreenWidth(20),
+                  controller: commentController),
+            ),
+          ],
+        ),
+      )),
+    );
+  }
+}

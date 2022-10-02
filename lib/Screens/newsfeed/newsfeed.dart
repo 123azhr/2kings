@@ -6,8 +6,8 @@ import 'package:housecontractors/components/Post/post.dart';
 import '../../helper/size_configuration.dart';
 
 class Newsfeed extends StatelessWidget {
-  const Newsfeed({Key? key}) : super(key: key);
-
+  Newsfeed({Key? key}) : super(key: key);
+  ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     TextEditingController _postController = TextEditingController();
@@ -17,11 +17,16 @@ class Newsfeed extends StatelessWidget {
           "assets/images/logo-black-half.png",
           fit: BoxFit.fitWidth,
         ),
-        title: Text(
-          "Newsfeed",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: getProportionateScreenWidth(20),
+        title: GestureDetector(
+          onTap: () {
+            _scrollController.jumpTo(0);
+          },
+          child: Text(
+            "Newsfeed",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: getProportionateScreenWidth(20),
+            ),
           ),
         ),
         centerTitle: true,
@@ -29,6 +34,7 @@ class Newsfeed extends StatelessWidget {
         backgroundColor: Colors.transparent,
       ),
       body: SingleChildScrollView(
+        controller: _scrollController,
         physics: const ScrollPhysics(),
         scrollDirection: Axis.vertical,
         child: Column(

@@ -85,7 +85,7 @@ class WorkerTile extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "About $serviceName",
+                        "About $serviceName ",
                         style: TextStyle(
                             fontSize: getProportionateScreenHeight(20),
                             fontWeight: FontWeight.bold),

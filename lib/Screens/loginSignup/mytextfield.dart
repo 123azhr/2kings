@@ -6,16 +6,16 @@ class MyTextField extends StatelessWidget {
       this.height,
       required this.width,
       this.color,
-      this.icon,
+      this.leading,
       required this.radius,
       required this.controller})
       : super();
-
+  
   final String? hintText;
   final double? height;
   final double width;
   final Color? color;
-  final IconData? icon;
+  final Widget? leading;
   final double radius;
   TextEditingController controller = TextEditingController();
   @override
@@ -27,9 +27,7 @@ class MyTextField extends StatelessWidget {
         controller: controller,
         textAlign: TextAlign.start,
         decoration: InputDecoration(
-          suffixIcon: Icon(
-            icon,
-          ),
+          suffixIcon: leading,
           fillColor: (color != null) ? color : Colors.white,
           filled: true,
           hintText: hintText,

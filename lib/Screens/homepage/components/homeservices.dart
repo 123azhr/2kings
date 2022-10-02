@@ -21,42 +21,34 @@ class HomeServices extends StatelessWidget {
             WorkerSlide(
               assetImagePath: 'assets/images/logo-black-half.png',
               title: "Plumber",
-              onTap: () {},
             ),
             WorkerSlide(
               assetImagePath: 'assets/images/logo-black-half.png',
               title: "Welder",
-              onTap: () {},
             ),
             WorkerSlide(
               assetImagePath: 'assets/images/logo-black-half.png',
               title: "AC Service",
-              onTap: () {},
             ),
             WorkerSlide(
               assetImagePath: 'assets/images/logo-black-half.png',
               title: "Plumber",
-              onTap: () {},
             ),
             WorkerSlide(
               assetImagePath: 'assets/images/logo-black-half.png',
               title: "Welder",
-              onTap: () {},
             ),
             WorkerSlide(
               assetImagePath: 'assets/images/logo-black-half.png',
               title: "AC Service",
-              onTap: () {},
             ),
             WorkerSlide(
               assetImagePath: 'assets/images/logo-black-half.png',
               title: "Welder",
-              onTap: () {},
             ),
             WorkerSlide(
               assetImagePath: 'assets/images/logo-black-half.png',
               title: "AC Service",
-              onTap: () {},
             ),
           ],
         ));
@@ -78,7 +70,8 @@ class WorkerSlide extends StatelessWidget {
       onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => WorkersList(workerName: "Arsalan",serviceName: "Electrician"),
+            builder: (context) =>
+                WorkersList(workerName: "Arsalan", serviceName: "Electrician"),
           )),
       child: Card(
         shape: RoundedRectangleBorder(

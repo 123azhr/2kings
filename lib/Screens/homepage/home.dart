@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/homepage/components/homeservices.dart';
 import 'package:housecontractors/Screens/homepage/components/stories.dart';
 import 'package:housecontractors/Screens/homepage/components/searchHome.dart';
+import 'package:housecontractors/Screens/homepage/workers/workers_list.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import '../Chat/chat_menu.dart';
+import 'components/hirecontractor.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -108,18 +110,7 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.black,
                     ),
                     HomeServices(),
-                    Card(
-                      child: Container(
-                        height: getProportionateScreenHeight(160),
-                        width: getProportionateScreenWidth(500),
-                        child: const Text("Hire a Contractor"),
-                        padding:
-                            EdgeInsets.all(getProportionateScreenHeight(10)),
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(
-                              getProportionateScreenWidth(20)))),
-                    ),
+                    HireContractor(),
                   ]),
             ),
           ],

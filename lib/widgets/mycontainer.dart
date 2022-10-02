@@ -33,10 +33,7 @@ class MyContainer extends StatelessWidget {
           height: height,
           width: width,
           decoration: BoxDecoration(
-            color: (color != null) ? Colors.white : color,
-            image: DecorationImage(
-              image: imageFunc(image),
-            ),
+            color: (color != null) ? color : Colors.transparent,
             border: Border.all(),
             borderRadius: const BorderRadius.all(
               Radius.circular(20),

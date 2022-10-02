@@ -13,8 +13,10 @@ class Stories extends StatelessWidget {
         child: Row(
           children: [
             MyContainer(
-                height: getProportionateScreenHeight(120),
-                width: getProportionateScreenWidth(70)),
+              height: getProportionateScreenHeight(120),
+              width: getProportionateScreenWidth(70),
+              child: Icon(Icons.add_circle),
+            ),
             SizedBox(
               width: getProportionateScreenWidth(280),
               child: ListView.builder(
