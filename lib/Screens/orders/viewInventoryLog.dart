@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import '../../helper/size_configuration.dart';
 
 class ViewInventoryLogs extends StatelessWidget {
-  const ViewInventoryLogs({
+  ViewInventoryLogs({
     Key? key,
+    this.tog = false,
   }) : super(key: key);
+  final bool? tog;
   TableRow addTableRow(String id, String itemName, String qty, String unit,
       String perUnit, String price) {
     return TableRow(
@@ -114,8 +116,7 @@ class ViewInventoryLogs extends StatelessWidget {
                       0: FixedColumnWidth(30),
                       1: FixedColumnWidth(130),
                     },
-                    defaultVerticalAlignment:
-                        TableCellVerticalAlignment.middle,
+                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                     children: <TableRow>[
                       addTableRow("1", "Sariya", "8", "inch", "100", "800"),
                       addTableRow("1", "Sariya", "8", "inch", "100", "800"),
@@ -145,6 +146,105 @@ class ViewInventoryLogs extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      bottomSheet: Visibility(
+        visible: tog!,
+        child: BottomAppBar(
+            child: Row(
+          children: [
+            Card(
+              child: Container(
+                height: setHeight(20),
+                child: Table(
+                  border: TableBorder.all(),
+                  columnWidths: const <int, TableColumnWidth>{
+                    0: FixedColumnWidth(130),
+                    1: FixedColumnWidth(239),
+                  },
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                  children: <TableRow>[
+                    TableRow(
+                      children: <Widget>[
+                        TableCell(
+                          child: SizedBox(
+                              height: setHeight(5),
+                              child: Center(
+                                child: Text("Total: ",
+                                    style: TextStyle(
+                                        fontSize:
+                                            getProportionateScreenHeight(25))),
+                              )),
+                        ),
+                        TableCell(
+                          child: SizedBox(
+                            height: setHeight(5),
+                            child: Center(
+                              child: Text("Remaining: ",
+                                  style: TextStyle(
+                                      fontSize:
+                                          getProportionateScreenHeight(25))),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    TableRow(
+                      children: <Widget>[
+                        TableCell(
+                          child: SizedBox(
+                              height: setHeight(5),
+                              child: Center(
+                                child: Text("Paid: ",
+                                    style: TextStyle(
+                                        fontSize:
+                                            getProportionateScreenHeight(25))),
+                              )),
+                        ),
+                        TableCell(
+                          child: SizedBox(
+                            height: setHeight(5),
+                            child: Center(
+                              child: Text("Remaining: ",
+                                  style: TextStyle(
+                                      fontSize:
+                                          getProportionateScreenHeight(25))),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    TableRow(
+                      children: <Widget>[
+                        TableCell(
+                          child: SizedBox(
+                            height: setHeight(5),
+                            child: Center(
+                              child: Text("Remaining: ",
+                                  style: TextStyle(
+                                      fontSize:
+                                          getProportionateScreenHeight(25))),
+                            ),
+                          ),
+                        ),
+                        TableCell(
+                          child: SizedBox(
+                            height: setHeight(5),
+                            child: Center(
+                              child: Text("Remaining: ",
+                                  style: TextStyle(
+                                      fontSize:
+                                          getProportionateScreenHeight(25))),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        )),
       ),
     );
   }

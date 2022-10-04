@@ -27,8 +27,7 @@ class MyContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-              Radius.circular(getProportionateScreenWidth(20)))),
+          borderRadius: BorderRadius.all(Radius.circular(20))),
       child: Container(
           height: height,
           width: width,

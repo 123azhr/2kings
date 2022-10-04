@@ -27,24 +27,21 @@ class Logs extends StatelessWidget {
       ),
       body: Column(
         children: [
-          ProfileHeader(
-            title: title,
-          ),
           Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: setWidth(2), vertical: setHeight(0)),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Divider(
                   thickness: 0.2,
                   color: Colors.black,
                 ),
                 Text(
-                  "Inventory Logs",
+                  "Inventory",
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: setHeight(2.5),
+                    fontSize: setHeight(4),
                   ),
                 ),
                 Divider(
@@ -72,20 +69,67 @@ class Logs extends StatelessWidget {
                           elevation: 0,
                           backgroundColor: Colors.transparent,
                         ),
-                        body: ViewInventoryLogs(),
+                        body: ViewInventoryLogs(tog: true),
                       ),
                     ),
                   ),
                 ),
                 Divider(
-                  thickness: 0.2,
+                  height: 0,
+                  thickness: 0.3,
                   color: Colors.black,
                 ),
+                SizedBox(
+                  height: 40,
+                  child: Row(
+                    children: [
+                      Divider(
+                        thickness: 0.3,
+                        color: Colors.black,
+                        height: 0,
+                      ),
+                      Container(
+                        padding:
+                            EdgeInsets.all(getProportionateScreenHeight(8)),
+                        height: 50,
+                        child: Text(
+                          "Inventory Total: ",
+                          style: TextStyle(fontSize: 24),
+                        ),
+                      ),
+                      Container(
+                        padding:
+                            EdgeInsets.all(getProportionateScreenHeight(8)),
+                        height: 50,
+                        child: Text(
+                          "48612315315 ",
+                          style: TextStyle(fontSize: 24),
+                        ),
+                      ),
+                      Spacer(),
+                      VerticalDivider(color: Colors.black),
+                      Container(
+                        padding:
+                            EdgeInsets.all(getProportionateScreenHeight(8)),
+                        height: 50,
+                        child: Text(
+                          "PKR",
+                          style: TextStyle(fontSize: 24),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(
+                  thickness: 0.2,
+                  color: Colors.black,
+                  height: 0,
+                ),
                 Text(
-                  "Services Logs",
+                  "Services ",
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: setHeight(2.5),
+                    fontSize: setHeight(4),
                   ),
                 ),
                 Divider(
@@ -103,7 +147,7 @@ class Logs extends StatelessWidget {
                       builder: (context) => Scaffold(
                         appBar: AppBar(
                           title: Text(
-                            "Inventory logs",
+                            "Services logs",
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: (kToolbarHeight / 100) * 50,
@@ -113,17 +157,107 @@ class Logs extends StatelessWidget {
                           elevation: 0,
                           backgroundColor: Colors.transparent,
                         ),
-                        body: ViewServicesLogs(),
+                        body: ViewServicesLogs(tog: true),
                       ),
                     ),
                   ),
+                ),
+                Divider(
+                  height: 0,
+                  thickness: 0.3,
+                  color: Colors.black,
+                ),
+                SizedBox(
+                  height: 40,
+                  child: Row(
+                    children: [
+                      Divider(
+                        thickness: 0.3,
+                        color: Colors.black,
+                        height: 0,
+                      ),
+                      Container(
+                        padding:
+                            EdgeInsets.all(getProportionateScreenHeight(8)),
+                        height: 50,
+                        child: Text(
+                          "Services Total: ",
+                          style: TextStyle(fontSize: 24),
+                        ),
+                      ),
+                      Container(
+                        padding:
+                            EdgeInsets.all(getProportionateScreenHeight(8)),
+                        height: 50,
+                        child: Text(
+                          "48612315315 ",
+                          style: TextStyle(fontSize: 24),
+                        ),
+                      ),
+                      Spacer(),
+                      VerticalDivider(color: Colors.black),
+                      Container(
+                        padding:
+                            EdgeInsets.all(getProportionateScreenHeight(8)),
+                        height: 50,
+                        child: Text(
+                          "PKR",
+                          style: TextStyle(fontSize: 24),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(
+                  thickness: 0.2,
+                  color: Colors.black,
+                  height: 0,
                 ),
               ],
             ),
           ),
         ],
       ),
-      bottomNavigationBar: bottomCallChat(),
+      bottomSheet: BottomAppBar(
+          color: Colors.amberAccent,
+          child: SizedBox(
+            height: 50,
+            child: Row(
+              children: [
+                Divider(
+                  height: 0,
+                  thickness: 0.3,
+                  color: Colors.black,
+                ),
+                Container(
+                  padding: EdgeInsets.all(getProportionateScreenHeight(8)),
+                  height: 50,
+                  child: Text(
+                    "Grand Total: ",
+                    style: TextStyle(fontSize: 24),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(getProportionateScreenHeight(8)),
+                  height: 50,
+                  child: Text(
+                    "48612315315 ",
+                    style: TextStyle(fontSize: 24),
+                  ),
+                ),
+                Spacer(),
+                VerticalDivider(color: Colors.black),
+                Container(
+                  padding: EdgeInsets.all(getProportionateScreenHeight(8)),
+                  height: 50,
+                  child: Text(
+                    "PKR",
+                    style: TextStyle(fontSize: 24),
+                  ),
+                ),
+              ],
+            ),
+          )),
     );
   }
 }

@@ -25,8 +25,7 @@ class HireContractor extends StatelessWidget {
           padding: EdgeInsets.all(getProportionateScreenHeight(10)),
         ),
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-                Radius.circular(getProportionateScreenWidth(20)))),
+            borderRadius: BorderRadius.all(Radius.circular(20))),
       ),
     );
   }

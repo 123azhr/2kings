@@ -4,13 +4,34 @@ import '../../helper/size_configuration.dart';
 import 'my_messages.dart';
 import 'opposite_messages.dart';
 
-class Inbox extends StatelessWidget {
+class Inbox extends StatefulWidget {
   Inbox({super.key, required this.title});
   final String title;
+
+  @override
+  State<Inbox> createState() => _InboxState();
+}
+
+String selectedValue = "Select";
+List<DropdownMenuItem<String>> get dropdownItems {
+  List<DropdownMenuItem<String>> menuItems = [
+    DropdownMenuItem(child: Text("Select"), value: "Select"),
+    DropdownMenuItem(child: Text("Canada"), value: "Canada"),
+    DropdownMenuItem(child: Text("Brazil"), value: "Brazil"),
+    DropdownMenuItem(child: Text("England"), value: "England"),
+  ];
+  return menuItems;
+}
+
+class _InboxState extends State<Inbox> {
   TextEditingController _textController = TextEditingController();
+
   TextEditingController _offertextController = TextEditingController();
+
   TextEditingController _servicetextController = TextEditingController();
+
   final bool isOpposite = true;
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -21,7 +42,7 @@ class Inbox extends StatelessWidget {
           backgroundColor: Colors.transparent,
           centerTitle: true,
           title: Text(
-            "$title",
+            "${widget.title}",
             style: TextStyle(
               color: Colors.black,
               fontSize: (kToolbarHeight / 100) * 40,
@@ -59,7 +80,7 @@ class Inbox extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  color: Colors.lightBlue,
+                  color: Color.fromARGB(255, 251, 237, 105),
                   height: setHeight(7),
                   child: Row(
                     children: [
@@ -71,22 +92,29 @@ class Inbox extends StatelessWidget {
                           style: TextStyle(fontSize: 20),
                         )),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8, bottom: 10),
-                        child: MyTextField(
-                          width: setWidth(40),
-                          height: setHeight(7 / 1.5),
-                          radius: 20,
-                          controller: _servicetextController,
-                          hintText: "Enter service name",
-                          leading: GestureDetector(
-                            onTap: () {},
-                            child: const Icon(Icons.send),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20),
                           ),
+                        ),
+                        width: getProportionateScreenWidth(100),
+                        height: getProportionateScreenHeight(30),
+                        child: Center(
+                          child: DropdownButton(
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: getProportionateScreenHeight(18),
+                              ),
+                              dropdownColor: Colors.amberAccent,
+                              onChanged: (value) {},
+                              value: selectedValue,
+                              items: dropdownItems),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
+                        padding: const EdgeInsets.only(left: 14.0),
                         child: Center(
                             child: Text(
                           "Offer: ",
@@ -96,7 +124,7 @@ class Inbox extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 8, bottom: 10),
                         child: MyTextField(
-                          width: setWidth(25),
+                          width: setWidth(35),
                           height: setHeight(7 / 1.5),
                           radius: 20,
                           controller: _offertextController,

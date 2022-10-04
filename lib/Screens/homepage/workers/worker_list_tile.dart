@@ -25,7 +25,6 @@ class WorkerTile extends StatelessWidget {
         "assets/images/KingContractor.jpg",
         fit: BoxFit.contain,
       ),
-      // Image.asset('KingContractor.jpg', fit: BoxFit.fill),
       title: Text(workerName),
       subtitle: Row(
         children: [
@@ -60,162 +59,351 @@ class WorkerTile extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(
-              getProportionateScreenWidth(20),
+              20,
             ),
           ),
         ),
         color: Color.fromARGB(255, 255, 255, 255),
-        child: SizedBox(
-          height: setHeight(60),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.amberAccent,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(
-                        getProportionateScreenWidth(20),
-                      ),
-                    ),
-                  ),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "About $serviceName ",
-                        style: TextStyle(
-                            fontSize: getProportionateScreenHeight(20),
-                            fontWeight: FontWeight.bold),
-                      ),
+        child: Container(
+          height: setHeight(59),
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: setHeight(1)),
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(102, 243, 215, 33),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(
+                      20,
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                  child: ProfileHeader(title: workerName),
-                ),
-                Divider(
-                  thickness: 0.2,
-                  height: 0,
-                  color: Colors.black,
-                ),
-                SizedBox(
-                  height: getProportionateScreenHeight(7),
-                ),
-                Text(
-                  "Services",
-                  style: TextStyle(
-                    fontSize: getProportionateScreenHeight(20),
+                height: setHeight(5),
+                width: setWidth(85),
+                child: Center(
+                  child: Text(
+                    "About $serviceName ",
+                    style: TextStyle(
+                        fontSize: getProportionateScreenHeight(20),
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
-                Divider(
-                  thickness: 0.2,
-                  height: getProportionateScreenHeight(10),
-                  color: Colors.black,
-                ),
-                Container(
-                  height: setHeight(7),
+              ),
+              Container(
+                margin: EdgeInsets.all(setHeight(1)),
+                color: Colors.greenAccent,
+                height: setHeight(10),
+                child: ProfileHeader(title: workerName),
+              ),
+              Container(
+                  height: setHeight(30),
                   color: Color.fromARGB(255, 255, 255, 255),
-                  child: GridView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: getProportionateScreenWidth(0),
-                        mainAxisSpacing: getProportionateScreenHeight(0),
-                        mainAxisExtent: getProportionateScreenHeight(20),
-                        childAspectRatio: 150 / 220),
-                    itemCount: 9,
-                    itemBuilder: (context, index) => Text("services"),
-                  ),
-                ),
-                Divider(
-                  thickness: 0.2,
-                  height: getProportionateScreenHeight(10),
-                  color: Colors.black,
-                ),
-                Text(
-                  "Bio: ",
-                  style: TextStyle(
-                    fontSize: getProportionateScreenHeight(15),
-                  ),
-                ),
-                SizedBox(
-                  height: setHeight(20),
-                ),
-                Divider(
-                  thickness: 0.2,
-                  height: getProportionateScreenHeight(10),
-                  color: Colors.black,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-                  child: Row(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        height: setHeight(5),
-                        width: setWidth(30),
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              Colors.amberAccent,
-                            ),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    ProfileView(title: workerName),
-                              ),
-                            );
-                          },
-                          child: Text(
-                            "Profile View",
-                            style: TextStyle(
-                                color: Colors.black87,
-                                fontSize: getProportionateScreenHeight(18),
-                                fontWeight: FontWeight.bold),
-                          ),
+                      Text(
+                        "Services",
+                        style: TextStyle(
+                          fontSize: getProportionateScreenHeight(20),
                         ),
                       ),
-                      Spacer(),
+                      Divider(
+                        thickness: 0.2,
+                        color: Colors.black,
+                        height: 0,
+                      ),
                       Container(
+                        height: setHeight(9),
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        child: GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: getProportionateScreenWidth(0),
+                            mainAxisSpacing: getProportionateScreenHeight(0),
+                            mainAxisExtent: getProportionateScreenHeight(20),
+                            childAspectRatio: 150 / 220,
+                          ),
+                          itemCount: 9,
+                          itemBuilder: (context, index) => Text("services"),
+                        ),
+                      ),
+                      Divider(
+                        thickness: 0.2,
+                        color: Colors.black,
+                        height: 0,
+                      ),
+                      Text(
+                        "Bio: ",
+                        style: TextStyle(
+                          fontSize: getProportionateScreenHeight(20),
+                        ),
+                      ),
+                      Divider(
+                        thickness: 0.2,
+                        color: Colors.black,
+                        height: 0,
+                      ),
+                      SizedBox(
                         height: setHeight(5),
-                        width: setWidth(30),
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              Colors.amberAccent,
-                            ),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Inbox(title: workerName),
-                              ),
-                            );
-                          },
-                          child: Text(
-                            "Chat",
-                            style: TextStyle(
-                                color: Colors.black87,
-                                fontSize: getProportionateScreenHeight(18),
-                                fontWeight: FontWeight.bold),
-                          ),
+                      ),
+                      Spacer(),
+                      Divider(
+                        thickness: 0.2,
+                        color: Colors.black,
+                        height: 0,
+                      ),
+                      Container(
+                        color: Colors.yellow,
+                        padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom,
                         ),
                       ),
                     ],
-                  ),
-                )
-              ],
-            ),
+                  )),
+              Container(
+                padding: EdgeInsets.all(getProportionateScreenHeight(12)),
+                height: setHeight(11),
+                color: Color.fromARGB(255, 255, 255, 255),
+                child: Row(
+                  children: [
+                    Container(
+                      height: setHeight(7),
+                      width: setWidth(30),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.amberAccent,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  ProfileView(title: workerName),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          "Profile View",
+                          style: TextStyle(
+                              color: Colors.black87,
+                              fontSize: getProportionateScreenHeight(18),
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    Container(
+                      height: setHeight(7),
+                      width: setWidth(30),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.amberAccent,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Inbox(title: workerName),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          "Chat",
+                          style: TextStyle(
+                              color: Colors.black87,
+                              fontSize: getProportionateScreenHeight(18),
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
           ),
         ),
       ),
     );
   }
 }
+// Container(
+//           color: Colors.blue,
+//           height: setHeight(60),
+//           child: Padding(
+//             padding: const EdgeInsets.all(8.0),
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Container(
+//                   decoration: BoxDecoration(
+//                     color: Colors.amberAccent,
+//                     borderRadius: BorderRadius.all(
+//                       Radius.circular(
+//                         20,
+//                       ),
+//                     ),
+//                   ),
+//                   child: Center(
+//                     child: Padding(
+//                       padding: const EdgeInsets.all(8.0),
+//                       child: Text(
+//                         "About $serviceName ",
+//                         style: TextStyle(
+//                             fontSize: getProportionateScreenHeight(20),
+//                             fontWeight: FontWeight.bold),
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//                 SingleChildScrollView(
+//                   child: Container(
+//                     height: setHeight(20),
+//                     child: Column(
+//                       children: [
+//                         Container(
+//                           height: setHeight(10),
+//                           child: Padding(
+//                             padding: EdgeInsets.fromLTRB(
+//                                 0,
+//                                 getProportionateScreenHeight(10),
+//                                 0,
+//                                 getProportionateScreenHeight(0)),
+//                             child: ProfileHeader(title: workerName),
+//                           ),
+//                         ),
+//                         Divider(
+//                           thickness: 0.2,
+//                           height: setHeight(1),
+//                           color: Colors.black,
+//                         ),
+//                         Text(
+//                           "Services",
+//                           style: TextStyle(
+//                             fontSize: getProportionateScreenHeight(20),
+//                           ),
+//                         ),
+//                         Divider(
+//                           thickness: 0.2,
+//                           color: Colors.black,
+//                         ),
+//                         Container(
+//                           height: setHeight(9),
+//                           color: Color.fromARGB(255, 255, 255, 255),
+//                           child: GridView.builder(
+//                             gridDelegate:
+//                                 SliverGridDelegateWithFixedCrossAxisCount(
+//                               crossAxisCount: 3,
+//                               crossAxisSpacing: getProportionateScreenWidth(0),
+//                               mainAxisSpacing: getProportionateScreenHeight(0),
+//                               mainAxisExtent: getProportionateScreenHeight(20),
+//                               childAspectRatio: 150 / 220,
+//                             ),
+//                             itemCount: 9,
+//                             itemBuilder: (context, index) => Text("services"),
+//                           ),
+//                         ),
+//                         Divider(
+//                           thickness: 0.2,
+//                           color: Colors.black,
+//                         ),
+//                         Text(
+//                           "Bio: ",
+//                           style: TextStyle(
+//                             fontSize: getProportionateScreenHeight(20),
+//                           ),
+//                         ),
+//                         Divider(
+//                           thickness: 0.2,
+//                           color: Colors.black,
+//                         ),
+//                         SizedBox(
+//                           height: setHeight(5),
+//                         ),
+//                         Divider(
+//                           thickness: 0.2,
+//                           color: Colors.black,
+//                         ),
+//                         Container(
+//                           color: Colors.yellow,
+//                           padding: EdgeInsets.only(
+//                             bottom: MediaQuery.of(context).viewInsets.bottom,
+//                           ),
+//                           child: Row(
+//                             children: [
+//                               Container(
+//                                 height: setHeight(7),
+//                                 width: setWidth(30),
+//                                 child: ElevatedButton(
+//                                   style: ButtonStyle(
+//                                     backgroundColor:
+//                                         MaterialStateProperty.all<Color>(
+//                                       Colors.amberAccent,
+//                                     ),
+//                                   ),
+//                                   onPressed: () {
+//                                     Navigator.push(
+//                                       context,
+//                                       MaterialPageRoute(
+//                                         builder: (context) =>
+//                                             ProfileView(title: workerName),
+//                                       ),
+//                                     );
+//                                   },
+//                                   child: Text(
+//                                     "Profile View",
+//                                     style: TextStyle(
+//                                         color: Colors.black87,
+//                                         fontSize:
+//                                             getProportionateScreenHeight(18),
+//                                         fontWeight: FontWeight.bold),
+//                                   ),
+//                                 ),
+//                               ),
+//                               Spacer(),
+//                               Container(
+//                                 height: setHeight(7),
+//                                 width: setWidth(30),
+//                                 child: ElevatedButton(
+//                                   style: ButtonStyle(
+//                                     backgroundColor:
+//                                         MaterialStateProperty.all<Color>(
+//                                       Colors.amberAccent,
+//                                     ),
+//                                   ),
+//                                   onPressed: () {
+//                                     Navigator.push(
+//                                       context,
+//                                       MaterialPageRoute(
+//                                         builder: (context) =>
+//                                             Inbox(title: workerName),
+//                                       ),
+//                                     );
+//                                   },
+//                                   child: Text(
+//                                     "Chat",
+//                                     style: TextStyle(
+//                                         color: Colors.black87,
+//                                         fontSize:
+//                                             getProportionateScreenHeight(18),
+//                                         fontWeight: FontWeight.bold),
+//                                   ),
+//                                 ),
+//                               ),
+//                             ],
+//                           ),
+//                         ),
+//                         Spacer(),
+//                       ],
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),

@@ -22,42 +22,36 @@ class ProfileHeader extends StatelessWidget {
               child: Image.network(
                 "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
                 fit: BoxFit.cover,
-                height: getProportionateScreenHeight(80),
+                height: getProportionateScreenHeight(60),
               ),
             ),
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(left: getProportionateScreenWidth(15)),
+          padding: EdgeInsets.all(getProportionateScreenHeight(8)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 title,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontSize: getProportionateScreenHeight(20),
+                    fontWeight: FontWeight.w500),
               ),
-              SizedBox(
-                height: 5,
+              Text(
+                "email@example.com",
+                style: TextStyle(
+                  fontSize: getProportionateScreenHeight(14),
+                  fontWeight: FontWeight.w300,
+                ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "email@example.com",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                  Text(
-                    "0305-56181354",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                ],
+              Text(
+                "0305-56181354",
+                style: TextStyle(
+                  fontSize: getProportionateScreenHeight(14),
+                  fontWeight: FontWeight.w300,
+                ),
               ),
             ],
           ),

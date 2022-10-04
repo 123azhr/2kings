@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/orders/logs.dart';
 
+import 'order_details.dart';
+
 class ActiveOrders extends StatelessWidget {
   const ActiveOrders({
     Key? key,
@@ -15,11 +17,7 @@ class ActiveOrders extends StatelessWidget {
         textDirection: TextDirection.ltr,
         children: [
           ListTile(
-            onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Logs(title: "Hassam Nusrat"),
-                )),
+            onTap: () => Order_details(context),
             leading: Icon(Icons.area_chart),
             title: Text("Hassam Nusrat",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),

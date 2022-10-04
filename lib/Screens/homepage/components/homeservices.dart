@@ -7,14 +7,14 @@ class HomeServices extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: getProportionateScreenHeight(250),
+        height: setHeight(30),
         child: GridView(
           physics: NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
             crossAxisSpacing: getProportionateScreenWidth(0),
             mainAxisSpacing: getProportionateScreenHeight(0),
-            mainAxisExtent: getProportionateScreenHeight(120),
+            mainAxisExtent: setHeight(15),
           ),
           shrinkWrap: true,
           children: [
@@ -75,8 +75,7 @@ class WorkerSlide extends StatelessWidget {
           )),
       child: Card(
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-                Radius.circular(getProportionateScreenWidth(20)))),
+            borderRadius: BorderRadius.all(Radius.circular(20))),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -96,7 +95,7 @@ class WorkerSlide extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w700,
-                  fontSize: getProportionateScreenWidth(17),
+                  fontSize: getProportionateScreenHeight(17),
                 ),
               ),
             ),

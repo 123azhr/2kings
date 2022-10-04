@@ -10,7 +10,7 @@ class MyTextField extends StatelessWidget {
       required this.radius,
       required this.controller})
       : super();
-  
+
   final String? hintText;
   final double? height;
   final double width;
@@ -20,23 +20,31 @@ class MyTextField extends StatelessWidget {
   TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: width,
-      height: height,
-      child: TextFormField(
-        controller: controller,
-        textAlign: TextAlign.start,
-        decoration: InputDecoration(
-          suffixIcon: leading,
-          fillColor: (color != null) ? color : Colors.white,
-          filled: true,
-          hintText: hintText,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(radius)),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(radius)),
-          ),
+    return TextFormField(
+      controller: controller,
+      textAlign: TextAlign.start,
+      style: TextStyle(
+        fontSize: 18,
+      ),
+      scrollPhysics: ScrollPhysics(),
+      decoration: InputDecoration(
+        constraints: BoxConstraints(
+          minWidth: width,
+          minHeight: height!,
+          maxHeight: height!,
+          maxWidth: width,
+        ),
+        suffixIcon: leading,
+        fillColor: (color != null) ? color : Colors.white,
+        filled: true,
+        isCollapsed: true,
+        hintText: hintText,
+        contentPadding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(radius)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(radius)),
         ),
       ),
     );

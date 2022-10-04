@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/widgets/mycontainer.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
@@ -9,34 +8,41 @@ class Stories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: getProportionateScreenHeight(140),
-        child: Row(
+        height: setHeight(21),
+        child: Stack(
           children: [
-            MyContainer(
-              height: getProportionateScreenHeight(120),
-              width: getProportionateScreenWidth(70),
-              child: Icon(Icons.add_circle),
+            Padding(
+              padding: EdgeInsets.only(left: setWidth(20)),
+              child: SizedBox(
+                width: setWidth(100),
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.all(5),
+                    itemExtent: setWidth(22),
+                    itemCount: 6,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          MyContainer(
+                            height: setHeight(18),
+                            width: setWidth(20),
+                          ),
+                          SizedBox(
+                            width: setWidth(20),
+                          ),
+                        ],
+                      );
+                    }),
+              ),
             ),
-            SizedBox(
-              width: getProportionateScreenWidth(280),
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.all(5),
-                  itemExtent: getProportionateScreenWidth(80),
-                  itemCount: 6,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        MyContainer(
-                            height: getProportionateScreenHeight(120),
-                            width: getProportionateScreenWidth(100)),
-                        SizedBox(
-                          width: getProportionateScreenWidth(75),
-                        ),
-                      ],
-                    );
-                  }),
-            )
+            Padding(
+              padding: EdgeInsets.only(top: 5),
+              child: MyContainer(
+                height: setHeight(18),
+                width: setWidth(20),
+                child: Icon(Icons.add_circle),
+              ),
+            ),
           ],
         ));
   }
