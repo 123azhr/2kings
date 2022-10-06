@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:housecontractors/Screens/Chat/Inbox.dart';
+import 'package:housecontractors/Screens/Main/dashboard.dart';
 import 'package:housecontractors/themes/mytheme.dart';
-import 'Screens/Main/dashboard.dart';
-import 'Screens/orders/viewInventoryLog.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {

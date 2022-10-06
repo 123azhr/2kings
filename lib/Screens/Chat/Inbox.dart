@@ -74,7 +74,7 @@ class _InboxState extends State<Inbox> {
         ),
         child: BottomAppBar(
           child: Container(
-            height: setHeight(14),
+            height: setHeight(15),
             color: Color.fromARGB(255, 239, 203, 0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -125,7 +125,7 @@ class _InboxState extends State<Inbox> {
                         padding: const EdgeInsets.only(top: 8, bottom: 10),
                         child: MyTextField(
                           width: setWidth(35),
-                          height: setHeight(7 / 1.5),
+                          height: setHeight(7 / 2),
                           radius: 20,
                           controller: _offertextController,
                           hintText: "Enter service name",
@@ -138,33 +138,36 @@ class _InboxState extends State<Inbox> {
                     ],
                   ),
                 ),
-                Row(
-                  children: [
-                    Container(
-                      height: setHeight(7),
-                      width: setWidth(10),
-                      child: Icon(Icons.camera_alt),
-                    ),
-                    Container(
-                      height: setHeight(7),
-                      width: setWidth(10),
-                      child: Icon(Icons.image),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8, bottom: 10),
-                      child: MyTextField(
-                        width: setWidth(75),
-                        height: setHeight(7 / 1.5),
-                        radius: 20,
-                        controller: _textController,
-                        hintText: "Message",
-                        leading: GestureDetector(
-                          onTap: () {},
-                          child: const Icon(Icons.send),
+                SizedBox(
+                  height: 65,
+                  child: Row(
+                    children: [
+                      Container(
+                        height: setHeight(7),
+                        width: setWidth(10),
+                        child: Icon(Icons.camera_alt),
+                      ),
+                      Container(
+                        height: setHeight(7),
+                        width: setWidth(10),
+                        child: Icon(Icons.image),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8, bottom: 10),
+                        child: MyTextField(
+                          width: setWidth(75),
+                          height: setHeight(7 / 1.5),
+                          radius: 20,
+                          controller: _textController,
+                          hintText: "Message",
+                          leading: GestureDetector(
+                            onTap: () {},
+                            child: const Icon(Icons.send),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),

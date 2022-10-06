@@ -2,7 +2,7 @@
     package="com.example.housecontractors">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="housecontractors"
+        android:label="2Kings House Contractors"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

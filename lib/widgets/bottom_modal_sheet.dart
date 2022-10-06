@@ -16,7 +16,7 @@ customBottomModalSheet({
     builder: (context) {
       return Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Color.fromARGB(255, 255, 210, 32),
           borderRadius: BorderRadius.only(
             topRight: Radius.circular(getProportionateScreenWidth(20)),
             topLeft: Radius.circular(getProportionateScreenWidth(20)),
@@ -24,7 +24,7 @@ customBottomModalSheet({
         ),
         child: Container(
           decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
+            color: Color.fromARGB(255, 255, 210, 32),
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(getProportionateScreenWidth(20)),
               topLeft: Radius.circular(getProportionateScreenWidth(20)),

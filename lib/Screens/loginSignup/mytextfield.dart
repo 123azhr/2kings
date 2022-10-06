@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MyTextField extends StatelessWidget {
   MyTextField(
       {this.hintText = "",
-      this.height,
+      this.height = 65,
       required this.width,
       this.color,
       this.leading,
@@ -17,7 +17,7 @@ class MyTextField extends StatelessWidget {
   final Color? color;
   final Widget? leading;
   final double radius;
-  TextEditingController controller = TextEditingController();
+  final TextEditingController controller;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -30,8 +30,6 @@ class MyTextField extends StatelessWidget {
       decoration: InputDecoration(
         constraints: BoxConstraints(
           minWidth: width,
-          minHeight: height!,
-          maxHeight: height!,
           maxWidth: width,
         ),
         suffixIcon: leading,
@@ -39,7 +37,7 @@ class MyTextField extends StatelessWidget {
         filled: true,
         isCollapsed: true,
         hintText: hintText,
-        contentPadding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+        contentPadding: EdgeInsets.fromLTRB(12, height! / 3, 12, height! / 3),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(radius)),
         ),

@@ -24,13 +24,13 @@ class MyProfileFields extends StatelessWidget {
         ),
         ListTile(
           leading: Text(
-            "Name: ",
+            "Name:     ",
             style: TextStyle(
                 fontSize: getProportionateScreenHeight(20),
                 fontWeight: FontWeight.bold),
           ),
           title: Text(
-            name,
+            nameController.text,
             style: TextStyle(
               fontSize: getProportionateScreenHeight(20),
             ),
@@ -53,7 +53,7 @@ class MyProfileFields extends StatelessWidget {
         ),
         ListTile(
           leading: Text(
-            "Gender: ",
+            "Gender:  ",
             style: TextStyle(
                 fontSize: getProportionateScreenHeight(20),
                 fontWeight: FontWeight.bold),
@@ -82,7 +82,7 @@ class MyProfileFields extends StatelessWidget {
         ),
         ListTile(
           leading: Text(
-            "Contact : ",
+            "Contact:",
             style: TextStyle(
                 fontSize: getProportionateScreenHeight(20),
                 fontWeight: FontWeight.bold),
@@ -111,7 +111,7 @@ class MyProfileFields extends StatelessWidget {
         ),
         ListTile(
           leading: Text(
-            "Email: ",
+            "Email:   ",
             style: TextStyle(
                 fontSize: getProportionateScreenHeight(20),
                 fontWeight: FontWeight.bold),
@@ -140,7 +140,7 @@ class MyProfileFields extends StatelessWidget {
         ),
         ListTile(
           leading: Text(
-            "Password: ",
+            "Password:",
             style: TextStyle(
                 fontSize: getProportionateScreenHeight(20),
                 fontWeight: FontWeight.bold),

@@ -96,7 +96,7 @@ class EditProfilePage extends StatelessWidget {
         body: Column(
           children: [
             Center(
-              heightFactor: 1.5,
+              heightFactor: 1.1,
               child: SizedBox(
                 height: getProportionateScreenHeight(200),
                 width: getProportionateScreenWidth(200),
@@ -114,7 +114,8 @@ class EditProfilePage extends StatelessWidget {
                           GestureDetector(
                             onTap: () {
                               showModalBottomSheet(
-                                backgroundColor: Colors.transparent,
+                                backgroundColor:
+                                    Color.fromARGB(255, 255, 210, 32),
                                 context: context,
                                 builder: (context) =>
                                     changeProfileImageBottomSheet(),
@@ -128,7 +129,7 @@ class EditProfilePage extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              color: Color.fromARGB(255, 249, 249, 249),
+                              color: Color.fromARGB(255, 255, 210, 32),
                               child: SizedBox(
                                 height: getProportionateScreenHeight(50),
                                 width: getProportionateScreenWidth(50),
@@ -167,6 +168,43 @@ class EditProfilePage extends StatelessWidget {
                   password: "*******",
                 ),
               ),
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(10),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                      Color.fromARGB(255, 18, 18, 18),
+                    ),
+                    fixedSize: MaterialStateProperty.all(
+                      Size(setWidth(30), setHeight(6)),
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: Text("Discard",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Color.fromARGB(255, 255, 210, 32),
+                      )),
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                      Color.fromARGB(255, 255, 210, 32),
+                    ),
+                    fixedSize: MaterialStateProperty.all(
+                      Size(setWidth(30), setHeight(6)),
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: Text("Save",
+                      style: TextStyle(fontSize: 18, color: Colors.black87)),
+                ),
+              ],
             ),
           ],
         ),
