@@ -38,18 +38,6 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => chatMenu()),
-              );
-            },
-            icon: const Icon(
-              Icons.chat,
-            ),
-          ),
-          IconButton(
-            color: Colors.black,
-            onPressed: () {
-              Navigator.push(
-                context,
                 MaterialPageRoute(builder: (context) => SearchHome()),
               );
             },

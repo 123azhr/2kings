@@ -8,7 +8,7 @@ class MyTextField extends StatelessWidget {
       this.color,
       this.leading,
       required this.radius,
-      required this.controller})
+      this.controller})
       : super();
 
   final String? hintText;
@@ -17,7 +17,7 @@ class MyTextField extends StatelessWidget {
   final Color? color;
   final Widget? leading;
   final double radius;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     return TextFormField(

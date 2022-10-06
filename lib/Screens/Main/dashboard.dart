@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:housecontractors/Screens/Chat/chat_menu.dart';
 import 'package:housecontractors/Screens/menu/menu.dart';
 import 'package:housecontractors/Screens/newsfeed/newsfeed.dart';
 import 'package:housecontractors/Screens/notifications/notifications.dart';
@@ -17,7 +18,7 @@ class _DashboardState extends State<Dashboard> {
   int _selectedIndex = 0;
   static final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
-    const Notifications(),
+    const chatMenu(),
     Newsfeed(),
     const MyOrders(),
     const Menu(title: "Azhar"),
@@ -42,12 +43,12 @@ class _DashboardState extends State<Dashboard> {
               icon: Icon(Icons.home_filled),
             ),
             BottomNavigationBarItem(
-              label: "Notifications",
-              icon: Icon(Icons.notifications),
+              label: "Chats",
+              icon: Icon(Icons.chat),
             ),
             BottomNavigationBarItem(
               label: "Newsfeed",
-              icon: Icon(Icons.timeline),
+              icon: Icon(Icons.newspaper_outlined),
             ),
             BottomNavigationBarItem(
               label: "Orders",

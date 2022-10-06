@@ -12,10 +12,10 @@ class Inbox extends StatefulWidget {
   State<Inbox> createState() => _InboxState();
 }
 
-String selectedValue = "Select";
+String selectedValue = "Services";
 List<DropdownMenuItem<String>> get dropdownItems {
   List<DropdownMenuItem<String>> menuItems = [
-    DropdownMenuItem(child: Text("Select"), value: "Select"),
+    DropdownMenuItem(child: Text("Services"), value: "Services"),
     DropdownMenuItem(child: Text("Canada"), value: "Canada"),
     DropdownMenuItem(child: Text("Brazil"), value: "Brazil"),
     DropdownMenuItem(child: Text("England"), value: "England"),
@@ -86,11 +86,7 @@ class _InboxState extends State<Inbox> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
-                        child: Center(
-                            child: Text(
-                          "Service: ",
-                          style: TextStyle(fontSize: 20),
-                        )),
+                        child: Center(),
                       ),
                       Container(
                         decoration: BoxDecoration(
@@ -100,7 +96,7 @@ class _InboxState extends State<Inbox> {
                           ),
                         ),
                         width: getProportionateScreenWidth(100),
-                        height: getProportionateScreenHeight(30),
+                        height: getProportionateScreenHeight(40),
                         child: Center(
                           child: DropdownButton(
                               style: TextStyle(
@@ -115,24 +111,36 @@ class _InboxState extends State<Inbox> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 14.0),
-                        child: Center(
-                            child: Text(
-                          "Offer: ",
-                          style: TextStyle(fontSize: 20),
-                        )),
+                        child: Center(),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8, bottom: 10),
                         child: MyTextField(
-                          width: setWidth(35),
+                          width: setWidth(30),
                           height: setHeight(7 / 2),
                           radius: 20,
                           controller: _offertextController,
-                          hintText: "Enter service name",
+                          hintText: "Offer",
                           leading: GestureDetector(
                             onTap: () {},
                             child: const Icon(Icons.send),
                           ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: ElevatedButton.icon(
+                          onPressed: () {},
+                          icon: Icon(Icons.cancel_outlined),
+                          label: Text(""),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: ElevatedButton.icon(
+                          onPressed: () {},
+                          icon: Icon(Icons.done),
+                          label: Text(""),
                         ),
                       ),
                     ],
