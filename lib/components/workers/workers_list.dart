@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:housecontractors/components/workers/add_workers.dart';
 import 'Worker_list_tile.dart';
 
 class WorkersList extends StatefulWidget {
@@ -101,6 +102,19 @@ class _WorkersListState extends State<WorkersList> {
           }
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.yellow,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddWorker(title: widget.serviceName),
+            ),
+          );
+        },
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ), // This,
     );
   }
 }

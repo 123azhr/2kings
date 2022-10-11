@@ -3,18 +3,13 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:housecontractors/Screens/profile/profile_view.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 
-import '../../../components/profile_header.dart';
-import '../../Chat/Inbox.dart';
+import '../profile_header.dart';
+import '../../Screens/Chat/Inbox.dart';
 
 class WorkerTile extends StatelessWidget {
-  WorkerTile(
-      {super.key,
-      required this.serviceName,
-      required this.rating,
-      required this.workerName});
+  WorkerTile({super.key, required this.serviceName, required this.workerName});
   final String serviceName;
   final String workerName;
-  final double rating;
   final TextEditingController _controller = TextEditingController();
 
   @override
@@ -29,7 +24,6 @@ class WorkerTile extends StatelessWidget {
       subtitle: Row(
         children: [
           RatingBar.builder(
-            initialRating: rating,
             minRating: 0,
             maxRating: 5,
             itemBuilder: ((context, _) => const Icon(
@@ -45,7 +39,6 @@ class WorkerTile extends StatelessWidget {
             itemSize: getProportionateScreenHeight(15),
             textDirection: TextDirection.ltr,
           ),
-          Text("$rating"),
         ],
       ),
     );
@@ -82,7 +75,7 @@ class WorkerTile extends StatelessWidget {
                 width: setWidth(85),
                 child: Center(
                   child: Text(
-                    "About $serviceName ",
+                    "About $workerName ",
                     style: TextStyle(
                         fontSize: getProportionateScreenHeight(20),
                         fontWeight: FontWeight.bold),
@@ -166,64 +159,6 @@ class WorkerTile extends StatelessWidget {
                 padding: EdgeInsets.all(getProportionateScreenHeight(12)),
                 height: setHeight(11),
                 color: Color.fromARGB(255, 255, 255, 255),
-                child: Row(
-                  children: [
-                    Container(
-                      height: setHeight(7),
-                      width: setWidth(30),
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                            Colors.amberAccent,
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ProfileView(title: workerName),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          "Profile View",
-                          style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: getProportionateScreenHeight(18),
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    Spacer(),
-                    Container(
-                      height: setHeight(7),
-                      width: setWidth(30),
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                            Colors.amberAccent,
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Inbox(title: workerName),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          "Chat",
-                          style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: getProportionateScreenHeight(18),
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
               )
             ],
           ),

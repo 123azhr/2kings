@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:housecontractors/Screens/homepage/workers/workers_list.dart';
+
+import 'package:housecontractors/components/workers/workers_list.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 
 class HomeServices extends StatelessWidget {
@@ -56,13 +57,12 @@ class HomeServices extends StatelessWidget {
 }
 
 class WorkerSlide extends StatelessWidget {
-  final String? _assetImagePath, _title;
-
-  const WorkerSlide(
-      {Key? key, String? assetImagePath, String? title, void Function()? onTap})
-      : _assetImagePath = assetImagePath,
-        _title = title,
-        super(key: key);
+  final String assetImagePath, title;
+  const WorkerSlide({
+    Key? key,
+    required this.title,
+    required this.assetImagePath,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +71,7 @@ class WorkerSlide extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                WorkersList(workerName: "Arsalan", serviceName: "Electrician"),
+                WorkersList(workerName: "Arsalan", serviceName: title),
           )),
       child: Card(
         shape: RoundedRectangleBorder(
@@ -83,7 +83,7 @@ class WorkerSlide extends StatelessWidget {
             SizedBox(
               height: getProportionateScreenHeight(70),
               child: Image(
-                image: AssetImage(_assetImagePath!),
+                image: AssetImage(assetImagePath),
                 fit: BoxFit.cover,
               ),
             ),
@@ -91,7 +91,7 @@ class WorkerSlide extends StatelessWidget {
               padding:
                   EdgeInsets.only(bottom: getProportionateScreenHeight(10)),
               child: Text(
-                _title!,
+                title,
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w700,

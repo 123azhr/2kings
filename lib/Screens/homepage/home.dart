@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/homepage/components/homeservices.dart';
 import 'package:housecontractors/Screens/homepage/components/stories.dart';
 import 'package:housecontractors/Screens/homepage/components/searchHome.dart';
-import 'package:housecontractors/Screens/homepage/workers/workers_list.dart';
+import 'package:housecontractors/components/workers/workers_list.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import '../Chat/chat_menu.dart';
 import 'components/hirecontractor.dart';

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:housecontractors/Screens/Chat/Inbox.dart';
 import 'package:housecontractors/Screens/Main/dashboard.dart';
 import 'package:housecontractors/themes/mytheme.dart';
-import 'Screens/homepage/workers/add_workers.dart';
+import 'components/workers/add_workers.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -27,7 +26,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: "HouseContractors",
       theme: MyTheme.Mytheme(),
-      home: AddWorker(),
+      home: Dashboard(),
     );
   }
 }
