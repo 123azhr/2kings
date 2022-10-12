@@ -19,7 +19,7 @@ class Newsfeed extends StatelessWidget {
         ),
         title: GestureDetector(
           onTap: () {
-            _scrollController.jumpTo(0);
+            _scrollController.initialScrollOffset;
           },
           child: Text(
             "Newsfeed",
@@ -32,45 +32,37 @@ class Newsfeed extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
-      ),
-      body: SingleChildScrollView(
-        controller: _scrollController,
-        physics: const ScrollPhysics(),
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: [
-            ListTile(
-              leading: CircleAvatar(
-                child: ClipOval(
-                  child: Image.network(
-                    "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-                    fit: BoxFit.fill,
-                    height: getProportionateScreenHeight(80),
-                  ),
+        bottom: PreferredSize(
+          preferredSize: Size(setWidth(100), setHeight(7)),
+          child: ListTile(
+            leading: CircleAvatar(
+              child: ClipOval(
+                child: Image.network(
+                  "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+                  fit: BoxFit.fill,
+                  height: getProportionateScreenHeight(80),
                 ),
               ),
-              title: MyTextField(
-                  hintText: "Share your skills",
-                  height: 40,
-                  width: 100,
-                  radius: 20,
-                  controller: _postController),
-              trailing: const Icon(
-                Icons.image_rounded,
-                size: 30,
-              ),
             ),
-            SizedBox(
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: 6,
-                itemBuilder: (context, int index) => Post(title: "Haziq Ahmed"),
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-              ),
+            title: MyTextField(
+                hintText: "Share your skills",
+                height: 40,
+                width: 100,
+                radius: 20,
+                controller: _postController),
+            trailing: const Icon(
+              color: Color.fromARGB(255, 87, 87, 87),
+              Icons.image_rounded,
+              size: 30,
             ),
-          ],
+          ),
         ),
+      ),
+      body: ListView.builder(
+        scrollDirection: Axis.vertical,
+        itemCount: 6,
+        itemBuilder: (context, int index) => Post(title: "Haziq Ahmed"),
+        physics: const BouncingScrollPhysics(),
       ),
     );
   }

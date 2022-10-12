@@ -61,12 +61,16 @@ class _MyOrdersState extends State<MyOrders>
           elevation: 0,
           backgroundColor: Colors.transparent,
           bottom: TabBar(
+            indicatorColor: Color.fromARGB(255, 255, 230, 0),
             controller: _tabController,
+            labelColor: Color.fromARGB(255, 255, 230, 0),
+            unselectedLabelColor: Colors.black87,
             tabs: [
-              _tabBarOptionWidget(icon: Icons.circle, label: "Active Orders"),
               _tabBarOptionWidget(
-                  icon: Icons.pending, label: "Pending History"),
-              _tabBarOptionWidget(icon: Icons.history, label: "Orders History"),
+                  icon: Icons.home_repair_service, label: "Active "),
+              _tabBarOptionWidget(
+                  icon: Icons.pending_actions, label: "Pending"),
+              _tabBarOptionWidget(icon: Icons.done_all, label: "Completed"),
             ],
             onTap: (newTabIndex) {
               setState(() {

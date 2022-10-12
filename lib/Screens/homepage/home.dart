@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/homepage/components/homeservices.dart';
 import 'package:housecontractors/Screens/homepage/components/stories.dart';
 import 'package:housecontractors/Screens/homepage/components/searchHome.dart';
-import 'package:housecontractors/components/workers/workers_list.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
-import '../Chat/chat_menu.dart';
+import 'package:page_transition/page_transition.dart';
 import 'components/hirecontractor.dart';
 
 class HomePage extends StatefulWidget {
@@ -38,7 +37,12 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SearchHome()),
+                PageTransition(
+                  type: PageTransitionType.rightToLeftWithFade,
+                  child: SearchHome(),
+                  isIos: true,
+                  duration: const Duration(milliseconds: 400),
+                ),
               );
             },
             icon: const Icon(
@@ -98,7 +102,6 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.black,
                     ),
                     HomeServices(),
-                    HireContractor(),
                   ]),
             ),
           ],

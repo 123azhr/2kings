@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:housecontractors/Screens/profile/profile_view.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 
 import '../profile_header.dart';
-import '../../Screens/Chat/Inbox.dart';
 
 class WorkerTile extends StatelessWidget {
-  WorkerTile({super.key, required this.serviceName, required this.workerName});
+  const WorkerTile(
+      {super.key, required this.serviceName, required this.workerName});
   final String serviceName;
   final String workerName;
-  final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -21,26 +19,6 @@ class WorkerTile extends StatelessWidget {
         fit: BoxFit.contain,
       ),
       title: Text(workerName),
-      subtitle: Row(
-        children: [
-          RatingBar.builder(
-            minRating: 0,
-            maxRating: 5,
-            itemBuilder: ((context, _) => const Icon(
-                  Icons.star,
-                  color: Colors.lightBlueAccent,
-                )),
-            ignoreGestures: true,
-            onRatingUpdate: (newRatingValue) {},
-            updateOnDrag: false,
-            allowHalfRating: true,
-            glow: false,
-            itemCount: 5,
-            itemSize: getProportionateScreenHeight(15),
-            textDirection: TextDirection.ltr,
-          ),
-        ],
-      ),
     );
   }
 

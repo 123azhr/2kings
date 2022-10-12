@@ -21,7 +21,7 @@ class HireContractor extends StatelessWidget {
         child: Container(
           height: getProportionateScreenHeight(160),
           width: getProportionateScreenWidth(500),
-          child: const Text("Hire a Contractor"),
+          child: const Text("Contracts"),
           padding: EdgeInsets.all(getProportionateScreenHeight(10)),
         ),
         shape: RoundedRectangleBorder(

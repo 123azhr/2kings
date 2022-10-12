@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:housecontractors/Screens/orders/logs.dart';
+import 'package:housecontractors/Screens/orders/Logs/aggrement.dart';
+import 'package:housecontractors/Screens/orders/Logs/logs.dart';
 import 'package:housecontractors/components/profile_header.dart';
 import '../../helper/size_configuration.dart';
 import '../Chat/Inbox.dart';
@@ -140,7 +141,7 @@ Future<dynamic> Order_details(BuildContext context) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Logs(title: "Hassam"),
+                            builder: (context) => ViewAggrement(),
                           ),
                         );
                       },

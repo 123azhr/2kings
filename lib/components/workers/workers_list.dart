@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/components/workers/add_workers.dart';
+import 'package:page_transition/page_transition.dart';
 import 'Worker_list_tile.dart';
 
 class WorkersList extends StatefulWidget {
@@ -83,7 +84,6 @@ class _WorkersListState extends State<WorkersList> {
             return Column(
               children: [
                 WorkerTile(
-                  rating: 5,
                   serviceName: widget.serviceName,
                   workerName: widget.workerName,
                 ),
@@ -97,7 +97,6 @@ class _WorkersListState extends State<WorkersList> {
             return WorkerTile(
               serviceName: widget.serviceName,
               workerName: widget.workerName,
-              rating: 5,
             );
           }
         },
@@ -107,9 +106,13 @@ class _WorkersListState extends State<WorkersList> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => AddWorker(title: widget.serviceName),
-            ),
+            PageTransition(
+                type: PageTransitionType.scale,
+                alignment: Alignment.bottomRight,
+                child: AddWorker(title: widget.serviceName),
+                duration: const Duration(milliseconds: 550),
+                inheritTheme: true,
+                ctx: context),
           );
         },
         tooltip: 'Increment',

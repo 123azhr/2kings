@@ -10,7 +10,7 @@ class Post extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.amber.shade300,
+      color: Color.fromARGB(255, 255, 230, 149),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:housecontractors/components/workers/workers_list.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
+import 'package:page_transition/page_transition.dart';
 
 class HomeServices extends StatelessWidget {
   HomeServices({Key? key}) : super(key: key);
@@ -47,10 +48,6 @@ class HomeServices extends StatelessWidget {
               assetImagePath: 'assets/images/logo-black-half.png',
               title: "Welder",
             ),
-            WorkerSlide(
-              assetImagePath: 'assets/images/logo-black-half.png',
-              title: "AC Service",
-            ),
           ],
         ));
   }
@@ -68,11 +65,15 @@ class WorkerSlide extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                WorkersList(workerName: "Arsalan", serviceName: title),
-          )),
+        context,
+        PageTransition(
+            type: PageTransitionType.scale,
+            alignment: Alignment.center,
+            child: WorkersList(workerName: "Arsalan", serviceName: title),
+            duration: Duration(milliseconds: 550),
+            inheritTheme: true,
+            ctx: context),
+      ),
       child: Card(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20))),

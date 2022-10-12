@@ -16,6 +16,7 @@ class Stories extends StatelessWidget {
               child: SizedBox(
                 width: setWidth(100),
                 child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     padding: const EdgeInsets.all(5),
                     itemExtent: setWidth(22),

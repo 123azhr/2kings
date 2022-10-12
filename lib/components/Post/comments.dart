@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-
 import '../../helper/size_configuration.dart';
 import 'open_comments.dart';
-import 'open_post.dart';
 
 class Comments extends StatelessWidget {
   const Comments({
