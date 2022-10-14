@@ -4,8 +4,8 @@ import 'package:housecontractors/components/workers/workers_list.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:page_transition/page_transition.dart';
 
-class HomeServices extends StatelessWidget {
-  const HomeServices({Key? key}) : super(key: key);
+class ConstructionServices extends StatelessWidget {
+  const ConstructionServices({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(

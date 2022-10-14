@@ -26,119 +26,123 @@ class WorkerTile extends StatelessWidget {
     return showModalBottomSheet(
       context: context,
       backgroundColor: Color.fromRGBO(0, 0, 0, 0),
-      builder: (context) => Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(
-              20,
+      builder: (context) => Padding(
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(
+                20,
+              ),
             ),
           ),
-        ),
-        color: Color.fromARGB(255, 255, 255, 255),
-        child: Container(
-          height: setHeight(59),
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: setHeight(1)),
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(102, 243, 215, 33),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(
-                      20,
+          color: Color.fromARGB(255, 255, 255, 255),
+          child: Container(
+            height: setHeight(59),
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: setHeight(1)),
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(102, 243, 215, 33),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(
+                        20,
+                      ),
+                    ),
+                  ),
+                  height: setHeight(5),
+                  width: setWidth(85),
+                  child: Center(
+                    child: Text(
+                      "About $workerName ",
+                      style: TextStyle(
+                          fontSize: getProportionateScreenHeight(20),
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
-                height: setHeight(5),
-                width: setWidth(85),
-                child: Center(
-                  child: Text(
-                    "About $workerName ",
-                    style: TextStyle(
-                        fontSize: getProportionateScreenHeight(20),
-                        fontWeight: FontWeight.bold),
-                  ),
+                Container(
+                  margin: EdgeInsets.all(setHeight(1)),
+                  color: Colors.greenAccent,
+                  height: setHeight(10),
+                  child: ProfileHeader(title: workerName),
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.all(setHeight(1)),
-                color: Colors.greenAccent,
-                height: setHeight(10),
-                child: ProfileHeader(title: workerName),
-              ),
-              Container(
-                  height: setHeight(30),
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Services",
-                        style: TextStyle(
-                          fontSize: getProportionateScreenHeight(20),
-                        ),
-                      ),
-                      Divider(
-                        thickness: 0.2,
-                        color: Colors.black,
-                        height: 0,
-                      ),
-                      Container(
-                        height: setHeight(9),
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        child: GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: getProportionateScreenWidth(0),
-                            mainAxisSpacing: getProportionateScreenHeight(0),
-                            mainAxisExtent: getProportionateScreenHeight(20),
-                            childAspectRatio: 150 / 220,
+                Container(
+                    height: setHeight(30),
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Services",
+                          style: TextStyle(
+                            fontSize: getProportionateScreenHeight(20),
                           ),
-                          itemCount: 9,
-                          itemBuilder: (context, index) => Text("services"),
                         ),
-                      ),
-                      Divider(
-                        thickness: 0.2,
-                        color: Colors.black,
-                        height: 0,
-                      ),
-                      Text(
-                        "Bio: ",
-                        style: TextStyle(
-                          fontSize: getProportionateScreenHeight(20),
+                        Divider(
+                          thickness: 0.2,
+                          color: Colors.black,
+                          height: 0,
                         ),
-                      ),
-                      Divider(
-                        thickness: 0.2,
-                        color: Colors.black,
-                        height: 0,
-                      ),
-                      SizedBox(
-                        height: setHeight(5),
-                      ),
-                      Spacer(),
-                      Divider(
-                        thickness: 0.2,
-                        color: Colors.black,
-                        height: 0,
-                      ),
-                      Container(
-                        color: Colors.yellow,
-                        padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom,
+                        Container(
+                          height: setHeight(9),
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          child: GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: getProportionateScreenWidth(0),
+                              mainAxisSpacing: getProportionateScreenHeight(0),
+                              mainAxisExtent: getProportionateScreenHeight(20),
+                              childAspectRatio: 150 / 220,
+                            ),
+                            itemCount: 9,
+                            itemBuilder: (context, index) => Text("services"),
+                          ),
                         ),
-                      ),
-                    ],
-                  )),
-              Container(
-                padding: EdgeInsets.all(getProportionateScreenHeight(12)),
-                height: setHeight(11),
-                color: Color.fromARGB(255, 255, 255, 255),
-              )
-            ],
+                        Divider(
+                          thickness: 0.2,
+                          color: Colors.black,
+                          height: 0,
+                        ),
+                        Text(
+                          "Bio: ",
+                          style: TextStyle(
+                            fontSize: getProportionateScreenHeight(20),
+                          ),
+                        ),
+                        Divider(
+                          thickness: 0.2,
+                          color: Colors.black,
+                          height: 0,
+                        ),
+                        SizedBox(
+                          height: setHeight(5),
+                        ),
+                        Spacer(),
+                        Divider(
+                          thickness: 0.2,
+                          color: Colors.black,
+                          height: 0,
+                        ),
+                        Container(
+                          color: Colors.yellow,
+                          padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom,
+                          ),
+                        ),
+                      ],
+                    )),
+                Container(
+                  padding: EdgeInsets.all(getProportionateScreenHeight(12)),
+                  height: setHeight(11),
+                  color: Color.fromARGB(255, 255, 255, 255),
+                )
+              ],
+            ),
           ),
         ),
       ),

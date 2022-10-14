@@ -18,7 +18,7 @@ class Logs extends StatelessWidget {
           "Logs",
           style: TextStyle(
             color: Colors.black,
-            fontSize: (kToolbarHeight / 100) * 40,
+            fontSize: 20,
           ),
         ),
         centerTitle: true,

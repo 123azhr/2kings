@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../Screens/profile/profile_view.dart';
@@ -8,23 +7,24 @@ class PostHeader extends StatelessWidget {
   const PostHeader({
     Key? key,
     required this.title,
+    this.date,
   }) : super(key: key);
 
   final String title;
-
+  final DateTime? date;
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(100)),
         child: GestureDetector(
-          onTap: () =>  Navigator.push(
-    context,
-    MaterialPageRoute(
-        builder: (context) => ProfileView(
-              title: title,
-            )),
-        ),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ProfileView(
+                      title: title,
+                    )),
+          ),
           child: Image.network(
             "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
             fit: BoxFit.cover,
@@ -34,7 +34,7 @@ class PostHeader extends StatelessWidget {
         ),
       ),
       title: Text(title),
-      subtitle: Text("10 Aug"),
+      subtitle: Text(date.toString()),
       trailing: PopupMenuButton(itemBuilder: (context) {
         return [
           PopupMenuItem<int>(

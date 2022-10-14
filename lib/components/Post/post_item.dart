@@ -6,8 +6,9 @@ import '../../helper/size_configuration.dart';
 class PostItem extends StatelessWidget {
   const PostItem({
     Key? key,
+    this.imageURL,
   }) : super(key: key);
-
+  final String? imageURL;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -22,7 +23,8 @@ class PostItem extends StatelessWidget {
           color: Color.fromARGB(255, 0, 0, 0),
           height: setHeight(31),
           child: Image.network(
-            "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+            // "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+            imageURL!,
             fit: BoxFit.contain,
           ),
         ),

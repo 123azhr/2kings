@@ -2,7 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:housecontractors/Screens/Main/dashboard.dart';
+import 'package:housecontractors/Screens/flashscreen/flashscreen.dart';
+import 'package:housecontractors/providers/post_provider.dart';
+import 'package:housecontractors/providers/user_provider.dart';
 import 'package:housecontractors/themes/mytheme.dart';
+import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 
@@ -24,11 +28,16 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "HouseContractors",
-      theme: MyTheme.Mytheme(),
-      home: const Dashboard(),
-      
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => PostProvider()),
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+      ],
+      child: MaterialApp(
+        title: "HouseContractors",
+        theme: MyTheme.Mytheme(),
+        home: const FlashScreen(),
+      ),
     );
   }
 }

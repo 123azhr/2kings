@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:housecontractors/widgets/mycontainer.dart';
 import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
 import 'package:housecontractors/components/Post/post.dart';
+import 'package:housecontractors/providers/post_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../helper/size_configuration.dart';
 
 class Newsfeed extends StatelessWidget {
   Newsfeed({Key? key}) : super(key: key);
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     TextEditingController _postController = TextEditingController();
+    final postProvider = Provider.of<PostProvider>(context);
+    final postsList = postProvider.getPostsList;
     return Scaffold(
       appBar: AppBar(
         leading: Image.asset(
@@ -21,11 +24,11 @@ class Newsfeed extends StatelessWidget {
           onTap: () {
             _scrollController.initialScrollOffset;
           },
-          child: Text(
+          child: const Text(
             "Newsfeed",
             style: TextStyle(
               color: Colors.black,
-              fontSize: getProportionateScreenWidth(20),
+              fontSize: 20,
             ),
           ),
         ),
@@ -60,8 +63,11 @@ class Newsfeed extends StatelessWidget {
       ),
       body: ListView.builder(
         scrollDirection: Axis.vertical,
-        itemCount: 6,
-        itemBuilder: (context, int index) => Post(title: "Haziq Ahmed"),
+        itemCount: postsList.length,
+        itemBuilder: (context, int index) => ChangeNotifierProvider.value(
+          value: postsList[index],
+          child:  Post(title: ""),
+        ),
         physics: const BouncingScrollPhysics(),
       ),
     );

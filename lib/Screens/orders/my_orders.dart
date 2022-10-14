@@ -54,7 +54,7 @@ class _MyOrdersState extends State<MyOrders>
             "My Orders",
             style: TextStyle(
               color: Colors.black,
-              fontSize: (kToolbarHeight / 100) * 40,
+              fontSize: 20,
             ),
           ),
           centerTitle: true,
@@ -94,7 +94,7 @@ class _MyOrdersState extends State<MyOrders>
         Icon(icon),
         Text(
           label!,
-          style: TextStyle(fontSize: getProportionateScreenWidth(15)),
+          style: TextStyle(fontSize: 15),
         ),
         SizedBox(height: getProportionateScreenHeight(5)),
       ],

@@ -4,6 +4,7 @@ import 'package:housecontractors/Screens/homepage/components/stories.dart';
 import 'package:housecontractors/Screens/homepage/components/searchHome.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:page_transition/page_transition.dart';
+import 'components/construction_services.dart';
 import 'components/hirecontractor.dart';
 
 class HomePage extends StatefulWidget {
@@ -70,24 +71,19 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   textDirection: TextDirection.ltr,
                   children: [
-                    SizedBox(height: getProportionateScreenHeight(0)),
                     Text(
                       "Stories",
                       style: Theme.of(context).textTheme.displaySmall,
                     ),
                     Divider(
                       height: getProportionateScreenHeight(20),
-                      thickness: 0.1,
-                      indent: 0,
-                      endIndent: 0,
+                      thickness: getProportionateScreenHeight(0.1),
                       color: Colors.black,
                     ),
                     const Stories(),
                     Divider(
                       height: getProportionateScreenHeight(20),
-                      thickness: 0.05,
-                      indent: 0,
-                      endIndent: 0,
+                      thickness: getProportionateScreenHeight(0.05),
                       color: Colors.black,
                     ),
                     Text(
@@ -96,12 +92,24 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Divider(
                       height: getProportionateScreenHeight(20),
-                      thickness: 0.05,
+                      thickness: getProportionateScreenHeight(0.05),
                       indent: 0,
                       endIndent: 0,
                       color: Colors.black,
                     ),
                     HomeServices(),
+                    Text(
+                      "Construction Services",
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                    Divider(
+                      height: getProportionateScreenHeight(20),
+                      thickness: getProportionateScreenHeight(0.05),
+                      indent: 0,
+                      endIndent: 0,
+                      color: Colors.black,
+                    ),
+                    ConstructionServices(),
                   ]),
             ),
           ],

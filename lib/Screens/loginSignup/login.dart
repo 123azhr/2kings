@@ -1,9 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/signup.dart';
+import 'package:provider/provider.dart';
+import '../../models/user_model.dart';
+import '../../models/post_model.dart';
+import '../../providers/user_provider.dart';
 import '../Main/dashboard.dart';
 import 'mytextfield.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 class Login extends StatelessWidget {
   Login({Key? key}) : super(key: key);
 
@@ -13,6 +18,8 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    final usersList = userProvider.getList;
     return Material(
       child: Column(children: [
         Image.asset(
@@ -31,7 +38,7 @@ class Login extends StatelessWidget {
           width: 300,
           radius: 20,
           hintText: "Email",
-          color: Color.fromARGB(255, 255, 239, 63),
+          color: const Color.fromARGB(255, 255, 239, 63),
         ),
         const SizedBox(
           height: 30,
@@ -41,9 +48,9 @@ class Login extends StatelessWidget {
           width: 300,
           radius: 20,
           hintText: "Password",
-          color: Color.fromARGB(255, 255, 239, 63),
+          color: const Color.fromARGB(255, 255, 239, 63),
         ),
-        SizedBox(
+        const SizedBox(
           height: 30,
         ),
         SizedBox(
@@ -51,27 +58,46 @@ class Login extends StatelessWidget {
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               //background color of button
-              side: BorderSide(
+              side: const BorderSide(
                 width: 1,
               ), //border width and color
               elevation: 3, //elevation of button
               shape: RoundedRectangleBorder(
                   //to set border radius to button
                   borderRadius: BorderRadius.circular(30)),
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
 
               //content padding inside button
             ),
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => Dashboard()),
-              );
+              for (int i = 0; i < usersList.length; i++) {
+                if (emailController.text == usersList[i].email &&
+                    passController.text == usersList[i].password) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Dashboard()),
+                  );
+                } else {
+                  showCupertinoModalPopup(
+                    context: context,
+                    builder: (context) => Center(
+                      child: Container(
+                          height: 400,
+                          width: 400,
+                          color: Colors.red,
+                          child: Text("Email or Password is incorrect")),
+                    ),
+                  );
+                }
+              }
             },
-            child: Text("login"),
+            child: const Text(
+              "login",
+              style: TextStyle(fontSize: 20),
+            ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         RichText(
@@ -83,8 +109,8 @@ class Login extends StatelessWidget {
               ),
               TextSpan(
                 text: 'signup here',
-                style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.blue),
                 // ignore: avoid_print
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
