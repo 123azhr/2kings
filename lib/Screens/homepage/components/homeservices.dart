@@ -13,12 +13,17 @@ class HomeServices extends StatelessWidget {
     final serviceProvider = Provider.of<ServiceProvider>(context);
     final serviceList = serviceProvider.getList;
     List<ServiceModel> tempList = List<ServiceModel>.generate(
-      serviceList.length,
+      0,
       (index) => serviceList.first,
     );
 
-    _final() {
-      tempList.add(serviceList[0]);
+    List<ServiceModel> _final() {
+      for (int i = 0; i < serviceList.length; i++) {
+        if (serviceList[i].serviceCategroy == true) {
+          tempList.add(serviceList[i]);
+        }
+      }
+      return tempList;
     }
 
     return SizedBox(
@@ -31,20 +36,14 @@ class HomeServices extends StatelessWidget {
             mainAxisExtent: getProportionateScreenHeight(120),
           ),
           shrinkWrap: true,
-          itemCount: serviceList.length,
-          itemBuilder: (context, int index) {
-            if (serviceList[index].serviceCategroy == false) {
-              return ChangeNotifierProvider.value(
-                value: serviceList[index],
+          itemCount: _final().length,
+          itemBuilder: (context, int index) => ChangeNotifierProvider.value(
+                value: _final()[index],
                 child: WorkerSlide(
                   assetImagePath: "",
                   title: "",
                 ),
-              );
-            } else {
-              return Text(tempList.toString());
-            }
-          }),
+              )),
     );
   }
 }

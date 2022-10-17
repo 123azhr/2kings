@@ -12,31 +12,39 @@ class ConstructionServices extends StatelessWidget {
   Widget build(BuildContext context) {
     final serviceProvider = Provider.of<ServiceProvider>(context);
     final serviceList = serviceProvider.getList;
+    List<ServiceModel> tempList = List<ServiceModel>.generate(
+      0,
+      (index) => serviceList.first,
+    );
+
+    List<ServiceModel> _final() {
+      for (int i = 0; i < serviceList.length; i++) {
+        if (serviceList[i].serviceCategroy == false) {
+          tempList.add(serviceList[i]);
+        }
+      }
+      return tempList;
+    }
 
     return SizedBox(
-        child: GridView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 4,
-              crossAxisSpacing: getProportionateScreenWidth(0),
-              mainAxisSpacing: getProportionateScreenHeight(0),
-              mainAxisExtent: getProportionateScreenHeight(120),
-            ),
-            shrinkWrap: true,
-            itemCount: serviceList.length,
-            itemBuilder: (context, int index) {
-              if (serviceList[index].serviceCategroy == true) {
-                return ChangeNotifierProvider.value(
-                  value: serviceList[index],
-                  child: WorkerSlide(
-                    assetImagePath: "",
-                    title: "",
-                  ),
-                );
-              } else {
-                return SizedBox.shrink();
-              }
-            }));
+      child: GridView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4,
+            crossAxisSpacing: getProportionateScreenWidth(0),
+            mainAxisSpacing: getProportionateScreenHeight(0),
+            mainAxisExtent: getProportionateScreenHeight(120),
+          ),
+          shrinkWrap: true,
+          itemCount: _final().length,
+          itemBuilder: (context, int index) => ChangeNotifierProvider.value(
+                value: _final()[index],
+                child: WorkerSlide(
+                  assetImagePath: "",
+                  title: "",
+                ),
+              )),
+    );
   }
 }
 
