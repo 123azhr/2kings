@@ -13,12 +13,13 @@ class Newsfeed extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController _postController = TextEditingController();
     final postProvider = Provider.of<PostProvider>(context);
-    final postsList = postProvider.getPostsList;
+    final postsList = postProvider.getList;
     return Scaffold(
       appBar: AppBar(
+        leadingWidth: getProportionateScreenWidth(40),
         leading: Image.asset(
           "assets/images/logo-black-half.png",
-          fit: BoxFit.fitWidth,
+          fit: BoxFit.contain,
         ),
         title: GestureDetector(
           onTap: () {
@@ -33,8 +34,8 @@ class Newsfeed extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
+        elevation: 1,
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         bottom: PreferredSize(
           preferredSize: Size(setWidth(100), setHeight(7)),
           child: ListTile(
@@ -66,7 +67,7 @@ class Newsfeed extends StatelessWidget {
         itemCount: postsList.length,
         itemBuilder: (context, int index) => ChangeNotifierProvider.value(
           value: postsList[index],
-          child:  Post(title: ""),
+          child: Post(title: ""),
         ),
         physics: const BouncingScrollPhysics(),
       ),

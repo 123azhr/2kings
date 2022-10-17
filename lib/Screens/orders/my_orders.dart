@@ -46,9 +46,10 @@ class _MyOrdersState extends State<MyOrders>
       child: Scaffold(
         extendBody: true,
         appBar: AppBar(
+          leadingWidth: getProportionateScreenWidth(40),
           leading: Image.asset(
             "assets/images/logo-black-half.png",
-            fit: BoxFit.fitWidth,
+            fit: BoxFit.contain,
           ),
           title: Text(
             "My Orders",
@@ -58,8 +59,8 @@ class _MyOrdersState extends State<MyOrders>
             ),
           ),
           centerTitle: true,
-          elevation: 0,
-          backgroundColor: Colors.transparent,
+          elevation: 1,
+          backgroundColor: Color.fromARGB(255, 255, 255, 255),
           bottom: TabBar(
             indicatorColor: Color.fromARGB(255, 255, 230, 0),
             controller: _tabController,

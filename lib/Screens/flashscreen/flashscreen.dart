@@ -3,6 +3,7 @@ import 'package:housecontractors/Screens/loginSignup/login.dart';
 import 'package:housecontractors/providers/post_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../providers/service_provider.dart';
 import '../../providers/user_provider.dart';
 
 class FlashScreen extends StatefulWidget {
@@ -26,6 +27,8 @@ class _FlashScreenState extends State<FlashScreen> {
       await postProvider.fetch();
        final userProvider = Provider.of<UserProvider>(context, listen: false);
       await userProvider.fetch();
+      final serviceProvider = Provider.of<ServiceProvider>(context, listen: false);
+      await serviceProvider.fetch();
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Login()));
     });

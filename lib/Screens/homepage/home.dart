@@ -5,24 +5,19 @@ import 'package:housecontractors/Screens/homepage/components/searchHome.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:page_transition/page_transition.dart';
 import 'components/construction_services.dart';
-import 'components/hirecontractor.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
       appBar: AppBar(
+        leadingWidth: getProportionateScreenWidth(40),
         leading: Image.asset(
           "assets/images/logo-black-half.png",
-          fit: BoxFit.fitWidth,
+          fit: BoxFit.contain,
         ),
         iconTheme: IconThemeData(color: Colors.black),
         title: Text(
@@ -52,8 +47,8 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
         centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
+        elevation: 1,
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -98,6 +93,11 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.black,
                     ),
                     HomeServices(),
+                    Divider(
+                      height: getProportionateScreenHeight(20),
+                      thickness: getProportionateScreenHeight(0.1),
+                      color: Colors.black,
+                    ),
                     Text(
                       "Construction Services",
                       style: Theme.of(context).textTheme.displaySmall,

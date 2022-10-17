@@ -12,9 +12,10 @@ class Menu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leadingWidth: getProportionateScreenWidth(40),
         leading: Image.asset(
           "assets/images/logo-black-half.png",
-          fit: BoxFit.fitWidth,
+          fit: BoxFit.contain,
         ),
         title: Text(
           "Menu",
@@ -24,8 +25,8 @@ class Menu extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
+        elevation: 1,
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,

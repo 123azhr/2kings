@@ -1,21 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:housecontractors/models/post_model.dart';
+import '../models/service_model.dart';
 
-class PostProvider with ChangeNotifier {
-  List<PostModel> _list = [];
+class ServiceProvider with ChangeNotifier {
+  List<ServiceModel> _list = [];
 
-  List<PostModel> get getList => _list;
+  List<ServiceModel> get getList => _list;
 
   Future<void> fetch() async {
-    await FirebaseFirestore.instance.collection("c_post").get().then(
+    await FirebaseFirestore.instance.collection("c_services").get().then(
           (QuerySnapshot<Map<String, dynamic>> snapshot) => {
             _list = [],
             for (var doc in snapshot.docs)
               {
                 _list.insert(
                   0,
-                  PostModel.fromMap(map: doc.data(), postID: doc.id),
+                  ServiceModel.fromMap(map: doc.data(), serviceID: doc.id),
                 ),
               },
           },

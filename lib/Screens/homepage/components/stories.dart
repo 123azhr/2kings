@@ -12,14 +12,12 @@ class Stories extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              color: Colors.amber,
-              padding: EdgeInsets.only(left: setWidth(20)),
-              margin: EdgeInsets.only(top: setWidth(0.5)),
+              margin: EdgeInsets.only(top: setWidth(4), left: setWidth(10)),
               width: setWidth(100),
               child: ListView.builder(
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.all(5),
+                  padding: EdgeInsets.only(left: setWidth(12)),
                   itemExtent: setWidth(22),
                   itemCount: 6,
                   itemBuilder: (context, index) {
@@ -37,9 +35,8 @@ class Stories extends StatelessWidget {
                   }),
             ),
             Padding(
-              padding: EdgeInsets.only(top: setHeight(1.5)),
+              padding: EdgeInsets.only(top: setHeight(2)),
               child: MyContainer(
-                color: Colors.amberAccent,
                 height: setHeight(18),
                 width: setWidth(20),
                 child: Icon(Icons.add_circle),

@@ -2,9 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/signup.dart';
+import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:provider/provider.dart';
-import '../../models/user_model.dart';
-import '../../models/post_model.dart';
 import '../../providers/user_provider.dart';
 import '../Main/dashboard.dart';
 import 'mytextfield.dart';
@@ -13,7 +12,6 @@ class Login extends StatelessWidget {
   Login({Key? key}) : super(key: key);
 
   final TextEditingController emailController = TextEditingController();
-
   final TextEditingController passController = TextEditingController();
 
   @override
@@ -71,8 +69,8 @@ class Login extends StatelessWidget {
             ),
             onPressed: () {
               for (int i = 0; i < usersList.length; i++) {
-                if (emailController.text == usersList[i].email &&
-                    passController.text == usersList[i].password) {
+                if (emailController.text != usersList[i].email &&
+                    passController.text != usersList[i].password) {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => const Dashboard()),
@@ -80,13 +78,15 @@ class Login extends StatelessWidget {
                 } else {
                   showCupertinoModalPopup(
                     context: context,
-                    builder: (context) => Center(
-                      child: Container(
-                          height: 400,
-                          width: 400,
-                          color: Colors.red,
-                          child: Text("Email or Password is incorrect")),
-                    ),
+                    builder: (context) => Container(
+                        height: 100,
+                        width: 400,
+                        color: Color.fromARGB(0, 244, 67, 54),
+                        child: Card(
+                            color: Color.fromARGB(255, 255, 82, 59),
+                            child: Center(
+                                child:
+                                    Text("Email or Password is incorrect")))),
                   );
                 }
               }
