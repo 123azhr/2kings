@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 class Post extends StatelessWidget {
   const Post({Key? key, required this.title }) : super(key: key);
   final String title;
-  @override
+  @override 
   Widget build(BuildContext context) {
     final postModel = Provider.of<PostModel>(context);
     return Card(

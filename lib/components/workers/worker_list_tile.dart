@@ -1,50 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
-
+import 'package:provider/provider.dart';
+import '../../models/workers_model.dart';
 import '../profile_header.dart';
 
 class WorkerTile extends StatelessWidget {
-  const WorkerTile(
-      {super.key, required this.serviceName, required this.workerName});
+  const WorkerTile({super.key, required this.serviceName});
   final String serviceName;
-  final String workerName;
 
   @override
   Widget build(BuildContext context) {
+    final workerModel = Provider.of<WorkerModel>(context);
     return ListTile(
       onTap: () => worker_tile_details(context),
       leading: Image.asset(
         "assets/images/KingContractor.jpg",
         fit: BoxFit.contain,
       ),
-      title: Text(workerName),
+      title: Text(workerModel.name!),
     );
   }
 
   Future<dynamic> worker_tile_details(BuildContext context) {
     return showModalBottomSheet(
       context: context,
-      backgroundColor: Color.fromRGBO(0, 0, 0, 0),
+      backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
       builder: (context) => Padding(
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: Card(
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(
                 20,
               ),
             ),
           ),
-          color: Color.fromARGB(255, 255, 255, 255),
-          child: Container(
+          color: const Color.fromARGB(255, 255, 255, 255),
+          child: SizedBox(
             height: setHeight(59),
             child: Column(
               children: [
                 Container(
                   margin: EdgeInsets.only(top: setHeight(1)),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color.fromARGB(102, 243, 215, 33),
                     borderRadius: BorderRadius.all(
                       Radius.circular(
@@ -56,7 +55,7 @@ class WorkerTile extends StatelessWidget {
                   width: setWidth(85),
                   child: Center(
                     child: Text(
-                      "About $workerName ",
+                      "About workerName",
                       style: TextStyle(
                           fontSize: getProportionateScreenHeight(20),
                           fontWeight: FontWeight.bold),
@@ -67,11 +66,11 @@ class WorkerTile extends StatelessWidget {
                   margin: EdgeInsets.all(setHeight(1)),
                   color: Colors.greenAccent,
                   height: setHeight(10),
-                  child: ProfileHeader(title: workerName),
+                  child: ProfileHeader(title: "workerName"),
                 ),
                 Container(
                     height: setHeight(30),
-                    color: Color.fromARGB(255, 255, 255, 255),
+                    color: const Color.fromARGB(255, 255, 255, 255),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,14 +81,14 @@ class WorkerTile extends StatelessWidget {
                             fontSize: getProportionateScreenHeight(20),
                           ),
                         ),
-                        Divider(
+                        const Divider(
                           thickness: 0.2,
                           color: Colors.black,
                           height: 0,
                         ),
                         Container(
                           height: setHeight(9),
-                          color: Color.fromARGB(255, 255, 255, 255),
+                          color: const Color.fromARGB(255, 255, 255, 255),
                           child: GridView.builder(
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
@@ -103,7 +102,7 @@ class WorkerTile extends StatelessWidget {
                             itemBuilder: (context, index) => Text("services"),
                           ),
                         ),
-                        Divider(
+                        const Divider(
                           thickness: 0.2,
                           color: Colors.black,
                           height: 0,
@@ -114,7 +113,7 @@ class WorkerTile extends StatelessWidget {
                             fontSize: getProportionateScreenHeight(20),
                           ),
                         ),
-                        Divider(
+                        const Divider(
                           thickness: 0.2,
                           color: Colors.black,
                           height: 0,
@@ -122,8 +121,8 @@ class WorkerTile extends StatelessWidget {
                         SizedBox(
                           height: setHeight(5),
                         ),
-                        Spacer(),
-                        Divider(
+                        const Spacer(),
+                        const Divider(
                           thickness: 0.2,
                           color: Colors.black,
                           height: 0,
@@ -139,7 +138,7 @@ class WorkerTile extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(getProportionateScreenHeight(12)),
                   height: setHeight(11),
-                  color: Color.fromARGB(255, 255, 255, 255),
+                  color: const Color.fromARGB(255, 255, 255, 255),
                 )
               ],
             ),

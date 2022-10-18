@@ -5,6 +5,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../../models/service_model.dart';
 import '../../../providers/service_provider.dart';
+import '../../../providers/worker_provider.dart';
 
 class HomeServices extends StatelessWidget {
   const HomeServices({Key? key}) : super(key: key);
@@ -39,26 +40,21 @@ class HomeServices extends StatelessWidget {
           itemCount: _final().length,
           itemBuilder: (context, int index) => ChangeNotifierProvider.value(
                 value: _final()[index],
-                child: WorkerSlide(
-                  assetImagePath: "",
-                  title: "",
-                ),
+                child: WorkerSlide(),
               )),
     );
   }
 }
 
 class WorkerSlide extends StatelessWidget {
-  final String assetImagePath, title;
   const WorkerSlide({
     Key? key,
-    required this.title,
-    required this.assetImagePath,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final serviceModel = Provider.of<ServiceModel>(context);
+
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
@@ -66,7 +62,7 @@ class WorkerSlide extends StatelessWidget {
             type: PageTransitionType.scale,
             alignment: const Alignment(0, 1000),
             child: WorkersList(
-                workerName: "Arsalan", serviceName: serviceModel.serviceName!),
+                serviceName: serviceModel.serviceName!),
             duration: Duration(milliseconds: 550),
             inheritTheme: true,
             ctx: context),

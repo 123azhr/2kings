@@ -14,8 +14,7 @@ class HireContractor extends StatelessWidget {
       onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>
-                WorkersList(workerName: "Arsalan", serviceName: "Contractors"),
+            builder: (context) => WorkersList(serviceName: "Contractors"),
           )),
       child: Card(
         child: Container(

@@ -74,8 +74,7 @@ class WorkerSlide extends StatelessWidget {
         PageTransition(
             type: PageTransitionType.scale,
             alignment: Alignment.center,
-            child: WorkersList(
-                workerName: "Arsalan", serviceName: serviceModel.serviceName!),
+            child: WorkersList(serviceName: serviceModel.serviceName!),
             duration: Duration(milliseconds: 550),
             inheritTheme: true,
             ctx: context),

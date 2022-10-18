@@ -25,15 +25,19 @@ class _FlashScreenState extends State<FlashScreen> {
         .then((value) async {
       final postProvider = Provider.of<PostProvider>(context, listen: false);
       await postProvider.fetch();
-       final userProvider = Provider.of<UserProvider>(context, listen: false);
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
       await userProvider.fetch();
-      final serviceProvider = Provider.of<ServiceProvider>(context, listen: false);
+      final serviceProvider =
+          Provider.of<ServiceProvider>(context, listen: false);
       await serviceProvider.fetch();
+      final workerProvider =
+          Provider.of<ServiceProvider>(context, listen: false);
+      await workerProvider.fetch();
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Login()));
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -5,6 +5,7 @@ import 'package:housecontractors/Screens/flashscreen/flashscreen.dart';
 import 'package:housecontractors/providers/post_provider.dart';
 import 'package:housecontractors/providers/service_provider.dart';
 import 'package:housecontractors/providers/user_provider.dart';
+import 'package:housecontractors/providers/worker_provider.dart';
 import 'package:housecontractors/themes/mytheme.dart';
 import 'package:provider/provider.dart';
 
@@ -33,6 +34,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => PostProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => ServiceProvider()),
+        ChangeNotifierProvider(create: (_) => WorkerProvider()),
       ],
       child: MaterialApp(
         title: "HouseContractors",

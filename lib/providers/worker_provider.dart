@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import '../models/workers_model.dart';
 
 class WorkerProvider with ChangeNotifier {
@@ -8,7 +9,7 @@ class WorkerProvider with ChangeNotifier {
   List<WorkerModel> get getList => _list;
 
   Future<void> fetch() async {
-    await FirebaseFirestore.instance.collection("c_user").get().then(
+    await FirebaseFirestore.instance.collection("c_workers").get().then(
           (QuerySnapshot<Map<String, dynamic>> snapshot) => {
             _list = [],
             for (var doc in snapshot.docs)

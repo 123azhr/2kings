@@ -81,7 +81,7 @@ class Newsfeed extends StatelessWidget {
         scrollDirection: Axis.vertical,
         itemCount: postsList.length,
         itemBuilder: (context, int index) => ChangeNotifierProvider.value(
-          value: postsList[index],
+          value: postsList[index], 
           child: Post(title: ""),
         ),
         physics: const BouncingScrollPhysics(),
