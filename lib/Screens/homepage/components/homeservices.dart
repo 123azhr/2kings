@@ -48,15 +48,6 @@ class HomeServices extends StatelessWidget {
   }
 }
 
-//  ListView.builder(
-//         scrollDirection: Axis.vertical,
-//         itemCount: postsList.length,
-//         itemBuilder: (context, int index) => ChangeNotifierProvider.value(
-//           value: postsList[index],
-//           child: Post(title: ""),
-//         ),
-//         physics: const BouncingScrollPhysics(),
-//       ),
 class WorkerSlide extends StatelessWidget {
   final String assetImagePath, title;
   const WorkerSlide({
@@ -73,7 +64,7 @@ class WorkerSlide extends StatelessWidget {
         context,
         PageTransition(
             type: PageTransitionType.scale,
-            alignment: Alignment.center,
+            alignment: const Alignment(0, 1000),
             child: WorkersList(
                 workerName: "Arsalan", serviceName: serviceModel.serviceName!),
             duration: Duration(milliseconds: 550),

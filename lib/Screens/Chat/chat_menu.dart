@@ -21,8 +21,8 @@ class _ChatMenuState extends State<ChatMenu> {
           "assets/images/logo-black-half.png",
           fit: BoxFit.contain,
         ),
-        iconTheme: IconThemeData(color: Colors.black),
-        title: Text(
+        iconTheme: const IconThemeData(color: Colors.black),
+        title: const Text(
           "Chats",
           style: TextStyle(
             color: Colors.black,
@@ -45,7 +45,7 @@ class _ChatMenuState extends State<ChatMenu> {
       body: ListView.builder(
           itemCount: 1,
           itemBuilder: (context, index) {
-            return chatMenuTile(
+            return const chatMenuTile(
               title: "Areeb",
               subtitle: "Electrician",
               image: NetworkImage(
@@ -58,7 +58,7 @@ class _ChatMenuState extends State<ChatMenu> {
 }
 
 class chatMenuTile extends StatelessWidget {
-  chatMenuTile({
+  const chatMenuTile({
     Key? key,
     required this.title,
     required this.subtitle,

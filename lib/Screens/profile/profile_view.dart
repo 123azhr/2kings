@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/components/Post/post.dart';
 import 'package:housecontractors/components/profile_header.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
+import 'package:provider/provider.dart';
 
+import '../../providers/post_provider.dart';
 import '../../widgets/chat_call_bottom_bar.dart';
 
 class ProfileView extends StatelessWidget {
@@ -10,6 +12,8 @@ class ProfileView extends StatelessWidget {
   final String title;
   @override
   Widget build(BuildContext context) {
+    final postProvider = Provider.of<PostProvider>(context);
+    final postsList = postProvider.getList;
     SizeConfig().init(context);
     return SafeArea(
       child: Scaffold(
@@ -69,8 +73,12 @@ class ProfileView extends StatelessWidget {
                     ),
                   ),
                   ListView.builder(
-                    itemCount: 6,
-                    itemBuilder: (context, int index) => Post(title: title),
+                    itemCount: postsList.length,
+                    itemBuilder: (context, int index) =>
+                        ChangeNotifierProvider.value(
+                      value: postsList[index],
+                      child: Post(title: ""),
+                    ),
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                   ),
