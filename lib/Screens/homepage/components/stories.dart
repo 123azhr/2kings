@@ -26,6 +26,10 @@ class Stories extends StatelessWidget {
                         MyContainer(
                           height: setHeight(18),
                           width: setWidth(20),
+                          child: InkWell(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            onTap: () {},
+                          ),
                         ),
                         SizedBox(
                           width: setWidth(20),
@@ -39,7 +43,11 @@ class Stories extends StatelessWidget {
               child: MyContainer(
                 height: setHeight(18),
                 width: setWidth(20),
-                child: Icon(Icons.add_circle),
+                child: InkWell(
+                  onTap: () {},
+                  child: const Icon(Icons.add_circle),
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                ),
               ),
             ),
           ],

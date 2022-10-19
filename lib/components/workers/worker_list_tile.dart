@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:provider/provider.dart';
 import '../../models/workers_model.dart';
-import '../profile_header.dart';
 
 class WorkerTile extends StatelessWidget {
   const WorkerTile({super.key, required this.serviceName});
@@ -12,16 +11,17 @@ class WorkerTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final workerModel = Provider.of<WorkerModel>(context);
     return ListTile(
-      onTap: () => worker_tile_details(context),
-      leading: Image.asset(
-        "assets/images/KingContractor.jpg",
+      onTap: () => worker_tile_details(context, workerModel),
+      leading: Image.network(
+        workerModel.profileImg!,
         fit: BoxFit.contain,
       ),
       title: Text(workerModel.name!),
     );
   }
 
-  Future<dynamic> worker_tile_details(BuildContext context) {
+  Future<dynamic> worker_tile_details(
+      BuildContext context, WorkerModel workerModel) {
     return showModalBottomSheet(
       context: context,
       backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
@@ -55,7 +55,7 @@ class WorkerTile extends StatelessWidget {
                   width: setWidth(85),
                   child: Center(
                     child: Text(
-                      "About workerName",
+                      "About " + workerModel.name!,
                       style: TextStyle(
                           fontSize: getProportionateScreenHeight(20),
                           fontWeight: FontWeight.bold),
@@ -63,43 +63,51 @@ class WorkerTile extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.all(setHeight(1)),
-                  color: Colors.greenAccent,
-                  height: setHeight(10),
-                  child: ProfileHeader(title: "workerName"),
-                ),
-                Container(
-                    height: setHeight(30),
+                    height: setHeight(53),
                     color: const Color.fromARGB(255, 255, 255, 255),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        SizedBox(
+                          height: getProportionateScreenHeight(10),
+                        ),
+                        Image.network(workerModel.profileImg!),
                         Text(
-                          "Services",
+                          "Email: " + workerModel.email!,
                           style: TextStyle(
                             fontSize: getProportionateScreenHeight(20),
                           ),
                         ),
-                        const Divider(
-                          thickness: 0.2,
-                          color: Colors.black,
-                          height: 0,
+                        Text(
+                          "CNIC: " + workerModel.cnic!,
+                          style: TextStyle(
+                            fontSize: getProportionateScreenHeight(20),
+                          ),
                         ),
-                        Container(
-                          height: setHeight(9),
-                          color: const Color.fromARGB(255, 255, 255, 255),
-                          child: GridView.builder(
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              crossAxisSpacing: getProportionateScreenWidth(0),
-                              mainAxisSpacing: getProportionateScreenHeight(0),
-                              mainAxisExtent: getProportionateScreenHeight(20),
-                              childAspectRatio: 150 / 220,
-                            ),
-                            itemCount: 9,
-                            itemBuilder: (context, index) => Text("services"),
+                        Text(
+                          "Experience: " + workerModel.experience!,
+                          style: TextStyle(
+                            fontSize: getProportionateScreenHeight(20),
+                          ),
+                        ),
+                        Text(
+                          "Gender: " +
+                              (workerModel.gender! ? "Male" : "Female"),
+                          style: TextStyle(
+                            fontSize: getProportionateScreenHeight(20),
+                          ),
+                        ),
+                        Text(
+                          "Contact: " + workerModel.number!,
+                          style: TextStyle(
+                            fontSize: getProportionateScreenHeight(20),
+                          ),
+                        ),
+                        Text(
+                          "Status: " + workerModel.status.toString(),
+                          style: TextStyle(
+                            fontSize: getProportionateScreenHeight(20),
                           ),
                         ),
                         const Divider(
@@ -118,28 +126,13 @@ class WorkerTile extends StatelessWidget {
                           color: Colors.black,
                           height: 0,
                         ),
-                        SizedBox(
-                          height: setHeight(5),
-                        ),
-                        const Spacer(),
                         const Divider(
                           thickness: 0.2,
                           color: Colors.black,
                           height: 0,
                         ),
-                        Container(
-                          color: Colors.yellow,
-                          padding: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).viewInsets.bottom,
-                          ),
-                        ),
                       ],
                     )),
-                Container(
-                  padding: EdgeInsets.all(getProportionateScreenHeight(12)),
-                  height: setHeight(11),
-                  color: const Color.fromARGB(255, 255, 255, 255),
-                )
               ],
             ),
           ),

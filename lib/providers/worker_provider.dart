@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import '../models/workers_model.dart';
 
 class WorkerProvider with ChangeNotifier {

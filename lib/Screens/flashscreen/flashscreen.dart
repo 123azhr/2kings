@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/login.dart';
 import 'package:housecontractors/providers/post_provider.dart';
+import 'package:housecontractors/providers/worker_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/service_provider.dart';
@@ -31,7 +32,7 @@ class _FlashScreenState extends State<FlashScreen> {
           Provider.of<ServiceProvider>(context, listen: false);
       await serviceProvider.fetch();
       final workerProvider =
-          Provider.of<ServiceProvider>(context, listen: false);
+          Provider.of<WorkerProvider>(context, listen: false);
       await workerProvider.fetch();
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Login()));

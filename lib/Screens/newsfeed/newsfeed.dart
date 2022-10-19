@@ -50,12 +50,31 @@ class Newsfeed extends StatelessWidget {
                 ),
               ),
             ),
-            title: MyTextField(
-                hintText: "Share your skills",
-                height: 40,
-                width: 100,
-                radius: 20,
-                controller: _postController),
+            title: InkWell(
+              onTap: () => Navigator.push(
+                context,
+                PageTransition(
+                    type: PageTransitionType.bottomToTop,
+                    child: const CreatePost(),
+                    duration: const Duration(milliseconds: 300),
+                    inheritTheme: true,
+                    ctx: context),
+              ),
+              child: Container(
+                height: getProportionateScreenHeight(40),
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Text("Share your skills.."),
+                ),
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  border: Border.all(),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                ),
+              ),
+            ),
             trailing: IconButton(
               onPressed: () {
                 Navigator.push(
@@ -81,7 +100,7 @@ class Newsfeed extends StatelessWidget {
         scrollDirection: Axis.vertical,
         itemCount: postsList.length,
         itemBuilder: (context, int index) => ChangeNotifierProvider.value(
-          value: postsList[index], 
+          value: postsList[index],
           child: Post(title: ""),
         ),
         physics: const BouncingScrollPhysics(),

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class WorkerModel with ChangeNotifier {
   final String? userID;
-  final String? status;
+  final bool? status;
   final String? profileImg;
   final String? number;
   final String? name;
-  final String? gender;
+  final bool? gender;
   final String? experience;
   final String? email;
   final String? cnic;

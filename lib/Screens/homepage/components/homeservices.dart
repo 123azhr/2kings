@@ -18,6 +18,9 @@ class HomeServices extends StatelessWidget {
       (index) => serviceList.first,
     );
 
+    final workerProvider = Provider.of<WorkerProvider>(context);
+    final workerList = workerProvider.getList;
+
     List<ServiceModel> _final() {
       for (int i = 0; i < serviceList.length; i++) {
         if (serviceList[i].serviceCategroy == true) {
@@ -60,9 +63,8 @@ class WorkerSlide extends StatelessWidget {
         context,
         PageTransition(
             type: PageTransitionType.scale,
-            alignment: const Alignment(0, 1000),
-            child: WorkersList(
-                serviceName: serviceModel.serviceName!),
+            alignment: Alignment.center,
+            child: WorkersList(serviceName: serviceModel.serviceName!),
             duration: Duration(milliseconds: 550),
             inheritTheme: true,
             ctx: context),

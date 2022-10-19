@@ -4,6 +4,7 @@ import 'package:housecontractors/Screens/profile/edit_profile.dart';
 import 'package:housecontractors/Screens/profile/profile_view.dart';
 
 import '../../helper/size_configuration.dart';
+import '../profile/my_profile_view.dart';
 
 class Menu extends StatelessWidget {
   const Menu({Key? key, required this.title}) : super(key: key);
@@ -35,6 +36,8 @@ class Menu extends StatelessWidget {
         children: [
           InkWell(
             child: ListTile(
+              visualDensity: VisualDensity(vertical: 4),
+              dense: true,
               leading: CircleAvatar(
                 child: ClipOval(
                   child: Image.network(
@@ -51,7 +54,7 @@ class Menu extends StatelessWidget {
             onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => ProfileView(
+                    builder: (context) => MyProfileView(
                           title: title,
                         ))),
           ),
@@ -60,9 +63,11 @@ class Menu extends StatelessWidget {
             indent: 0,
             endIndent: 0,
             color: Colors.black,
+            height: 0,
           ),
           ListTile(
-            visualDensity: VisualDensity(horizontal: 4, vertical: -4),
+            visualDensity: VisualDensity(vertical: 4),
+            dense: true,
             leading: CircleAvatar(
               child: Icon(Icons.edit_rounded),
             ),
@@ -79,8 +84,9 @@ class Menu extends StatelessWidget {
             indent: 0,
             endIndent: 0,
             color: Colors.black,
+            height: 0,
           ),
-          GestureDetector(
+          InkWell(
             onTap: () {
               Navigator.pushReplacement(
                 context,
@@ -88,7 +94,8 @@ class Menu extends StatelessWidget {
               );
             },
             child: ListTile(
-              visualDensity: VisualDensity(horizontal: 4, vertical: -4),
+              visualDensity: VisualDensity(vertical: 4),
+              dense: true,
               leading: CircleAvatar(
                 child: Icon(Icons.logout),
               ),
@@ -100,6 +107,7 @@ class Menu extends StatelessWidget {
             indent: 0,
             endIndent: 0,
             color: Colors.black,
+            height: 0,
           ),
         ],
       ),
