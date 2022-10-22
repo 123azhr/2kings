@@ -22,4 +22,8 @@ class UserProvider with ChangeNotifier {
     });
     notifyListeners();
   }
+
+  List<UserModel> getUserByID(String userID) {
+    return _list.where((element) => element.userID!.trim() == userID).toList();
+  }
 }

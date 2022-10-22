@@ -23,4 +23,8 @@ class StoryProvider with ChangeNotifier {
         );
     notifyListeners();
   }
+
+  List<StoryModel> getPostByID(String userID) {
+    return _list.where((element) => element.userID!.trim() == userID).toList();
+  }
 }

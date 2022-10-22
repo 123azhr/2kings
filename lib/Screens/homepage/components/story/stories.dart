@@ -6,7 +6,9 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../models/story_model.dart';
+import '../../../../models/user_model.dart';
 import '../../../../providers/story_provider.dart';
+import '../../../../providers/user_provider.dart';
 
 class Stories extends StatelessWidget {
   const Stories({Key? key}) : super(key: key);
@@ -15,6 +17,10 @@ class Stories extends StatelessWidget {
   Widget build(BuildContext context) {
     final storyProvider = Provider.of<StoryProvider>(context);
     final storyList = storyProvider.getList;
+
+    final userProvider = Provider.of<UserProvider>(context);
+    final userList = storyProvider.getList;
+
     return SizedBox(
         height: getProportionateScreenHeight(140),
         width: setWidth(100),
@@ -31,7 +37,9 @@ class Stories extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return ChangeNotifierProvider.value(
                       value: storyList[index],
-                      child: const StoryTile(),
+                      child: StoryTile(
+                          userList: userProvider
+                              .getUserByID(storyList[index].userID!)),
                     );
                   }),
             ),
@@ -52,22 +60,27 @@ class Stories extends StatelessWidget {
 class StoryTile extends StatelessWidget {
   const StoryTile({
     Key? key,
+    required this.userList,
   }) : super(key: key);
-
+  final List<UserModel> userList;
   @override
   Widget build(BuildContext context) {
     final storyModel = Provider.of<StoryModel>(context);
+    final userModel = userList[0];
     return MyContainer(
       height: setHeight(18),
       width: setWidth(20),
-      image: NetworkImage(storyModel.url!),
+      image: NetworkImage(userModel.profileImageURL!),
       child: InkWell(
         borderRadius: const BorderRadius.all(Radius.circular(20)),
         onTap: () => Navigator.push(
           context,
           PageTransition(
             type: PageTransitionType.bottomToTop,
-            child: StoryView(url: storyModel.url!),
+            child: StoryView(
+                itemURL: storyModel.url!,
+                userImgUrl: userModel.profileImageURL!,
+                userName: userModel.name!),
             isIos: true,
             duration: const Duration(milliseconds: 400),
           ),
