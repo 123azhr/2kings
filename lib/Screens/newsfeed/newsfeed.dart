@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
 import 'package:housecontractors/Screens/newsfeed/create_post.dart';
 import 'package:housecontractors/components/Post/post.dart';
 import 'package:housecontractors/providers/post_provider.dart';
@@ -37,7 +36,7 @@ class Newsfeed extends StatelessWidget {
         ),
         centerTitle: true,
         elevation: 1,
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         bottom: PreferredSize(
           preferredSize: Size(setWidth(100), setHeight(7)),
           child: ListTile(
@@ -62,14 +61,14 @@ class Newsfeed extends StatelessWidget {
               ),
               child: Container(
                 height: getProportionateScreenHeight(40),
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
+                child: const Padding(
+                  padding: EdgeInsets.all(12),
                   child: Text("Share your skills.."),
                 ),
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   border: Border.all(),
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(20),
                   ),
                 ),
@@ -87,7 +86,7 @@ class Newsfeed extends StatelessWidget {
                       ctx: context),
                 );
               },
-              icon: Icon(
+              icon: const Icon(
                 color: Color.fromARGB(255, 87, 87, 87),
                 Icons.image_rounded,
                 size: 30,

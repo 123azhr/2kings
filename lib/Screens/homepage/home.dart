@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/homepage/components/homeservices.dart';
-import 'package:housecontractors/Screens/homepage/components/stories.dart';
+import 'package:housecontractors/Screens/homepage/components/story/stories.dart';
 import 'package:housecontractors/Screens/homepage/components/searchHome.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:page_transition/page_transition.dart';
@@ -48,7 +48,7 @@ class HomePage extends StatelessWidget {
         ],
         centerTitle: true,
         elevation: 1,
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -92,7 +92,7 @@ class HomePage extends StatelessWidget {
                       endIndent: 0,
                       color: Colors.black,
                     ),
-                    HomeServices(),
+                    const HomeServices(),
                     Divider(
                       height: getProportionateScreenHeight(20),
                       thickness: getProportionateScreenHeight(0.1),
@@ -109,7 +109,7 @@ class HomePage extends StatelessWidget {
                       endIndent: 0,
                       color: Colors.black,
                     ),
-                    ConstructionServices(),
+                    const ConstructionServices(),
                   ]),
             ),
           ],

@@ -4,7 +4,9 @@ import 'package:housecontractors/providers/post_provider.dart';
 import 'package:housecontractors/providers/worker_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../providers/chat_provider.dart';
 import '../../providers/service_provider.dart';
+import '../../providers/story_provider.dart';
 import '../../providers/user_provider.dart';
 
 class FlashScreen extends StatefulWidget {
@@ -26,14 +28,24 @@ class _FlashScreenState extends State<FlashScreen> {
         .then((value) async {
       final postProvider = Provider.of<PostProvider>(context, listen: false);
       await postProvider.fetch();
+
       final userProvider = Provider.of<UserProvider>(context, listen: false);
       await userProvider.fetch();
+
       final serviceProvider =
           Provider.of<ServiceProvider>(context, listen: false);
       await serviceProvider.fetch();
+
       final workerProvider =
           Provider.of<WorkerProvider>(context, listen: false);
       await workerProvider.fetch();
+
+      final chatProvider = Provider.of<ChatProvider>(context, listen: false);
+      await chatProvider.fetch();
+
+      final storyProvider = Provider.of<StoryProvider>(context, listen: false);
+      await storyProvider.fetch();
+
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Login()));
     });

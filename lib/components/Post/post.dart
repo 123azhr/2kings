@@ -6,9 +6,10 @@ import 'package:housecontractors/models/post_model.dart';
 import 'package:provider/provider.dart';
 
 class Post extends StatelessWidget {
-  const Post({Key? key, required this.title }) : super(key: key);
+  const Post({Key? key, required this.title}) : super(key: key);
   final String title;
-  @override 
+
+  @override
   Widget build(BuildContext context) {
     final postModel = Provider.of<PostModel>(context);
     return Card(
@@ -16,7 +17,7 @@ class Post extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          PostHeader(title: postModel.userName!, date: postModel.postedTime),
+          PostHeader(title: title, date: postModel.postedTime),
           PostItem(imageURL: postModel.imageURL),
           PostBottom(),
         ],

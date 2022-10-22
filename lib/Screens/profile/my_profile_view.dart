@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/components/Post/post.dart';
 import 'package:housecontractors/components/profile_header.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
+import 'package:housecontractors/providers/user_provider.dart';
 import 'package:provider/provider.dart';
-
 import '../../providers/post_provider.dart';
-import '../../widgets/chat_call_bottom_bar.dart';
 
 class MyProfileView extends StatelessWidget {
   const MyProfileView({super.key, required this.title});
@@ -13,12 +12,15 @@ class MyProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final postProvider = Provider.of<PostProvider>(context);
-    final postsList = postProvider.getList;
+    final postsList = postProvider.getPostByID("XFVuGYHjDAQtJeew6OVxKraVqQ73");
+    final userProvider = Provider.of<UserProvider>(context);
+    final userList = userProvider.getList;
+    // final postsList = postProvider.getList;
     SizeConfig().init(context);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             "My Profile",
             style: TextStyle(
               color: Colors.black,
@@ -32,7 +34,7 @@ class MyProfileView extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
             },
-            child: Icon(Icons.arrow_back, color: Colors.black),
+            child: const Icon(Icons.arrow_back, color: Colors.black),
           ),
         ),
         body: Padding(
@@ -44,7 +46,12 @@ class MyProfileView extends StatelessWidget {
               height: 800,
               child: ListView(
                 children: [
-                  ProfileHeader(title: title),
+                  ProfileHeader(
+                    title: userList[0].name!,
+                    email: userList[0].email!,
+                    phoneNumber: userList[0].contactNumber!,
+                    imageURL: userList[0].profileImageURL!,
+                  ),
                   Divider(
                     thickness: 1,
                   ),
@@ -77,7 +84,7 @@ class MyProfileView extends StatelessWidget {
                     itemBuilder: (context, int index) =>
                         ChangeNotifierProvider.value(
                       value: postsList[index],
-                      child: Post(title: ""),
+                      child: Post(title: userList[0].name!),
                     ),
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),

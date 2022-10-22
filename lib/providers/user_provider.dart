@@ -3,23 +3,23 @@ import 'package:flutter/cupertino.dart';
 import '../models/user_model.dart';
 
 class UserProvider with ChangeNotifier {
-  List<UserModel>  _list = [];
+  List<UserModel> _list = [];
 
   List<UserModel> get getList => _list;
 
   Future<void> fetch() async {
-    await FirebaseFirestore.instance.collection("c_user").get().then(
-          (QuerySnapshot<Map<String, dynamic>> snapshot) => {
-            _list = [],
-            for (var doc in snapshot.docs)
-              {
-                _list.insert(
-                  0,
-                  UserModel.fromMap(map: doc.data(), userID: doc.id),
-                ),
-              },
-          },
-        );
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc("Y1DImckjzK5z2khAEi7o")
+        .collection("contractors")
+        .doc("XFVuGYHjDAQtJeew6OVxKraVqQ73") //userID
+        .get()
+        .then((DocumentSnapshot snapshot) {
+      _list = [];
+      Map<String, dynamic> dataMap = snapshot.data() as Map<String, dynamic>;
+      _list.insert(
+          0, UserModel.fromMap(map: dataMap, userID: snapshot.id.trim()));
+    });
     notifyListeners();
   }
 }

@@ -22,4 +22,8 @@ class PostProvider with ChangeNotifier {
         );
     notifyListeners();
   }
+
+  List<PostModel> getPostByID(String userID) {
+    return _list.where((element) => element.userID!.trim() == userID).toList();
+  }
 }

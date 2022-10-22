@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:housecontractors/helper/size_configuration.dart';
 
 class MyContainer extends StatelessWidget {
   const MyContainer({
@@ -31,6 +30,7 @@ class MyContainer extends StatelessWidget {
       child: Container(
           height: height,
           width: width,
+          
           decoration: BoxDecoration(
             color: (color != null) ? color : Colors.transparent,
             border: Border.all(),

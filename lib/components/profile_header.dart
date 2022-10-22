@@ -5,14 +5,19 @@ import 'package:housecontractors/helper/size_configuration.dart';
 class ProfileHeader extends StatelessWidget {
   ProfileHeader({
     Key? key,
-    required this.title,
+    this.title = "",
+    this.email = "",
+    this.imageURL = "",
+    this.phoneNumber = "",
+    this.rating = const [],
   }) : super(key: key);
-  final String title;
+  final String title, email, phoneNumber, imageURL;
+  final List<String> rating;
   double starRating = 3.6;
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color.fromARGB(255, 255, 255, 255),
+      color: const Color.fromARGB(255, 255, 255, 255),
       child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         SizedBox(
           height: getProportionateScreenHeight(60),
@@ -20,7 +25,7 @@ class ProfileHeader extends StatelessWidget {
           child: CircleAvatar(
             child: ClipOval(
               child: Image.network(
-                "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+                imageURL,
                 fit: BoxFit.cover,
                 height: getProportionateScreenHeight(60),
               ),
@@ -40,14 +45,14 @@ class ProfileHeader extends StatelessWidget {
                     fontWeight: FontWeight.w500),
               ),
               Text(
-                "email@example.com",
+                email,
                 style: TextStyle(
                   fontSize: getProportionateScreenHeight(14),
                   fontWeight: FontWeight.w300,
                 ),
               ),
               Text(
-                "0305-56181354",
+                phoneNumber,
                 style: TextStyle(
                   fontSize: getProportionateScreenHeight(14),
                   fontWeight: FontWeight.w300,

@@ -27,7 +27,7 @@ class MyTheme {
         displayMedium: TextStyle(
             fontSize: 36.0,
             fontWeight: FontWeight.bold,
-            color: Color.fromARGB(255, 253, 216, 3),
+            color: Color.fromARGB(255, 0, 0, 0),
             fontFamily: 'Hind'),
         displaySmall: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
         headlineMedium: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),

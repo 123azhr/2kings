@@ -126,11 +126,6 @@ class WorkerTile extends StatelessWidget {
                           color: Colors.black,
                           height: 0,
                         ),
-                        const Divider(
-                          thickness: 0.2,
-                          color: Colors.black,
-                          height: 0,
-                        ),
                       ],
                     )),
               ],
