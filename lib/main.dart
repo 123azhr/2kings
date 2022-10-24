@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:housecontractors/Screens/Main/dashboard.dart';
 import 'package:housecontractors/Screens/flashscreen/flashscreen.dart';
+import 'package:housecontractors/Screens/orders/Logs/aggrement.dart';
 import 'package:housecontractors/providers/chat_provider.dart';
 import 'package:housecontractors/providers/post_provider.dart';
 import 'package:housecontractors/providers/service_provider.dart';
@@ -43,7 +43,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         title: "HouseContractors",
         theme: MyTheme.Mytheme(),
-        home: const FlashScreen(),
+        home: const ViewAggrement(),
       ),
     );
   }

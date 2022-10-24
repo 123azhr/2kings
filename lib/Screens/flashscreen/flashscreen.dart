@@ -3,7 +3,6 @@ import 'package:housecontractors/Screens/loginSignup/login.dart';
 import 'package:housecontractors/providers/post_provider.dart';
 import 'package:housecontractors/providers/worker_provider.dart';
 import 'package:provider/provider.dart';
-
 import '../../providers/chat_provider.dart';
 import '../../providers/service_provider.dart';
 import '../../providers/story_provider.dart';
