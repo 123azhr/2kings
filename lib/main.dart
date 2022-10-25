@@ -43,7 +43,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         title: "HouseContractors",
         theme: MyTheme.Mytheme(),
-        home: const ViewAggrement(),
+        home: ViewAggrement(),
       ),
     );
   }
