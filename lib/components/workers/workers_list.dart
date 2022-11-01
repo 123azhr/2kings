@@ -14,7 +14,7 @@ class WorkersList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final workerProvider = Provider.of<WorkerProvider>(context);
-    final workerList = workerProvider.getList;
+    final workerList = workerProvider.getWorkerByserviceName(serviceName);
 
     return Scaffold(
       appBar: AppBar(
@@ -45,9 +45,7 @@ class WorkersList extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, int index) => ChangeNotifierProvider.value(
                 value: workerList[index],
-                child: WorkerTile(
-                  serviceName: serviceName,
-                ),
+                child: WorkerTile(serviceName: serviceName),
               )),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.yellow,

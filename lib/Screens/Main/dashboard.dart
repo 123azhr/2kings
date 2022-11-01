@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/Chat/chat_menu.dart';
 import 'package:housecontractors/Screens/menu/menu.dart';
 import 'package:housecontractors/Screens/newsfeed/newsfeed.dart';
+import 'package:housecontractors/models/current_user.dart';
 import '../../helper/size_configuration.dart';
 import '../homepage/home.dart';
 import '../orders/my_orders.dart';
@@ -20,7 +22,7 @@ class _DashboardState extends State<Dashboard> {
     const ChatMenu(),
     Newsfeed(),
     const MyOrders(),
-    const Menu(title: "Azhar"),
+    const Menu(),
   ];
   void _onItemTapped(int index) {
     setState(() {
@@ -28,6 +30,7 @@ class _DashboardState extends State<Dashboard> {
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return SafeArea(

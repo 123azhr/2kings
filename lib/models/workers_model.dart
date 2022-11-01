@@ -10,6 +10,7 @@ class WorkerModel with ChangeNotifier {
   final String? experience;
   final String? email;
   final String? cnic;
+  final String? service;
   WorkerModel({
     this.userID,
     this.status,
@@ -20,18 +21,21 @@ class WorkerModel with ChangeNotifier {
     this.experience,
     this.email,
     this.cnic,
+    this.service,
   });
   factory WorkerModel.fromMap(
       {required Map<String, dynamic> map, required String userID}) {
     return WorkerModel(
-        userID: userID,
-        name: map["worker_name"],
-        email: map["worker_email"],
-        status: map["worker_status"],
-        profileImg: map["worker_profile_img"],
-        gender: map["worker_gender"],
-        experience: map["worker_experience"],
-        cnic: map["worker_CNIC"],
-        number: map["worker_number"]);
+      userID: userID,
+      name: map["worker_name"],
+      email: map["worker_email"],
+      status: map["worker_status"],
+      profileImg: map["worker_profile_img"],
+      gender: map["worker_gender"],
+      experience: map["worker_experience"],
+      cnic: map["worker_CNIC"],
+      number: map["worker_number"],
+      service: map["worker_service"],
+    );
   }
 }

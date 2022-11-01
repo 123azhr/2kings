@@ -4,6 +4,7 @@ import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../../models/service_model.dart';
+import '../../../models/workers_model.dart';
 import '../../../providers/service_provider.dart';
 import '../../../providers/worker_provider.dart';
 
@@ -18,12 +19,24 @@ class HomeServices extends StatelessWidget {
       (index) => serviceList.first,
     );
 
-    final workerProvider = Provider.of<WorkerProvider>(context);
-    final workerList = workerProvider.getList;
-
-    List<ServiceModel> _final() {
+    List<ServiceModel> _allHomeService() {
       for (int i = 0; i < serviceList.length; i++) {
         if (serviceList[i].serviceCategroy == true) {
+          tempList.add(serviceList[i]);
+        }
+      }
+      return tempList;
+    }
+
+    List<ServiceModel> _allService(String serviceName) {
+      List<ServiceModel> tempList = List<ServiceModel>.generate(
+        0,
+        (index) => serviceList.first,
+      );
+
+      for (int i = 0; i < serviceList.length; i++) {
+        if (serviceList[i].serviceCategroy == true &&
+            serviceList[i].serviceName == serviceName) {
           tempList.add(serviceList[i]);
         }
       }
@@ -40,9 +53,9 @@ class HomeServices extends StatelessWidget {
             mainAxisExtent: getProportionateScreenHeight(120),
           ),
           shrinkWrap: true,
-          itemCount: _final().length,
+          itemCount: _allHomeService().length,
           itemBuilder: (context, int index) => ChangeNotifierProvider.value(
-                value: _final()[index],
+                value: _allHomeService()[index],
                 child: WorkerSlide(),
               )),
     );
@@ -65,7 +78,7 @@ class WorkerSlide extends StatelessWidget {
             type: PageTransitionType.scale,
             alignment: Alignment.center,
             child: WorkersList(serviceName: serviceModel.serviceName!),
-            duration: Duration(milliseconds: 550),
+            duration: const Duration(milliseconds: 550),
             inheritTheme: true,
             ctx: context),
       ),

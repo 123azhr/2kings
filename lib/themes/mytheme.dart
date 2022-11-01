@@ -29,7 +29,11 @@ class MyTheme {
             fontWeight: FontWeight.bold,
             color: Color.fromARGB(255, 0, 0, 0),
             fontFamily: 'Hind'),
-        displaySmall: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+        displaySmall: TextStyle(
+          fontSize: 24.0,
+          fontFamily: 'Hind',
+          color: Color.fromARGB(255, 0, 0, 0),
+        ),
         headlineMedium: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
         headlineSmall: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
         titleLarge: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),

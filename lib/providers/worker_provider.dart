@@ -22,4 +22,10 @@ class WorkerProvider with ChangeNotifier {
         );
     notifyListeners();
   }
+
+  List<WorkerModel> getWorkerByserviceName(String serviceName) {
+    return _list
+        .where((element) => element.service!.trim() == serviceName)
+        .toList();
+  }
 }

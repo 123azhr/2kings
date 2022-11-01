@@ -19,11 +19,14 @@ class UserProvider with ChangeNotifier {
       Map<String, dynamic> dataMap = snapshot.data() as Map<String, dynamic>;
       _list.insert(
           0, UserModel.fromMap(map: dataMap, userID: snapshot.id.trim()));
-    });
+    }); 
     notifyListeners();
   }
 
-  List<UserModel> getUserByID(String userID) {
-    return _list.where((element) => element.userID!.trim() == userID).toList();
+  UserModel getUserByID(String userID) {
+    return _list
+        .where((element) => element.userID!.trim() == userID)
+        .toList()
+        .elementAt(0);
   }
 }

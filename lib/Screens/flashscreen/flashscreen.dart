@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/login.dart';
 import 'package:housecontractors/providers/post_provider.dart';
@@ -7,6 +8,7 @@ import '../../providers/chat_provider.dart';
 import '../../providers/service_provider.dart';
 import '../../providers/story_provider.dart';
 import '../../providers/user_provider.dart';
+import '../Main/dashboard.dart';
 
 class FlashScreen extends StatefulWidget {
   const FlashScreen({Key? key}) : super(key: key);
@@ -19,11 +21,11 @@ class _FlashScreenState extends State<FlashScreen> {
   @override
   void initState() {
     loadData();
-    super.initState();
+    super.initState(); 
   }
 
   loadData() async {
-    await Future.delayed(const Duration(milliseconds: 1000))
+    await Future.delayed(const Duration(milliseconds: 0))
         .then((value) async {
       final postProvider = Provider.of<PostProvider>(context, listen: false);
       await postProvider.fetch();
@@ -45,8 +47,8 @@ class _FlashScreenState extends State<FlashScreen> {
       final storyProvider = Provider.of<StoryProvider>(context, listen: false);
       await storyProvider.fetch();
 
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Login()));
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => AuthenticationWrapper()));
     });
   }
 
@@ -59,5 +61,19 @@ class _FlashScreenState extends State<FlashScreen> {
             Image.asset('assets/images/logo-black-full.png', fit: BoxFit.fill),
       ),
     );
+  }
+}
+
+class AuthenticationWrapper extends StatelessWidget {
+  const AuthenticationWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final firebaseUser = context.watch<User?>();
+    if (firebaseUser != null) {
+      return const Dashboard();
+    } else {
+      return Login();
+    }
   }
 }

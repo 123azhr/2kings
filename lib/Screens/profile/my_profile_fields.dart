@@ -11,9 +11,9 @@ class MyProfileFields extends StatelessWidget {
     required this.name,
     required this.password,
   }) : super(key: key);
-  String name, gender, password, contact, email;
+  final String name, gender, password, contact, email;
 
-  TextEditingController nameController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -30,7 +30,7 @@ class MyProfileFields extends StatelessWidget {
                 fontWeight: FontWeight.bold),
           ),
           title: Text(
-            nameController.text,
+            name,
             style: TextStyle(
               fontSize: getProportionateScreenHeight(20),
             ),

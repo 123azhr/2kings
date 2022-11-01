@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
+import '../../providers/user_provider.dart';
 import 'my_profile_fields.dart';
 
 class EditProfilePage extends StatelessWidget {
@@ -77,7 +80,11 @@ class EditProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    final loggedInUser =
+        userProvider.getUserByID(FirebaseAuth.instance.currentUser!.uid);
     SizeConfig().init(context);
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -102,8 +109,8 @@ class EditProfilePage extends StatelessWidget {
                 width: getProportionateScreenWidth(200),
                 child: CircleAvatar(
                   backgroundColor: Colors.white10,
-                  backgroundImage: const NetworkImage(
-                    "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+                  backgroundImage: NetworkImage(
+                    loggedInUser.profileImageURL!,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -161,11 +168,11 @@ class EditProfilePage extends StatelessWidget {
                   ),
                 ),
                 child: MyProfileFields(
-                  contact: "0359-8645318",
-                  email: "azhar@gmail.com",
-                  gender: "Male",
-                  name: "Muhammad Azhar",
-                  password: "*******",
+                  contact: loggedInUser.contactNumber!,
+                  email: loggedInUser.email!,
+                  gender: loggedInUser.gender.toString(),
+                  name: loggedInUser.name!,
+                  password: "***********",
                 ),
               ),
             ),

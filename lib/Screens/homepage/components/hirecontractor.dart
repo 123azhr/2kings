@@ -22,7 +22,7 @@ class HireContractor extends StatelessWidget {
           width: getProportionateScreenWidth(500),
           child: const Text("Contracts"),
           padding: EdgeInsets.all(getProportionateScreenHeight(10)),
-        ),
+        ), 
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20))),
       ),

@@ -4,7 +4,6 @@ import 'package:housecontractors/components/Post/post.dart';
 import 'package:housecontractors/providers/post_provider.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-
 import '../../helper/size_configuration.dart';
 
 class Newsfeed extends StatelessWidget {
@@ -72,24 +71,6 @@ class Newsfeed extends StatelessWidget {
                     Radius.circular(20),
                   ),
                 ),
-              ),
-            ),
-            trailing: IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  PageTransition(
-                      type: PageTransitionType.bottomToTop,
-                      child: const CreatePost(),
-                      duration: const Duration(milliseconds: 300),
-                      inheritTheme: true,
-                      ctx: context),
-                );
-              },
-              icon: const Icon(
-                color: Color.fromARGB(255, 87, 87, 87),
-                Icons.image_rounded,
-                size: 30,
               ),
             ),
           ),

@@ -19,7 +19,6 @@ class Stories extends StatelessWidget {
     final storyList = storyProvider.getList;
 
     final userProvider = Provider.of<UserProvider>(context);
-    final userList = storyProvider.getList;
 
     return SizedBox(
         height: getProportionateScreenHeight(140),
@@ -38,7 +37,7 @@ class Stories extends StatelessWidget {
                     return ChangeNotifierProvider.value(
                       value: storyList[index],
                       child: StoryTile(
-                          userList: userProvider
+                          user: userProvider
                               .getUserByID(storyList[index].userID!)),
                     );
                   }),
@@ -60,13 +59,13 @@ class Stories extends StatelessWidget {
 class StoryTile extends StatelessWidget {
   const StoryTile({
     Key? key,
-    required this.userList,
+    required this.user,
   }) : super(key: key);
-  final List<UserModel> userList;
+  final UserModel user;
   @override
   Widget build(BuildContext context) {
     final storyModel = Provider.of<StoryModel>(context);
-    final userModel = userList[0];
+    final userModel = user;
     return MyContainer(
       height: setHeight(18),
       width: setWidth(20),
@@ -81,7 +80,6 @@ class StoryTile extends StatelessWidget {
                 itemURL: storyModel.url!,
                 userImgUrl: userModel.profileImageURL!,
                 userName: userModel.name!),
-            isIos: true,
             duration: const Duration(milliseconds: 400),
           ),
         ),

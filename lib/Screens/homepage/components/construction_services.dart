@@ -17,9 +17,24 @@ class ConstructionServices extends StatelessWidget {
       (index) => serviceList.first,
     );
 
-    List<ServiceModel> _final() {
+    List<ServiceModel> _allHomeService() {
       for (int i = 0; i < serviceList.length; i++) {
         if (serviceList[i].serviceCategroy == false) {
+          tempList.add(serviceList[i]);
+        }
+      }
+      return tempList;
+    }
+
+    List<ServiceModel> _allService(String serviceName) {
+      List<ServiceModel> tempList = List<ServiceModel>.generate(
+        0,
+        (index) => serviceList.first,
+      );
+
+      for (int i = 0; i < serviceList.length; i++) {
+        if (serviceList[i].serviceCategroy == false &&
+            serviceList[i].serviceName == serviceName) {
           tempList.add(serviceList[i]);
         }
       }
@@ -36,38 +51,24 @@ class ConstructionServices extends StatelessWidget {
             mainAxisExtent: getProportionateScreenHeight(120),
           ),
           shrinkWrap: true,
-          itemCount: _final().length,
+          itemCount: _allHomeService().length,
           itemBuilder: (context, int index) => ChangeNotifierProvider.value(
-                value: _final()[index],
-                child: WorkerSlide(
-                  assetImagePath: "",
-                  title: "",
-                ),
+                value: _allHomeService()[index],
+                child: WorkerSlide(),
               )),
     );
   }
 }
 
-//  ListView.builder(
-//         scrollDirection: Axis.vertical,
-//         itemCount: postsList.length,
-//         itemBuilder: (context, int index) => ChangeNotifierProvider.value(
-//           value: postsList[index],
-//           child: Post(title: ""),
-//         ),
-//         physics: const BouncingScrollPhysics(),
-//       ),
 class WorkerSlide extends StatelessWidget {
-  final String assetImagePath, title;
   const WorkerSlide({
     Key? key,
-    required this.title,
-    required this.assetImagePath,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final serviceModel = Provider.of<ServiceModel>(context);
+
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
@@ -75,7 +76,7 @@ class WorkerSlide extends StatelessWidget {
             type: PageTransitionType.scale,
             alignment: Alignment.center,
             child: WorkersList(serviceName: serviceModel.serviceName!),
-            duration: Duration(milliseconds: 550),
+            duration: const Duration(milliseconds: 550),
             inheritTheme: true,
             ctx: context),
       ),
