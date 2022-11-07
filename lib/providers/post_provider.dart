@@ -30,8 +30,11 @@ class PostProvider with ChangeNotifier {
     return _list.where((element) => element.userID!.trim() == userID).toList();
   }
 
-  Future<void> uploadDataToFireStore(
-      {String? userID, String? imageURL, String? userName}) async {
+  Future<void> uploadImageDataToFireStore(
+      {String? userID,
+      String? imageURL,
+      String? userName,
+      String? caption = ""}) async {
     await FirebaseFirestore.instance.collection("c_post").add({
       "post_imgVideo": imageURL,
       "userName": userName,
@@ -39,17 +42,22 @@ class PostProvider with ChangeNotifier {
       "post_date": DateTime.now(),
       "post_comments": [],
       "post_likes": [],
+      "caption": caption,
     });
   }
 
-  Future<String?> uploadProductImageToStorage(
-      {required String? imagePath}) async {
+  Future<String?> uploadImageToStorage(
+      {required String? imagePath,
+      required String? userID,
+      required String? imageType}) async {
     File imageFile = File(imagePath!);
+
     String _imageBaseName = basename(imageFile.path);
     Reference imageReference = FirebaseStorage.instance
         .ref()
         .child("images")
-        .child("productImages")
+        .child(userID!)
+        .child(imageType!)
         .child(_imageBaseName);
     await imageReference.putFile(imageFile);
     String getImageUrl = await imageReference.getDownloadURL();
@@ -57,13 +65,16 @@ class PostProvider with ChangeNotifier {
     return getImageUrl;
   }
 
-  Future<void> deleteProductImageFromStorage(
-      {required String? imageURL}) async {
+  Future<void> deleteImageFromStorage(
+      {required String? imageURL,
+      required String? userID,
+      required String? imageType}) async {
     String? imageName = imageURL!.split('2F')[2].split('?alt')[0];
     await FirebaseStorage.instance
         .ref()
         .child("images")
-        .child("productImages")
+        .child(userID!)
+        .child(imageType!)
         .child(imageName)
         .delete();
     notifyListeners();

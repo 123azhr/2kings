@@ -31,26 +31,28 @@ class _StoryViewState extends State<StoryView>
     )..addListener(() {
         setState(() {});
       });
-    controller.repeat().timeout(const Duration(seconds: 5), onTimeout: () {
-      controller.stop();
+    controller.repeat().whenCompleteOrCancel(() {
       Navigator.pop(context);
+      controller.dispose();
     });
+    Future.delayed(const Duration(seconds: 5)).then((value) async {
+      controller.stop();
+    });
+
+    // controller.repeat().whenCompleteOrCancel(() {
+
+    //   Navigator.pop(context);
+    // });
     // controller.repeat(reverse: false);
 
     super.initState();
   }
 
-  loadData() async {
-    await Future.delayed(const Duration(seconds: 10)).then((value) async {});
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  // }
 
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  bool isLoading = true;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -83,12 +85,11 @@ class _StoryViewState extends State<StoryView>
                         ),
                         const Spacer(),
                         IconButton(
-                          icon: const Icon(Icons.close,
-                              color: Color.fromARGB(255, 0, 0, 0)),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        )
+                            icon: const Icon(Icons.close,
+                                color: Color.fromARGB(255, 0, 0, 0)),
+                            onPressed: () {
+                              controller.reset();
+                            })
                       ],
                     )),
                 Container(child: Center(child: Image.network(widget.itemURL!))),

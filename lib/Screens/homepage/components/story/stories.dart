@@ -4,11 +4,11 @@ import 'package:housecontractors/widgets/mycontainer.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../models/story_model.dart';
 import '../../../../models/user_model.dart';
 import '../../../../providers/story_provider.dart';
 import '../../../../providers/user_provider.dart';
+import 'create_story.dart';
 
 class Stories extends StatelessWidget {
   const Stories({Key? key}) : super(key: key);
@@ -43,14 +43,19 @@ class Stories extends StatelessWidget {
                   }),
             ),
             MyContainer(
-              height: setHeight(18),
-              width: setWidth(20),
-              child: InkWell(
-                onTap: () {},
-                child: const Icon(Icons.add_circle),
-                borderRadius: const BorderRadius.all(Radius.circular(20)),
-              ),
-            ),
+                height: setHeight(18),
+                width: setWidth(20),
+                child: InkWell(
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                    child: const Icon(Icons.add_circle),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CreateStory(),
+                        ),
+                      );
+                    })),
           ],
         ));
   }
@@ -77,13 +82,13 @@ class StoryTile extends StatelessWidget {
           PageTransition(
             type: PageTransitionType.bottomToTop,
             child: StoryView(
-                itemURL: storyModel.url!,
+                itemURL: storyModel.imageURL!,
                 userImgUrl: userModel.profileImageURL!,
                 userName: userModel.name!),
             duration: const Duration(milliseconds: 400),
           ),
         ),
-        child: Image.network(storyModel.url!),
+        child: Image.network(storyModel.imageURL!),
       ),
     );
   }

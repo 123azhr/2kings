@@ -6,10 +6,14 @@ import '../../helper/size_configuration.dart';
 class PostHeader extends StatelessWidget {
   const PostHeader({
     Key? key,
+    required this.userID,
     required this.title,
-    this.date,
+    required this.profilePicURL,
+    required this.date,
   }) : super(key: key);
 
+  final String? userID;
+  final String profilePicURL;
   final String title;
   final DateTime? date;
   @override
@@ -22,18 +26,18 @@ class PostHeader extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) => ProfileView(
-                      title: title,
+                      userID: userID!,
                     )),
           ),
           child: Image.network(
-            "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+            profilePicURL,
             fit: BoxFit.cover,
             width: getProportionateScreenWidth(40),
             height: getProportionateScreenWidth(40),
           ),
         ),
       ),
-      title: Text(title),
+      title: Text(title, style: Theme.of(context).textTheme.bodyLarge),
       subtitle: Text(date.toString()),
       trailing: PopupMenuButton(itemBuilder: (context) {
         return [

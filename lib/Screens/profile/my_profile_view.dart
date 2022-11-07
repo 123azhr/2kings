@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/components/Post/post.dart';
 import 'package:housecontractors/components/profile_header.dart';
@@ -11,10 +12,12 @@ class MyProfileView extends StatelessWidget {
   final String title;
   @override
   Widget build(BuildContext context) {
-    final postProvider = Provider.of<PostProvider>(context);
-    final postsList = postProvider.getPostByID("XFVuGYHjDAQtJeew6OVxKraVqQ73");
     final userProvider = Provider.of<UserProvider>(context);
-    final userList = userProvider.getList;
+    final loggedInUser =
+        userProvider.getUserByID(FirebaseAuth.instance.currentUser!.uid);
+
+    final postProvider = Provider.of<PostProvider>(context);
+    final postsList = postProvider.getPostByID(loggedInUser.userID!);
     // final postsList = postProvider.getList;
     SizeConfig().init(context);
     return SafeArea(
@@ -38,7 +41,11 @@ class MyProfileView extends StatelessWidget {
           ),
         ),
         body: Padding(
-          padding: EdgeInsets.all(getProportionateScreenHeight(5.0)),
+          padding: EdgeInsets.only(
+              left: getProportionateScreenWidth(5.0),
+              top: getProportionateScreenHeight(5.0),
+              right: getProportionateScreenWidth(5.0),
+              bottom: MediaQuery.of(context).viewInsets.bottom),
           child: SingleChildScrollView(
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.manual,
             scrollDirection: Axis.vertical,
@@ -47,10 +54,10 @@ class MyProfileView extends StatelessWidget {
               child: ListView(
                 children: [
                   ProfileHeader(
-                    title: userList[0].name!,
-                    email: userList[0].email!,
-                    phoneNumber: userList[0].contactNumber!,
-                    imageURL: userList[0].profileImageURL!,
+                    title: loggedInUser.name!,
+                    email: loggedInUser.email!,
+                    phoneNumber: loggedInUser.contactNumber!,
+                    imageURL: loggedInUser.profileImageURL!,
                   ),
                   Divider(
                     thickness: 1,
@@ -58,15 +65,15 @@ class MyProfileView extends StatelessWidget {
                   Padding(
                     padding:
                         EdgeInsets.only(left: getProportionateScreenWidth(5.0)),
-                    child: Text("Services"),
+                    child: Text("Available Services"),
                   ),
                   Divider(
                     thickness: 1,
                   ),
                   Container(
-                    height: getProportionateScreenHeight(80),
                     padding: EdgeInsets.all(getProportionateScreenHeight(8)),
                     child: GridView.builder(
+                      shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
@@ -74,9 +81,9 @@ class MyProfileView extends StatelessWidget {
                           mainAxisSpacing: getProportionateScreenHeight(0),
                           mainAxisExtent: getProportionateScreenHeight(20),
                           childAspectRatio: 150 / 220),
-                      itemCount: 9,
+                      itemCount: loggedInUser.services!.length,
                       itemBuilder: (context, index) =>
-                          const Text("electrician"),
+                          Text(loggedInUser.services!.elementAt(index)),
                     ),
                   ),
                   ListView.builder(
@@ -84,13 +91,13 @@ class MyProfileView extends StatelessWidget {
                     itemBuilder: (context, int index) =>
                         ChangeNotifierProvider.value(
                       value: postsList[index],
-                      child: Post(title: userList[0].name!),
+                      child: const Post(),
                     ),
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                   ),
                   SizedBox(
-                    height: 65,
+                    height: getProportionateScreenHeight(20),
                   )
                 ],
               ),

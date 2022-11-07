@@ -1,24 +1,28 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/components/Post/post.dart';
 import 'package:housecontractors/components/profile_header.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
+import 'package:housecontractors/providers/user_provider.dart';
 import 'package:provider/provider.dart';
-
 import '../../providers/post_provider.dart';
 import '../../widgets/chat_call_bottom_bar.dart';
 
 class ProfileView extends StatelessWidget {
-  const ProfileView({super.key, required this.title});
-  final String title;
+  const ProfileView({super.key, required this.userID});
+  final String? userID;
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    final user = userProvider.getUserByID(userID!);
     final postProvider = Provider.of<PostProvider>(context);
-    final postsList = postProvider.getList;
+    final postsList = postProvider.getPostByID(user.userID!);
+    // final postsList = postProvider.getList;
     SizeConfig().init(context);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             "My Profile",
             style: TextStyle(
               color: Colors.black,
@@ -32,7 +36,7 @@ class ProfileView extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
             },
-            child: Icon(Icons.arrow_back, color: Colors.black),
+            child: const Icon(Icons.arrow_back, color: Colors.black),
           ),
         ),
         body: Padding(
@@ -44,7 +48,12 @@ class ProfileView extends StatelessWidget {
               height: 800,
               child: ListView(
                 children: [
-                  ProfileHeader(title: title),
+                  ProfileHeader(
+                    title: user.name!,
+                    email: user.email!,
+                    phoneNumber: user.contactNumber!,
+                    imageURL: user.profileImageURL!,
+                  ),
                   Divider(
                     thickness: 1,
                   ),
@@ -57,9 +66,9 @@ class ProfileView extends StatelessWidget {
                     thickness: 1,
                   ),
                   Container(
-                    height: getProportionateScreenHeight(80),
                     padding: EdgeInsets.all(getProportionateScreenHeight(8)),
                     child: GridView.builder(
+                      shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
@@ -67,9 +76,9 @@ class ProfileView extends StatelessWidget {
                           mainAxisSpacing: getProportionateScreenHeight(0),
                           mainAxisExtent: getProportionateScreenHeight(20),
                           childAspectRatio: 150 / 220),
-                      itemCount: 9,
+                      itemCount: user.services!.length,
                       itemBuilder: (context, index) =>
-                          const Text("electrician"),
+                          Text(user.services!.elementAt(index)),
                     ),
                   ),
                   ListView.builder(
@@ -77,12 +86,12 @@ class ProfileView extends StatelessWidget {
                     itemBuilder: (context, int index) =>
                         ChangeNotifierProvider.value(
                       value: postsList[index],
-                      child: Post(title: ""),
+                      child: const Post(),
                     ),
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 65,
                   )
                 ],

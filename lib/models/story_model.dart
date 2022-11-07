@@ -1,24 +1,28 @@
 import 'package:flutter/cupertino.dart';
 
 class StoryModel with ChangeNotifier {
-  final String? storyID;
   final String? userID;
-  final String? url;
+  final String? storyID;
+  final String? imageURL;
   final DateTime? postedTime;
-  StoryModel({
-    this.storyID,
-    this.userID,
-    this.url,
-    this.postedTime,
-  });
+  final String? userName;
+  final String? caption;
+  StoryModel(
+      {this.userID,
+      this.storyID,
+      this.imageURL,
+      this.postedTime,
+      this.userName,
+      this.caption});
 
   factory StoryModel.fromMap(
       {required Map<String, dynamic> map, required String storyID}) {
     return StoryModel(
-      storyID: storyID,
-      userID: map["contractor_id"],
-      postedTime: map["time"].toDate(),
-      url: map["url"],
-    );
+        storyID: storyID,
+        userID: map["userID"],
+        postedTime: map["date"].toDate(),
+        imageURL: map["imgVideo"],
+        userName: map["userName"],
+        caption: map["caption"]);
   }
 }

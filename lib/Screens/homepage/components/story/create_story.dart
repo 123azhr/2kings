@@ -1,26 +1,34 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/widgets/mycontainer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-import '../../helper/size_configuration.dart';
-import '../../providers/post_provider.dart';
-import '../../providers/user_provider.dart';
+import '../../../../helper/size_configuration.dart';
+import '../../../../providers/story_provider.dart';
+import '../../../../providers/user_provider.dart';
 
-class CreatePost extends StatefulWidget {
-  const CreatePost({super.key});
+class CreateStory extends StatefulWidget {
+  const CreateStory({super.key});
 
   @override
-  State<CreatePost> createState() => _CreatePostState();
+  State<CreateStory> createState() => _CreateStoryState();
 }
 
-class _CreatePostState extends State<CreatePost> {
+class _CreateStoryState extends State<CreateStory> {
   String _imagePath = "";
   File? _selectedImageFile;
   bool? _isProductImageSelected = true;
+
+  @override
+  initState() {
+    pickImage();
+    print(_imagePath);
+    // this is called when the class is initialized or called for the first time
+    super
+        .initState(); //  this is the material super constructor for init state to link your instance initState to the global initState context
+  }
 
   void pickImage() async {
     final ImagePicker _picker = ImagePicker();
@@ -37,7 +45,7 @@ class _CreatePostState extends State<CreatePost> {
     final userProvider = Provider.of<UserProvider>(context);
     final loggedInUser =
         userProvider.getUserByID(FirebaseAuth.instance.currentUser!.uid);
-    final postProvider = Provider.of<PostProvider>(context);
+    final storyProvider = Provider.of<StoryProvider>(context);
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -47,7 +55,7 @@ class _CreatePostState extends State<CreatePost> {
           backgroundColor: Colors.transparent,
           centerTitle: true,
           title: Text(
-            "Create Post",
+            "Share Story",
             style: TextStyle(
               color: Colors.black,
               fontSize: (kToolbarHeight / 100) * 40,
@@ -81,33 +89,35 @@ class _CreatePostState extends State<CreatePost> {
                         ),
                       ],
                     ),
-                    const Spacer(),
+                    Spacer(),
                     ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
                           Color.fromARGB(255, 255, 210, 32),
                         ),
-                        fixedSize: MaterialStateProperty.all(
-                          Size(setWidth(5), setHeight(5)),
+                        minimumSize: MaterialStateProperty.all(
+                          Size(setWidth(6), setHeight(6)),
                         ),
                       ),
                       onPressed: () {
-                        Future<String?> imageURL =
-                            postProvider.uploadImageToStorage(
+                         
+                        var imageURL =
+                              storyProvider.uploadImageToStorage(
                                 imagePath: _imagePath,
-                                imageType: "posts",
                                 userID: loggedInUser.userID);
-                        postProvider.uploadImageDataToFireStore(
-                            imageURL: imageURL.toString(),
+                        print(imageURL);
+                        
+                        storyProvider.uploadImageDataToFireStore(
+                            imageURL:  imageURL.toString(),
                             userID: loggedInUser.userID,
                             userName: loggedInUser.name);
                         Navigator.pop(context);
                         Future.delayed(const Duration(milliseconds: 0))
                             .then((value) async {
-                          await postProvider.fetch();
+                          await storyProvider.fetch();
                         });
                       },
-                      child: Text("Post",
+                      child: Text("Share",
                           style:
                               TextStyle(fontSize: 18, color: Colors.black87)),
                     ),
@@ -122,11 +132,7 @@ class _CreatePostState extends State<CreatePost> {
                     : MyContainer(
                         height: setHeight(40),
                         child: InkWell(
-                            child: const Icon(Icons.add_a_photo),
-                            onTap: () {
-                              pickImage();
-                              print(_imagePath);
-                            }),
+                            child: const Icon(Icons.add_a_photo), onTap: () {}),
                         width: setWidth(100),
                       ),
                 TextFormField(

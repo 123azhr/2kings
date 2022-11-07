@@ -1,27 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:housecontractors/components/Post/post.dart';
-import 'package:housecontractors/components/Post/post_item.dart';
-
 import '../../helper/size_configuration.dart';
 import 'comments.dart';
 import 'like.dart';
 
 class OpenPost extends StatelessWidget {
-  const OpenPost({super.key});
+  const OpenPost({
+    super.key,
+    required this.imageURL,
+    required this.caption,
+  });
 
+  final String? imageURL;
+
+  final String? caption;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        body: Stack(
           children: [
-            Container(),
+            Padding(
+                padding: EdgeInsets.all(12),
+                child: Row(
+                  children: [
+                    CircleAvatar(foregroundImage: NetworkImage(imageURL!)),
+                    SizedBox(
+                      width: getProportionateScreenWidth(10),
+                    ),
+                    Text(
+                      caption!,
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0), fontSize: 18),
+                    ),
+                    const Spacer(),
+                    IconButton(
+                      icon: const Icon(Icons.close,
+                          color: Color.fromARGB(255, 0, 0, 0)),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  ],
+                )),
             Container(
               color: Color.fromARGB(255, 0, 0, 0),
               height: setHeight(31),
               child: Image.network(
-                "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+                imageURL!,
                 fit: BoxFit.contain,
               ),
             ),
