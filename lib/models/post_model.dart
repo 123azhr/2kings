@@ -19,9 +19,9 @@ class PostModel with ChangeNotifier {
       {required Map<String, dynamic> map, required String postID}) {
     return PostModel(
         postID: postID,
-        userID: map["post_userID"],
-        postedTime: map["post_date"].toDate(),
-        imageURL: map["post_imgVideo"],
+        userID: map["userID"],
+        postedTime: map["date"].toDate(),
+        imageURL: map["imgVideo"],
         userName: map["userName"],
         caption: map["caption"]);
   }

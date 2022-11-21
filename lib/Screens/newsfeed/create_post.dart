@@ -32,11 +32,49 @@ class _CreatePostState extends State<CreatePost> {
     });
   }
 
+  uploadBlog() async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final loggedInUser = userProvider.getCurrentUser();
+    final postProvider = Provider.of<PostProvider>(context, listen: false);
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: ((context) => const Center(child: CircularProgressIndicator())),
+    );
+    try {
+      DateTime date = DateTime.now();
+      String imageURL = await postProvider.uploadImageToStorage(
+          imagePath: _imagePath,
+          imageType: "posts",
+          userID: loggedInUser.userID);
+
+      await postProvider.uploadImageDataToFireStore(
+        imageURL: imageURL,
+        userID: loggedInUser.userID,
+        userName: loggedInUser.name,
+        date: date,
+        caption: "",
+      );
+
+      // await postProvider.fetch();
+      Navigator.pop(context);
+      Navigator.pop(context);
+
+      // Future.delayed(const Duration(milliseconds: 0)).then((value) async {
+      //   await postProvider.fetch();
+      // });
+    } on FirebaseException catch (e) {
+      print(e.message);
+      print(e.code);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
-    final loggedInUser =
-        userProvider.getUserByID(FirebaseAuth.instance.currentUser!.uid);
+    final loggedInUser = userProvider.getCurrentUser();
     final postProvider = Provider.of<PostProvider>(context);
     return SafeArea(
       child: Scaffold(
@@ -91,21 +129,21 @@ class _CreatePostState extends State<CreatePost> {
                           Size(setWidth(5), setHeight(5)),
                         ),
                       ),
-                      onPressed: () {
-                        Future<String?> imageURL =
-                            postProvider.uploadImageToStorage(
-                                imagePath: _imagePath,
-                                imageType: "posts",
-                                userID: loggedInUser.userID);
-                        postProvider.uploadImageDataToFireStore(
-                            imageURL: imageURL.toString(),
-                            userID: loggedInUser.userID,
-                            userName: loggedInUser.name);
-                        Navigator.pop(context);
-                        Future.delayed(const Duration(milliseconds: 0))
-                            .then((value) async {
-                          await postProvider.fetch();
-                        });
+                      onPressed: () async {
+                        // String imageURL = postProvider.uploadImageToStorage(
+                        //     imagePath: _imagePath,
+                        //     imageType: "posts",
+                        //     userID: loggedInUser.userID);
+                        // postProvider.uploadImageDataToFireStore(
+                        //     imageURL: imageURL,
+                        //     userID: loggedInUser.userID,
+                        //     userName: loggedInUser.name);
+                        await uploadBlog();
+                        // Navigator.pop(context);
+                        // Future.delayed(const Duration(milliseconds: 0))
+                        //     .then((value) async {
+                        //   await postProvider.fetch();
+                        // });
                       },
                       child: Text("Post",
                           style:

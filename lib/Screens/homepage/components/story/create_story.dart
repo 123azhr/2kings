@@ -44,7 +44,7 @@ class _CreateStoryState extends State<CreateStory> {
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
     final loggedInUser =
-        userProvider.getUserByID(FirebaseAuth.instance.currentUser!.uid);
+        userProvider.getCurrentUser();
     final storyProvider = Provider.of<StoryProvider>(context);
     return SafeArea(
       child: Scaffold(
@@ -100,15 +100,12 @@ class _CreateStoryState extends State<CreateStory> {
                         ),
                       ),
                       onPressed: () {
-                         
-                        var imageURL =
-                              storyProvider.uploadImageToStorage(
-                                imagePath: _imagePath,
-                                userID: loggedInUser.userID);
+                        var imageURL = storyProvider.uploadImageToStorage(
+                            imagePath: _imagePath, userID: loggedInUser.userID);
                         print(imageURL);
-                        
+
                         storyProvider.uploadImageDataToFireStore(
-                            imageURL:  imageURL.toString(),
+                            imageURL: imageURL.toString(),
                             userID: loggedInUser.userID,
                             userName: loggedInUser.name);
                         Navigator.pop(context);

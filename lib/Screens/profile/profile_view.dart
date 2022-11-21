@@ -14,7 +14,7 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
-    final user = userProvider.getUserByID(userID!);
+    final user = userProvider.getCurrentUser(); //updateReq
     final postProvider = Provider.of<PostProvider>(context);
     final postsList = postProvider.getPostByID(user.userID!);
     // final postsList = postProvider.getList;

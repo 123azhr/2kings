@@ -28,7 +28,7 @@ class HomeServices extends StatelessWidget {
       return tempList;
     }
 
-    List<ServiceModel> _allService(String serviceName) {
+    List<ServiceModel> _allService(String serviceID) {
       List<ServiceModel> tempList = List<ServiceModel>.generate(
         0,
         (index) => serviceList.first,
@@ -36,7 +36,7 @@ class HomeServices extends StatelessWidget {
 
       for (int i = 0; i < serviceList.length; i++) {
         if (serviceList[i].serviceCategroy == true &&
-            serviceList[i].serviceName == serviceName) {
+            serviceList[i].serviceID == serviceID) {
           tempList.add(serviceList[i]);
         }
       }

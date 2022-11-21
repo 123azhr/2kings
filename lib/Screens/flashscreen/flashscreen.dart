@@ -5,6 +5,7 @@ import 'package:housecontractors/providers/post_provider.dart';
 import 'package:housecontractors/providers/worker_provider.dart';
 import 'package:provider/provider.dart';
 import '../../providers/chat_provider.dart';
+import '../../providers/current_user_provider.dart';
 import '../../providers/service_provider.dart';
 import '../../providers/story_provider.dart';
 import '../../providers/user_provider.dart';
@@ -21,17 +22,20 @@ class _FlashScreenState extends State<FlashScreen> {
   @override
   void initState() {
     loadData();
-    super.initState(); 
+    super.initState();
   }
 
   loadData() async {
-    await Future.delayed(const Duration(milliseconds: 0))
-        .then((value) async {
+    await Future.delayed(const Duration(milliseconds: 0)).then((value) async {
       final postProvider = Provider.of<PostProvider>(context, listen: false);
       await postProvider.fetch();
 
       final userProvider = Provider.of<UserProvider>(context, listen: false);
       await userProvider.fetch();
+
+      final currentUserProvider =
+          Provider.of<CurrentUserProvider>(context, listen: false);
+      await currentUserProvider.fetch();
 
       final serviceProvider =
           Provider.of<ServiceProvider>(context, listen: false);

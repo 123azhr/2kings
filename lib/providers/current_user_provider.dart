@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import '../models/user_model.dart';
+import '../models/current_user.dart';
 
-class UserProvider with ChangeNotifier {
-  List<UserModel> _list = [];
+class CurrentUserProvider with ChangeNotifier {
+  List<CurrentUserModel> _list = [];
 
-  List<UserModel> get getList => _list;
+  List<CurrentUserModel> get getList => _list;
 
   Future<void> fetch() async {
     await FirebaseFirestore.instance
@@ -17,13 +17,13 @@ class UserProvider with ChangeNotifier {
         .then((DocumentSnapshot snapshot) {
       _list = [];
       Map<String, dynamic> dataMap = snapshot.data() as Map<String, dynamic>;
-      _list.insert(
-          0, UserModel.fromMap(map: dataMap, userID: snapshot.id.trim()));
+      _list.insert(0,
+          CurrentUserModel.fromMap(map: dataMap, userID: snapshot.id.trim()));
     });
     notifyListeners();
   }
 
-  UserModel getCurrentUser() {
+  CurrentUserModel getCurrentUser() {
     return _list
         .where((element) =>
             element.userID!.trim() == "XFVuGYHjDAQtJeew6OVxKraVqQ73")

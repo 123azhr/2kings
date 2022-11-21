@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../helper/size_configuration.dart';
@@ -41,10 +42,12 @@ class PostItem extends StatelessWidget {
                 color: Color.fromARGB(255, 0, 0, 0),
                 height: setHeight(31),
                 width: setWidth(100),
-                child: Image.network(
-                  "$imageURL",
-                  fit: BoxFit.fitWidth,
-                ),
+                // child: Image.network(
+                //   "$imageURL",
+                //   fit: BoxFit.fitWidth,
+                // ),
+                child: CachedNetworkImage(
+                    imageUrl: imageURL!, fit: BoxFit.fitWidth),
               ),
             ],
           ),

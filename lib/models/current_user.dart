@@ -1,44 +1,47 @@
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter/cupertino.dart';
-// import 'package:housecontractors/models/user_model.dart';
-// import 'package:housecontractors/providers/user_provider.dart';
-// import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
 
-// class My {
-//   final String? userID = UserProvider()
-//       .getUserByID(FirebaseAuth.instance.currentUser!.uid)
-//       .userID!;
-//   final String? email = UserProvider()
-//       .getUserByID(FirebaseAuth.instance.currentUser!.uid)
-//       .email!;
-//   final String? password = UserProvider()
-//       .getUserByID(FirebaseAuth.instance.currentUser!.uid)[0]
-//       .password!;
-//   final bool? status = UserProvider()
-//       .getUserByID(FirebaseAuth.instance.currentUser!.uid)[0]
-//       .status;
-//   final List? rating = UserProvider()
-//       .getUserByID(FirebaseAuth.instance.currentUser!.uid)[0]
-//       .rating!;
-//   final List? services = UserProvider()
-//       .getUserByID(FirebaseAuth.instance.currentUser!.uid)[0]
-//       .services!;
-//   final String? profileImageURL = UserProvider()
-//       .getUserByID(FirebaseAuth.instance.currentUser!.uid)[0]
-//       .profileImageURL!;
-//   final bool? gender = UserProvider()
-//       .getUserByID(FirebaseAuth.instance.currentUser!.uid)[0]
-//       .gender!;
-//   final String? name = UserProvider()
-//       .getUserByID(FirebaseAuth.instance.currentUser!.uid)[0]
-//       .name!;
-//   final String? contactNumber = UserProvider()
-//       .getUserByID(FirebaseAuth.instance.currentUser!.uid)[0]
-//       .contactNumber!;
-//   final String? cnic = UserProvider()
-//       .getUserByID(FirebaseAuth.instance.currentUser!.uid)[0]
-//       .cnic!;
-//   final DateTime? createdDate = UserProvider()
-//       .getUserByID(FirebaseAuth.instance.currentUser!.uid)[0]
-//       .createdDate!;
-// }
+class CurrentUserModel with ChangeNotifier {
+  final String? userID;
+  final String? email;
+  final String? password;
+  final bool? status;
+  final List? rating;
+  final List? services;
+  final String? profileImageURL;
+  final bool? gender;
+  final String? name;
+  final String? contactNumber;
+  final String? cnic;
+  final DateTime? createdDate;
+  CurrentUserModel({
+    this.cnic,
+    this.status,
+    this.createdDate,
+    this.userID,
+    this.name,
+    this.email,
+    this.password,
+    this.rating,
+    this.services,
+    this.profileImageURL,
+    this.gender,
+    this.contactNumber,
+  });
+  factory CurrentUserModel.fromMap(
+      {required Map<String, dynamic> map, required String userID}) {
+    return CurrentUserModel(
+      userID: userID,
+      cnic: map["cnic"],
+      name: map["name"],
+      email: map["email"],
+      rating: map["rating"],
+      services: map["services"],
+      profileImageURL: map["profileImageURL"],
+      gender: map["gender"],
+      contactNumber: map["contactNumber"],
+      password: map["password"],
+      status: map["status"],
+      createdDate: map["createdDate"].toDate(),
+    );
+  }
+}

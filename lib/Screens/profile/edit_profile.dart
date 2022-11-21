@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:housecontractors/Screens/profile/edit_services.dart';
 import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
 import '../../providers/user_provider.dart';
@@ -81,8 +83,7 @@ class EditProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
-    final loggedInUser =
-        userProvider.getUserByID(FirebaseAuth.instance.currentUser!.uid);
+    final loggedInUser = userProvider.getCurrentUser();
     SizeConfig().init(context);
 
     return SafeArea(

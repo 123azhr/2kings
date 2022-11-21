@@ -1,5 +1,13 @@
+import 'dart:io';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
+import 'package:housecontractors/providers/user_provider.dart';
+import 'package:housecontractors/providers/worker_provider.dart';
+import 'package:housecontractors/widgets/mycontainer.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import '../../widgets/bottom_modal_sheet.dart';
 
 class AddWorker extends StatefulWidget {
@@ -13,15 +21,34 @@ class AddWorker extends StatefulWidget {
 }
 
 class _AddWorkerState extends State<AddWorker> {
+  String _imagePath = "";
+  File? _selectedImageFile;
+  bool? _isProductImageSelected = true;
+
   TextEditingController nameController = TextEditingController();
   TextEditingController genderController = TextEditingController();
   TextEditingController contactController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController skillController = TextEditingController();
+  TextEditingController experienceController = TextEditingController();
+  TextEditingController serviceController = TextEditingController();
+  TextEditingController cnicController = TextEditingController();
+
+  void pickImage() async {
+    final ImagePicker _picker = ImagePicker();
+    final _image = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _selectedImageFile = File(_image!.path);
+      _imagePath = _image.path;
+      _isProductImageSelected = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
+    final userProvider = Provider.of<UserProvider>(context);
+    final loggedInUser =
+        userProvider.getCurrentUser();
+    final workerProvider = Provider.of<WorkerProvider>(context);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -40,6 +67,33 @@ class _AddWorkerState extends State<AddWorker> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            _selectedImageFile != null
+                ? Stack(
+                    children: [
+                      MyContainer(
+                        width: setWidth(90),
+                        height: setHeight(30),
+                        child: Image.file(_selectedImageFile!),
+                      ),
+                      FloatingActionButton(
+                          onPressed: () {
+                            _selectedImageFile = null;
+                            setState(() {});
+                          },
+                          child: Icon(Icons.cancel),
+                          mini: true),
+                    ],
+                  )
+                : MyContainer(
+                    height: setHeight(30),
+                    child: InkWell(
+                        child: const Icon(Icons.add_a_photo),
+                        onTap: () {
+                          pickImage();
+                          print(_imagePath);
+                        }),
+                    width: setWidth(90),
+                  ),
             ListTile(
               leading: Text(
                 "Name:     ",
@@ -71,13 +125,13 @@ class _AddWorkerState extends State<AddWorker> {
             ),
             ListTile(
               leading: Text(
-                "Skill:",
+                "Experience:",
                 style: TextStyle(
                     fontSize: getProportionateScreenHeight(20),
                     fontWeight: FontWeight.bold),
               ),
               title: Text(
-                "     Work",
+                "     details",
                 style: TextStyle(
                   fontSize: getProportionateScreenHeight(20),
                 ),
@@ -185,6 +239,35 @@ class _AddWorkerState extends State<AddWorker> {
               thickness: getProportionateScreenHeight(0.2),
               color: Colors.black,
             ),
+            ListTile(
+              leading: Text(
+                "CNIC:   ",
+                style: TextStyle(
+                    fontSize: getProportionateScreenHeight(20),
+                    fontWeight: FontWeight.bold),
+              ),
+              title: Text(
+                "email",
+                style: TextStyle(
+                  fontSize: getProportionateScreenHeight(20),
+                ),
+              ),
+              trailing: Icon(
+                Icons.edit,
+                size: getProportionateScreenHeight(20),
+              ),
+              onTap: () => customBottomModalSheet(
+                context: context,
+                hight: 356,
+                controller: nameController,
+                title: "Change Email",
+                hintText: "example@gmail.com",
+              ),
+            ),
+            Divider(
+              thickness: getProportionateScreenHeight(0.2),
+              color: Colors.black,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -213,7 +296,20 @@ class _AddWorkerState extends State<AddWorker> {
                       Size(setWidth(30), setHeight(6)),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    var imageURL = workerProvider.uploadWorkerImageToStorage(
+                        imagePath: _imagePath, userID: loggedInUser.userID);
+                    print(imageURL);
+
+                    workerProvider.uploadWorkerImageToStorage(
+                        userID: loggedInUser.userID,
+                        imagePath: imageURL.toString());
+                    Navigator.pop(context);
+                    Future.delayed(const Duration(milliseconds: 0))
+                        .then((value) async {
+                      await workerProvider.fetch();
+                    });
+                  },
                   child: Text("Save",
                       style: TextStyle(fontSize: 18, color: Colors.black87)),
                 ),

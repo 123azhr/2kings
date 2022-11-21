@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/login.dart';
 import 'package:housecontractors/Screens/profile/edit_profile.dart';
+import 'package:housecontractors/Screens/profile/edit_services.dart';
 import 'package:housecontractors/models/current_user.dart';
 import 'package:housecontractors/providers/authentication_provider.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,7 @@ class Menu extends StatelessWidget {
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
     final loggedInUser =
-        userProvider.getUserByID(FirebaseAuth.instance.currentUser!.uid);
+        userProvider.getCurrentUser();
     return Scaffold(
       appBar: AppBar(
         leadingWidth: getProportionateScreenWidth(40),
@@ -82,7 +83,7 @@ class Menu extends StatelessWidget {
             visualDensity: VisualDensity(vertical: 4),
             dense: true,
             leading: CircleAvatar(
-              child: Icon(Icons.edit_rounded),
+              child: Icon(Icons.person),
             ),
             title: Text(
               "Edit Profile",
@@ -115,16 +116,20 @@ class Menu extends StatelessWidget {
               visualDensity: VisualDensity(vertical: 4),
               dense: true,
               leading: CircleAvatar(
-                child: Icon(Icons.logout),
+                child: Icon(Icons.construction),
               ),
               title: Text(
-                "Logout",
+                "Edit Services",
                 style: TextStyle(
                   fontSize: 18,
                 ),
               ),
               onTap: () {
-                context.read<AuthenticationService>().signOut();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditServices(),
+                    ));
               },
             ),
           ),
@@ -227,7 +232,8 @@ class Menu extends StatelessWidget {
             endIndent: 0,
             color: Colors.black,
             height: 0,
-          ),InkWell(
+          ),
+          InkWell(
             onTap: () {
               Navigator.pushReplacement(
                 context,
@@ -257,7 +263,8 @@ class Menu extends StatelessWidget {
             endIndent: 0,
             color: Colors.black,
             height: 0,
-          ),InkWell(
+          ),
+          InkWell(
             onTap: () {
               Navigator.pushReplacement(
                 context,

@@ -36,9 +36,7 @@ class Stories extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return ChangeNotifierProvider.value(
                       value: storyList[index],
-                      child: StoryTile(
-                          user: userProvider
-                              .getUserByID(storyList[index].userID!)),
+                      child: StoryTile(user: userProvider.getCurrentUser()),
                     );
                   }),
             ),

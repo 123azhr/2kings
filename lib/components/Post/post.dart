@@ -14,7 +14,7 @@ class Post extends StatelessWidget {
   Widget build(BuildContext context) {
     final postModel = Provider.of<PostModel>(context);
     final userProvider = Provider.of<UserProvider>(context);
-    final user = userProvider.getUserByID(postModel.userID!);
+    final user = userProvider.getCurrentUser();
     return Card(
       color: const Color.fromARGB(255, 255, 230, 149),
       child: Column(

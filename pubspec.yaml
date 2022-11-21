@@ -51,6 +51,7 @@ dependencies:
   permission_handler:
   image_picker: ^0.8.5
   firebase_messaging: ^13.1.0
+  cached_network_image: ^3.2.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
