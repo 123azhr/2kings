@@ -1,10 +1,10 @@
 import 'dart:io';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/widgets/mycontainer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import '../../../../helper/size_configuration.dart';
 import '../../../../providers/story_provider.dart';
 import '../../../../providers/user_provider.dart';
@@ -21,30 +21,66 @@ class _CreateStoryState extends State<CreateStory> {
   File? _selectedImageFile;
   bool? _isProductImageSelected = true;
 
+  void pickImage() async {
+    final ImagePicker _picker = ImagePicker();
+    final _image = await _picker.pickImage(source: ImageSource.gallery);
+    if (_selectedImageFile != null) {
+      setState(() {
+        _selectedImageFile = File(_image!.path);
+        _imagePath = _image.path;
+        _isProductImageSelected = true;
+      });
+    }
+  }
+
   @override
   initState() {
     pickImage();
-    print(_imagePath);
     // this is called when the class is initialized or called for the first time
     super
         .initState(); //  this is the material super constructor for init state to link your instance initState to the global initState context
   }
 
-  void pickImage() async {
-    final ImagePicker _picker = ImagePicker();
-    final _image = await _picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _selectedImageFile = File(_image!.path);
-      _imagePath = _image.path;
-      _isProductImageSelected = true;
-    });
+  uploadStory() async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final loggedInUser = userProvider.getCurrentUser();
+    final storyProvider = Provider.of<StoryProvider>(context, listen: false);
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: ((context) => const Center(child: CircularProgressIndicator())),
+    );
+    try {
+      DateTime date = DateTime.now();
+      String? imageURL = await storyProvider.uploadImageToStorage(
+          imagePath: _imagePath, userID: loggedInUser.userID);
+
+      await storyProvider.uploadImageDataToFireStore(
+        imageURL: imageURL,
+        userID: loggedInUser.userID,
+        userName: loggedInUser.name,
+        caption: "",
+      );
+
+      await storyProvider.fetch();
+      Navigator.pop(context);
+      Navigator.pop(context);
+
+      // Future.delayed(const Duration(milliseconds: 0)).then((value) async {
+      //   await postProvider.fetch();
+      // });
+    } on FirebaseException catch (e) {
+      print(e.message);
+      print(e.code);
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
-    final loggedInUser =
-        userProvider.getCurrentUser();
+    final loggedInUser = userProvider.getCurrentUser();
     final storyProvider = Provider.of<StoryProvider>(context);
     return SafeArea(
       child: Scaffold(
@@ -77,7 +113,7 @@ class _CreateStoryState extends State<CreateStory> {
                       height: getProportionateScreenHeight(60),
                       width: getProportionateScreenWidth(80),
                       child: const CircleAvatar(
-                        backgroundImage: NetworkImage(
+                        backgroundImage: CachedNetworkImageProvider(
                             "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"),
                       ),
                     ),
@@ -100,19 +136,20 @@ class _CreateStoryState extends State<CreateStory> {
                         ),
                       ),
                       onPressed: () {
-                        var imageURL = storyProvider.uploadImageToStorage(
-                            imagePath: _imagePath, userID: loggedInUser.userID);
-                        print(imageURL);
+                        // var imageURL = storyProvider.uploadImageToStorage(
+                        //     imagePath: _imagePath, userID: loggedInUser.userID);
+                        // print(imageURL);
 
-                        storyProvider.uploadImageDataToFireStore(
-                            imageURL: imageURL.toString(),
-                            userID: loggedInUser.userID,
-                            userName: loggedInUser.name);
-                        Navigator.pop(context);
-                        Future.delayed(const Duration(milliseconds: 0))
-                            .then((value) async {
-                          await storyProvider.fetch();
-                        });
+                        // storyProvider.uploadImageDataToFireStore(
+                        //     imageURL: imageURL.toString(),
+                        //     userID: loggedInUser.userID,
+                        //     userName: loggedInUser.name);
+                        // Navigator.pop(context);
+                        // Future.delayed(const Duration(milliseconds: 0))
+                        //     .then((value) async {
+                        //   await storyProvider.fetch();
+                        // });
+                        uploadStory();
                       },
                       child: Text("Share",
                           style:
@@ -121,15 +158,32 @@ class _CreateStoryState extends State<CreateStory> {
                   ],
                 ),
                 _selectedImageFile != null
-                    ? MyContainer(
-                        width: setWidth(100),
-                        height: setHeight(40),
-                        child: Image.file(_selectedImageFile!),
+                    ? Stack(
+                        alignment: AlignmentDirectional.topEnd,
+                        children: [
+                          MyContainer(
+                            width: setWidth(100),
+                            height: setHeight(40),
+                            child: Image.file(_selectedImageFile!),
+                          ),
+                          FloatingActionButton(
+                              onPressed: () {
+                                setState(() {
+                                  _selectedImageFile = null;
+                                });
+                              },
+                              child: Icon(Icons.cancel),
+                              isExtended: false,
+                              mini: true),
+                        ],
                       )
                     : MyContainer(
                         height: setHeight(40),
                         child: InkWell(
-                            child: const Icon(Icons.add_a_photo), onTap: () {}),
+                            child: const Icon(Icons.add_a_photo),
+                            onTap: () {
+                              pickImage();
+                            }),
                         width: setWidth(100),
                       ),
                 TextFormField(

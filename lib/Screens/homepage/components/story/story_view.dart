@@ -29,15 +29,16 @@ class _StoryViewState extends State<StoryView>
       vsync: this,
       duration: const Duration(seconds: 5),
     )..addListener(() {
-        setState(() {});
+        setState(() {
+          if (controller.value >= 0.999) {
+            controller.reset();
+          }
+        });
       });
     controller.repeat().whenCompleteOrCancel(() {
       Navigator.pop(context);
-      controller.dispose();
     });
-    Future.delayed(const Duration(seconds: 5)).then((value) async {
-      controller.stop();
-    });
+    Future.delayed(const Duration(seconds: 5)).then((value) async {});
 
     // controller.repeat().whenCompleteOrCancel(() {
 
@@ -48,10 +49,11 @@ class _StoryViewState extends State<StoryView>
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/widgets/mycontainer.dart';
@@ -25,14 +26,16 @@ class _CreatePostState extends State<CreatePost> {
   void pickImage() async {
     final ImagePicker _picker = ImagePicker();
     final _image = await _picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _selectedImageFile = File(_image!.path);
-      _imagePath = _image.path;
-      _isProductImageSelected = true;
-    });
+    if (_selectedImageFile != null) {
+      setState(() {
+        _selectedImageFile = File(_image!.path);
+        _imagePath = _image.path;
+        _isProductImageSelected = true;
+      });
+    }
   }
 
-  uploadBlog() async {
+  uploadPost() async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     final loggedInUser = userProvider.getCurrentUser();
     final postProvider = Provider.of<PostProvider>(context, listen: false);
@@ -56,7 +59,7 @@ class _CreatePostState extends State<CreatePost> {
         caption: "",
       );
 
-      // await postProvider.fetch();
+      await postProvider.fetch();
       Navigator.pop(context);
       Navigator.pop(context);
 
@@ -107,7 +110,7 @@ class _CreatePostState extends State<CreatePost> {
                       height: getProportionateScreenHeight(60),
                       width: getProportionateScreenWidth(80),
                       child: const CircleAvatar(
-                        backgroundImage: NetworkImage(
+                        backgroundImage: CachedNetworkImageProvider(
                             "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"),
                       ),
                     ),
@@ -138,7 +141,7 @@ class _CreatePostState extends State<CreatePost> {
                         //     imageURL: imageURL,
                         //     userID: loggedInUser.userID,
                         //     userName: loggedInUser.name);
-                        await uploadBlog();
+                        await uploadPost();
                         // Navigator.pop(context);
                         // Future.delayed(const Duration(milliseconds: 0))
                         //     .then((value) async {
@@ -152,11 +155,12 @@ class _CreatePostState extends State<CreatePost> {
                   ],
                 ),
                 _selectedImageFile != null
-                    ? MyContainer(
-                        width: setWidth(100),
-                        height: setHeight(40),
-                        child: Image.file(_selectedImageFile!),
-                      )
+                    ? Stack(alignment: AlignmentDirectional.topEnd, children: [
+                        MyContainer(
+                            width: setWidth(100),
+                            height: setHeight(40),
+                            child: Image.file(_selectedImageFile!))
+                      ])
                     : MyContainer(
                         height: setHeight(40),
                         child: InkWell(
