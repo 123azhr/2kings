@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/profile/edit_services.dart';
 import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
+import '../../providers/current_user_provider.dart';
 import '../../providers/user_provider.dart';
 import 'my_profile_fields.dart';
 
@@ -82,7 +83,7 @@ class EditProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context);
+    final userProvider = Provider.of<CurrentUserProvider>(context);
     final loggedInUser = userProvider.getCurrentUser();
     SizeConfig().init(context);
 

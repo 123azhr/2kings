@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:housecontractors/models/current_user.dart';
 import 'package:provider/provider.dart';
 
 import '../../helper/size_configuration.dart';
 import '../../models/service_model.dart';
 import '../../models/user_model.dart';
+import '../../providers/current_user_provider.dart';
 import '../../providers/service_provider.dart';
 import '../../providers/user_provider.dart';
 
@@ -148,8 +150,8 @@ class _WorkerSlideState extends State<WorkerSlide> {
   @override
   Widget build(BuildContext context) {
     final serviceModel = Provider.of<ServiceModel>(context);
-    final userProvider = Provider.of<UserProvider>(context);
-    UserModel user = userProvider.getCurrentUser();
+    final userProvider = Provider.of<CurrentUserProvider>(context);
+    CurrentUserModel user = userProvider.getCurrentUser();
     bool? initialValue = user.services!.contains(serviceModel.serviceName!);
 
     return Card(

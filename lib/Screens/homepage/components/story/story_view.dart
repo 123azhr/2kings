@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../../../helper/size_configuration.dart';
 
@@ -58,44 +59,59 @@ class _StoryViewState extends State<StoryView>
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Material(
-            color: Color.fromARGB(255, 255, 255, 255),
-            child: Center(
-              child: Stack(children: [
-                SizedBox(
-                  width: 10,
+        child: WillPopScope(
+      onWillPop: () async {
+        // Do something here
+        controller.reset();
+        return true;
+      },
+      child: Material(
+          color: Color.fromARGB(255, 255, 255, 255),
+          child: Center(
+            child: Stack(children: [
+              SizedBox(
+                width: 10,
+              ),
+              LinearProgressIndicator(
+                color: Color.fromARGB(255, 0, 0, 0),
+                backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                value: controller.value,
+              ),
+              Padding(
+                  padding: EdgeInsets.all(12),
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                          foregroundImage:
+                              CachedNetworkImageProvider(widget.userImgUrl!)),
+                      SizedBox(
+                        width: getProportionateScreenWidth(10),
+                      ),
+                      Text(
+                        widget.userName!,
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 0, 0, 0), fontSize: 18),
+                      ),
+                      const Spacer(),
+                      IconButton(
+                          icon: const Icon(Icons.close,
+                              color: Color.fromARGB(255, 0, 0, 0)),
+                          onPressed: () {
+                            controller.reset();
+                          })
+                    ],
+                  )),
+              SizedBox(
+                width: setWidth(100),
+                child: Center(
+                  child: Image.network(
+                    widget.itemURL!,
+                    fit: BoxFit.contain,
+                  ),
                 ),
-                LinearProgressIndicator(
-                  color: Color.fromARGB(255, 0, 0, 0),
-                  backgroundColor: Color.fromARGB(255, 255, 255, 255),
-                  value: controller.value,
-                ),
-                Padding(
-                    padding: EdgeInsets.all(12),
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                            foregroundImage: NetworkImage(widget.userImgUrl!)),
-                        SizedBox(
-                          width: getProportionateScreenWidth(10),
-                        ),
-                        Text(
-                          widget.userName!,
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 0, 0, 0),
-                              fontSize: 18),
-                        ),
-                        const Spacer(),
-                        IconButton(
-                            icon: const Icon(Icons.close,
-                                color: Color.fromARGB(255, 0, 0, 0)),
-                            onPressed: () {
-                              controller.reset();
-                            })
-                      ],
-                    )),
-                Container(child: Center(child: Image.network(widget.itemURL!))),
-              ]),
-            )));
+              ),
+            ]),
+          )),
+    ));
   }
 }

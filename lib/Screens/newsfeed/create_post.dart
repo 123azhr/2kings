@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../../helper/size_configuration.dart';
+import '../../providers/current_user_provider.dart';
 import '../../providers/post_provider.dart';
 import '../../providers/user_provider.dart';
 
@@ -26,7 +27,7 @@ class _CreatePostState extends State<CreatePost> {
   void pickImage() async {
     final ImagePicker _picker = ImagePicker();
     final _image = await _picker.pickImage(source: ImageSource.gallery);
-    if (_selectedImageFile != null) {
+    if (_image?.path != null) {
       setState(() {
         _selectedImageFile = File(_image!.path);
         _imagePath = _image.path;
@@ -36,7 +37,8 @@ class _CreatePostState extends State<CreatePost> {
   }
 
   uploadPost() async {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final userProvider =
+        Provider.of<CurrentUserProvider>(context, listen: false);
     final loggedInUser = userProvider.getCurrentUser();
     final postProvider = Provider.of<PostProvider>(context, listen: false);
     showDialog(
@@ -76,7 +78,7 @@ class _CreatePostState extends State<CreatePost> {
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context);
+    final userProvider = Provider.of<CurrentUserProvider>(context);
     final loggedInUser = userProvider.getCurrentUser();
     final postProvider = Provider.of<PostProvider>(context);
     return SafeArea(

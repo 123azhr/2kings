@@ -8,6 +8,7 @@ import 'package:housecontractors/providers/authentication_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../helper/size_configuration.dart';
+import '../../providers/current_user_provider.dart';
 import '../../providers/user_provider.dart';
 import '../profile/my_profile_view.dart';
 
@@ -17,9 +18,8 @@ class Menu extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context);
-    final loggedInUser =
-        userProvider.getCurrentUser();
+    final userProvider = Provider.of<CurrentUserProvider>(context);
+    final loggedInUser = userProvider.getCurrentUser();
     return Scaffold(
       appBar: AppBar(
         leadingWidth: getProportionateScreenWidth(40),

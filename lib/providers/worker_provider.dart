@@ -57,7 +57,7 @@ class WorkerProvider with ChangeNotifier {
     });
   }
 
-  Future<String?> uploadWorkerImageToStorage({
+  Future<String> uploadWorkerImageToStorage({
     required String? imagePath,
     required String? userID,
   }) async {
@@ -68,7 +68,7 @@ class WorkerProvider with ChangeNotifier {
         .ref()
         .child("images")
         .child(userID!)
-        .child("workers")
+        .child("workersImages")
         .child(_imageBaseName);
     await imageReference.putFile(imageFile);
     String getImageUrl = await imageReference.getDownloadURL();
@@ -85,7 +85,7 @@ class WorkerProvider with ChangeNotifier {
         .ref()
         .child("images")
         .child(userID!)
-        .child("workers")
+        .child("workersImages")
         .child(imageName)
         .delete();
     notifyListeners();

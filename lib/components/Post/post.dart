@@ -5,6 +5,7 @@ import 'package:housecontractors/components/Post/post_item.dart';
 import 'package:housecontractors/models/post_model.dart';
 import 'package:provider/provider.dart';
 
+import '../../providers/current_user_provider.dart';
 import '../../providers/user_provider.dart';
 
 class Post extends StatelessWidget {
@@ -13,7 +14,7 @@ class Post extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final postModel = Provider.of<PostModel>(context);
-    final userProvider = Provider.of<UserProvider>(context);
+    final userProvider = Provider.of<CurrentUserProvider>(context);
     final user = userProvider.getCurrentUser();
     return Card(
       color: const Color.fromARGB(255, 255, 230, 149),

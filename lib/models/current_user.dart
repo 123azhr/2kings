@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class CurrentUserModel with ChangeNotifier {
   final String? userID;
   final String? email;
-  final String? password;
   final bool? status;
   final List? rating;
   final List? services;
@@ -20,7 +19,6 @@ class CurrentUserModel with ChangeNotifier {
     this.userID,
     this.name,
     this.email,
-    this.password,
     this.rating,
     this.services,
     this.profileImageURL,
@@ -39,7 +37,6 @@ class CurrentUserModel with ChangeNotifier {
       profileImageURL: map["profileImageURL"],
       gender: map["gender"],
       contactNumber: map["contactNumber"],
-      password: map["password"],
       status: map["status"],
       createdDate: map["createdDate"].toDate(),
     );

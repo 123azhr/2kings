@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:provider/provider.dart';
@@ -12,9 +13,12 @@ class WorkerTile extends StatelessWidget {
     final workerModel = Provider.of<WorkerModel>(context);
     return ListTile(
       onTap: () => worker_tile_details(context, workerModel),
-      leading: Image.network(
-        workerModel.profileImg!,
-        fit: BoxFit.contain,
+      leading: SizedBox(
+        height: 50,
+        width: 50,
+        child: CachedNetworkImage(
+          imageUrl: workerModel.profileImg!,
+        ),
       ),
       title: Text(workerModel.name!),
     );

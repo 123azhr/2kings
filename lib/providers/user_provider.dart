@@ -12,22 +12,25 @@ class UserProvider with ChangeNotifier {
         .collection("users")
         .doc("Y1DImckjzK5z2khAEi7o")
         .collection("contractors")
-        .doc("XFVuGYHjDAQtJeew6OVxKraVqQ73") //userID
         .get()
-        .then((DocumentSnapshot snapshot) {
+        .then((QuerySnapshot snapshot) {
       _list = [];
-      Map<String, dynamic> dataMap = snapshot.data() as Map<String, dynamic>;
-      _list.insert(
-          0, UserModel.fromMap(map: dataMap, userID: snapshot.id.trim()));
+      for (var documents in snapshot.docs) {
+        Map<String, dynamic> dataMap = documents.data() as Map<String, dynamic>;
+        _list.insert(
+            0, UserModel.fromMap(map: dataMap, userID: documents.id.trim()));
+      }
+      // Map<String, dynamic> dataMap =
+      //     snapshot.docs.data() as Map<String, dynamic>;
+      // _list.insert(
+      //     0, UserModel.fromMap(map: dataMap, userID: snapshot.id.trim()));
     });
     notifyListeners();
   }
 
-  UserModel getCurrentUser() {
+  UserModel getUserByID(String userID) {
     return _list
-        .where((element) =>
-            element.userID!.trim() == "XFVuGYHjDAQtJeew6OVxKraVqQ73")
-        .toList()
-        .elementAt(0);
+        .where((element) => element.userID!.trim() == userID.trim())
+        .first;
   }
 }

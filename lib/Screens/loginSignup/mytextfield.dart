@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MyTextField extends StatelessWidget {
-  MyTextField(
+  const MyTextField(
       {this.hintText = "",
       this.height = 65,
       required this.width,
@@ -23,6 +23,7 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      obscureText: obsecure,
       controller: controller,
       textAlign: TextAlign.start,
       style: TextStyle(

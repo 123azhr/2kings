@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/components/workers/Worker_list_tile.dart';
 import 'package:housecontractors/components/workers/add_workers.dart';
+import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../providers/worker_provider.dart';
@@ -39,7 +40,10 @@ class WorkersList extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: ListView.builder(
+      body: ListView.separated(
+          separatorBuilder: (context, index) => SizedBox(
+                height: setHeight(2),
+              ),
           scrollDirection: Axis.vertical,
           itemCount: workerList.length,
           physics: const BouncingScrollPhysics(),
@@ -61,7 +65,7 @@ class WorkersList extends StatelessWidget {
                 ctx: context),
           );
         },
-        tooltip: 'Increment',
+        tooltip: 'Add Workers',
         child: const Icon(Icons.add),
       ), // This,
     );

@@ -8,15 +8,23 @@ import '../../providers/authentication_provider.dart';
 import '../../providers/user_provider.dart';
 import 'mytextfield.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   Login({Key? key}) : super(key: key);
 
-  final emailController = TextEditingController();
-  final passController = TextEditingController();
+  @override
+  State<Login> createState() => _LoginState();
+}
 
+class _LoginState extends State<Login> {
+  final emailController = TextEditingController();
+
+  bool obsecureText = false;
+  final passController = TextEditingController();
+  @override
   void dispose() {
     emailController.dispose();
     passController.dispose();
+    super.dispose();
   }
 
   Future signIn() async {
@@ -28,9 +36,6 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-
-    final userProvider = Provider.of<UserProvider>(context);
-    final usersList = userProvider.getList;
     return Material(
       child: SingleChildScrollView(
         child: Column(children: [
@@ -59,11 +64,21 @@ class Login extends StatelessWidget {
           MyTextField(
             height: getProportionateScreenHeight(50),
             controller: passController,
-            obsecure: true,
+            obsecure: obsecureText,
             width: 300,
             radius: 20,
             hintText: "Password",
             color: const Color.fromARGB(255, 255, 239, 63),
+            leading: IconButton(
+              onPressed: () {
+                setState(() {
+                  obsecureText = !obsecureText;
+                });
+              },
+              icon: obsecureText
+                  ? const Icon(Icons.visibility_off)
+                  : const Icon(Icons.visibility),
+            ),
           ),
           SizedBox(
             height: getProportionateScreenHeight(30),

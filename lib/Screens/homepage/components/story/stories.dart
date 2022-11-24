@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/homepage/components/story/story_view.dart';
 import 'package:housecontractors/widgets/mycontainer.dart';
@@ -36,7 +37,9 @@ class Stories extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return ChangeNotifierProvider.value(
                       value: storyList[index],
-                      child: StoryTile(user: userProvider.getCurrentUser()),
+                      child: StoryTile(
+                          user: userProvider
+                              .getUserByID(storyList[index].userID!)),
                     );
                   }),
             ),
@@ -69,25 +72,49 @@ class StoryTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final storyModel = Provider.of<StoryModel>(context);
     final userModel = user;
-    return MyContainer(
-      height: setHeight(18),
-      width: setWidth(20),
-      image: NetworkImage(userModel.profileImageURL!),
-      child: InkWell(
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
-        onTap: () => Navigator.push(
-          context,
-          PageTransition(
-            type: PageTransitionType.bottomToTop,
-            child: StoryView(
-                itemURL: storyModel.imageURL!,
-                userImgUrl: userModel.profileImageURL!,
-                userName: userModel.name!),
-            duration: const Duration(milliseconds: 400),
+    return Stack(
+      children: [
+        MyContainer(
+          height: setHeight(18),
+          width: setWidth(20),
+          image: CachedNetworkImageProvider(userModel.profileImageURL!),
+          child: InkWell(
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
+            onTap: () => Navigator.push(
+              context,
+              PageTransition(
+                type: PageTransitionType.bottomToTop,
+                child: StoryView(
+                    itemURL: storyModel.imageURL!,
+                    userImgUrl: userModel.profileImageURL!,
+                    userName: userModel.name!),
+                duration: const Duration(milliseconds: 400),
+              ),
+            ),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
+              child: CachedNetworkImage(
+                imageUrl: storyModel.imageURL!,
+                fit: BoxFit.cover,
+                progressIndicatorBuilder: (context, url, progress) =>
+                    const Center(child: CircularProgressIndicator()),
+              ),
+            ),
           ),
         ),
-        child: Image.network(storyModel.imageURL!),
-      ),
+        Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(
+                getProportionateScreenWidth(100),
+              ),
+            ),
+          ),
+          child: CircleAvatar(
+              foregroundImage:
+                  CachedNetworkImageProvider(userModel.profileImageURL!)),
+        ),
+      ],
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:housecontractors/Screens/flashscreen/flashscreen.dart';
 import 'package:housecontractors/providers/chat_provider.dart';
 import 'package:housecontractors/providers/current_user_provider.dart';
@@ -49,6 +50,7 @@ Future<void> main() async {
   // );
   //   }
   // });
+
   runApp(const MyApp());
 //...
 }
@@ -58,6 +60,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return MultiProvider(
       providers: [
         Provider<AuthenticationService>(

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/components/workers/workers_list.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
@@ -92,7 +93,8 @@ class WorkerSlide extends StatelessWidget {
             SizedBox(
               height: getProportionateScreenHeight(70),
               child: Image(
-                image: NetworkImage(serviceModel.serviceimageURL!),
+                image:
+                    CachedNetworkImageProvider(serviceModel.serviceimageURL!),
                 fit: BoxFit.cover,
               ),
             ),

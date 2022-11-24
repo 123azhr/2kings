@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 
-customBottomModalSheet({
-  required BuildContext context,
-  required String? title,
-  required TextEditingController? controller,
-  required String? hintText,
-  double? hight = 220,
-}) {
+customBottomModalSheet(
+    {required BuildContext context,
+    required String? title,
+    required TextEditingController? controller,
+    required String? hintText,
+    double? hight = 220,
+    Widget? button}) {
   return showModalBottomSheet(
     backgroundColor: Colors.transparent,
     isScrollControlled: true,
@@ -65,8 +65,8 @@ customBottomModalSheet({
                   width: SizeConfig.screenWidth,
                   height: 50,
                   radius: 20,
-                  leading: Icon(Icons.arrow_right),
-                  controller: controller!,
+                  leading: button,
+                  controller: controller,
                   hintText: hintText,
                 ),
               ],

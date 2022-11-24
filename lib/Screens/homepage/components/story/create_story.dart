@@ -1,13 +1,14 @@
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:housecontractors/models/current_user.dart';
 import 'package:housecontractors/widgets/mycontainer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../../../helper/size_configuration.dart';
+import '../../../../providers/current_user_provider.dart';
 import '../../../../providers/story_provider.dart';
-import '../../../../providers/user_provider.dart';
 
 class CreateStory extends StatefulWidget {
   const CreateStory({super.key});
@@ -19,16 +20,14 @@ class CreateStory extends StatefulWidget {
 class _CreateStoryState extends State<CreateStory> {
   String _imagePath = "";
   File? _selectedImageFile;
-  bool? _isProductImageSelected = true;
 
   void pickImage() async {
     final ImagePicker _picker = ImagePicker();
     final _image = await _picker.pickImage(source: ImageSource.gallery);
-    if (_selectedImageFile != null) {
+    if (_image?.path != null) {
       setState(() {
         _selectedImageFile = File(_image!.path);
         _imagePath = _image.path;
-        _isProductImageSelected = true;
       });
     }
   }
@@ -42,8 +41,9 @@ class _CreateStoryState extends State<CreateStory> {
   }
 
   uploadStory() async {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final loggedInUser = userProvider.getCurrentUser();
+    CurrentUserProvider userProvider =
+        Provider.of<CurrentUserProvider>(context, listen: false);
+    CurrentUserModel loggedInUser = userProvider.getCurrentUser();
     final storyProvider = Provider.of<StoryProvider>(context, listen: false);
     showDialog(
       context: context,
@@ -51,7 +51,6 @@ class _CreateStoryState extends State<CreateStory> {
       builder: ((context) => const Center(child: CircularProgressIndicator())),
     );
     try {
-      DateTime date = DateTime.now();
       String? imageURL = await storyProvider.uploadImageToStorage(
           imagePath: _imagePath, userID: loggedInUser.userID);
 
@@ -79,8 +78,9 @@ class _CreateStoryState extends State<CreateStory> {
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context);
-    final loggedInUser = userProvider.getCurrentUser();
+    CurrentUserProvider userProvider =
+        Provider.of<CurrentUserProvider>(context);
+    CurrentUserModel loggedInUser = userProvider.getCurrentUser();
     final storyProvider = Provider.of<StoryProvider>(context);
     return SafeArea(
       child: Scaffold(

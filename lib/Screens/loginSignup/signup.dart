@@ -1,19 +1,39 @@
-import 'dart:ui';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/Main/dashboard.dart';
 import 'package:housecontractors/Screens/loginSignup/login.dart';
+import 'package:housecontractors/Screens/loginSignup/user_form.dart';
 import 'mytextfield.dart';
+import 'package:email_validator/email_validator.dart';
 
-class Signup extends StatelessWidget {
+// ignore: must_be_immutable
+class Signup extends StatefulWidget {
   Signup({Key? key}) : super(key: key);
+
+  @override
+  State<Signup> createState() => _SignupState();
+}
+
+class _SignupState extends State<Signup> {
+  bool emailError = false;
+
+  bool passError = false;
+
+  bool confirmError = false;
+
+  bool validateStructure(String value) {
+    String pattern =
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+    RegExp regExp = RegExp(pattern);
+    return regExp.hasMatch(value);
+  }
 
   final TextEditingController emailController = TextEditingController();
 
   final TextEditingController passController = TextEditingController();
 
   final TextEditingController cpassController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -34,7 +54,14 @@ class Signup extends StatelessWidget {
           width: 300,
           radius: 20,
           hintText: "Email",
-          color: Color.fromARGB(255, 255, 239, 63),
+          color: const Color.fromARGB(255, 255, 239, 63),
+        ),
+        Visibility(
+          visible: emailError,
+          child: const Text(
+            "Invalid Email",
+            style: TextStyle(color: Colors.red),
+          ),
         ),
         const SizedBox(
           height: 30,
@@ -44,9 +71,16 @@ class Signup extends StatelessWidget {
           width: 300,
           radius: 20,
           hintText: "Password",
-          color: Color.fromARGB(255, 255, 239, 63),
+          color: const Color.fromARGB(255, 255, 239, 63),
         ),
-        SizedBox(
+        Visibility(
+          visible: passError,
+          child: const Text(
+            "Invalid password",
+            style: TextStyle(color: Colors.red),
+          ),
+        ),
+        const SizedBox(
           height: 30,
         ),
         MyTextField(
@@ -54,9 +88,19 @@ class Signup extends StatelessWidget {
           width: 300,
           radius: 20,
           hintText: "Confirm Password",
-          color: Color.fromARGB(255, 255, 239, 63),
+          color: const Color.fromARGB(255, 255, 239, 63),
         ),
-        SizedBox(
+        Visibility(
+          visible: confirmError,
+          child: const Text(
+            "Type same password as above",
+            style: TextStyle(
+              color: Colors.red,
+            ),
+            textAlign: TextAlign.left,
+          ),
+        ),
+        const SizedBox(
           height: 30,
         ),
         RichText(
@@ -68,8 +112,8 @@ class Signup extends StatelessWidget {
               ),
               TextSpan(
                 text: 'login here',
-                style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.blue),
                 // ignore: avoid_print
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
@@ -82,7 +126,7 @@ class Signup extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 30,
         ),
         SizedBox(
@@ -90,24 +134,42 @@ class Signup extends StatelessWidget {
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               //background color of button
-              side: BorderSide(
+              side: const BorderSide(
                 width: 1,
               ), //border width and color
               elevation: 3, //elevation of button
               shape: RoundedRectangleBorder(
                   //to set border radius to button
                   borderRadius: BorderRadius.circular(30)),
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
 
               //content padding inside button
             ),
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => Dashboard()),
-              );
+              if (EmailValidator.validate(emailController.text) &&
+                  emailController.text.isNotEmpty) {
+                confirmError = false;
+                if (validateStructure(passController.text) &&
+                    passController.text.isNotEmpty) {
+                  passError = false;
+                  if (passController.text == cpassController.text &&
+                      cpassController.text.isNotEmpty) {
+                    confirmError = false;
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const UserForm()),
+                    );
+                  } else {
+                    confirmError = true;
+                  }
+                } else {
+                  passError = true;
+                }
+              } else {
+                emailError = true;
+              }
             },
-            child: Text("Signup"),
+            child: const Text("Signup"),
           ),
         )
       ]),

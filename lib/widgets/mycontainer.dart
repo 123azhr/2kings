@@ -30,7 +30,6 @@ class MyContainer extends StatelessWidget {
       child: Container(
           height: height,
           width: width,
-          
           decoration: BoxDecoration(
             color: (color != null) ? color : Colors.transparent,
             border: Border.all(),

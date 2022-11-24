@@ -5,6 +5,7 @@ import 'package:housecontractors/components/profile_header.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:housecontractors/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+import '../../providers/current_user_provider.dart';
 import '../../providers/post_provider.dart';
 import '../../widgets/chat_call_bottom_bar.dart';
 
@@ -13,7 +14,7 @@ class ProfileView extends StatelessWidget {
   final String? userID;
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context);
+    final userProvider = Provider.of<CurrentUserProvider>(context);
     final user = userProvider.getCurrentUser(); //updateReq
     final postProvider = Provider.of<PostProvider>(context);
     final postsList = postProvider.getPostByID(user.userID!);

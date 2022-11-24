@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:housecontractors/providers/user_provider.dart';
@@ -8,6 +9,8 @@ import 'package:housecontractors/providers/worker_provider.dart';
 import 'package:housecontractors/widgets/mycontainer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import '../../providers/current_user_provider.dart';
+import '../../providers/post_provider.dart';
 import '../../widgets/bottom_modal_sheet.dart';
 
 class AddWorker extends StatefulWidget {
@@ -23,42 +26,79 @@ class AddWorker extends StatefulWidget {
 class _AddWorkerState extends State<AddWorker> {
   String _imagePath = "";
   File? _selectedImageFile;
-  bool? _isProductImageSelected = true;
 
   TextEditingController nameController = TextEditingController();
-  TextEditingController genderController = TextEditingController();
+  String genderText = "";
   TextEditingController contactController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController experienceController = TextEditingController();
-  TextEditingController serviceController = TextEditingController();
   TextEditingController cnicController = TextEditingController();
+
+  uploadWokerData() async {
+    final userProvider =
+        Provider.of<CurrentUserProvider>(context, listen: false);
+    final loggedInUser = userProvider.getCurrentUser();
+    final workerProvider = Provider.of<WorkerProvider>(context, listen: false);
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: ((context) => const Center(child: CircularProgressIndicator())),
+    );
+    try {
+      String imageURL = await workerProvider.uploadWorkerImageToStorage(
+        imagePath: _imagePath,
+        userID: loggedInUser.userID,
+      );
+      await workerProvider.uploadWorkerDataToFireStore(
+        cnic: cnicController.text,
+        email: emailController.text,
+        experience: experienceController.text,
+        gender: genderText == "male" ? true : false,
+        name: nameController.text,
+        profileImg: imageURL,
+        userID: loggedInUser.userID,
+        status: true,
+        number: contactController.text,
+        service: widget.title,
+      );
+      await workerProvider.fetch();
+      Navigator.pop(context);
+      Navigator.pop(context);
+
+      // Future.delayed(const Duration(milliseconds: 0)).then((value) async {
+      //   await postProvider.fetch();
+      // });
+    } on FirebaseException catch (e) {
+      print(e.message);
+      print(e.code);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
   void pickImage() async {
     final ImagePicker _picker = ImagePicker();
     final _image = await _picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _selectedImageFile = File(_image!.path);
-      _imagePath = _image.path;
-      _isProductImageSelected = true;
-    });
+    if (_image?.path != null) {
+      setState(() {
+        _selectedImageFile = File(_image!.path);
+        _imagePath = _image.path;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context);
-    final loggedInUser =
-        userProvider.getCurrentUser();
-    final workerProvider = Provider.of<WorkerProvider>(context);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: const IconThemeData(color: Colors.black),
           elevation: 0,
           backgroundColor: Colors.yellow,
           centerTitle: true,
           title: Text(
             "Add " + widget.title,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontSize: (kToolbarHeight / 100) * 40,
             ),
@@ -80,7 +120,7 @@ class _AddWorkerState extends State<AddWorker> {
                             _selectedImageFile = null;
                             setState(() {});
                           },
-                          child: Icon(Icons.cancel),
+                          child: const Icon(Icons.cancel),
                           mini: true),
                     ],
                   )
@@ -90,35 +130,42 @@ class _AddWorkerState extends State<AddWorker> {
                         child: const Icon(Icons.add_a_photo),
                         onTap: () {
                           pickImage();
-                          print(_imagePath);
                         }),
                     width: setWidth(90),
                   ),
             ListTile(
-              leading: Text(
-                "Name:     ",
-                style: TextStyle(
-                    fontSize: getProportionateScreenHeight(20),
-                    fontWeight: FontWeight.bold),
-              ),
-              title: Text(
-                nameController.text,
-                style: TextStyle(
-                  fontSize: getProportionateScreenHeight(20),
+                leading: Text(
+                  "Name:     ",
+                  style: TextStyle(
+                      fontSize: getProportionateScreenHeight(20),
+                      fontWeight: FontWeight.bold),
                 ),
-              ),
-              trailing: Icon(
-                Icons.edit,
-                size: getProportionateScreenHeight(20),
-              ),
-              onTap: () => customBottomModalSheet(
-                context: context,
-                hight: getProportionateScreenHeight(400),
-                controller: nameController,
-                title: "Change Name",
-                hintText: "Name",
-              ),
-            ),
+                title: Text(
+                  nameController.text,
+                  style: TextStyle(
+                    fontSize: getProportionateScreenHeight(20),
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.edit,
+                  size: getProportionateScreenHeight(20),
+                ),
+                onTap: () {
+                  customBottomModalSheet(
+                    button: IconButton(
+                      icon: Icon(Icons.arrow_right),
+                      onPressed: () {
+                        setState(() {});
+                        Navigator.pop(context);
+                      },
+                    ),
+                    context: context,
+                    hight: getProportionateScreenHeight(400),
+                    controller: nameController,
+                    title: "Change Name",
+                    hintText: "Name",
+                  );
+                }),
             Divider(
               thickness: getProportionateScreenHeight(0.2),
               color: Colors.black,
@@ -131,7 +178,7 @@ class _AddWorkerState extends State<AddWorker> {
                     fontWeight: FontWeight.bold),
               ),
               title: Text(
-                "     details",
+                experienceController.text,
                 style: TextStyle(
                   fontSize: getProportionateScreenHeight(20),
                 ),
@@ -141,11 +188,20 @@ class _AddWorkerState extends State<AddWorker> {
                 size: getProportionateScreenHeight(20),
               ),
               onTap: () => customBottomModalSheet(
+                button: IconButton(
+                  icon: Icon(Icons.arrow_right),
+                  onPressed: () {
+                    setState(() {
+                      nameController.text;
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
                 context: context,
                 hight: getProportionateScreenHeight(356),
-                controller: nameController,
-                title: "Change Password",
-                hintText: "New Password",
+                controller: experienceController,
+                title: "Enter Experience ",
+                hintText: "Enter Experience ",
               ),
             ),
             Divider(
@@ -153,30 +209,66 @@ class _AddWorkerState extends State<AddWorker> {
               color: Colors.black,
             ),
             ListTile(
-              leading: Text(
-                "Gender:  ",
-                style: TextStyle(
-                    fontSize: getProportionateScreenHeight(20),
-                    fontWeight: FontWeight.bold),
-              ),
-              title: Text(
-                "gender",
-                style: TextStyle(
-                  fontSize: getProportionateScreenHeight(20),
+                leading: Text(
+                  "Gender:  ",
+                  style: TextStyle(
+                      fontSize: getProportionateScreenHeight(20),
+                      fontWeight: FontWeight.bold),
                 ),
-              ),
-              trailing: Icon(
-                Icons.edit,
-                size: getProportionateScreenHeight(20),
-              ),
-              onTap: () => customBottomModalSheet(
-                context: context,
-                hight: 356,
-                controller: nameController,
-                title: "Change Gender",
-                hintText: "male/female",
-              ),
-            ),
+                title: Text(
+                  genderText,
+                  style: TextStyle(
+                    fontSize: getProportionateScreenHeight(20),
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.edit,
+                  size: getProportionateScreenHeight(20),
+                ),
+                onTap: () => showCupertinoModalPopup(
+                    context: context,
+                    builder: (context) => SingleChildScrollView(
+                          child: MyContainer(
+                            color: Colors.yellow,
+                            height: setHeight(10),
+                            width: setWidth(90),
+                            child: Column(
+                              children: [
+                                SizedBox(height: setHeight(1)),
+                                InkWell(
+                                  onTap: () {
+                                    genderText = "Male";
+                                    setState(() {});
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    "Male",
+                                    style: TextStyle(
+                                      fontSize:
+                                          getProportionateScreenHeight(20),
+                                    ),
+                                  ),
+                                ),
+                                const Divider(),
+                                InkWell(
+                                  onTap: () {
+                                    genderText = "Famale";
+                                    setState(() {});
+
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    "Female",
+                                    style: TextStyle(
+                                      fontSize:
+                                          getProportionateScreenHeight(20),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ))),
             Divider(
               thickness: getProportionateScreenHeight(0.2),
               color: Colors.black,
@@ -189,7 +281,7 @@ class _AddWorkerState extends State<AddWorker> {
                     fontWeight: FontWeight.bold),
               ),
               title: Text(
-                "contact",
+                contactController.text,
                 style: TextStyle(
                   fontSize: getProportionateScreenHeight(20),
                 ),
@@ -199,9 +291,18 @@ class _AddWorkerState extends State<AddWorker> {
                 size: getProportionateScreenHeight(20),
               ),
               onTap: () => customBottomModalSheet(
+                button: IconButton(
+                  icon: Icon(Icons.arrow_right),
+                  onPressed: () {
+                    setState(() {
+                      nameController.text;
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
                 context: context,
                 hight: getProportionateScreenHeight(356),
-                controller: nameController,
+                controller: contactController,
                 title: "Change Contact",
                 hintText: "Contact ",
               ),
@@ -218,7 +319,7 @@ class _AddWorkerState extends State<AddWorker> {
                     fontWeight: FontWeight.bold),
               ),
               title: Text(
-                "email",
+                emailController.text,
                 style: TextStyle(
                   fontSize: getProportionateScreenHeight(20),
                 ),
@@ -228,9 +329,18 @@ class _AddWorkerState extends State<AddWorker> {
                 size: getProportionateScreenHeight(20),
               ),
               onTap: () => customBottomModalSheet(
+                button: IconButton(
+                  icon: Icon(Icons.arrow_right),
+                  onPressed: () {
+                    setState(() {
+                      nameController.text;
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
                 context: context,
                 hight: 356,
-                controller: nameController,
+                controller: emailController,
                 title: "Change Email",
                 hintText: "example@gmail.com",
               ),
@@ -247,7 +357,7 @@ class _AddWorkerState extends State<AddWorker> {
                     fontWeight: FontWeight.bold),
               ),
               title: Text(
-                "email",
+                cnicController.text,
                 style: TextStyle(
                   fontSize: getProportionateScreenHeight(20),
                 ),
@@ -257,11 +367,18 @@ class _AddWorkerState extends State<AddWorker> {
                 size: getProportionateScreenHeight(20),
               ),
               onTap: () => customBottomModalSheet(
+                button: IconButton(
+                  icon: Icon(Icons.arrow_right),
+                  onPressed: () {
+                    setState(() {});
+                    Navigator.pop(context);
+                  },
+                ),
                 context: context,
                 hight: 356,
-                controller: nameController,
-                title: "Change Email",
-                hintText: "example@gmail.com",
+                controller: cnicController,
+                title: "Change CNIC",
+                hintText: "425014865186487",
               ),
             ),
             Divider(
@@ -297,18 +414,21 @@ class _AddWorkerState extends State<AddWorker> {
                     ),
                   ),
                   onPressed: () {
-                    var imageURL = workerProvider.uploadWorkerImageToStorage(
-                        imagePath: _imagePath, userID: loggedInUser.userID);
-                    print(imageURL);
+                    // var imageURL = workerProvider.uploadWorkerImageToStorage(
+                    //     imagePath: _imagePath, userID: loggedInUser.userID);
+                    // print(imageURL);
 
-                    workerProvider.uploadWorkerImageToStorage(
-                        userID: loggedInUser.userID,
-                        imagePath: imageURL.toString());
-                    Navigator.pop(context);
-                    Future.delayed(const Duration(milliseconds: 0))
-                        .then((value) async {
-                      await workerProvider.fetch();
-                    });
+                    // workerProvider.uploadWorkerImageToStorage(
+                    //     userID: loggedInUser.userID,
+                    //     imagePath: imageURL.toString());
+                    // Navigator.pop(context);
+                    // Future.delayed(const Duration(milliseconds: 0))
+                    //     .then((value) async {
+                    //   await workerProvider.fetch();
+
+                    // }
+                    //   );
+                    uploadWokerData();
                   },
                   child: Text("Save",
                       style: TextStyle(fontSize: 18, color: Colors.black87)),

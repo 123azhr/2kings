@@ -5,6 +5,7 @@ import 'package:housecontractors/components/profile_header.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:housecontractors/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+import '../../providers/current_user_provider.dart';
 import '../../providers/post_provider.dart';
 
 class MyProfileView extends StatelessWidget {
@@ -12,9 +13,9 @@ class MyProfileView extends StatelessWidget {
   final String title;
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context);
-    final loggedInUser =
-        userProvider.getCurrentUser();
+    CurrentUserProvider userProvider =
+        Provider.of<CurrentUserProvider>(context);
+    final loggedInUser = userProvider.getCurrentUser();
 
     final postProvider = Provider.of<PostProvider>(context);
     final postsList = postProvider.getPostByID(loggedInUser.userID!);
