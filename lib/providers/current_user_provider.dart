@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import '../models/current_user.dart';
 
@@ -12,7 +13,7 @@ class CurrentUserProvider with ChangeNotifier {
         .collection("users")
         .doc("Y1DImckjzK5z2khAEi7o")
         .collection("contractors")
-        .doc("XFVuGYHjDAQtJeew6OVxKraVqQ73") //userID
+        .doc(FirebaseAuth.instance.currentUser!.uid) //userID
         .get()
         .then((DocumentSnapshot snapshot) {
       _list = [];

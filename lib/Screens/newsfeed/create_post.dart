@@ -1,16 +1,13 @@
 import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/widgets/mycontainer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-
 import '../../helper/size_configuration.dart';
 import '../../providers/current_user_provider.dart';
 import '../../providers/post_provider.dart';
-import '../../providers/user_provider.dart';
 
 class CreatePost extends StatefulWidget {
   const CreatePost({super.key});
@@ -85,11 +82,11 @@ class _CreatePostState extends State<CreatePost> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: const IconThemeData(color: Colors.black),
           elevation: 0,
           backgroundColor: Colors.transparent,
           centerTitle: true,
-          title: Text(
+          title: const Text(
             "Create Post",
             style: TextStyle(
               color: Colors.black,
@@ -128,7 +125,7 @@ class _CreatePostState extends State<CreatePost> {
                     ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
-                          Color.fromARGB(255, 255, 210, 32),
+                          const Color.fromARGB(255, 255, 210, 32),
                         ),
                         fixedSize: MaterialStateProperty.all(
                           Size(setWidth(5), setHeight(5)),
@@ -150,7 +147,7 @@ class _CreatePostState extends State<CreatePost> {
                         //   await postProvider.fetch();
                         // });
                       },
-                      child: Text("Post",
+                      child: const Text("Post",
                           style:
                               TextStyle(fontSize: 18, color: Colors.black87)),
                     ),

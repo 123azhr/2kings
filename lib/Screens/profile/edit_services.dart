@@ -6,20 +6,19 @@ import 'package:provider/provider.dart';
 
 import '../../helper/size_configuration.dart';
 import '../../models/service_model.dart';
-import '../../models/user_model.dart';
 import '../../providers/current_user_provider.dart';
 import '../../providers/service_provider.dart';
 import '../../providers/user_provider.dart';
 
 class EditServices extends StatelessWidget {
-  EditServices({super.key});
+  const EditServices({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         title: Text(
           "Edit Services",
           style: TextStyle(
@@ -34,21 +33,23 @@ class EditServices extends StatelessWidget {
       body: Column(
         children: [
           const MyServices(),
-          Spacer(),
+          const Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(
-                    Color.fromARGB(255, 18, 18, 18),
+                    const Color.fromARGB(255, 18, 18, 18),
                   ),
                   fixedSize: MaterialStateProperty.all(
                     Size(setWidth(30), setHeight(6)),
                   ),
                 ),
-                onPressed: () {},
-                child: Text("Discard",
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text("Discard",
                     style: TextStyle(
                       fontSize: 18,
                       color: Color.fromARGB(255, 255, 210, 32),
@@ -64,15 +65,21 @@ class EditServices extends StatelessWidget {
                   ),
                 ),
                 onPressed: () async {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: ((context) =>
+                        const Center(child: CircularProgressIndicator())),
+                  );
+                  final userProvider =
+                      Provider.of<CurrentUserProvider>(context, listen: false);
                   await FirebaseFirestore.instance
                       .collection("users")
                       .doc("Y1DImckjzK5z2khAEi7o")
                       .collection("contractors")
-                      .doc("XFVuGYHjDAQtJeew6OVxKraVqQ73")
+                      .doc(userProvider.getCurrentUser().userID)
                       .update({"services": list});
 
-                  final userProvider =
-                      Provider.of<UserProvider>(context, listen: false);
                   await userProvider.fetch();
                   Navigator.pop(context);
                 },
@@ -129,7 +136,7 @@ class _MyServicesState extends State<MyServices> {
           itemCount: _allService().length,
           itemBuilder: (context, int index) => ChangeNotifierProvider.value(
                 value: _allService()[index],
-                child: WorkerSlide(),
+                child: const WorkerSlide(),
               )),
     );
   }
@@ -155,7 +162,7 @@ class _WorkerSlideState extends State<WorkerSlide> {
     bool? initialValue = user.services!.contains(serviceModel.serviceName!);
 
     return Card(
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -181,7 +188,7 @@ class _WorkerSlideState extends State<WorkerSlide> {
               ),
             ),
           ),
-          Spacer(),
+          const Spacer(),
           Checkbox(
             value: initialValue ? isCheck1 : isCheck,
             onChanged: (value) {
