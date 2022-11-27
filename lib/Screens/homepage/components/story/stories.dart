@@ -5,8 +5,10 @@ import 'package:housecontractors/widgets/mycontainer.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+import '../../../../models/current_user.dart';
 import '../../../../models/story_model.dart';
 import '../../../../models/user_model.dart';
+import '../../../../providers/current_user_provider.dart';
 import '../../../../providers/story_provider.dart';
 import '../../../../providers/user_provider.dart';
 import 'create_story.dart';
@@ -19,7 +21,7 @@ class Stories extends StatelessWidget {
     final storyProvider = Provider.of<StoryProvider>(context);
     final storyList = storyProvider.getList;
 
-    final userProvider = Provider.of<UserProvider>(context);
+    final userProvider = Provider.of<CurrentUserProvider>(context);
 
     return SizedBox(
         height: getProportionateScreenHeight(140),
@@ -36,11 +38,10 @@ class Stories extends StatelessWidget {
                   itemCount: storyList.length,
                   itemBuilder: (context, index) {
                     return ChangeNotifierProvider.value(
-                      value: storyList[index],
-                      child: StoryTile(
-                          user: userProvider
-                              .getUserByID(storyList[index].userID!)),
-                    );
+                        value: storyList[index],
+                        child: StoryTile(
+                          user: userProvider.getCurrentUser(),
+                        ));
                   }),
             ),
             MyContainer(
@@ -67,7 +68,7 @@ class StoryTile extends StatelessWidget {
     Key? key,
     required this.user,
   }) : super(key: key);
-  final UserModel user;
+  final CurrentUserModel user;
   @override
   Widget build(BuildContext context) {
     final storyModel = Provider.of<StoryModel>(context);

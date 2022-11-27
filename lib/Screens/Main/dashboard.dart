@@ -18,7 +18,7 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
-    loadcurrentUser();
+    loadWorkers();
 
     super.initState();
   }
@@ -37,14 +37,8 @@ class _DashboardState extends State<Dashboard> {
     });
   }
 
-  loadcurrentUser() async {
-    try {
-      final currentUserProvider =
-          Provider.of<CurrentUserProvider>(context, listen: false);
-      await currentUserProvider.fetch();
-    } catch (e) {
-      print("could'nt load user");
-    }
+  loadWorkers() async {
+   
     try {
       final workerProvider =
           Provider.of<WorkerProvider>(context, listen: false);

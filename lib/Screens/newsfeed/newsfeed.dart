@@ -81,7 +81,7 @@ class Newsfeed extends StatelessWidget {
         itemCount: postsList.length,
         itemBuilder: (context, int index) => ChangeNotifierProvider.value(
           value: postsList[index],
-          child: Post(),
+          child: const Post(),
         ),
         physics: const BouncingScrollPhysics(),
       ),

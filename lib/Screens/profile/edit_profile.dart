@@ -1,16 +1,40 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/profile/edit_services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
 import '../../providers/current_user_provider.dart';
 import '../../providers/user_provider.dart';
 import 'my_profile_fields.dart';
 
-class EditProfilePage extends StatelessWidget {
-  const EditProfilePage({super.key});
+class EditProfilePage extends StatefulWidget {
+  EditProfilePage({super.key});
+
+  @override
+  State<EditProfilePage> createState() => _EditProfilePageState();
+}
+
+class _EditProfilePageState extends State<EditProfilePage> {
   //function
+  String _imagePath = "";
+
+  File? _selectedImageFile;
+
+  void pickImage() async {
+    final ImagePicker _picker = ImagePicker();
+    final _image = await _picker.pickImage(source: ImageSource.gallery);
+    if (_image?.path != null) {
+      setState(() {
+        _selectedImageFile = File(_image!.path);
+        _imagePath = _image.path;
+      });
+    }
+  }
+
   Widget changeProfileImageBottomSheet() {
     return Container(
       decoration: BoxDecoration(
@@ -55,7 +79,7 @@ class EditProfilePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 TextButton.icon(
                   icon: Icon(
                     Icons.photo,
@@ -63,7 +87,7 @@ class EditProfilePage extends StatelessWidget {
                     size: getProportionateScreenHeight(30),
                   ),
                   onPressed: () {
-                    // pickImage(imageSource: ImageSource.gallery);
+                    pickImage();
                   },
                   label: Text(
                     "Gallery",

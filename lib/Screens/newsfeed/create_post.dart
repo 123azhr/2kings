@@ -19,7 +19,6 @@ class CreatePost extends StatefulWidget {
 class _CreatePostState extends State<CreatePost> {
   String _imagePath = "";
   File? _selectedImageFile;
-  bool? _isProductImageSelected = true;
 
   void pickImage() async {
     final ImagePicker _picker = ImagePicker();
@@ -28,7 +27,6 @@ class _CreatePostState extends State<CreatePost> {
       setState(() {
         _selectedImageFile = File(_image!.path);
         _imagePath = _image.path;
-        _isProductImageSelected = true;
       });
     }
   }
@@ -77,7 +75,6 @@ class _CreatePostState extends State<CreatePost> {
   Widget build(BuildContext context) {
     final userProvider = Provider.of<CurrentUserProvider>(context);
     final loggedInUser = userProvider.getCurrentUser();
-    final postProvider = Provider.of<PostProvider>(context);
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -108,15 +105,15 @@ class _CreatePostState extends State<CreatePost> {
                     SizedBox(
                       height: getProportionateScreenHeight(60),
                       width: getProportionateScreenWidth(80),
-                      child: const CircleAvatar(
+                      child: CircleAvatar(
                         backgroundImage: CachedNetworkImageProvider(
-                            "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"),
+                            loggedInUser.profileImageURL!),
                       ),
                     ),
                     Column(
                       children: [
                         Text(
-                          "Muhammad Azhar",
+                          loggedInUser.name!,
                           style: Theme.of(context).textTheme.displaySmall,
                         ),
                       ],
@@ -166,7 +163,6 @@ class _CreatePostState extends State<CreatePost> {
                             child: const Icon(Icons.add_a_photo),
                             onTap: () {
                               pickImage();
-                              print(_imagePath);
                             }),
                         width: setWidth(100),
                       ),

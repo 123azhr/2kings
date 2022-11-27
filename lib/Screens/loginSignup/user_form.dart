@@ -101,7 +101,8 @@ class _UserFormState extends State<UserForm> {
           name: name,
           status: true,
           createdDate: date,
-          profileImageURL: "",
+          profileImageURL:
+              "https://firebasestorage.googleapis.com/v0/b/kings-9b7d2.appspot.com/o/images%2FContractorDefault%2FcontractorDefault.png?alt=media&token=1b2ca997-7138-4a7f-8adb-91043ae36868",
           rating: [],
           services: []);
     } on FirebaseException catch (e) {

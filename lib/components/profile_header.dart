@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
@@ -24,10 +25,11 @@ class ProfileHeader extends StatelessWidget {
           width: getProportionateScreenWidth(60),
           child: CircleAvatar(
             child: ClipOval(
-              child: Image.network(
-                imageURL,
+              child: CachedNetworkImage(
+                imageUrl: imageURL,
                 fit: BoxFit.cover,
                 height: getProportionateScreenHeight(60),
+                width: getProportionateScreenHeight(60),
               ),
             ),
           ),

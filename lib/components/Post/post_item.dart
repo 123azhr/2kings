@@ -22,7 +22,19 @@ class PostItem extends StatelessWidget {
               builder: (context) => SizedBox(
                   child: GestureDetector(
                       onTap: () => Navigator.pop(context),
-                      child: Image.network(imageURL!)))),
+                      child: SafeArea(
+                        child: Stack(
+                          alignment: AlignmentDirectional.topEnd,
+                          children: [
+                            Center(
+                                child: CachedNetworkImage(imageUrl: imageURL!)),
+                            const Icon(
+                              Icons.cancel,
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
+                      )))),
         ),
         child: SizedBox(
           child: Column(

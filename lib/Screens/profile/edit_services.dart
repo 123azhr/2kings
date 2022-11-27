@@ -82,6 +82,7 @@ class EditServices extends StatelessWidget {
 
                   await userProvider.fetch();
                   Navigator.pop(context);
+                  Navigator.pop(context);
                 },
                 child: Text("Save",
                     style: TextStyle(fontSize: 18, color: Colors.black87)),

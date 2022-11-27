@@ -21,13 +21,11 @@ class FlashScreen extends StatefulWidget {
 class _FlashScreenState extends State<FlashScreen> {
   @override
   void initState() {
-   
     try {
       loadData();
     } catch (e) {}
     super.initState();
   }
-
 
   loadData() async {
     await Future.delayed(const Duration(milliseconds: 0)).then((value) async {
@@ -39,10 +37,17 @@ class _FlashScreenState extends State<FlashScreen> {
       } catch (e) {
         print(e);
       }
+      try {
+        final currentUserProvider =
+            Provider.of<CurrentUserProvider>(context, listen: false);
+        await currentUserProvider.fetch();
+      } catch (e) {
+        print("could'nt load user");
+      }
       final serviceProvider =
           Provider.of<ServiceProvider>(context, listen: false);
       await serviceProvider.fetch();
-     
+
       final chatProvider = Provider.of<ChatProvider>(context, listen: false);
       await chatProvider.fetch();
 
