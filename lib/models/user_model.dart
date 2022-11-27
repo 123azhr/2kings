@@ -33,7 +33,7 @@ class UserModel with ChangeNotifier {
       userID: userID,
       cnic: map["cnic"],
       name: map["name"],
-      email: map["email"],
+      email: map["email"], 
       rating: map["rating"],
       services: map["services"],
       profileImageURL: map["profileImageURL"],

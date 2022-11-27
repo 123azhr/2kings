@@ -2,18 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/Chat/chat_menu.dart';
 import 'package:housecontractors/Screens/menu/menu.dart';
 import 'package:housecontractors/Screens/newsfeed/newsfeed.dart';
+import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
+import '../../providers/current_user_provider.dart';
+import '../../providers/worker_provider.dart';
 import '../homepage/home.dart';
 import '../orders/my_orders.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
-
   @override
   State<Dashboard> createState() => _DashboardState();
 }
 
 class _DashboardState extends State<Dashboard> {
+  @override
+  void initState() {
+    loadcurrentUser();
+
+    super.initState();
+  }
+
   int _selectedIndex = 0;
   static final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
@@ -28,9 +37,27 @@ class _DashboardState extends State<Dashboard> {
     });
   }
 
+  loadcurrentUser() async {
+    try {
+      final currentUserProvider =
+          Provider.of<CurrentUserProvider>(context, listen: false);
+      await currentUserProvider.fetch();
+    } catch (e) {
+      print("could'nt load user");
+    }
+    try {
+      final workerProvider =
+          Provider.of<WorkerProvider>(context, listen: false);
+      await workerProvider.fetch();
+    } catch (e) {
+      print("no workers found");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+
     return SafeArea(
       child: Scaffold(
         body: Center(

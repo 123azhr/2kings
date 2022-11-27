@@ -57,7 +57,8 @@ class UserProvider with ChangeNotifier {
         .collection("users")
         .doc("Y1DImckjzK5z2khAEi7o")
         .collection("contractors")
-        .add({
+        .doc(userID)
+        .set({
       "name": name,
       "email": email,
       "status": status,
@@ -67,6 +68,7 @@ class UserProvider with ChangeNotifier {
       "contactNumber": contactNumber,
       "rating": rating,
       "services": services,
+      "createdDate": createdDate
     });
   }
 

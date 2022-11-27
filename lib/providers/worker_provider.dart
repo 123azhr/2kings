@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:path/path.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -9,9 +10,14 @@ class WorkerProvider with ChangeNotifier {
   List<WorkerModel> _list = [];
 
   List<WorkerModel> get getList => _list;
-
+  String userID = FirebaseAuth.instance.currentUser!.uid;
   Future<void> fetch() async {
-    await FirebaseFirestore.instance.collection("c_workers").get().then(
+    print(userID);
+    await FirebaseFirestore.instance
+        .collection("c_workers")
+        .where("userID", isEqualTo: userID.trim())
+        .get()
+        .then(
           (QuerySnapshot<Map<String, dynamic>> snapshot) => {
             _list = [],
             for (var doc in snapshot.docs)
@@ -54,6 +60,7 @@ class WorkerProvider with ChangeNotifier {
       "worker_CNIC": cnic,
       "worker_number": number,
       "worker_service": service,
+      "userID": userID
     });
   }
 

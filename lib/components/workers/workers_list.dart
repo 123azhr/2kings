@@ -7,10 +7,8 @@ import 'package:provider/provider.dart';
 import '../../providers/worker_provider.dart';
 
 class WorkersList extends StatelessWidget {
-  WorkersList({super.key, required this.serviceName});
+  const WorkersList({super.key, required this.serviceName});
   final String serviceName;
-
-  TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +17,10 @@ class WorkersList extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         title: Text(
           serviceName,
-          style: TextStyle(
+          style:const  TextStyle(
             color: Color.fromARGB(255, 0, 0, 0),
             fontSize: (kToolbarHeight / 100) * 40,
           ),

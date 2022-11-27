@@ -1,21 +1,27 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:housecontractors/Screens/Main/dashboard.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 import 'package:housecontractors/Screens/loginSignup/login.dart';
 import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
 import 'package:housecontractors/providers/user_provider.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 
 import '../../helper/size_configuration.dart';
+import '../../providers/authentication_provider.dart';
+import '../../providers/current_user_provider.dart';
 
 class UserForm extends StatefulWidget {
-  List userData;
-  UserForm({
+  final String email;
+  final String password;
+  const UserForm({
     Key? key,
-    required this.userData,
+    required this.email,
+    required this.password,
   }) : super(key: key);
   @override
   State<UserForm> createState() => _UserFormState();
@@ -48,41 +54,63 @@ class _UserFormState extends State<UserForm> {
     }
   }
 
-  // uploadUserData() async {
-  //   final userProvider = Provider.of<UserProvider>(context, listen: false);
-  //   final loggedInUser =  Provider.of<UserProvider>(context, listen: false);
-  //   showDialog(
-  //     context: context,
-  //     barrierDismissible: false,
-  //     builder: ((context) => const Center(child: CircularProgressIndicator())),
-  //   );
-  //   try {
-  //     DateTime date = DateTime.now();
-  //     String imageURL = await userProvider.uploadUserImageToStorage(
-  //         imagePath: _imagePath, userID: loggedInUser.userID);
+  loadcurrentUser() async {
+    try {
+      final currentUserProvider =
+          Provider.of<CurrentUserProvider>(context, listen: false);
+      await currentUserProvider.fetch();
+    } catch (e) {
+      print("could'nt load user");
+    }
+  }
 
-  //     await postProvider.uploadImageDataToFireStore(
-  //       imageURL: imageURL,
-  //       userID: loggedInUser.userID,
-  //       userName: loggedInUser.name,
-  //       date: date,
-  //       caption: "",
-  //     );
+  createAccountandLogin() async {
+    await context
+        .read<AuthenticationService>()
+        .signUp(email: widget.email.trim(), password: widget.password.trim());
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: ((context) => const Center(child: CircularProgressIndicator())),
+    );
+    context
+        .read<AuthenticationService>()
+        .signIn(email: widget.email.trim(), password: widget.password.trim());
+    Navigator.pop(context);
+  }
 
-  //     await postProvider.fetch();
-  //     Navigator.pop(context);
-  //     Navigator.pop(context);
+  uploadUserData(
+      {String? cnic,
+      String? contactNumber,
+      String? email,
+      bool? gender,
+      String? name,
+      String? userID}) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
 
-  //     // Future.delayed(const Duration(milliseconds: 0)).then((value) async {
-  //     //   await postProvider.fetch();
-  //     // });
-  //   } on FirebaseException catch (e) {
-  //     print(e.message);
-  //     print(e.code);
-  //   } catch (e) {
-  //     print(e.toString());
-  //   }
-  // }
+    try {
+      DateTime date = DateTime.now();
+      // String imageURL = await userProvider.uploadUserImageToStorage(
+      //     imagePath: _imagePath, userID: loggedInUser!.uid);
+      userProvider.uploadUserDataToFireStore(
+          userID: userID,
+          cnic: cnic,
+          contactNumber: contactNumber,
+          email: email,
+          gender: gender,
+          name: name,
+          status: true,
+          createdDate: date,
+          profileImageURL: "",
+          rating: [],
+          services: []);
+    } on FirebaseException catch (e) {
+      print(e.message);
+      print(e.code);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,6 +147,7 @@ class _UserFormState extends State<UserForm> {
                       width: setWidth(95),
                       radius: 20,
                       hintText: "Full Name",
+                      controller: nameController,
                     ),
                     Row(
                       children: [
@@ -126,12 +155,14 @@ class _UserFormState extends State<UserForm> {
                           width: setWidth(35),
                           radius: 20,
                           hintText: "Gender",
+                          controller: genderController,
                         ),
                         const Spacer(),
                         MyTextField(
                           width: setWidth(45),
                           radius: 20,
                           hintText: "Contact",
+                          controller: contactController,
                         ),
                       ],
                     ),
@@ -139,6 +170,7 @@ class _UserFormState extends State<UserForm> {
                       width: setWidth(45),
                       radius: 20,
                       hintText: "CNIC",
+                      controller: cnicController,
                     ),
                     SizedBox(
                       height: setHeight(5),
@@ -160,19 +192,24 @@ class _UserFormState extends State<UserForm> {
 
                             //content padding inside button
                           ),
-                          onPressed: () {
-                            widget.userData.addAll([
-                              nameController.text,
-                              genderController.text,
-                              cnicController.text,
-                              contactController.text
-                            ]);
-
-                            widget.userData.removeRange(0, 4);
+                          onPressed: () async {
+                            await createAccountandLogin();
+                            final loggedInUser =
+                                FirebaseAuth.instance.currentUser;
+                            await uploadUserData(
+                                cnic: cnicController.text,
+                                contactNumber: contactController.text,
+                                email: loggedInUser!.email!,
+                                gender: genderController.text == "Male"
+                                    ? true
+                                    : false,
+                                name: nameController.text,
+                                userID: loggedInUser.uid);
+                            await loadcurrentUser();
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const Login(),
+                                  builder: (context) => const Dashboard(),
                                 ));
                           },
                           child: const Text("Continue"),

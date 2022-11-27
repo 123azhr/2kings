@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/login.dart';
 import 'package:housecontractors/Screens/loginSignup/user_form.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
-import 'package:housecontractors/providers/authentication_provider.dart';
-import 'package:provider/provider.dart';
 import 'mytextfield.dart';
 import 'package:email_validator/email_validator.dart';
 
@@ -21,7 +19,6 @@ class _SignupState extends State<Signup> {
   bool passError = false;
   bool confirmError = false;
   bool obsecureText = true;
-  List userData = [];
   bool validateStructure(String value) {
     String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$';
     RegExp regExp = RegExp(pattern);
@@ -33,12 +30,6 @@ class _SignupState extends State<Signup> {
   final TextEditingController passController = TextEditingController();
 
   final TextEditingController cpassController = TextEditingController();
-
-  createUser() async {
-    FirebaseAuth authInstance = FirebaseAuth.instance;
-    await authInstance.createUserWithEmailAndPassword(
-        email: "azhar@gmail.com", password: "123456789");
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -200,84 +191,46 @@ class _SignupState extends State<Signup> {
                               if (passController.text == cpassController.text &&
                                   cpassController.text.isNotEmpty) {
                                 confirmError = false;
-                                userData.addAll([
-                                  emailController.text,
-                                  passController.text
-                                ]);
-                                await context
-                                    .read<AuthenticationService>()
-                                    .signUp(
-                                        email: emailController.text.trim(),
-                                        password: passController.text.trim());
-                                showDialog(
-                                  context: context,
-                                  barrierDismissible: false,
-                                  builder: ((context) => const Center(
-                                      child: CircularProgressIndicator())),
-                                ).then((value) async => await Future.delayed(
-                                      const Duration(seconds: 5),
-                                      () async {
-                                        await showDialog(
-                                          context: context,
-                                          builder: (context) => SizedBox(
-                                            height: setHeight(5),
-                                            width: setWidth(20),
-                                            child: Card(
-                                              child: Center(
-                                                  child: Text(
-                                                      "Registration Successful")),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    )
-                                        //     .then((value) async {
-                                        //   showDialog(
-                                        //     context: context,
-                                        //     builder: (context) => SizedBox(
-                                        //       height: setHeight(5),
-                                        //       width: setWidth(20),
-                                        //       child: Card(
-                                        //         child: Center(
-                                        //             child: Text(
-                                        //                 "Registration Successful")),
-                                        //       ),
-                                        //     ),
-                                        //   );
-                                        // })
-                                        .then((value) => context
-                                            .read<AuthenticationService>()
-                                            .signIn(
-                                                email:
-                                                    emailController.text.trim(),
-                                                password: passController.text
-                                                    .trim())));
 
-                                // controlle
-
-                                // showDialog(
-                                //       context: context,
-                                //       builder: (context) => SizedBox(
-                                //         height: setHeight(5),
-                                //         width: setWidth(20),
-                                //         child: const Card(
-                                //           child: Center(
-                                //               child: Text(
-                                //                   "Registration Successful")),
-                                //         ),
-                                //       ),
-                                //     ))
-                                // .then((value) => context
+                                // await context
                                 //     .read<AuthenticationService>()
-                                //     .signIn(
+                                //     .signUp(
                                 //         email: emailController.text.trim(),
-                                //         password:
-                                //             passController.text.trim()));
+                                //         password: passController.text.trim());
+                                // showDialog(
+                                //   context: context,
+                                //   barrierDismissible: false,
+                                //   builder: ((context) => const Center(
+                                //       child: CircularProgressIndicator())),
+                                // ).then((value) async => await Future.delayed(
+                                //       const Duration(seconds: 5),
+                                //       () async {
+                                //         await showDialog(
+                                //           context: context,
+                                //           builder: (context) => SizedBox(
+                                //             height: setHeight(5),
+                                //             width: setWidth(20),
+                                //             child: const Card(
+                                //               child: Center(
+                                //                   child: Text(
+                                //                       "Registration Successful")),
+                                //             ),
+                                //           ),
+                                //         );
+                                //       },
+                                //     ).then((value) => context
+                                //         .read<AuthenticationService>()
+                                //         .signIn(
+                                //             email: emailController.text.trim(),
+                                //             password:
+                                //                 passController.text.trim())));
+
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          UserForm(userData: userData),
+                                      builder: (context) => UserForm(
+                                          email: emailController.text,
+                                          password: passController.text),
                                     ));
                               } else {
                                 confirmError = true;

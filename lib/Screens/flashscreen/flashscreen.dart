@@ -21,38 +21,38 @@ class FlashScreen extends StatefulWidget {
 class _FlashScreenState extends State<FlashScreen> {
   @override
   void initState() {
-    loadData();
+   
+    try {
+      loadData();
+    } catch (e) {}
     super.initState();
   }
+
 
   loadData() async {
     await Future.delayed(const Duration(milliseconds: 0)).then((value) async {
       final postProvider = Provider.of<PostProvider>(context, listen: false);
       await postProvider.fetch();
-
-      final userProvider = Provider.of<UserProvider>(context, listen: false);
-      await userProvider.fetch();
-
-      final currentUserProvider =
-          Provider.of<CurrentUserProvider>(context, listen: false);
-      await currentUserProvider.fetch();
-
+      try {
+        final userProvider = Provider.of<UserProvider>(context, listen: false);
+        await userProvider.fetch();
+      } catch (e) {
+        print(e);
+      }
       final serviceProvider =
           Provider.of<ServiceProvider>(context, listen: false);
       await serviceProvider.fetch();
-
-      final workerProvider =
-          Provider.of<WorkerProvider>(context, listen: false);
-      await workerProvider.fetch();
-
+     
       final chatProvider = Provider.of<ChatProvider>(context, listen: false);
       await chatProvider.fetch();
 
       final storyProvider = Provider.of<StoryProvider>(context, listen: false);
       await storyProvider.fetch();
 
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => AuthenticationWrapper()));
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const AuthenticationWrapper()));
     });
   }
 
@@ -77,7 +77,7 @@ class AuthenticationWrapper extends StatelessWidget {
     if (firebaseUser != null) {
       return const Dashboard();
     } else {
-      return Login();
+      return const Login();
     }
   }
 }
