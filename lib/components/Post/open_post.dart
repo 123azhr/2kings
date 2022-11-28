@@ -20,7 +20,7 @@ class OpenPost extends StatelessWidget {
         body: Stack(
           children: [
             Padding(
-                padding: EdgeInsets.all(12),
+                padding:const  EdgeInsets.all(12),
                 child: Row(
                   children: [
                     CircleAvatar(foregroundImage: NetworkImage(imageURL!)),
@@ -29,7 +29,7 @@ class OpenPost extends StatelessWidget {
                     ),
                     Text(
                       caption!,
-                      style: TextStyle(
+                      style:const  TextStyle(
                           color: Color.fromARGB(255, 0, 0, 0), fontSize: 18),
                     ),
                     const Spacer(),
@@ -43,7 +43,7 @@ class OpenPost extends StatelessWidget {
                   ],
                 )),
             Container(
-              color: Color.fromARGB(255, 0, 0, 0),
+              color:const  Color.fromARGB(255, 0, 0, 0),
               height: setHeight(31),
               child: Image.network(
                 imageURL!,
@@ -59,10 +59,10 @@ class OpenPost extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                    child: Like(
+                    child:const  Like(
                       isLiked: false,
                     ),
-                    onTap: () => Like(
+                    onTap: () =>const  Like(
                       isLiked: true,
                     ),
                   ),
@@ -74,8 +74,8 @@ class OpenPost extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => Comments(isClicked: true),
-                    child: Comments(isClicked: false),
+                    onTap: () =>const  Comments(isClicked: true),
+                    child:const  Comments(isClicked: false),
                   ),
                 ],
               ),

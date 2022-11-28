@@ -1,7 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/Chat/Inbox.dart';
+import 'package:housecontractors/models/user_model.dart';
+import 'package:provider/provider.dart';
 
 import '../../helper/size_configuration.dart';
+import '../../models/chat_model.dart';
+import '../../providers/chat_provider.dart';
+import '../../providers/current_user_provider.dart';
+import '../../providers/user_provider.dart';
 
 class ChatMenu extends StatefulWidget {
   const ChatMenu({super.key});
@@ -14,6 +21,13 @@ class _ChatMenuState extends State<ChatMenu> {
   final TextEditingController _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final chatProvider = Provider.of<ChatProvider>(context);
+    final chatList = chatProvider.getList;
+    final currentUserProvider = Provider.of<CurrentUserProvider>(context);
+    final loggedInUser = currentUserProvider.getCurrentUser();
+
+    final userProvider = Provider.of<UserProvider>(context);
+    // final user = userProvider.getUserByID(chatList[index].otherID);
     return Scaffold(
       appBar: AppBar(
         leadingWidth: getProportionateScreenWidth(40),
@@ -43,16 +57,24 @@ class _ChatMenuState extends State<ChatMenu> {
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       body: ListView.builder(
-          itemCount: 1,
-          itemBuilder: (context, index) {
-            return const chatMenuTile(
-              title: "Areeb",
-              subtitle: "Electrician",
-              image: NetworkImage(
-                "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-              ),
-            );
-          }),
+        scrollDirection: Axis.vertical,
+        itemCount: chatList.length,
+        itemBuilder: (context, int index) => ChangeNotifierProvider.value(
+          value: chatList[index],
+          child: chatMenuTile(
+            chat: chatList[index],
+            subtitle: userProvider
+                .getUserByID(chatList[index].otherID!)
+                .services!
+                .first,
+            user: userProvider.getUserByID(chatList[index].otherID!),
+            image: NetworkImage(userProvider
+                .getUserByID(chatList[index].otherID!)
+                .profileImageURL!),
+          ),
+        ),
+        physics: const BouncingScrollPhysics(),
+      ),
     );
   }
 }
@@ -60,11 +82,14 @@ class _ChatMenuState extends State<ChatMenu> {
 class chatMenuTile extends StatelessWidget {
   const chatMenuTile({
     Key? key,
-    required this.title,
+    required this.user,
     required this.subtitle,
     this.image,
+    required this.chat,
   }) : super(key: key);
-  final String title;
+  final UserModel user;
+
+  final ChatModel chat;
   final String subtitle;
   final ImageProvider<Object>? image;
 
@@ -75,15 +100,13 @@ class chatMenuTile extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => Inbox(
-                    title: title,
-                  )),
+              builder: (context) => Inbox(user: user, chat: chat)),
         );
       },
-      title: Text(title),
+      title: Text(user.name!),
       subtitle: Text(subtitle),
       leading: CircleAvatar(
-        backgroundImage: AssetImage(
+        backgroundImage: const AssetImage(
           "assets/images/logo-black-half.png",
         ),
         foregroundImage: image,

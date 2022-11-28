@@ -5,6 +5,7 @@ import 'package:housecontractors/Screens/loginSignup/signup.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:provider/provider.dart';
 import '../../providers/authentication_provider.dart';
+import '../../providers/current_user_provider.dart';
 import 'mytextfield.dart';
 
 class Login extends StatefulWidget {
@@ -111,11 +112,18 @@ class _LoginState extends State<Login> {
 
                     //content padding inside button
                   ),
-                  onPressed: () {
-                    context.read<AuthenticationService>().signIn(
+                  onPressed: () async {
+                    await context.read<AuthenticationService>().signIn(
                         email: emailController.text.trim(),
                         password: passController.text.trim());
+
+                    final currentUserProvider =
+                        Provider.of<CurrentUserProvider>(context,
+                            listen: false);
+
+                    await currentUserProvider.fetch();
                   }
+
                   // for (int i = 0; i < usersList.length; i++) {
                   //   if (emailController.text != usersList[i].email &&
                   //       passController.text != usersList[i].password) {
@@ -160,7 +168,8 @@ class _LoginState extends State<Login> {
                       ..onTap = () {
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) => Signup()),
+                          MaterialPageRoute(
+                              builder: (context) => const Signup()),
                         );
                       },
                   ),

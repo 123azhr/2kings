@@ -145,6 +145,7 @@ class _UserFormState extends State<UserForm> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     MyTextField(
+                      color: const Color.fromARGB(255, 255, 239, 63),
                       width: setWidth(95),
                       radius: 20,
                       hintText: "Full Name",
@@ -153,6 +154,7 @@ class _UserFormState extends State<UserForm> {
                     Row(
                       children: [
                         MyTextField(
+                          color: const Color.fromARGB(255, 255, 239, 63),
                           width: setWidth(35),
                           radius: 20,
                           hintText: "Gender",
@@ -160,6 +162,7 @@ class _UserFormState extends State<UserForm> {
                         ),
                         const Spacer(),
                         MyTextField(
+                          color: const Color.fromARGB(255, 255, 239, 63),
                           width: setWidth(45),
                           radius: 20,
                           hintText: "Contact",
@@ -168,6 +171,7 @@ class _UserFormState extends State<UserForm> {
                       ],
                     ),
                     MyTextField(
+                      color: const Color.fromARGB(255, 255, 239, 63),
                       width: setWidth(45),
                       radius: 20,
                       hintText: "CNIC",

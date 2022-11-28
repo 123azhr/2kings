@@ -18,11 +18,11 @@ class Comments extends StatelessWidget {
           )),
       child: Row(
         children: [
-          Icon(Icons.comment),
+          const Icon(Icons.comment),
           SizedBox(
             width: getProportionateScreenWidth(10),
           ),
-          Text("Comments"),
+         const  Text("Comments"),
         ],
       ),
     );

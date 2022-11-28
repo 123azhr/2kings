@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/components/Post/post.dart';
 import 'package:housecontractors/components/profile_header.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
-import 'package:housecontractors/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import '../../providers/current_user_provider.dart';
 import '../../providers/post_provider.dart';

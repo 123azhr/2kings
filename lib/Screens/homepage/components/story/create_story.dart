@@ -78,19 +78,15 @@ class _CreateStoryState extends State<CreateStory> {
 
   @override
   Widget build(BuildContext context) {
-    CurrentUserProvider userProvider =
-        Provider.of<CurrentUserProvider>(context);
-    CurrentUserModel loggedInUser = userProvider.getCurrentUser();
-    final storyProvider = Provider.of<StoryProvider>(context);
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme:const  IconThemeData(color: Colors.black),
           elevation: 0,
           backgroundColor: Colors.transparent,
           centerTitle: true,
-          title: Text(
+          title: const Text(
             "Share Story",
             style: TextStyle(
               color: Colors.black,
@@ -125,11 +121,11 @@ class _CreateStoryState extends State<CreateStory> {
                         ),
                       ],
                     ),
-                    Spacer(),
+                    const Spacer(),
                     ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
-                          Color.fromARGB(255, 255, 210, 32),
+                         const  Color.fromARGB(255, 255, 210, 32),
                         ),
                         minimumSize: MaterialStateProperty.all(
                           Size(setWidth(6), setHeight(6)),
@@ -172,14 +168,14 @@ class _CreateStoryState extends State<CreateStory> {
                                   _selectedImageFile = null;
                                 });
                               },
-                              child: Icon(Icons.cancel),
+                              child: const Icon(Icons.cancel),
                               isExtended: false,
                               mini: true),
                         ],
                       )
                     : MyContainer(
                         height: setHeight(40),
-                        child: InkWell(
+                        child: InkWell( 
                             child: const Icon(Icons.add_a_photo),
                             onTap: () {
                               pickImage();

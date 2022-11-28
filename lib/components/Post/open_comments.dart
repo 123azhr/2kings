@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 
+// ignore: must_be_immutable
 class OpenComments extends StatelessWidget {
   OpenComments({super.key});
   TextEditingController commentController = TextEditingController();
@@ -12,7 +13,7 @@ class OpenComments extends StatelessWidget {
           body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: kToolbarHeight,
             ),
             Container(
@@ -31,7 +32,7 @@ class OpenComments extends StatelessWidget {
                     99,
                   ),
                   hintText: "Comment your view",
-                  leading: Icon(Icons.send_sharp),
+                  leading:const  Icon(Icons.send_sharp),
                   radius: getProportionateScreenWidth(20),
                   controller: commentController),
             ),

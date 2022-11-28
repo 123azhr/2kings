@@ -6,6 +6,7 @@ import 'package:housecontractors/providers/worker_provider.dart';
 import 'package:provider/provider.dart';
 import '../../providers/chat_provider.dart';
 import '../../providers/current_user_provider.dart';
+import '../../providers/message_provider.dart';
 import '../../providers/service_provider.dart';
 import '../../providers/story_provider.dart';
 import '../../providers/user_provider.dart';
@@ -40,6 +41,7 @@ class _FlashScreenState extends State<FlashScreen> {
       try {
         final currentUserProvider =
             Provider.of<CurrentUserProvider>(context, listen: false);
+
         await currentUserProvider.fetch();
       } catch (e) {
         print("could'nt load user");
@@ -47,13 +49,22 @@ class _FlashScreenState extends State<FlashScreen> {
       final serviceProvider =
           Provider.of<ServiceProvider>(context, listen: false);
       await serviceProvider.fetch();
-
-      final chatProvider = Provider.of<ChatProvider>(context, listen: false);
-      await chatProvider.fetch();
-
+      try {
+        final chatProvider = Provider.of<ChatProvider>(context, listen: false);
+        await chatProvider.fetch();
+      } catch (e) {
+        print(e);
+      }
       final storyProvider = Provider.of<StoryProvider>(context, listen: false);
       await storyProvider.fetch();
 
+      try {
+        final messageProvider =
+            Provider.of<MessageProvider>(context, listen: false);
+        await messageProvider.fetch(context);
+      } catch (e) {
+        print(e);
+      }
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(

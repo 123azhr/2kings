@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../helper/size_configuration.dart';
 import '../../widgets/bottom_modal_sheet.dart';
 
-class MyProfileFields extends StatelessWidget {
+class MyProfileFields extends StatefulWidget {
   MyProfileFields({
     Key? key,
     required this.contact,
@@ -13,7 +13,21 @@ class MyProfileFields extends StatelessWidget {
   }) : super(key: key);
   final String name, gender, password, contact, email;
 
-  final TextEditingController nameController = TextEditingController();
+  @override
+  State<MyProfileFields> createState() => _MyProfileFieldsState();
+}
+
+class _MyProfileFieldsState extends State<MyProfileFields> {
+  TextEditingController nameController = TextEditingController();
+
+  TextEditingController genderController = TextEditingController();
+
+  TextEditingController passwordController = TextEditingController();
+
+  TextEditingController contactController = TextEditingController();
+
+  TextEditingController emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -30,7 +44,7 @@ class MyProfileFields extends StatelessWidget {
                 fontWeight: FontWeight.bold),
           ),
           title: Text(
-            name,
+            nameController.text.isEmpty ? widget.name : nameController.text,
             style: TextStyle(
               fontSize: getProportionateScreenHeight(20),
             ),
@@ -40,6 +54,11 @@ class MyProfileFields extends StatelessWidget {
             size: getProportionateScreenHeight(20),
           ),
           onTap: () => customBottomModalSheet(
+            button: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.arrow_forward_rounded)),
             context: context,
             hight: getProportionateScreenHeight(400),
             controller: nameController,
@@ -59,7 +78,7 @@ class MyProfileFields extends StatelessWidget {
                 fontWeight: FontWeight.bold),
           ),
           title: Text(
-            gender,
+            widget.gender == "true" ? "Male" : "Female",
             style: TextStyle(
               fontSize: getProportionateScreenHeight(20),
             ),
@@ -69,9 +88,14 @@ class MyProfileFields extends StatelessWidget {
             size: getProportionateScreenHeight(20),
           ),
           onTap: () => customBottomModalSheet(
+            button: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.arrow_forward_rounded)),
             context: context,
             hight: 356,
-            controller: nameController,
+            controller: genderController,
             title: "Change Gender",
             hintText: "male/female",
           ),
@@ -88,7 +112,9 @@ class MyProfileFields extends StatelessWidget {
                 fontWeight: FontWeight.bold),
           ),
           title: Text(
-            contact,
+            contactController.text.isEmpty
+                ? widget.contact
+                : contactController.text,
             style: TextStyle(
               fontSize: getProportionateScreenHeight(20),
             ),
@@ -98,9 +124,14 @@ class MyProfileFields extends StatelessWidget {
             size: getProportionateScreenHeight(20),
           ),
           onTap: () => customBottomModalSheet(
+            button: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.arrow_forward_rounded)),
             context: context,
             hight: getProportionateScreenHeight(356),
-            controller: nameController,
+            controller: contactController,
             title: "Change Contact",
             hintText: "Contact ",
           ),
@@ -117,7 +148,7 @@ class MyProfileFields extends StatelessWidget {
                 fontWeight: FontWeight.bold),
           ),
           title: Text(
-            email,
+            emailController.text.isEmpty ? widget.email : emailController.text,
             style: TextStyle(
               fontSize: getProportionateScreenHeight(20),
             ),
@@ -127,9 +158,14 @@ class MyProfileFields extends StatelessWidget {
             size: getProportionateScreenHeight(20),
           ),
           onTap: () => customBottomModalSheet(
+            button: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.arrow_forward_rounded)),
             context: context,
             hight: 356,
-            controller: nameController,
+            controller: emailController,
             title: "Change Email",
             hintText: "example@gmail.com",
           ),
@@ -146,7 +182,9 @@ class MyProfileFields extends StatelessWidget {
                 fontWeight: FontWeight.bold),
           ),
           title: Text(
-            password,
+            passwordController.text.isEmpty
+                ? widget.password
+                : passwordController.text,
             style: TextStyle(
               fontSize: getProportionateScreenHeight(20),
             ),
@@ -156,9 +194,14 @@ class MyProfileFields extends StatelessWidget {
             size: getProportionateScreenHeight(20),
           ),
           onTap: () => customBottomModalSheet(
+            button: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.arrow_forward_rounded)),
             context: context,
             hight: getProportionateScreenHeight(356),
-            controller: nameController,
+            controller: passwordController,
             title: "Change Password",
             hintText: "New Password",
           ),

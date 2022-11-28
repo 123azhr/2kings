@@ -1,28 +1,25 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:housecontractors/Screens/profile/edit_services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
 import '../../providers/current_user_provider.dart';
-import '../../providers/user_provider.dart';
 import 'my_profile_fields.dart';
 
 class EditProfilePage extends StatefulWidget {
-  EditProfilePage({super.key});
+  const EditProfilePage({super.key});
 
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  //function
   String _imagePath = "";
 
-  File? _selectedImageFile;
+  File? _selectedImageFile = null;
+
+  List list = [];
 
   void pickImage() async {
     final ImagePicker _picker = ImagePicker();
@@ -88,6 +85,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                   onPressed: () {
                     pickImage();
+
+                    Navigator.pop(context);
                   },
                   label: Text(
                     "Gallery",
@@ -114,7 +113,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: const IconThemeData(color: Colors.black),
           title: Text(
             "Edit Profile",
             style: TextStyle(
@@ -133,59 +132,105 @@ class _EditProfilePageState extends State<EditProfilePage> {
               child: SizedBox(
                 height: getProportionateScreenHeight(200),
                 width: getProportionateScreenWidth(200),
-                child: CircleAvatar(
-                  backgroundColor: Colors.white10,
-                  backgroundImage: NetworkImage(
-                    loggedInUser.profileImageURL!,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              showModalBottomSheet(
-                                backgroundColor:
-                                    Color.fromARGB(255, 255, 210, 32),
-                                context: context,
-                                builder: (context) =>
-                                    changeProfileImageBottomSheet(),
-                              );
-                            },
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    getProportionateScreenWidth(100),
+                child: _selectedImageFile != null
+                    ? CircleAvatar(
+                        backgroundColor: Colors.white10,
+                        backgroundImage: FileImage(_selectedImageFile!),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                showModalBottomSheet(
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 255, 210, 32),
+                                  context: context,
+                                  builder: (context) =>
+                                      changeProfileImageBottomSheet(),
+                                );
+                              },
+                              child: Row(
+                                children: [
+                                  const Spacer(),
+                                  Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(
+                                          getProportionateScreenWidth(100),
+                                        ),
+                                      ),
+                                    ),
+                                    color:
+                                        const Color.fromARGB(255, 255, 210, 32),
+                                    child: SizedBox(
+                                      height: getProportionateScreenHeight(50),
+                                      width: getProportionateScreenWidth(50),
+                                      child: Icon(
+                                        Icons.edit,
+                                        size: getProportionateScreenWidth(40),
+                                        color: Colors.black,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
-                              color: Color.fromARGB(255, 255, 210, 32),
-                              child: SizedBox(
-                                height: getProportionateScreenHeight(50),
-                                width: getProportionateScreenWidth(50),
-                                child: Icon(
-                                  Icons.edit,
-                                  size: getProportionateScreenWidth(40),
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                            )
+                          ],
+                        ),
                       )
-                    ],
-                  ),
-                ),
+                    : CircleAvatar(
+                        backgroundColor: Colors.white10,
+                        backgroundImage:
+                            NetworkImage(loggedInUser.profileImageURL!),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                showModalBottomSheet(
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 255, 210, 32),
+                                  context: context,
+                                  builder: (context) =>
+                                      changeProfileImageBottomSheet(),
+                                );
+                              },
+                              child: Row(
+                                children: [
+                                  const Spacer(),
+                                  Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(
+                                          getProportionateScreenWidth(100),
+                                        ),
+                                      ),
+                                    ),
+                                    color:
+                                        const Color.fromARGB(255, 255, 210, 32),
+                                    child: SizedBox(
+                                      height: getProportionateScreenHeight(50),
+                                      width: getProportionateScreenWidth(50),
+                                      child: Icon(
+                                        Icons.edit,
+                                        size: getProportionateScreenWidth(40),
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
               ),
             ),
             SizedBox(
               height: getProportionateScreenHeight(390),
               width: getProportionateScreenWidth(400),
               child: Card(
-                color: Color.fromARGB(255, 255, 210, 32),
+                color: const Color.fromARGB(255, 255, 210, 32),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(
@@ -211,14 +256,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
-                      Color.fromARGB(255, 18, 18, 18),
+                      const Color.fromARGB(255, 18, 18, 18),
                     ),
                     fixedSize: MaterialStateProperty.all(
                       Size(setWidth(30), setHeight(6)),
                     ),
                   ),
-                  onPressed: () {},
-                  child: Text("Discard",
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Discard",
                       style: TextStyle(
                         fontSize: 18,
                         color: Color.fromARGB(255, 255, 210, 32),
@@ -227,14 +274,34 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
-                      Color.fromARGB(255, 255, 210, 32),
+                      const Color.fromARGB(255, 255, 210, 32),
                     ),
                     fixedSize: MaterialStateProperty.all(
                       Size(setWidth(30), setHeight(6)),
                     ),
                   ),
-                  onPressed: () {},
-                  child: Text("Save",
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: ((context) =>
+                          const Center(child: CircularProgressIndicator())),
+                    );
+                    final userProvider = Provider.of<CurrentUserProvider>(
+                        context,
+                        listen: false);
+                    await FirebaseFirestore.instance
+                        .collection("users")
+                        .doc("Y1DImckjzK5z2khAEi7o")
+                        .collection("contractors")
+                        .doc(userProvider.getCurrentUser().userID)
+                        .update({"profileImageURL": _imagePath});
+
+                    await userProvider.fetch();
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Save",
                       style: TextStyle(fontSize: 18, color: Colors.black87)),
                 ),
               ],

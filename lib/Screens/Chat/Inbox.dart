@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
+import 'package:housecontractors/models/user_model.dart';
+import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
-import 'my_messages.dart';
+import '../../models/chat_model.dart';
+import '../../providers/message_provider.dart';
 import 'opposite_messages.dart';
 
 class Inbox extends StatefulWidget {
-  Inbox({super.key, required this.title});
-  final String title;
-
+  Inbox({super.key, required this.user, required this.chat});
+  final UserModel user;
+  final ChatModel chat;
   @override
   State<Inbox> createState() => _InboxState();
 }
@@ -34,7 +37,9 @@ class _InboxState extends State<Inbox> {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
+    final messageProvider = Provider.of<MessageProvider>(context);
+    final messageList = messageProvider.getList;
+
     return Scaffold(
       appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.black),
@@ -42,7 +47,7 @@ class _InboxState extends State<Inbox> {
           backgroundColor: Colors.transparent,
           centerTitle: true,
           title: Text(
-            "${widget.title}",
+            "${widget.user.name}",
             style: TextStyle(
               color: Colors.black,
               fontSize: (kToolbarHeight / 100) * 40,
@@ -57,16 +62,28 @@ class _InboxState extends State<Inbox> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView.builder(
-          itemCount: 1,
-          itemBuilder: (context, index) => isOpposite
-              ? OppositeMessages(
-                  text: "hello ",
-                )
-              : MyMessages(
-                  text: _textController.text,
-                ),
           reverse: true,
+          scrollDirection: Axis.vertical,
+          itemCount: messageList.length,
+          itemBuilder: (context, int index) => ChangeNotifierProvider.value(
+            value: messageList[index],
+            child: OppositeMessages(
+              text: messageList[index].messagetxt!,
+            ),
+          ),
+          physics: const BouncingScrollPhysics(),
         ),
+        // ListView.builder(
+        //   itemCount: 1,
+        //   itemBuilder: (context, index) => isOpposite
+        //       ? OppositeMessages(
+        //           text: "hello ",
+        //         )
+        //       : MyMessages(
+        //           text: _textController.text,
+        //         ),
+        //   reverse: true,
+        // ),
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.only(
@@ -83,13 +100,10 @@ class _InboxState extends State<Inbox> {
                   color: Color.fromARGB(255, 251, 237, 105),
                   height: setHeight(7),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Center(),
-                      ),
                       Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.all(
                             Radius.circular(20),
@@ -97,26 +111,26 @@ class _InboxState extends State<Inbox> {
                         ),
                         width: getProportionateScreenWidth(100),
                         height: getProportionateScreenHeight(40),
-                        child: Center(
-                          child: DropdownButton(
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: getProportionateScreenHeight(18),
-                              ),
-                              dropdownColor: Colors.amberAccent,
-                              onChanged: (value) {},
-                              value: selectedValue,
-                              items: dropdownItems),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(
+                            child: DropdownButton(
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: getProportionateScreenHeight(14),
+                                ),
+                                dropdownColor: Colors.amberAccent,
+                                onChanged: (value) {},
+                                value: selectedValue,
+                                items: dropdownItems),
+                          ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 14.0),
-                        child: Center(),
-                      ),
+
                       Padding(
                         padding: const EdgeInsets.only(top: 8, bottom: 10),
                         child: MyTextField(
-                          width: setWidth(30),
+                          width: setWidth(40),
                           height: setHeight(7 / 2),
                           radius: 20,
                           controller: _offertextController,
@@ -127,49 +141,51 @@ class _InboxState extends State<Inbox> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: Icon(Icons.cancel_outlined),
-                          label: Text(""),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: Icon(Icons.done),
-                          label: Text(""),
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.all(4.0),
+                      //   child: ElevatedButton.icon(
+                      //     onPressed: () {},
+                      //     icon: Icon(Icons.cancel_outlined),
+                      //     label: Text(""),
+                      //   ),
+                      // ),
+                      // Padding(
+                      //   padding: const EdgeInsets.all(4.0),
+                      //   child: ElevatedButton.icon(
+                      //     onPressed: () {},
+                      //     icon: Icon(Icons.done),
+                      //     label: Text(""),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
                 SizedBox(
-                  height: 65,
+                  height: setHeight(8),
                   child: Row(
                     children: [
-                      Container(
+                      SizedBox(
                         height: setHeight(7),
                         width: setWidth(10),
-                        child: Icon(Icons.camera_alt),
+                        child: const Icon(Icons.camera_alt),
                       ),
-                      Container(
+                      SizedBox(
                         height: setHeight(7),
-                        width: setWidth(10),
-                        child: Icon(Icons.image),
+                        width: setWidth(14),
+                        child: const Icon(Icons.image),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8, bottom: 10),
                         child: MyTextField(
-                          width: setWidth(75),
-                          height: setHeight(7 / 1.5),
+                          width: setWidth(70),
+                          height: setHeight(3),
                           radius: 20,
                           controller: _textController,
                           hintText: "Message",
                           leading: GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              print(messageList);
+                            },
                             child: const Icon(Icons.send),
                           ),
                         ),

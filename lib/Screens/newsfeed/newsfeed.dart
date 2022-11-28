@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/newsfeed/create_post.dart';
 import 'package:housecontractors/components/Post/post.dart';
+import 'package:housecontractors/providers/current_user_provider.dart';
 import 'package:housecontractors/providers/post_provider.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +13,8 @@ class Newsfeed extends StatelessWidget {
   final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<CurrentUserProvider>(context);
+    final loggedInUser = userProvider.getCurrentUser();
     TextEditingController _postController = TextEditingController();
     final postProvider = Provider.of<PostProvider>(context);
     final postsList = postProvider.getList;
@@ -41,8 +45,8 @@ class Newsfeed extends StatelessWidget {
           child: ListTile(
             leading: CircleAvatar(
               child: ClipOval(
-                child: Image.network(
-                  "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+                child: CachedNetworkImage(
+                  imageUrl: loggedInUser.profileImageURL!,
                   fit: BoxFit.fill,
                   height: getProportionateScreenHeight(80),
                 ),

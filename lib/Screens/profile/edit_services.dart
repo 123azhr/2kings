@@ -84,7 +84,7 @@ class EditServices extends StatelessWidget {
                   Navigator.pop(context);
                   Navigator.pop(context);
                 },
-                child: Text("Save",
+                child:const Text("Save",
                     style: TextStyle(fontSize: 18, color: Colors.black87)),
               ),
             ],
