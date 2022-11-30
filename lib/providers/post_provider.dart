@@ -52,7 +52,7 @@ class PostProvider with ChangeNotifier {
     return _list.where((element) => element.userID!.trim() == userID).toList();
   }
 
-  Future<void> uploadImageDataToFireStore({
+  Future<void> uploadPostDataToFireStore({
     String? userID,
     String? imageURL,
     String? userName,

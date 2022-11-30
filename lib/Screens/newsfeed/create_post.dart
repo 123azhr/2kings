@@ -48,7 +48,7 @@ class _CreatePostState extends State<CreatePost> {
           imageType: "posts",
           userID: loggedInUser.userID);
 
-      await postProvider.uploadImageDataToFireStore(
+      await postProvider.uploadPostDataToFireStore(
         imageURL: imageURL,
         userID: loggedInUser.userID,
         userName: loggedInUser.name,

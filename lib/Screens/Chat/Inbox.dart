@@ -86,10 +86,10 @@ class _InboxState extends State<Inbox> {
           itemBuilder: (context, int index) => ChangeNotifierProvider.value(
               value: messageList[index],
               child: messageList[index].type!
-                  ? OppositeMessages(
+                  ? MyMessages(
                       text: messageList[index].messageTxt!,
                     )
-                  : MyMessages(text: messageList[index].messageTxt!)),
+                  : OppositeMessages(text: messageList[index].messageTxt!)),
           physics: const BouncingScrollPhysics(),
           // ),
           // ListView.builder(
@@ -203,8 +203,15 @@ class _InboxState extends State<Inbox> {
                           hintText: "Message",
                           leading: GestureDetector(
                             onTap: () {
-                              
-
+                              if (_textController.text.isNotEmpty) {
+                                messageProvider.uploadMessageDataToFireStore(
+                                    chatWith: widget.user.userID,
+                                    createdAt: DateTime.now(),
+                                    messagetxt: _textController.text,
+                                    type: true);
+                                _textController.clear();
+                                messageProvider.fetch();
+                              }
                             },
                             child: const Icon(Icons.send),
                           ),

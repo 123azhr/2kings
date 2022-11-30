@@ -31,4 +31,33 @@ class MessageProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> uploadMessageDataToFireStore({
+    bool? type,
+    String? chatWith,
+    String? messagetxt,
+    DateTime? createdAt,
+  }) async {
+    DocumentReference<Map<String, dynamic>> doc = await FirebaseFirestore
+        .instance
+        .collection("chats")
+        .doc(loggedInUser!.uid)
+        .collection("messages")
+        .add({
+      "with": chatWith,
+      "type": type,
+      "text": messagetxt,
+      "createdAt": createdAt,
+    });
+    _list.insert(
+      0,
+      MessageModel(
+        chatWith: chatWith,
+        createdAt: createdAt,
+        messageID: doc.id,
+        messageTxt: messagetxt,
+        type: type,
+      ),
+    );
+    notifyListeners();
+  }
 }
