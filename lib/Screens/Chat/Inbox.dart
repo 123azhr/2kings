@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
 import 'package:housecontractors/models/message_model.dart';
 import 'package:housecontractors/models/user_model.dart';
+import 'package:housecontractors/providers/chat_provider.dart';
 import 'package:housecontractors/providers/message_provider.dart';
 import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
 import '../../models/chat_model.dart';
+import '../../providers/current_user_provider.dart';
+import 'my_messages.dart';
 import 'opposite_messages.dart';
 
 class Inbox extends StatefulWidget {
@@ -17,16 +20,16 @@ class Inbox extends StatefulWidget {
   State<Inbox> createState() => _InboxState();
 }
 
-String selectedValue = "Services";
-List<DropdownMenuItem<String>> get dropdownItems {
-  List<DropdownMenuItem<String>> menuItems = [
-    DropdownMenuItem(child: Text("Services"), value: "Services"),
-    DropdownMenuItem(child: Text("Canada"), value: "Canada"),
-    DropdownMenuItem(child: Text("Brazil"), value: "Brazil"),
-    DropdownMenuItem(child: Text("England"), value: "England"),
-  ];
-  return menuItems;
-}
+// String selectedValue = "Services";
+// List<DropdownMenuItem<String>> get dropdownItems {
+//   List<DropdownMenuItem<String>> menuItems = [
+//     DropdownMenuItem(child: Text("Services"), value: "Services"),
+//     DropdownMenuItem(child: Text("Canada"), value: "Canada"),
+//     DropdownMenuItem(child: Text("Brazil"), value: "Brazil"),
+//     DropdownMenuItem(child: Text("England"), value: "England"),
+//   ];
+//   return menuItems;
+// }
 
 class _InboxState extends State<Inbox> {
   final TextEditingController _textController = TextEditingController();
@@ -39,8 +42,22 @@ class _InboxState extends State<Inbox> {
 
   @override
   Widget build(BuildContext context) {
-    final msgProvider = Provider.of<MessageProvider>(context);
-    List<MessageModel> messageList = msgProvider.getList;
+    final messageProvider = Provider.of<MessageProvider>(context);
+    final messageList = messageProvider.getList;
+
+    final userProvider = Provider.of<CurrentUserProvider>(context);
+    final loggedinUser = userProvider.getCurrentUser();
+
+    String selectedValue = "Services";
+    List<DropdownMenuItem<String>> menuItems = [
+      const DropdownMenuItem(child: Text("Services"), value: "Services"),
+    ];
+    for (int index = 0; index < loggedinUser.services!.length; index++) {
+      menuItems.add(DropdownMenuItem(
+        child: Text(loggedinUser.services!.elementAt(index)),
+        value: loggedinUser.services!.elementAt(index),
+      ));
+    }
     return Scaffold(
       appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.black),
@@ -67,11 +84,12 @@ class _InboxState extends State<Inbox> {
           scrollDirection: Axis.vertical,
           itemCount: messageList.length,
           itemBuilder: (context, int index) => ChangeNotifierProvider.value(
-            value: messageList[index],
-            child: OppositeMessages(
-              text: messageList[index].messageTxt!,
-            ),
-          ),
+              value: messageList[index],
+              child: messageList[index].type!
+                  ? OppositeMessages(
+                      text: messageList[index].messageTxt!,
+                    )
+                  : MyMessages(text: messageList[index].messageTxt!)),
           physics: const BouncingScrollPhysics(),
           // ),
           // ListView.builder(
@@ -123,7 +141,7 @@ class _InboxState extends State<Inbox> {
                                 dropdownColor: Colors.amberAccent,
                                 onChanged: (value) {},
                                 value: selectedValue,
-                                items: dropdownItems),
+                                items: menuItems),
                           ),
                         ),
                       ),
@@ -185,7 +203,8 @@ class _InboxState extends State<Inbox> {
                           hintText: "Message",
                           leading: GestureDetector(
                             onTap: () {
-                              print(messageList);
+                              
+
                             },
                             child: const Icon(Icons.send),
                           ),

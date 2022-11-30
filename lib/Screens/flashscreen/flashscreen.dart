@@ -1,9 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/login.dart';
+import 'package:housecontractors/providers/message_provider.dart';
 import 'package:housecontractors/providers/post_provider.dart';
+import 'package:housecontractors/providers/worker_provider.dart';
 import 'package:provider/provider.dart';
 import '../../providers/chat_provider.dart';
+import '../../providers/current_user_provider.dart';
+import '../../providers/order_provider.dart';
 import '../../providers/service_provider.dart';
 import '../../providers/story_provider.dart';
 import '../../providers/user_provider.dart';
@@ -29,6 +33,13 @@ class _FlashScreenState extends State<FlashScreen> {
   }
 
   loadData() async {
+    try {
+      final currentUserProvider =
+          Provider.of<CurrentUserProvider>(context, listen: false);
+      await currentUserProvider.fetch();
+    } catch (e) {
+      print(e);
+    }
     await Future.delayed(const Duration(milliseconds: 0)).then((value) async {
       final postProvider = Provider.of<PostProvider>(context, listen: false);
       await postProvider.fetch();
@@ -39,9 +50,19 @@ class _FlashScreenState extends State<FlashScreen> {
         print(e);
       }
 
+      try {
+        final workersProvider =
+            Provider.of<WorkerProvider>(context, listen: false);
+        await workersProvider.fetch();
+      } catch (e) {
+        print(e);
+      }
       final serviceProvider =
           Provider.of<ServiceProvider>(context, listen: false);
       await serviceProvider.fetch();
+      // final ordersProvider =
+      //     Provider.of<OrdersProvider>(context, listen: false);
+      // await ordersProvider.fetch();
       try {
         final chatProvider = Provider.of<ChatProvider>(context, listen: false);
         await chatProvider.fetch();
@@ -51,13 +72,13 @@ class _FlashScreenState extends State<FlashScreen> {
       final storyProvider = Provider.of<StoryProvider>(context, listen: false);
       await storyProvider.fetch();
 
-      // try {
-      //   final messageProvider =
-      //       Provider.of<MessageProvider>(context, listen: false);
-      //   await messageProvider.fetch();
-      // } catch (e) {
-      //   print(e);
-      // }
+      try {
+        final messageProvider =
+            Provider.of<MessageProvider>(context, listen: false);
+        await messageProvider.fetch();
+      } catch (e) {
+        print(e);
+      }
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(

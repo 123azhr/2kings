@@ -13,16 +13,9 @@ class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
   @override
   State<Dashboard> createState() => _DashboardState();
+  
 }
-
 class _DashboardState extends State<Dashboard> {
-  @override
-  void initState() {
-    loadWorkers();
-
-    super.initState();
-  }
-
   int _selectedIndex = 0;
   static final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
@@ -35,24 +28,7 @@ class _DashboardState extends State<Dashboard> {
     setState(() {
       _selectedIndex = index;
     });
-  }
-
-  loadWorkers() async {
-    CurrentUserProvider().dispose();
-    try {
-      final currentUserProvider =
-          Provider.of<CurrentUserProvider>(context, listen: false);
-      await currentUserProvider.fetch();
-    } catch (e) {
-      print("Current user not  found");
-    }
-    try {
-      final workerProvider =
-          Provider.of<WorkerProvider>(context, listen: false);
-      await workerProvider.fetch();
-    } catch (e) {
-      print("no workers found");
-    }
+    
   }
 
   @override

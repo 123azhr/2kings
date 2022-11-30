@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/Chat/inbox.dart';
 import 'package:housecontractors/models/user_model.dart';
@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
 import '../../models/chat_model.dart';
 import '../../providers/chat_provider.dart';
-import '../../providers/current_user_provider.dart';
 import '../../providers/user_provider.dart';
 
 class ChatMenu extends StatefulWidget {
@@ -23,10 +22,6 @@ class _ChatMenuState extends State<ChatMenu> {
   Widget build(BuildContext context) {
     final chatProvider = Provider.of<ChatProvider>(context);
     final chatList = chatProvider.getList;
-
-    final currentUserProvider = Provider.of<CurrentUserProvider>(context);
-    final loggedInUser = currentUserProvider.getCurrentUser();
-
     final userProvider = Provider.of<UserProvider>(context);
     // final user = userProvider.getUserByID(chatList[index].otherID);
     return Scaffold(
@@ -98,7 +93,6 @@ class ChatMenuTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        print(chat.messagesID);
         Navigator.push(
           context,
           MaterialPageRoute(

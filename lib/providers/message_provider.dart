@@ -13,7 +13,8 @@ class MessageProvider with ChangeNotifier {
   Future<void> fetch() async {
     await FirebaseFirestore.instance
         .collection("chats")
-        .where("userID", isEqualTo: loggedInUser!.uid)
+        .doc(loggedInUser!.uid)
+        .collection("messages")
         .get()
         .then(
           (QuerySnapshot<Map<String, dynamic>> snapshot) => {
@@ -22,13 +23,12 @@ class MessageProvider with ChangeNotifier {
               {
                 _list.insert(
                   0,
-                  MessageModel.fromMap(
-                      map: doc.data().entries.first.value,
-                      messageID: doc.get('messages')),
+                  MessageModel.fromMap(map: doc.data(), messageID: doc.id),
                 ),
               },
           },
         );
     notifyListeners();
   }
+
 }

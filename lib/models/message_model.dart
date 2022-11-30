@@ -2,20 +2,24 @@ import 'package:flutter/material.dart';
 
 class MessageModel with ChangeNotifier {
   final String? messageID;
-  final String? createdAt;
+  final DateTime? createdAt;
   final String? messageTxt;
-  final bool? msgType;
+  final String? chatWith;
+  final bool? type;
   factory MessageModel.fromMap(
       {required Map<String, dynamic> map, required String messageID}) {
     return MessageModel(
-        messageID: messageID,
-        messageTxt: map["text"],
-        createdAt: map["createdAt"],
-        msgType: map["msgType"]);
+      messageID: messageID,
+      messageTxt: map["text"],
+      createdAt: map["createdAt"].toDate(),
+      chatWith: map["with"],
+      type: map["type"],
+    );
   }
 
   MessageModel({
-    this.msgType,
+    this.type,
+    this.chatWith,
     this.messageID,
     this.createdAt,
     this.messageTxt,

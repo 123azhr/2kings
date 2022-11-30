@@ -1,23 +1,18 @@
 import 'package:flutter/cupertino.dart';
 
 class ChatModel with ChangeNotifier {
-  final String? userID;
   final String? otherID;
-  final String? chatID;
-  final Map? messagesID;
+  final String? userID;
   factory ChatModel.fromMap(
-      {required Map<String, dynamic> map, required String chatID}) {
+      {required Map<String, dynamic> map, required String userID}) {
     return ChatModel(
-        chatID: chatID,
-        otherID: map["otherID"],
-        messagesID: map["messages"],
-        userID: map["userID"]);
+      userID: userID,
+      otherID: map["with"],
+    );
   }
 
   ChatModel({
-    this.messagesID,
-    this.userID,
     this.otherID,
-    this.chatID,
+    this.userID,
   });
 }

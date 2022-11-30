@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:housecontractors/Screens/flashscreen/flashscreen.dart';
 import 'package:housecontractors/providers/chat_provider.dart';
 import 'package:housecontractors/providers/current_user_provider.dart';
+import 'package:housecontractors/providers/message_provider.dart';
+import 'package:housecontractors/providers/order_provider.dart';
 import 'package:housecontractors/providers/post_provider.dart';
 import 'package:housecontractors/providers/service_provider.dart';
 import 'package:housecontractors/providers/story_provider.dart';
@@ -14,7 +16,6 @@ import 'package:housecontractors/themes/mytheme.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'providers/authentication_provider.dart';
-import 'providers/message_provider.dart';
 
 // Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 //   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -81,7 +82,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ChatProvider()),
         ChangeNotifierProvider(create: (_) => StoryProvider()),
         ChangeNotifierProvider(create: (_) => CurrentUserProvider()),
-        // ChangeNotifierProvider(create: (_) => MessageProvider()),
+        
+        ChangeNotifierProvider(create: (_) => OrdersProvider()),
+        ChangeNotifierProvider(create: (_) => MessageProvider()),
       ],
       child: MaterialApp(
         title: "HouseContractors",

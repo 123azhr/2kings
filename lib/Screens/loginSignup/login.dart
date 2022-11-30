@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/Dashboard/dashboard.dart';
+import 'package:housecontractors/Screens/loginSignup/loading_screen.dart';
 import 'package:housecontractors/Screens/loginSignup/signup.dart';
 import 'package:housecontractors/Screens/loginSignup/verify_email.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
@@ -123,10 +124,6 @@ class _LoginState extends State<Login> {
                             password: passController.text.trim());
                     if (isSignedin == "signed in") {
                       if (FirebaseAuth.instance.currentUser!.emailVerified) {
-                        final currentUserProvider =
-                            Provider.of<CurrentUserProvider>(context,
-                                listen: false);
-                        await currentUserProvider.fetch();
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

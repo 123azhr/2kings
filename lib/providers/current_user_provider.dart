@@ -10,6 +10,7 @@ class CurrentUserProvider with ChangeNotifier {
 
   final String _user = FirebaseAuth.instance.currentUser!.uid;
   Future<void> fetch() async {
+    print("$_user provider");
     await FirebaseFirestore.instance
         .collection("users")
         .doc("Y1DImckjzK5z2khAEi7o")

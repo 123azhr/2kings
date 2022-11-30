@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/orders/active_orders.dart';
 import 'package:housecontractors/Screens/orders/pending_orders.dart';
+import 'package:housecontractors/providers/order_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../helper/size_configuration.dart';
 import 'completed_orders.dart';
@@ -39,7 +41,9 @@ class _MyOrdersState extends State<MyOrders>
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
+    final ordersProvider = Provider.of<OrdersProvider>(context);
+    final ordersList = ordersProvider.getList;
+    print(ordersList);
     return DefaultTabController(
       length: 3,
       initialIndex: 0,

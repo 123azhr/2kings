@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/login.dart';
 import 'package:housecontractors/Screens/profile/edit_profile.dart';
 import 'package:housecontractors/Screens/profile/edit_services.dart';
+import 'package:housecontractors/models/current_user.dart';
 import 'package:housecontractors/providers/authentication_provider.dart';
 import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
@@ -15,6 +18,7 @@ class Menu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<CurrentUserProvider>(context);
+    userProvider.fetch();
     final loggedInUser = userProvider.getCurrentUser();
     return Scaffold(
       appBar: AppBar(
@@ -101,33 +105,25 @@ class Menu extends StatelessWidget {
             color: Colors.black,
             height: 0,
           ),
-          InkWell(
-            onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => Login()),
-              );
-            },
-            child: ListTile(
-              visualDensity: VisualDensity(vertical: 4),
-              dense: true,
-              leading: CircleAvatar(
-                child: Icon(Icons.construction),
-              ),
-              title: Text(
-                "Edit Services",
-                style: TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditServices(),
-                    ));
-              },
+          ListTile(
+            visualDensity: VisualDensity(vertical: 4),
+            dense: true,
+            leading: CircleAvatar(
+              child: Icon(Icons.construction),
             ),
+            title: Text(
+              "Edit Services",
+              style: TextStyle(
+                fontSize: 18,
+              ),
+            ),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditServices(),
+                  ));
+            },
           ),
           const Divider(
             thickness: 0.05,
@@ -155,8 +151,9 @@ class Menu extends StatelessWidget {
                 fontSize: 18,
               ),
             ),
-            onTap: () {
-              context.read<AuthenticationService>().signOut();
+            onTap: () async {
+              await context.read<AuthenticationService>().signOut();
+              CurrentUserProvider().getList.clear();
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => const Login()),
