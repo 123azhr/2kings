@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ChatProvider()),
         ChangeNotifierProvider(create: (_) => StoryProvider()),
         ChangeNotifierProvider(create: (_) => CurrentUserProvider()),
-        ChangeNotifierProvider(create: (_) => MessageProvider()),
+        // ChangeNotifierProvider(create: (_) => MessageProvider()),
       ],
       child: MaterialApp(
         title: "HouseContractors",

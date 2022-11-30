@@ -14,7 +14,7 @@ class HireContractor extends StatelessWidget {
       onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => WorkersList(serviceName: "Contractors"),
+            builder: (context) => const WorkersList(serviceName: "Contractors"),
           )),
       child: Card(
         child: Container(
@@ -22,8 +22,8 @@ class HireContractor extends StatelessWidget {
           width: getProportionateScreenWidth(500),
           child: const Text("Contracts"),
           padding: EdgeInsets.all(getProportionateScreenHeight(10)),
-        ), 
-        shape: RoundedRectangleBorder(
+        ),
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20))),
       ),
     );

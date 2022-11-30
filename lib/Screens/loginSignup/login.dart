@@ -1,11 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:housecontractors/Screens/Dashboard/dashboard.dart';
 import 'package:housecontractors/Screens/loginSignup/signup.dart';
+import 'package:housecontractors/Screens/loginSignup/verify_email.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
+import 'package:housecontractors/models/current_user.dart';
+import 'package:housecontractors/models/workers_model.dart';
 import 'package:provider/provider.dart';
 import '../../providers/authentication_provider.dart';
 import '../../providers/current_user_provider.dart';
+import '../../widgets/mycontainer.dart';
 import 'mytextfield.dart';
 
 class Login extends StatefulWidget {
@@ -25,12 +30,6 @@ class _LoginState extends State<Login> {
     emailController.dispose();
     passController.dispose();
     super.dispose();
-  }
-
-  Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passController.text.trim());
   }
 
   @override
@@ -113,17 +112,48 @@ class _LoginState extends State<Login> {
                     //content padding inside button
                   ),
                   onPressed: () async {
-                    await context.read<AuthenticationService>().signIn(
-                        email: emailController.text.trim(),
-                        password: passController.text.trim());
-
-                    final currentUserProvider =
-                        Provider.of<CurrentUserProvider>(context,
-                            listen: false);
-
-                    await currentUserProvider.fetch();
+                    showDialog(
+                        context: context,
+                        builder: (context) =>
+                            const Center(child: CircularProgressIndicator()));
+                    String isSignedin = await context
+                        .read<AuthenticationService>()
+                        .signIn(
+                            email: emailController.text.trim(),
+                            password: passController.text.trim());
+                    if (isSignedin == "signed in") {
+                      if (FirebaseAuth.instance.currentUser!.emailVerified) {
+                        final currentUserProvider =
+                            Provider.of<CurrentUserProvider>(context,
+                                listen: false);
+                        await currentUserProvider.fetch();
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Dashboard(),
+                            ));
+                      } else {
+                        Navigator.pop(context);
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const VerifyEmail(),
+                            ));
+                      }
+                    } else {
+                      showModalBottomSheet(
+                        backgroundColor: Colors.transparent,
+                        context: context,
+                        builder: (context) => MyContainer(
+                            height: setHeight(10),
+                            width: setWidth(90),
+                            child: const Center(
+                                child: Center(
+                                    child: Text(
+                                        "Email / Password is incorrect")))),
+                      );
+                    }
                   }
-
                   // for (int i = 0; i < usersList.length; i++) {
                   //   if (emailController.text != usersList[i].email &&
                   //       passController.text != usersList[i].password) {

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
+import 'package:housecontractors/models/message_model.dart';
 import 'package:housecontractors/models/user_model.dart';
+import 'package:housecontractors/providers/message_provider.dart';
 import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
 import '../../models/chat_model.dart';
-import '../../providers/message_provider.dart';
 import 'opposite_messages.dart';
 
 class Inbox extends StatefulWidget {
-  Inbox({super.key, required this.user, required this.chat});
+  const Inbox({super.key, required this.user, required this.chat});
   final UserModel user;
   final ChatModel chat;
+
   @override
   State<Inbox> createState() => _InboxState();
 }
@@ -27,35 +29,34 @@ List<DropdownMenuItem<String>> get dropdownItems {
 }
 
 class _InboxState extends State<Inbox> {
-  TextEditingController _textController = TextEditingController();
+  final TextEditingController _textController = TextEditingController();
 
-  TextEditingController _offertextController = TextEditingController();
+  final TextEditingController _offertextController = TextEditingController();
 
-  TextEditingController _servicetextController = TextEditingController();
+  final TextEditingController _servicetextController = TextEditingController();
 
   final bool isOpposite = true;
 
   @override
   Widget build(BuildContext context) {
-    final messageProvider = Provider.of<MessageProvider>(context);
-    final messageList = messageProvider.getList;
-
+    final msgProvider = Provider.of<MessageProvider>(context);
+    List<MessageModel> messageList = msgProvider.getList;
     return Scaffold(
       appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: const IconThemeData(color: Colors.black),
           elevation: 0,
           backgroundColor: Colors.transparent,
           centerTitle: true,
           title: Text(
             "${widget.user.name}",
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontSize: (kToolbarHeight / 100) * 40,
             ),
           ),
           actions: [
             IconButton(
-              icon: Icon(Icons.call),
+              icon: const Icon(Icons.call),
               onPressed: () {},
             ),
           ]),
@@ -68,22 +69,22 @@ class _InboxState extends State<Inbox> {
           itemBuilder: (context, int index) => ChangeNotifierProvider.value(
             value: messageList[index],
             child: OppositeMessages(
-              text: messageList[index].messagetxt!,
+              text: messageList[index].messageTxt!,
             ),
           ),
           physics: const BouncingScrollPhysics(),
+          // ),
+          // ListView.builder(
+          //   itemCount: 1,
+          //   itemBuilder: (context, index) => isOpposite
+          //       ? OppositeMessages(
+          //           text: "hello ",
+          //         )
+          //       : MyMessages(
+          //           text: _textController.text,
+          //         ),
+          //   reverse: true,
         ),
-        // ListView.builder(
-        //   itemCount: 1,
-        //   itemBuilder: (context, index) => isOpposite
-        //       ? OppositeMessages(
-        //           text: "hello ",
-        //         )
-        //       : MyMessages(
-        //           text: _textController.text,
-        //         ),
-        //   reverse: true,
-        // ),
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.only(

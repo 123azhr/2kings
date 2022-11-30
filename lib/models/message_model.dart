@@ -1,26 +1,23 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class MessageModel with ChangeNotifier {
   final String? messageID;
-
   final String? createdAt;
-  final String? messagetxt;
-  final String? userID;
-  final String? otherID;
-
+  final String? messageTxt;
+  final bool? msgType;
   factory MessageModel.fromMap(
       {required Map<String, dynamic> map, required String messageID}) {
     return MessageModel(
         messageID: messageID,
-        messagetxt: map["text"],
-        otherID: map["toID"],
-        userID: map["userID"]);
+        messageTxt: map["text"],
+        createdAt: map["createdAt"],
+        msgType: map["msgType"]);
   }
 
-  MessageModel(
-      {this.messageID,
-      this.createdAt,
-      this.messagetxt,
-      this.userID,
-      this.otherID});
+  MessageModel({
+    this.msgType,
+    this.messageID,
+    this.createdAt,
+    this.messageTxt,
+  });
 }

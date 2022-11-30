@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:housecontractors/Screens/Chat/Inbox.dart';
+import 'package:housecontractors/Screens/Chat/inbox.dart';
 import 'package:housecontractors/models/user_model.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +23,7 @@ class _ChatMenuState extends State<ChatMenu> {
   Widget build(BuildContext context) {
     final chatProvider = Provider.of<ChatProvider>(context);
     final chatList = chatProvider.getList;
+
     final currentUserProvider = Provider.of<CurrentUserProvider>(context);
     final loggedInUser = currentUserProvider.getCurrentUser();
 
@@ -61,7 +62,7 @@ class _ChatMenuState extends State<ChatMenu> {
         itemCount: chatList.length,
         itemBuilder: (context, int index) => ChangeNotifierProvider.value(
           value: chatList[index],
-          child: chatMenuTile(
+          child: ChatMenuTile(
             chat: chatList[index],
             subtitle: userProvider
                 .getUserByID(chatList[index].otherID!)
@@ -79,8 +80,8 @@ class _ChatMenuState extends State<ChatMenu> {
   }
 }
 
-class chatMenuTile extends StatelessWidget {
-  const chatMenuTile({
+class ChatMenuTile extends StatelessWidget {
+  const ChatMenuTile({
     Key? key,
     required this.user,
     required this.subtitle,
@@ -97,6 +98,7 @@ class chatMenuTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
+        print(chat.messagesID);
         Navigator.push(
           context,
           MaterialPageRoute(

@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:housecontractors/Screens/Main/dashboard.dart';
+import 'package:housecontractors/Screens/Dashboard/dashboard.dart';
+import 'package:housecontractors/Screens/loginSignup/verify_email.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -68,14 +69,16 @@ class _UserFormState extends State<UserForm> {
     await context
         .read<AuthenticationService>()
         .signUp(email: widget.email.trim(), password: widget.password.trim());
+
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: ((context) => const Center(child: CircularProgressIndicator())),
     );
-    context
+    await context
         .read<AuthenticationService>()
         .signIn(email: widget.email.trim(), password: widget.password.trim());
+
     Navigator.pop(context);
   }
 
@@ -214,7 +217,7 @@ class _UserFormState extends State<UserForm> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const Dashboard(),
+                                  builder: (context) => const VerifyEmail(),
                                 ));
                           },
                           child: const Text("Continue"),

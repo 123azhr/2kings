@@ -32,5 +32,6 @@ class AuthenticationService {
     } on FirebaseAuthException catch (e) {
       return e.message!;
     }
+    
   }
 }

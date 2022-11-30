@@ -8,13 +8,13 @@ class CurrentUserProvider with ChangeNotifier {
 
   List<CurrentUserModel> get getList => _list;
 
-  String user = FirebaseAuth.instance.currentUser!.uid;
+  final String _user = FirebaseAuth.instance.currentUser!.uid;
   Future<void> fetch() async {
     await FirebaseFirestore.instance
         .collection("users")
         .doc("Y1DImckjzK5z2khAEi7o")
         .collection("contractors")
-        .doc(user) //userID
+        .doc(_user) //userID
         .get()
         .then((DocumentSnapshot snapshot) {
       _list = [];
@@ -27,7 +27,7 @@ class CurrentUserProvider with ChangeNotifier {
 
   CurrentUserModel getCurrentUser() {
     return _list
-        .where((element) => element.userID!.trim() == user)
+        .where((element) => element.userID!.trim() == _user)
         .toList()
         .elementAt(0);
   }

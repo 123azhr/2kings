@@ -19,8 +19,8 @@ class HomePage extends StatelessWidget {
           "assets/images/logo-black-half.png",
           fit: BoxFit.contain,
         ),
-        iconTheme: IconThemeData(color: Colors.black),
-        title: Text(
+        iconTheme: const IconThemeData(color: Colors.black),
+        title: const Text(
           "Home",
           style: TextStyle(
             color: Colors.black,

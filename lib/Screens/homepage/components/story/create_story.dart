@@ -82,7 +82,7 @@ class _CreateStoryState extends State<CreateStory> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          iconTheme:const  IconThemeData(color: Colors.black),
+          iconTheme: const IconThemeData(color: Colors.black),
           elevation: 0,
           backgroundColor: Colors.transparent,
           centerTitle: true,
@@ -125,7 +125,7 @@ class _CreateStoryState extends State<CreateStory> {
                     ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
-                         const  Color.fromARGB(255, 255, 210, 32),
+                          const Color.fromARGB(255, 255, 210, 32),
                         ),
                         minimumSize: MaterialStateProperty.all(
                           Size(setWidth(6), setHeight(6)),
@@ -175,7 +175,7 @@ class _CreateStoryState extends State<CreateStory> {
                       )
                     : MyContainer(
                         height: setHeight(40),
-                        child: InkWell( 
+                        child: InkWell(
                             child: const Icon(Icons.add_a_photo),
                             onTap: () {
                               pickImage();

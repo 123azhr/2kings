@@ -2,15 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/login.dart';
 import 'package:housecontractors/providers/post_provider.dart';
-import 'package:housecontractors/providers/worker_provider.dart';
 import 'package:provider/provider.dart';
 import '../../providers/chat_provider.dart';
-import '../../providers/current_user_provider.dart';
-import '../../providers/message_provider.dart';
 import '../../providers/service_provider.dart';
 import '../../providers/story_provider.dart';
 import '../../providers/user_provider.dart';
-import '../Main/dashboard.dart';
+import '../Dashboard/dashboard.dart';
+import '../loginSignup/verify_email.dart';
 
 class FlashScreen extends StatefulWidget {
   const FlashScreen({Key? key}) : super(key: key);
@@ -24,7 +22,9 @@ class _FlashScreenState extends State<FlashScreen> {
   void initState() {
     try {
       loadData();
-    } catch (e) {}
+    } catch (e) {
+      print("cannot load data");
+    }
     super.initState();
   }
 
@@ -38,14 +38,7 @@ class _FlashScreenState extends State<FlashScreen> {
       } catch (e) {
         print(e);
       }
-      try {
-        final currentUserProvider =
-            Provider.of<CurrentUserProvider>(context, listen: false);
 
-        await currentUserProvider.fetch();
-      } catch (e) {
-        print("could'nt load user");
-      }
       final serviceProvider =
           Provider.of<ServiceProvider>(context, listen: false);
       await serviceProvider.fetch();
@@ -58,13 +51,13 @@ class _FlashScreenState extends State<FlashScreen> {
       final storyProvider = Provider.of<StoryProvider>(context, listen: false);
       await storyProvider.fetch();
 
-      try {
-        final messageProvider =
-            Provider.of<MessageProvider>(context, listen: false);
-        await messageProvider.fetch(context);
-      } catch (e) {
-        print(e);
-      }
+      // try {
+      //   final messageProvider =
+      //       Provider.of<MessageProvider>(context, listen: false);
+      //   await messageProvider.fetch();
+      // } catch (e) {
+      //   print(e);
+      // }
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -90,8 +83,13 @@ class AuthenticationWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User?>();
+
     if (firebaseUser != null) {
-      return const Dashboard();
+      if (FirebaseAuth.instance.currentUser!.emailVerified) {
+        return const Dashboard();
+      } else {
+        return const VerifyEmail();
+      }
     } else {
       return const Login();
     }

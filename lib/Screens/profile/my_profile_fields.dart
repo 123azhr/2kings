@@ -3,7 +3,7 @@ import '../../helper/size_configuration.dart';
 import '../../widgets/bottom_modal_sheet.dart';
 
 class MyProfileFields extends StatefulWidget {
-  MyProfileFields({
+  const MyProfileFields({
     Key? key,
     required this.contact,
     required this.email,
@@ -167,7 +167,7 @@ class _MyProfileFieldsState extends State<MyProfileFields> {
             hight: 356,
             controller: emailController,
             title: "Change Email",
-            hintText: "example@gmail.com",
+            hintText: "example@xyz.com",
           ),
         ),
         Divider(

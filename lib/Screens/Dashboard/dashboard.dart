@@ -4,6 +4,7 @@ import 'package:housecontractors/Screens/menu/menu.dart';
 import 'package:housecontractors/Screens/newsfeed/newsfeed.dart';
 import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
+import '../../providers/current_user_provider.dart';
 import '../../providers/worker_provider.dart';
 import '../homepage/home.dart';
 import '../orders/my_orders.dart';
@@ -37,6 +38,14 @@ class _DashboardState extends State<Dashboard> {
   }
 
   loadWorkers() async {
+    CurrentUserProvider().dispose();
+    try {
+      final currentUserProvider =
+          Provider.of<CurrentUserProvider>(context, listen: false);
+      await currentUserProvider.fetch();
+    } catch (e) {
+      print("Current user not  found");
+    }
     try {
       final workerProvider =
           Provider.of<WorkerProvider>(context, listen: false);
