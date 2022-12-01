@@ -134,20 +134,20 @@ class ViewAggrement extends StatelessWidget {
                           ],
                         ),
                         Divider(thickness: 0.4),
-                        ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: 50,
-                          itemBuilder: (context, index) => Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text("name "),
-                              Text("S4865 "),
-                              Text("20 "),
-                            ],
-                          ),
-                        ),
-                        Divider(thickness: 0.4),
+                        // ListView.builder(
+                        //   physics: const NeverScrollableScrollPhysics(),
+                        //   shrinkWrap: true,
+                        //   itemCount: 50,
+                        //   itemBuilder: (context, index) => Row(
+                        //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //     children: [
+                        //       Text("name "),
+                        //       Text("S4865 "),
+                        //       Text("20 "),
+                        //     ],
+                        //   ),
+                        // ),
+                        // Divider(thickness: 0.4),
                         SizedBox(
                           height: 50,
                           child: Center(

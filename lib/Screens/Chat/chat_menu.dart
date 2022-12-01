@@ -57,7 +57,7 @@ class _ChatMenuState extends State<ChatMenu> {
         itemCount: chatList.length,
         itemBuilder: (context, int index) => ChangeNotifierProvider.value(
           value: chatList[index],
-          child: ChatMenuTile(
+          child:  ChatMenuTile(
             chat: chatList[index],
             subtitle: userProvider
                 .getUserByID(chatList[index].otherID!)

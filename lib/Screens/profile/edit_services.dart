@@ -137,31 +137,31 @@ class _MyServicesState extends State<MyServices> {
           itemCount: _allService().length,
           itemBuilder: (context, int index) => ChangeNotifierProvider.value(
                 value: _allService()[index],
-                child: const WorkerSlide(),
+                child: const ServiceSlide(),
               )),
     );
   }
 }
 
-class WorkerSlide extends StatefulWidget {
-  const WorkerSlide({
+class ServiceSlide extends StatefulWidget {
+  const ServiceSlide({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<WorkerSlide> createState() => _WorkerSlideState();
+  State<ServiceSlide> createState() => _ServiceSlideState();
 }
 
-class _WorkerSlideState extends State<WorkerSlide> {
-  bool? isCheck = false;
-  bool? isCheck1 = true;
+class _ServiceSlideState extends State<ServiceSlide> {
+  bool isCheck = false;
+  bool isCheck1 = true;
   @override
   Widget build(BuildContext context) {
     final serviceModel = Provider.of<ServiceModel>(context);
     final userProvider = Provider.of<CurrentUserProvider>(context);
     CurrentUserModel user = userProvider.getCurrentUser();
-    bool? initialValue = user.services!.contains(serviceModel.serviceName!);
-
+    bool initialValue =
+        user.services!.contains(serviceModel.serviceName!) ? true : false;
     return Card(
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
@@ -191,11 +191,11 @@ class _WorkerSlideState extends State<WorkerSlide> {
           ),
           const Spacer(),
           Checkbox(
-            value: initialValue ? isCheck1 : isCheck,
+            value: isCheck1 ? initialValue : isCheck,
             onChanged: (value) {
               setState(() {
                 isCheck = value!;
-                isCheck1 = value;
+                isCheck1 = false;
                 if (list.contains(serviceModel.serviceName!) == false &&
                     value == true) {
                   list.add(serviceModel.serviceName!);

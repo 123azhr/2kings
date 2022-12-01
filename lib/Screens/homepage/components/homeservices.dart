@@ -5,9 +5,8 @@ import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../../models/service_model.dart';
-import '../../../models/workers_model.dart';
+import '../../../providers/current_user_provider.dart';
 import '../../../providers/service_provider.dart';
-import '../../../providers/worker_provider.dart';
 
 class HomeServices extends StatelessWidget {
   const HomeServices({Key? key}) : super(key: key);
@@ -15,6 +14,9 @@ class HomeServices extends StatelessWidget {
   Widget build(BuildContext context) {
     final serviceProvider = Provider.of<ServiceProvider>(context);
     final serviceList = serviceProvider.getList;
+
+    final currentProvider = Provider.of<CurrentUserProvider>(context);
+    final loggedInUser = currentProvider.getCurrentUser();
     List<ServiceModel> tempList = List<ServiceModel>.generate(
       0,
       (index) => serviceList.first,
@@ -22,7 +24,8 @@ class HomeServices extends StatelessWidget {
 
     List<ServiceModel> _allHomeService() {
       for (int i = 0; i < serviceList.length; i++) {
-        if (serviceList[i].serviceCategroy == true) {
+        if (serviceList[i].serviceCategroy == true &&
+            loggedInUser.services!.contains(serviceList[i].serviceName)) {
           tempList.add(serviceList[i]);
         }
       }

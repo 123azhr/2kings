@@ -6,9 +6,17 @@ import 'package:housecontractors/Screens/profile/edit_profile.dart';
 import 'package:housecontractors/Screens/profile/edit_services.dart';
 import 'package:housecontractors/models/current_user.dart';
 import 'package:housecontractors/providers/authentication_provider.dart';
+import 'package:housecontractors/providers/message_provider.dart';
 import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
+import '../../providers/chat_provider.dart';
 import '../../providers/current_user_provider.dart';
+import '../../providers/order_provider.dart';
+import '../../providers/post_provider.dart';
+import '../../providers/service_provider.dart';
+import '../../providers/story_provider.dart';
+import '../../providers/user_provider.dart';
+import '../../providers/worker_provider.dart';
 import '../profile/my_profile_view.dart';
 
 class Menu extends StatelessWidget {
@@ -17,9 +25,18 @@ class Menu extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<CurrentUserProvider>(context);
-    userProvider.fetch();
-    final loggedInUser = userProvider.getCurrentUser();
+    final serviceProvider = Provider.of<ServiceProvider>(context);
+    final chatProvider = Provider.of<ChatProvider>(context);
+    final currentProvider = Provider.of<CurrentUserProvider>(context);
+
+    final userProvider = Provider.of<UserProvider>(context);
+    final storyProvider = Provider.of<StoryProvider>(context);
+    final postProvider = Provider.of<PostProvider>(context);
+    final orderstProvider = Provider.of<OrdersProvider>(context);
+    final messageProvider = Provider.of<MessageProvider>(context);
+    final workerProvider = Provider.of<WorkerProvider>(context);
+
+    final loggedInUser = currentProvider.getCurrentUser();
     return Scaffold(
       appBar: AppBar(
         leadingWidth: getProportionateScreenWidth(40),
@@ -153,7 +170,15 @@ class Menu extends StatelessWidget {
             ),
             onTap: () async {
               await context.read<AuthenticationService>().signOut();
-              CurrentUserProvider().getList.clear();
+              // chatProvider.clearList();
+              // messageProvider.clearList();
+              // postProvider.clearList();
+              // serviceProvider.clearList();
+              // currentProvider.clearList();
+              // orderstProvider.clearList();
+              // workerProvider.clearList();
+              // storyProvider.clearList();
+              userProvider.clearList();
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => const Login()),

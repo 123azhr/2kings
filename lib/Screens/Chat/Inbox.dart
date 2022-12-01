@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:housecontractors/Screens/Chat/fill_aggrement_form.dart';
 import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
-import 'package:housecontractors/models/message_model.dart';
 import 'package:housecontractors/models/user_model.dart';
-import 'package:housecontractors/providers/chat_provider.dart';
 import 'package:housecontractors/providers/message_provider.dart';
 import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
@@ -19,17 +18,6 @@ class Inbox extends StatefulWidget {
   @override
   State<Inbox> createState() => _InboxState();
 }
-
-// String selectedValue = "Services";
-// List<DropdownMenuItem<String>> get dropdownItems {
-//   List<DropdownMenuItem<String>> menuItems = [
-//     DropdownMenuItem(child: Text("Services"), value: "Services"),
-//     DropdownMenuItem(child: Text("Canada"), value: "Canada"),
-//     DropdownMenuItem(child: Text("Brazil"), value: "Brazil"),
-//     DropdownMenuItem(child: Text("England"), value: "England"),
-//   ];
-//   return menuItems;
-// }
 
 class _InboxState extends State<Inbox> {
   final TextEditingController _textController = TextEditingController();
@@ -121,45 +109,60 @@ class _InboxState extends State<Inbox> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20),
-                          ),
-                        ),
-                        width: getProportionateScreenWidth(100),
-                        height: getProportionateScreenHeight(40),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Center(
-                            child: DropdownButton(
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: getProportionateScreenHeight(14),
-                                ),
-                                dropdownColor: Colors.amberAccent,
-                                onChanged: (value) {},
-                                value: selectedValue,
-                                items: menuItems),
-                          ),
-                        ),
-                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FillAggrement(),
+                                ));
+                          },
+                          child: Text("Generate Aggrement"))
+                      // Container(
+                      //   decoration: const BoxDecoration(
+                      //     color: Colors.white,
+                      //     borderRadius: BorderRadius.all(
+                      //       Radius.circular(20),
+                      //     ),
+                      //   ),
+                      //   width: getProportionateScreenWidth(100),
+                      //   height: getProportionateScreenHeight(40),
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.all(8.0),
+                      //     child: Center(
+                      //       child: DropdownButton(
+                      //           style: TextStyle(
+                      //             color: Colors.black,
+                      //             fontSize: getProportionateScreenHeight(14),
+                      //           ),
+                      //           dropdownColor: Colors.amberAccent,
+                      //           onChanged: (value) {},
+                      //           value: selectedValue,
+                      //           items: menuItems),
+                      //     ),
+                      //   ),
+                      // ),
 
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8, bottom: 10),
-                        child: MyTextField(
-                          width: setWidth(40),
-                          height: setHeight(7 / 2),
-                          radius: 20,
-                          controller: _offertextController,
-                          hintText: "Offer",
-                          leading: GestureDetector(
-                            onTap: () {},
-                            child: const Icon(Icons.send),
-                          ),
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(top: 8, bottom: 10),
+                      //   child: MyTextField(
+                      //     width: setWidth(40),
+                      //     height: setHeight(7 / 2),
+                      //     radius: 20,
+                      //     controller: _offertextController,
+                      //     hintText: "Offer",
+                      //     leading: GestureDetector(
+                      //       onTap: () {
+                      //         Navigator.push(
+                      //             context,
+                      //             MaterialPageRoute(
+                      //               builder: (context) => FillAggrement(),
+                      //             ));
+                      //       },
+                      //       child: const Icon(Icons.send),
+                      //     ),
+                      //   ),
+                      // ),
                       // Padding(
                       //   padding: const EdgeInsets.all(4.0),
                       //   child: ElevatedButton.icon(

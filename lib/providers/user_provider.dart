@@ -12,6 +12,10 @@ class UserProvider with ChangeNotifier {
 
   List<UserModel> get getList => _list;
 
+  void clearList(){
+    _list.clear();
+  }
+
   Future<void> fetch() async {
     await FirebaseFirestore.instance
         .collection("users")

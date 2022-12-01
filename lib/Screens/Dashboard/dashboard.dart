@@ -13,8 +13,8 @@ class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
   @override
   State<Dashboard> createState() => _DashboardState();
-  
 }
+
 class _DashboardState extends State<Dashboard> {
   int _selectedIndex = 0;
   static final List<Widget> _widgetOptions = <Widget>[
@@ -28,7 +28,12 @@ class _DashboardState extends State<Dashboard> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  @override
+  void initState() {
     
+    super.initState();
   }
 
   @override

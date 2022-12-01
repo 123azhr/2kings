@@ -1,8 +1,9 @@
+
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/Dashboard/dashboard.dart';
-import 'package:housecontractors/Screens/loginSignup/loading_screen.dart';
 import 'package:housecontractors/Screens/loginSignup/signup.dart';
 import 'package:housecontractors/Screens/loginSignup/verify_email.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
@@ -10,7 +11,10 @@ import 'package:housecontractors/models/current_user.dart';
 import 'package:housecontractors/models/workers_model.dart';
 import 'package:provider/provider.dart';
 import '../../providers/authentication_provider.dart';
+import '../../providers/chat_provider.dart';
 import '../../providers/current_user_provider.dart';
+import '../../providers/message_provider.dart';
+import '../../providers/worker_provider.dart';
 import '../../widgets/mycontainer.dart';
 import 'mytextfield.dart';
 
@@ -124,6 +128,33 @@ class _LoginState extends State<Login> {
                             password: passController.text.trim());
                     if (isSignedin == "signed in") {
                       if (FirebaseAuth.instance.currentUser!.emailVerified) {
+                        try {
+        final currentUserProvider =
+            Provider.of<CurrentUserProvider>(context, listen: false);
+        currentUserProvider.fetch();
+      } catch (e) {
+        print(e);
+      }
+      try {
+        final workersProvider =
+            Provider.of<WorkerProvider>(context, listen: false);
+        workersProvider.fetch();
+      } catch (e) {
+        print(e);
+ try {
+        final chatProvider = Provider.of<ChatProvider>(context, listen: false);
+        await chatProvider.fetch();
+      } catch (e) {
+        print(e);
+      }   
+      
+      try {
+        final messageProvider =
+            Provider.of<MessageProvider>(context, listen: false);
+        await messageProvider.fetch();
+      } catch (e) {
+        print(e);
+      }   }
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -138,6 +169,7 @@ class _LoginState extends State<Login> {
                             ));
                       }
                     } else {
+                      Navigator.pop(context);
                       showModalBottomSheet(
                         backgroundColor: Colors.transparent,
                         context: context,
