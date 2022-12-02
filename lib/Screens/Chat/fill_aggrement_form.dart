@@ -23,8 +23,8 @@ class FillAggrement extends StatefulWidget {
 class _FillAggrementState extends State<FillAggrement> {
   final ScreenshotController screenshotController = ScreenshotController();
 
-  String startDate = "";
-  String endDate = "";
+  DateTime startDate = DateTime(19);
+  DateTime endDate = DateTime(19);
   @override
   Widget build(BuildContext context) {
     TextEditingController _textController = TextEditingController();
@@ -140,18 +140,20 @@ class _FillAggrementState extends State<FillAggrement> {
                                     maxTime: DateTime(2025, 6, 7),
                                     onConfirm: (date) {
                                   setState(() {
-                                    startDate = date.day.toString() +
-                                        "/" +
-                                        date.month.toString() +
-                                        "/" +
-                                        date.year.toString();
+                                    startDate = date;
                                   });
                                 },
                                     currentTime: DateTime.now(),
                                     locale: LocaleType.en);
                               },
                               child: Text(
-                                startDate == "" ? 'Select' : startDate,
+                                startDate.year == 19
+                                    ? 'Select'
+                                    : startDate.day.toString() +
+                                        "/" +
+                                        startDate.month.toString() +
+                                        "/" +
+                                        startDate.year.toString(),
                                 style: TextStyle(color: Colors.blue),
                               )),
                           const Spacer(),
@@ -164,29 +166,55 @@ class _FillAggrementState extends State<FillAggrement> {
                               onPressed: () async {
                                 DatePicker.showDatePicker(context,
                                     showTitleActions: true,
-                                    minTime: DateTime.now(),
-                                    maxTime: DateTime(2025, 6, 7),
+                                    minTime: DateTime(startDate.year,
+                                        startDate.month, startDate.day),
+                                    maxTime: DateTime(2026, 6, 7),
                                     onConfirm: (date) {
                                   setState(() {
-                                    endDate = date.day.toString() +
-                                        "/" +
-                                        date.month.toString() +
-                                        "/" +
-                                        date.year.toString();
+                                    endDate = date;
                                   });
                                 },
                                     currentTime: DateTime.now(),
                                     locale: LocaleType.en);
                               },
                               child: Text(
-                                endDate == "" ? 'Select' : endDate,
-                                style: TextStyle(color: Colors.blue),
+                                endDate.year == 19
+                                    ? 'Select'
+                                    : endDate.day.toString() +
+                                        "/" +
+                                        endDate.month.toString() +
+                                        "/" +
+                                        endDate.year.toString(),
+                                style: const TextStyle(color: Colors.blue),
                               )),
+                          // TextButton(
+                          //     onPressed: () async {
+                          //       DatePicker.showDatePicker(context,
+                          //           showTitleActions: true,
+                          //           minTime: DateTime(startDate[0]as int, startDate[2]as int, startDate[4]as int),
+                          //           maxTime: DateTime(2025, 6, 7),
+                          //           onConfirm: (date) {
+                          //         setState(() {
+                          //          endDate.addAll([
+                          //             date.day.toString(),
+                          //             "/",
+                          //             date.month.toString(),
+                          //             "/",
+                          //             date.year.toString()
+                          //           ]);});}
+
+                          //           currentTime: DateTime.now(),
+                          //           locale: LocaleType.en);
+                          //     },
+                          //     child: Text(
+                          //       endDate == "" ? 'Select' : endDate,
+                          //       style: TextStyle(color: Colors.blue),
+                          //     )),
                         ],
                       ),
                       const Divider(thickness: 0.4),
-                      Center(
-                        child: const Text(
+                      const Center(
+                        child: Text(
                           "Services",
                           style: TextStyle(color: Colors.black, fontSize: 20),
                         ),
