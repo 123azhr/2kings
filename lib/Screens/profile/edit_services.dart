@@ -108,15 +108,8 @@ class MyServices extends StatefulWidget {
 class _MyServicesState extends State<MyServices> {
   @override
   Widget build(BuildContext context) {
-    List<String> servicesList = [];
     final serviceProvider = Provider.of<ServiceProvider>(context);
     final serviceList = serviceProvider.getList;
-
-    final userProvider = Provider.of<UserProvider>(context);
-    List<ServiceModel> tempList = List<ServiceModel>.generate(
-      0,
-      (index) => serviceList.first,
-    );
 
     List<ServiceModel> _allService() {
       List<ServiceModel> tempList = List<ServiceModel>.generate(

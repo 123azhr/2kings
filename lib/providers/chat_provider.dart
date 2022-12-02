@@ -18,7 +18,7 @@ class ChatProvider with ChangeNotifier {
     await FirebaseFirestore.instance
         .collection("chats")
         .doc(loggedInUser!.uid)
-        .collection("messages")
+        .collection("with")
         .get()
         .then(
           (QuerySnapshot<Map<String, dynamic>> snapshot) => {
@@ -27,33 +27,17 @@ class ChatProvider with ChangeNotifier {
               {
                 _list.insert(
                   0,
-                  ChatModel.fromMap(map: doc.data(), userID: doc.id),
+                  ChatModel.fromMap(otherID: doc.id),
                 ),
               },
           },
         );
     notifyListeners();
   }
-  // Future<void> fetch() async {
-  //   await FirebaseFirestore.instance
-  //       .collection("chats")
-  //       .doc(loggedInUser!.uid).collection("messages")
-  //       .get()
-  //       .then((DocumentSnapshot snapshot) {
-  //     _list = [];
-  //     Map<String, dynamic> dataMap = snapshot.data() as Map<String, dynamic>;
-  //     _list.insert(
-  //         0, ChatModel.fromMap(map: dataMap, userID: snapshot.id.trim()));
-
-  //     print(_list);
-  //   });
-  //   notifyListeners();
-  // }
 
   List<ChatModel> getChatByID(String otherID) {
     return _list
         .where((element) => element.otherID!.trim() == otherID.trim())
         .toList();
-    //  .first
   }
 }

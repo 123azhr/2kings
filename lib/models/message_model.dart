@@ -5,7 +5,9 @@ class MessageModel with ChangeNotifier {
   final DateTime? createdAt;
   final String? messageTxt;
   final String? chatWith;
+  final String? aggrementID;
   final bool? type;
+  
   factory MessageModel.fromMap(
       {required Map<String, dynamic> map, required String messageID}) {
     return MessageModel(
@@ -14,10 +16,12 @@ class MessageModel with ChangeNotifier {
       createdAt: map["createdAt"].toDate(),
       chatWith: map["with"],
       type: map["type"],
+      aggrementID: map["aggrementID"],
     );
   }
 
   MessageModel({
+    this.aggrementID,
     this.type,
     this.chatWith,
     this.messageID,

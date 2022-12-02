@@ -1,5 +1,3 @@
-
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +8,7 @@ import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:housecontractors/models/current_user.dart';
 import 'package:housecontractors/models/workers_model.dart';
 import 'package:provider/provider.dart';
+import '../../providers/aggrement_provider.dart';
 import '../../providers/authentication_provider.dart';
 import '../../providers/chat_provider.dart';
 import '../../providers/current_user_provider.dart';
@@ -105,16 +104,13 @@ class _LoginState extends State<Login> {
                   ),
                   icon: const Icon(Icons.lock_open),
                   style: ElevatedButton.styleFrom(
-                    //background color of button
                     side: const BorderSide(
                       width: 0,
-                    ), //border width and color
-                    elevation: 3, //elevation of button
+                    ), 
+                    elevation: 3, 
                     shape: RoundedRectangleBorder(
-                        //to set border radius to button
                         borderRadius: BorderRadius.circular(30)),
 
-                    //content padding inside button
                   ),
                   onPressed: () async {
                     showDialog(
@@ -129,32 +125,46 @@ class _LoginState extends State<Login> {
                     if (isSignedin == "signed in") {
                       if (FirebaseAuth.instance.currentUser!.emailVerified) {
                         try {
-        final currentUserProvider =
-            Provider.of<CurrentUserProvider>(context, listen: false);
-        currentUserProvider.fetch();
-      } catch (e) {
-        print(e);
-      }
-      try {
-        final workersProvider =
-            Provider.of<WorkerProvider>(context, listen: false);
-        workersProvider.fetch();
-      } catch (e) {
-        print(e);
- try {
-        final chatProvider = Provider.of<ChatProvider>(context, listen: false);
-        await chatProvider.fetch();
-      } catch (e) {
-        print(e);
-      }   
-      
-      try {
-        final messageProvider =
-            Provider.of<MessageProvider>(context, listen: false);
-        await messageProvider.fetch();
-      } catch (e) {
-        print(e);
-      }   }
+                          final currentUserProvider =
+                              Provider.of<CurrentUserProvider>(context,
+                                  listen: false);
+                          currentUserProvider.fetch();
+                        } catch (e) {
+                          print(e);
+                        }
+                        try {
+                          final workersProvider = Provider.of<WorkerProvider>(
+                              context,
+                              listen: false);
+                          workersProvider.fetch();
+                        } catch (e) {
+                          print(e);
+                          try {
+                            final chatProvider = Provider.of<ChatProvider>(
+                                context,
+                                listen: false);
+                            await chatProvider.fetch();
+                          } catch (e) {
+                            print(e);
+                          }
+                          try {
+                            final aggrementProvider =
+                                Provider.of<AggrementProvider>(context,
+                                    listen: false);
+
+                            aggrementProvider.fetch();
+                          } catch (e) {
+                            print(e);
+                          }
+                          try {
+                            final messageProvider =
+                                Provider.of<MessageProvider>(context,
+                                    listen: false);
+                            messageProvider.fetch();
+                          } catch (e) {
+                            print(e);
+                          }
+                        }
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/Chat/fill_aggrement_form.dart';
+import 'package:housecontractors/Screens/Chat/aggrement_message.dart';
 import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
 import 'package:housecontractors/models/user_model.dart';
 import 'package:housecontractors/providers/message_provider.dart';
@@ -22,9 +23,9 @@ class Inbox extends StatefulWidget {
 class _InboxState extends State<Inbox> {
   final TextEditingController _textController = TextEditingController();
 
-  final TextEditingController _offertextController = TextEditingController();
+  // final TextEditingController _offertextController = TextEditingController();
 
-  final TextEditingController _servicetextController = TextEditingController();
+  // final TextEditingController _servicetextController = TextEditingController();
 
   final bool isOpposite = true;
 
@@ -36,7 +37,7 @@ class _InboxState extends State<Inbox> {
     final userProvider = Provider.of<CurrentUserProvider>(context);
     final loggedinUser = userProvider.getCurrentUser();
 
-    String selectedValue = "Services";
+    // String selectedValue = "Services";
     List<DropdownMenuItem<String>> menuItems = [
       const DropdownMenuItem(child: Text("Services"), value: "Services"),
     ];
@@ -69,15 +70,18 @@ class _InboxState extends State<Inbox> {
         padding: const EdgeInsets.all(8.0),
         child: ListView.builder(
           reverse: true,
+
           scrollDirection: Axis.vertical,
           itemCount: messageList.length,
           itemBuilder: (context, int index) => ChangeNotifierProvider.value(
               value: messageList[index],
-              child: messageList[index].type!
-                  ? MyMessages(
-                      text: messageList[index].messageTxt!,
-                    )
-                  : OppositeMessages(text: messageList[index].messageTxt!)),
+              child: messageList[index].aggrementID == ""
+                  ? messageList[index].type!
+                      ? MyMessages(
+                          text: messageList[index].messageTxt!,
+                        )
+                      : OppositeMessages(text: messageList[index].messageTxt!)
+                  : AggrementMsg(text: messageList[index].aggrementID!)),
           physics: const BouncingScrollPhysics(),
           // ),
           // ListView.builder(
@@ -114,10 +118,11 @@ class _InboxState extends State<Inbox> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => FillAggrement(),
+                                  builder: (context) => FillAggrement(
+                                      customerID: widget.user.userID!),
                                 ));
                           },
-                          child: Text("Generate Aggrement"))
+                          child: const Text("Generate Aggrement"))
                       // Container(
                       //   decoration: const BoxDecoration(
                       //     color: Colors.white,
@@ -211,6 +216,7 @@ class _InboxState extends State<Inbox> {
                                     chatWith: widget.user.userID,
                                     createdAt: DateTime.now(),
                                     messagetxt: _textController.text,
+                                    aggrementID: "",
                                     type: true);
                                 _textController.clear();
                                 messageProvider.fetch();

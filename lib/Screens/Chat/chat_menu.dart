@@ -1,6 +1,6 @@
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:housecontractors/Screens/Chat/inbox.dart';
+import 'package:housecontractors/Screens/Chat/chat_inbox.dart';
 import 'package:housecontractors/models/user_model.dart';
 import 'package:provider/provider.dart';
 
@@ -57,14 +57,14 @@ class _ChatMenuState extends State<ChatMenu> {
         itemCount: chatList.length,
         itemBuilder: (context, int index) => ChangeNotifierProvider.value(
           value: chatList[index],
-          child:  ChatMenuTile(
+          child: ChatMenuTile(
             chat: chatList[index],
             subtitle: userProvider
                 .getUserByID(chatList[index].otherID!)
                 .services!
                 .first,
             user: userProvider.getUserByID(chatList[index].otherID!),
-            image: NetworkImage(userProvider
+            image: CachedNetworkImageProvider(userProvider
                 .getUserByID(chatList[index].otherID!)
                 .profileImageURL!),
           ),
@@ -84,7 +84,6 @@ class ChatMenuTile extends StatelessWidget {
     required this.chat,
   }) : super(key: key);
   final UserModel user;
-
   final ChatModel chat;
   final String subtitle;
   final ImageProvider<Object>? image;

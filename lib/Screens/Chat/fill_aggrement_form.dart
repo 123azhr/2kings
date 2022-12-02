@@ -1,204 +1,272 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
+import 'package:housecontractors/models/user_model.dart';
+import 'package:housecontractors/providers/aggrement_provider.dart';
+import 'package:housecontractors/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
 import '../../models/current_user.dart';
 import '../../providers/current_user_provider.dart';
+import '../../providers/message_provider.dart';
 
-class FillAggrement extends StatelessWidget {
-  final ScreenshotController screenshotController = ScreenshotController();
+class FillAggrement extends StatefulWidget {
+  const FillAggrement({super.key, required this.customerID});
 
-  FillAggrement({super.key});
+  final String customerID;
 
   @override
+  State<FillAggrement> createState() => _FillAggrementState();
+}
+
+class _FillAggrementState extends State<FillAggrement> {
+  final ScreenshotController screenshotController = ScreenshotController();
+
+  String startDate = "";
+  String endDate = "";
+  @override
   Widget build(BuildContext context) {
+    TextEditingController _textController = TextEditingController();
+    final messageProvider = Provider.of<MessageProvider>(context);
+
     CurrentUserProvider currentUserProvider =
         Provider.of<CurrentUserProvider>(context);
-    final myServices = currentUserProvider.getCurrentUser().services;
+    CurrentUserModel contractorModel = currentUserProvider.getCurrentUser();
+    List<dynamic>? myServices = contractorModel.services;
+    AggrementProvider aggrementProvider =
+        Provider.of<AggrementProvider>(context);
 
-    // final serviceProvider = Provider.of<ServiceProvider>(context);
-    // final serviceList = serviceProvider.getList;
-
-    // List<ServiceModel> tempList = List<ServiceModel>.generate(
-    //   0,
-    //   (index) => serviceList.first,
-    // );
-
-    // List<ServiceModel> _allService() {
-    //   List<ServiceModel> tempList = List<ServiceModel>.generate(
-    //     0,
-    //     (index) => serviceList.first,
-    //   );
-    //   List<String> servicesList = [];
-    //   for (int i = 0; i < serviceList.length; i++) {
-    //     tempList.add(serviceList[i]);
-    //   }
-    //   return tempList;
-    // }
-
-    // List<ServiceModel> _myServices() {
-    //   List<ServiceModel> tempList = List<ServiceModel>.generate(
-    //     0,
-    //     (index) => serviceList.first,
-    //   );
-    //   List<String> servicesList = [];
-    //   for (int i = 0; i < serviceList.length; i++) {
-    //     tempList.add(serviceList[i]);
-    //   }
-    //   return tempList;
-    // }
-
+    UserProvider userProvider = Provider.of<UserProvider>(context);
+    UserModel customerModel = userProvider.getUserByID(widget.customerID);
     return SafeArea(
         child: Scaffold(
-            appBar: AppBar(
-              title: const Text(
-                "Aggrement",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: (kToolbarHeight / 100) * 40,
-                ),
+      appBar: AppBar(
+        title: const Text(
+          "Aggrement",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: (kToolbarHeight / 100) * 40,
+          ),
+        ),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
+      body: SizedBox(
+        height: setHeight(100),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Screenshot(
+            controller: screenshotController,
+            child: SingleChildScrollView(
+              child: Container(
+                color: Colors.white,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Divider(
+                        thickness: 0.4,
+                      ),
+                      const Center(
+                        child: Text(
+                          "Customer details",
+                          style: TextStyle(color: Colors.black, fontSize: 20),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Text(
+                            softWrap: true,
+                            "Name: " + customerModel.name!,
+                            style: TextStyle(color: Colors.black, fontSize: 16),
+                          ),
+                          const Spacer(),
+                          Text(
+                            softWrap: true,
+                            "ID: " + customerModel.userID!,
+                            style: TextStyle(color: Colors.black, fontSize: 16),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        softWrap: true,
+                        "CNIC: " + customerModel.cnic!,
+                        style: TextStyle(color: Colors.black, fontSize: 16),
+                      ),
+                      const Divider(thickness: 0.4),
+                      const Center(
+                        child: Text(
+                          "Contractor details",
+                          style: TextStyle(color: Colors.black, fontSize: 20),
+                        ),
+                      ),
+                      SizedBox(height: getProportionateScreenHeight(10)),
+                      Row(
+                        children: [
+                          Text(
+                            softWrap: true,
+                            "Name: " + contractorModel.name!,
+                            style: TextStyle(color: Colors.black, fontSize: 16),
+                          ),
+                          Spacer(),
+                          Text(
+                            softWrap: true,
+                            "ID: " + contractorModel.userID!,
+                            style: TextStyle(color: Colors.black, fontSize: 16),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        softWrap: true,
+                        "CNIC: " + contractorModel.cnic!,
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 16),
+                      ),
+                      const Divider(thickness: 0.4),
+                      Row(
+                        children: [
+                          Text(
+                            "Start Date: ",
+                            style: TextStyle(color: Colors.black, fontSize: 16),
+                          ),
+                          TextButton(
+                              onPressed: () async {
+                                DatePicker.showDatePicker(context,
+                                    showTitleActions: true,
+                                    minTime: DateTime.now(),
+                                    maxTime: DateTime(2025, 6, 7),
+                                    onConfirm: (date) {
+                                  setState(() {
+                                    startDate = date.day.toString() +
+                                        "/" +
+                                        date.month.toString() +
+                                        "/" +
+                                        date.year.toString();
+                                  });
+                                },
+                                    currentTime: DateTime.now(),
+                                    locale: LocaleType.en);
+                              },
+                              child: Text(
+                                startDate == "" ? 'Select' : startDate,
+                                style: TextStyle(color: Colors.blue),
+                              )),
+                          const Spacer(),
+                          Text(
+                            "End Date: ",
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 16),
+                          ),
+                          TextButton(
+                              onPressed: () async {
+                                DatePicker.showDatePicker(context,
+                                    showTitleActions: true,
+                                    minTime: DateTime.now(),
+                                    maxTime: DateTime(2025, 6, 7),
+                                    onConfirm: (date) {
+                                  setState(() {
+                                    endDate = date.day.toString() +
+                                        "/" +
+                                        date.month.toString() +
+                                        "/" +
+                                        date.year.toString();
+                                  });
+                                },
+                                    currentTime: DateTime.now(),
+                                    locale: LocaleType.en);
+                              },
+                              child: Text(
+                                endDate == "" ? 'Select' : endDate,
+                                style: TextStyle(color: Colors.blue),
+                              )),
+                        ],
+                      ),
+                      const Divider(thickness: 0.4),
+                      Center(
+                        child: const Text(
+                          "Services",
+                          style: TextStyle(color: Colors.black, fontSize: 20),
+                        ),
+                      ),
+                      const Divider(thickness: 0.4),
+                      SizedBox(
+                          child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: myServices!.length,
+                        itemBuilder: (context, int index) =>
+                            ServiceSlide(serviceName: myServices[index]),
+                      )),
+                      const Divider(thickness: 0.4),
+                      const SizedBox(
+                        height: 50,
+                        child: Center(
+                          child: Text(
+                            "Aggrement details",
+                            style: TextStyle(color: Colors.black, fontSize: 16),
+                          ),
+                        ),
+                      ),
+                      TextFormField(
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                        textAlign: TextAlign.start,
+                        style: const TextStyle(
+                          fontSize: 18,
+                        ),
+                        controller: _textController,
+                        decoration: InputDecoration(
+                          contentPadding:
+                              EdgeInsets.all(getProportionateScreenWidth(10)),
+                          isCollapsed: true,
+                          hintText: "Type here..",
+                        ),
+                      ),
+                    ]),
               ),
-              centerTitle: true,
-              elevation: 0,
-              backgroundColor: Colors.transparent,
             ),
-            body: SizedBox(
-              height: setHeight(100),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Screenshot(
-                  controller: screenshotController,
-                  child: SingleChildScrollView(
-                    child: Container(
-                      color: Colors.white,
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Divider(
-                              thickness: 0.4,
-                            ),
-                            const Center(
-                              child: Text(
-                                "Customer details",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 20),
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Row(
-                              children: const [
-                                Text(
-                                  "Name: Areeb uz Zaman",
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 16),
-                                ),
-                                Spacer(),
-                                Text(
-                                  "ID: HSGduidiusa894asddad45",
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 16),
-                                ),
-                              ],
-                            ),
-                            Text(
-                              "CNIC: 412856448156",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 16),
-                            ),
-                            const Divider(thickness: 0.4),
-                            const Center(
-                              child: Text(
-                                "Contractor details",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 20),
-                              ),
-                            ),
-                            SizedBox(height: getProportionateScreenHeight(10)),
-                            Row(
-                              children: const [
-                                Text(
-                                  "Name: Arsalan Ahmed",
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 16),
-                                ),
-                                Spacer(),
-                                Text(
-                                  "ID: HSGd4d5s6f46ds5f5",
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 16),
-                                ),
-                              ],
-                            ),
-                            const Text(
-                              "CNIC: 894684867",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 16),
-                            ),
-                            const Divider(thickness: 0.4),
-                            Row(
-                              children: const [
-                                Text(
-                                  "Start Date: 9/8/2022",
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 16),
-                                ),
-                                Spacer(),
-                                Text(
-                                  "End Date: 9/9/2022",
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 16),
-                                ),
-                              ],
-                            ),
-                            const Divider(thickness: 0.4),
-                            Center(
-                              child: const Text(
-                                "Services",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 20),
-                              ),
-                            ),
-                            const Divider(thickness: 0.4),
-                            SizedBox(
-                                child: ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: myServices!.length,
-                              itemBuilder: (context, int index) =>
-                                  ServiceSlide(serviceName: myServices[index]),
-                            )),
-                            const Divider(thickness: 0.4),
-                            const SizedBox(
-                              height: 50,
-                              child: Center(
-                                child: Text(
-                                  "Aggrement details",
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 16),
-                                ),
-                              ),
-                            ),
-                            TextFormField(
-                              keyboardType: TextInputType.multiline,
-                              maxLines: null,
-                              textAlign: TextAlign.start,
-                              style: const TextStyle(
-                                fontSize: 18,
-                              ),
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.all(
-                                    getProportionateScreenWidth(10)),
-                                isCollapsed: true,
-                                hintText: "Type here..",
-                              ),
-                            ),
-                          ]),
-                    ),
-                  ),
+          ),
+        ),
+      ),
+      bottomSheet: SizedBox(
+          height: setHeight(10),
+          width: setWidth(100),
+          child: Center(
+            child: ElevatedButton(
+              onPressed: () async {
+                String aggrementID =
+                    await aggrementProvider.uploadAggrementDataToFireStore(
+                        customerID: widget.customerID,
+                        contractorID:
+                            currentUserProvider.getCurrentUser().userID,
+                        details: _textController.text,
+                        status: false);
+                _textController.clear();
+                aggrementProvider.fetch();
+                messageProvider.uploadMessageDataToFireStore(
+                    chatWith: widget.customerID,
+                    createdAt: DateTime.now(),
+                    messagetxt: _textController.text,
+                    aggrementID: aggrementID,
+                    type: true);
+                _textController.clear();
+                messageProvider.fetch();
+              },
+              child: const Text("Send"),
+              style: ElevatedButton.styleFrom(
+                side: const BorderSide(
+                  width: 0,
                 ),
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30)),
               ),
-            )));
+            ),
+          )),
+    ));
   }
 }
 
@@ -214,12 +282,10 @@ class ServiceSlide extends StatefulWidget {
 
 class _ServiceSlideState extends State<ServiceSlide> {
   bool? isCheck = false;
-  bool? isCheck1 = true;
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<CurrentUserProvider>(context);
     CurrentUserModel user = userProvider.getCurrentUser();
-    bool? initialValue = false;
 
     return Card(
       shape: const RoundedRectangleBorder(
@@ -243,11 +309,10 @@ class _ServiceSlideState extends State<ServiceSlide> {
           ),
           const Spacer(),
           Checkbox(
-            value: initialValue ? isCheck1 : isCheck,
+            value: isCheck,
             onChanged: (value) {
               setState(() {
                 isCheck = value!;
-                isCheck1 = value;
                 if (list.contains(widget.serviceName) == false &&
                     value == true) {
                   list.add(widget.serviceName);
