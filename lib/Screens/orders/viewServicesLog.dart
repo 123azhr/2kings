@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 
 import '../../helper/size_configuration.dart';
+import '../../models/service_log_model.dart';
 
 class ViewServicesLogs extends StatelessWidget {
-  ViewServicesLogs({
+  const ViewServicesLogs({
     Key? key,
     this.tog = false,
+    required this.serviceLogList,
   }) : super(key: key);
+
+  final List<ServiceLogModel> serviceLogList;
   final bool? tog;
+
   TableRow addTableRow(
-    String id,
     String serviceName,
     String noOfDays,
     String perDay,
@@ -18,21 +22,7 @@ class ViewServicesLogs extends StatelessWidget {
     return TableRow(
       children: <Widget>[
         TableCell(
-          child: Container(
-            height: setHeight(5),
-            width: setWidth(10),
-            child: Center(
-              child: Text(
-                id,
-                style: TextStyle(
-                  fontSize: getProportionateScreenHeight(20),
-                ),
-              ),
-            ),
-          ),
-        ),
-        TableCell(
-          child: Container(
+          child: SizedBox(
             height: setHeight(5),
             width: setWidth(40),
             child: Center(
@@ -46,7 +36,7 @@ class ViewServicesLogs extends StatelessWidget {
           ),
         ),
         TableCell(
-          child: Container(
+          child: SizedBox(
             height: setHeight(5),
             width: setWidth(10),
             child: Center(
@@ -60,7 +50,7 @@ class ViewServicesLogs extends StatelessWidget {
           ),
         ),
         TableCell(
-          child: Container(
+          child: SizedBox(
             height: setHeight(5),
             width: setWidth(10),
             child: Center(
@@ -74,7 +64,7 @@ class ViewServicesLogs extends StatelessWidget {
           ),
         ),
         TableCell(
-          child: Container(
+          child: SizedBox(
             height: setHeight(5),
             width: setWidth(10),
             child: Center(
@@ -104,36 +94,18 @@ class ViewServicesLogs extends StatelessWidget {
                   Table(
                     border: TableBorder.all(),
                     columnWidths: const <int, TableColumnWidth>{
-                      0: FixedColumnWidth(30),
-                      1: FixedColumnWidth(150),
-                      2: FixedColumnWidth(50)
+                      1: FixedColumnWidth(50),
+                      2: FixedColumnWidth(70)
                     },
                     defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                    children: <TableRow>[
-                      addTableRow("1", "Sariya lagayaa", "2", "1500", "3000"),
-                      addTableRow("1", "Sariya lagayaa", "2", "1500", "3000"),
-                      addTableRow("1", "Sariya lagayaa", "2", "1500", "3000"),
-                      addTableRow("1", "Sariya lagayaa", "2", "1500", "3000"),
-                      addTableRow("1", "Sariya lagayaa", "2", "1500", "3000"),
-                      addTableRow("1", "Sariya lagayaa", "2", "1500", "3000"),
-                      addTableRow("1", "Sariya lagayaa", "2", "1500", "3000"),
-                      addTableRow("1", "Sariya lagayaa", "2", "1500", "3000"),
-                      addTableRow("1", "Sariya lagayaa", "2", "1500", "3000"),
-                      addTableRow("1", "Sariya lagayaa", "2", "1500", "3000"),
-                      addTableRow("1", "Sariya lagayaa", "2", "1500", "3000"),
-                      addTableRow("1", "Sariya lagayaa", "2", "1500", "3000"),
-                      addTableRow("1", "Sariya lagayaa", "2", "1500", "3000"),
-                      addTableRow("1", "Sariya lagayaa", "2", "1500", "3000"),
-                      addTableRow("1", "Sariya lagayaa", "2", "1500", "3000"),
-                      addTableRow("1", "Sariya lagayaa", "2", "1500", "3000"),
-                      addTableRow("1", "Sariya lagayaa", "2", "1500", "3000"),
-                      addTableRow("1", "Sariya lagayaa", "2", "1500", "3000"),
-                      addTableRow("1", "Sariya lagayaa", "2", "1500", "3000"),
-                      addTableRow("1", "Sariya lagayaa", "2", "1500", "3000"),
-                      addTableRow("1", "Sariya lagayaa", "2", "1500", "3000"),
-                      addTableRow("1", "Sariya lagayaa", "2", "1500", "3000"),
-                      addTableRow("2", "Sariya lagayaa", "2", "1500", "3000"),
-                    ],
+                    children:
+                        // <TableRow>[
+                        serviceLogList
+                            .map((e) => addTableRow(e.serviceName!, e.noOfDays!,
+                                e.perDay!, e.total!))
+                            .toList(),
+                    // addTableRow("Sariya lagayaa", "2", "1500", "3000"),
+                    // ],
                   ),
                 ],
               ),
@@ -257,29 +229,13 @@ class ServicesTableHeader extends StatelessWidget {
     return Table(
       border: TableBorder.all(),
       columnWidths: const <int, TableColumnWidth>{
-        0: FixedColumnWidth(30),
-        1: FixedColumnWidth(150),
-        2: FixedColumnWidth(50)
+        1: FixedColumnWidth(50),
+        2: FixedColumnWidth(70)
       },
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       children: <TableRow>[
         TableRow(
           children: <Widget>[
-            TableCell(
-              child: Container(
-                height: setHeight(5),
-                width: setWidth(10),
-                child: Center(
-                  child: Text(
-                    "ID",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: getProportionateScreenHeight(20),
-                    ),
-                  ),
-                ),
-              ),
-            ),
             TableCell(
               child: Container(
                 height: setHeight(5),

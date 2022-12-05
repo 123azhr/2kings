@@ -114,67 +114,7 @@ class _InboxState extends State<Inbox> {
                                 ));
                           },
                           child: const Text("Generate Aggrement"))
-                      // Container(
-                      //   decoration: const BoxDecoration(
-                      //     color: Colors.white,
-                      //     borderRadius: BorderRadius.all(
-                      //       Radius.circular(20),
-                      //     ),
-                      //   ),
-                      //   width: getProportionateScreenWidth(100),
-                      //   height: getProportionateScreenHeight(40),
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.all(8.0),
-                      //     child: Center(
-                      //       child: DropdownButton(
-                      //           style: TextStyle(
-                      //             color: Colors.black,
-                      //             fontSize: getProportionateScreenHeight(14),
-                      //           ),
-                      //           dropdownColor: Colors.amberAccent,
-                      //           onChanged: (value) {},
-                      //           value: selectedValue,
-                      //           items: menuItems),
-                      //     ),
-                      //   ),
-                      // ),
-
-                      // Padding(
-                      //   padding: const EdgeInsets.only(top: 8, bottom: 10),
-                      //   child: MyTextField(
-                      //     width: setWidth(40),
-                      //     height: setHeight(7 / 2),
-                      //     radius: 20,
-                      //     controller: _offertextController,
-                      //     hintText: "Offer",
-                      //     leading: GestureDetector(
-                      //       onTap: () {
-                      //         Navigator.push(
-                      //             context,
-                      //             MaterialPageRoute(
-                      //               builder: (context) => FillAggrement(),
-                      //             ));
-                      //       },
-                      //       child: const Icon(Icons.send),
-                      //     ),
-                      //   ),
-                      // ),
-                      // Padding(
-                      //   padding: const EdgeInsets.all(4.0),
-                      //   child: ElevatedButton.icon(
-                      //     onPressed: () {},
-                      //     icon: Icon(Icons.cancel_outlined),
-                      //     label: Text(""),
-                      //   ),
-                      // ),
-                      // Padding(
-                      //   padding: const EdgeInsets.all(4.0),
-                      //   child: ElevatedButton.icon(
-                      //     onPressed: () {},
-                      //     icon: Icon(Icons.done),
-                      //     label: Text(""),
-                      //   ),
-                      // ),
+                     
                     ],
                   ),
                 ),

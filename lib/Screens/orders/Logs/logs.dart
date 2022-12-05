@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:housecontractors/Screens/Chat/chat_menu.dart';
 import 'package:housecontractors/Screens/orders/viewInventoryLog.dart';
 import 'package:housecontractors/Screens/orders/viewServicesLog.dart';
-import 'package:housecontractors/components/profile_header.dart';
+import 'package:housecontractors/models/orders_model.dart';
 import '../../../helper/size_configuration.dart';
-import '../../../widgets/chat_call_bottom_bar.dart';
+import '../../../models/inventory_model.dart';
+import '../../../models/service_log_model.dart';
 
 class Logs extends StatelessWidget {
-  const Logs({super.key, required this.title});
+  const Logs(
+      {super.key,
+      required this.title,
+      required this.ordersModel,
+      required this.inventoryList,
+      required this.serviceLogList});
   final String title;
+  final OrdersModel ordersModel;
+  final List<InventoryModel> inventoryList;
+  final List<ServiceLogModel> serviceLogList;
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Logs",
           style: TextStyle(
             color: Colors.black,
@@ -33,7 +40,7 @@ class Logs extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Divider(
+                const Divider(
                   thickness: 0.2,
                   color: Colors.black,
                 ),
@@ -44,21 +51,21 @@ class Logs extends StatelessWidget {
                     fontSize: setHeight(4),
                   ),
                 ),
-                Divider(
+                const Divider(
                   thickness: 0.2,
                   color: Colors.black,
                 ),
                 GestureDetector(
                   child: SizedBox(
                     height: setHeight(33),
-                    child: ViewInventoryLogs(),
+                    child: ViewInventoryLogs(inventoryList: inventoryList),
                   ),
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => Scaffold(
                         appBar: AppBar(
-                          title: Text(
+                          title: const Text(
                             "Inventory logs",
                             style: TextStyle(
                               color: Colors.black,
@@ -69,17 +76,18 @@ class Logs extends StatelessWidget {
                           elevation: 0,
                           backgroundColor: Colors.transparent,
                         ),
-                        body: ViewInventoryLogs(tog: true),
+                        body: ViewInventoryLogs(
+                            tog: true, inventoryList: inventoryList),
                       ),
                     ),
                   ),
                 ),
-                Divider(
+                const Divider(
                   height: 0,
                   thickness: 0.3,
                   color: Colors.black,
                 ),
-                Divider(
+                const Divider(
                   thickness: 0.2,
                   color: Colors.black,
                   height: 0,
@@ -91,21 +99,21 @@ class Logs extends StatelessWidget {
                     fontSize: setHeight(4),
                   ),
                 ),
-                Divider(
+                const Divider(
                   thickness: 0.2,
                   color: Colors.black,
                 ),
                 GestureDetector(
                   child: SizedBox(
                     height: setHeight(33),
-                    child: ViewServicesLogs(),
+                    child: ViewServicesLogs(serviceLogList: serviceLogList),
                   ),
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => Scaffold(
                         appBar: AppBar(
-                          title: Text(
+                          title: const Text(
                             "Services logs",
                             style: TextStyle(
                               color: Colors.black,
@@ -116,17 +124,18 @@ class Logs extends StatelessWidget {
                           elevation: 0,
                           backgroundColor: Colors.transparent,
                         ),
-                        body: ViewServicesLogs(tog: true),
+                        body: ViewServicesLogs(
+                            tog: true, serviceLogList: serviceLogList),
                       ),
                     ),
                   ),
                 ),
-                Divider(
+                const Divider(
                   height: 0,
                   thickness: 0.3,
                   color: Colors.black,
                 ),
-                Divider(
+                const Divider(
                   thickness: 0.2,
                   color: Colors.black,
                   height: 0,
@@ -146,7 +155,7 @@ class Logs extends StatelessWidget {
                   height: 40,
                   child: Row(
                     children: [
-                      Divider(
+                      const Divider(
                         thickness: 0.3,
                         color: Colors.black,
                         height: 0,
@@ -155,7 +164,7 @@ class Logs extends StatelessWidget {
                         padding:
                             EdgeInsets.all(getProportionateScreenHeight(8)),
                         height: 50,
-                        child: Text(
+                        child: const Text(
                           "Inventory Total: ",
                           style: TextStyle(fontSize: 24),
                         ),
@@ -165,17 +174,17 @@ class Logs extends StatelessWidget {
                             EdgeInsets.all(getProportionateScreenHeight(8)),
                         height: 50,
                         child: Text(
-                          "48612315315 ",
+                          ordersModel.inventoryTotal!,
                           style: TextStyle(fontSize: 24),
                         ),
                       ),
-                      Spacer(),
-                      VerticalDivider(color: Colors.black),
+                      const Spacer(),
+                      const VerticalDivider(color: Colors.black),
                       Container(
                         padding:
                             EdgeInsets.all(getProportionateScreenHeight(8)),
                         height: 50,
-                        child: Text(
+                        child: const Text(
                           "PKR",
                           style: TextStyle(fontSize: 24),
                         ),
@@ -206,17 +215,17 @@ class Logs extends StatelessWidget {
                             EdgeInsets.all(getProportionateScreenHeight(8)),
                         height: 50,
                         child: Text(
-                          "48612315315 ",
+                          ordersModel.serviceTotal!,
                           style: TextStyle(fontSize: 24),
                         ),
                       ),
-                      Spacer(),
-                      VerticalDivider(color: Colors.black),
+                      const Spacer(),
+                      const VerticalDivider(color: Colors.black),
                       Container(
                         padding:
                             EdgeInsets.all(getProportionateScreenHeight(8)),
                         height: 50,
-                        child: Text(
+                        child: const Text(
                           "PKR",
                           style: TextStyle(fontSize: 24),
                         ),
@@ -226,7 +235,7 @@ class Logs extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Divider(
+                    const Divider(
                       height: 0,
                       thickness: 0.3,
                       color: Colors.black,
@@ -234,7 +243,7 @@ class Logs extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.all(getProportionateScreenHeight(8)),
                       height: 50,
-                      child: Text(
+                      child: const Text(
                         "Grand Total: ",
                         style: TextStyle(fontSize: 24),
                       ),
@@ -243,16 +252,16 @@ class Logs extends StatelessWidget {
                       padding: EdgeInsets.all(getProportionateScreenHeight(8)),
                       height: 50,
                       child: Text(
-                        "48612315315 ",
-                        style: TextStyle(fontSize: 24),
+                        ordersModel.grandTotal!,
+                        style: const TextStyle(fontSize: 24),
                       ),
                     ),
-                    Spacer(),
-                    VerticalDivider(color: Colors.black),
+                    const Spacer(),
+                    const VerticalDivider(color: Colors.black),
                     Container(
                       padding: EdgeInsets.all(getProportionateScreenHeight(8)),
                       height: 50,
-                      child: Text(
+                      child: const Text(
                         "PKR",
                         style: TextStyle(fontSize: 24),
                       ),

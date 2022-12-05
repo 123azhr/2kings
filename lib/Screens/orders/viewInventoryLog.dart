@@ -1,33 +1,23 @@
 import 'package:flutter/material.dart';
 
 import '../../helper/size_configuration.dart';
+import '../../models/inventory_model.dart';
 
 class ViewInventoryLogs extends StatelessWidget {
-  ViewInventoryLogs({
+  const ViewInventoryLogs({
     Key? key,
+    required this.inventoryList,
     this.tog = false,
   }) : super(key: key);
+
+  final List<InventoryModel> inventoryList;
   final bool? tog;
-  TableRow addTableRow(String id, String itemName, String qty, String unit,
-      String perUnit, String price) {
+  TableRow addTableRow(
+      String itemName, String qty, String perUnit, String price) {
     return TableRow(
       children: <Widget>[
         TableCell(
-          child: Container(
-            height: setHeight(5),
-            width: setWidth(10),
-            child: Center(
-              child: Text(
-                id,
-                style: TextStyle(
-                  fontSize: getProportionateScreenHeight(20),
-                ),
-              ),
-            ),
-          ),
-        ),
-        TableCell(
-          child: Container(
+          child: SizedBox(
             height: setHeight(5),
             width: setWidth(40),
             child: Center(
@@ -41,7 +31,7 @@ class ViewInventoryLogs extends StatelessWidget {
           ),
         ),
         TableCell(
-          child: Container(
+          child: SizedBox(
             height: setHeight(5),
             width: setWidth(10),
             child: Center(
@@ -55,21 +45,7 @@ class ViewInventoryLogs extends StatelessWidget {
           ),
         ),
         TableCell(
-          child: Container(
-            height: setHeight(5),
-            width: setWidth(10),
-            child: Center(
-              child: Text(
-                unit,
-                style: TextStyle(
-                  fontSize: getProportionateScreenHeight(20),
-                ),
-              ),
-            ),
-          ),
-        ),
-        TableCell(
-          child: Container(
+          child: SizedBox(
             height: setHeight(5),
             width: setWidth(10),
             child: Center(
@@ -83,7 +59,7 @@ class ViewInventoryLogs extends StatelessWidget {
           ),
         ),
         TableCell(
-          child: Container(
+          child: SizedBox(
             height: setHeight(5),
             width: setWidth(10),
             child: Center(
@@ -113,33 +89,14 @@ class ViewInventoryLogs extends StatelessWidget {
                   Table(
                     border: TableBorder.all(),
                     columnWidths: const <int, TableColumnWidth>{
-                      0: FixedColumnWidth(30),
-                      1: FixedColumnWidth(130),
+                      0: FixedColumnWidth(100),
+                      1: FixedColumnWidth(50),
                     },
                     defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                    children: <TableRow>[
-                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                      addTableRow("1", "Sariya", "8", "inch", "100", "800"),
-                    ],
+                    children: inventoryList
+                        .map((e) => addTableRow(
+                            e.itemName!, e.qty!, e.perItem!, e.total!))
+                        .toList(),
                   ),
                 ],
               ),
@@ -153,7 +110,7 @@ class ViewInventoryLogs extends StatelessWidget {
             child: Row(
           children: [
             Card(
-              child: Container(
+              child: SizedBox(
                 height: setHeight(20),
                 child: Table(
                   border: TableBorder.all(),
@@ -260,30 +217,15 @@ class InventoryTableHeader extends StatelessWidget {
     return Table(
       border: TableBorder.all(),
       columnWidths: const <int, TableColumnWidth>{
-        0: FixedColumnWidth(30),
-        1: FixedColumnWidth(130),
+        0: FixedColumnWidth(100),
+        1: FixedColumnWidth(50),
       },
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       children: <TableRow>[
         TableRow(
           children: <Widget>[
             TableCell(
-              child: Container(
-                height: setHeight(5),
-                width: setWidth(10),
-                child: Center(
-                  child: Text(
-                    "ID",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: getProportionateScreenHeight(20),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            TableCell(
-              child: Container(
+              child: SizedBox(
                 height: setHeight(5),
                 width: setWidth(40),
                 child: Center(
@@ -298,7 +240,7 @@ class InventoryTableHeader extends StatelessWidget {
               ),
             ),
             TableCell(
-              child: Container(
+              child: SizedBox(
                 height: setHeight(5),
                 width: setWidth(10),
                 child: Center(
@@ -313,22 +255,7 @@ class InventoryTableHeader extends StatelessWidget {
               ),
             ),
             TableCell(
-              child: Container(
-                height: setHeight(5),
-                width: setWidth(10),
-                child: Center(
-                  child: Text(
-                    "Unit",
-                    style: TextStyle(
-                      fontSize: getProportionateScreenHeight(20),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            TableCell(
-              child: Container(
+              child: SizedBox(
                 height: setHeight(5),
                 width: setWidth(10),
                 child: Center(
@@ -343,7 +270,7 @@ class InventoryTableHeader extends StatelessWidget {
               ),
             ),
             TableCell(
-              child: Container(
+              child: SizedBox(
                 height: setHeight(5),
                 width: setWidth(10),
                 child: Center(

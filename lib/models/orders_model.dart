@@ -4,11 +4,10 @@ class OrdersModel with ChangeNotifier {
   final String? orderID;
   final String? aggrementID;
   final String? serviceTotal;
-
   final String? inventoryTotal;
   final String? grandTotal;
   final String? status;
-  final List? logsID;
+  final String? logsID;
   OrdersModel({
     this.orderID,
     this.aggrementID,

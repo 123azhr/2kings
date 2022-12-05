@@ -8,11 +8,7 @@ class ChatProvider with ChangeNotifier {
   List<ChatModel> _list = [];
 
   List<ChatModel> get getList => _list;
-
-  List<MessageModel> _msglist = [];
-
-  List<MessageModel> get getmsgList => _msglist;
-
+  
   final loggedInUser = FirebaseAuth.instance.currentUser;
   Future<void> fetch() async {
     await FirebaseFirestore.instance

@@ -8,6 +8,8 @@ import 'package:housecontractors/providers/worker_provider.dart';
 import 'package:provider/provider.dart';
 import '../../providers/chat_provider.dart';
 import '../../providers/current_user_provider.dart';
+import '../../providers/logs_provider.dart';
+import '../../providers/order_provider.dart';
 import '../../providers/service_provider.dart';
 import '../../providers/story_provider.dart';
 import '../../providers/user_provider.dart';
@@ -60,9 +62,9 @@ class _FlashScreenState extends State<FlashScreen> {
       final serviceProvider =
           Provider.of<ServiceProvider>(context, listen: false);
       await serviceProvider.fetch();
-      // final ordersProvider =
-      //     Provider.of<OrdersProvider>(context, listen: false);
-      // await ordersProvider.fetch();
+      final ordersProvider =
+          Provider.of<OrdersProvider>(context, listen: false);
+      await ordersProvider.fetch();
       try {
         final chatProvider = Provider.of<ChatProvider>(context, listen: false);
         await chatProvider.fetch();
@@ -85,6 +87,11 @@ class _FlashScreenState extends State<FlashScreen> {
             Provider.of<AggrementProvider>(context, listen: false);
 
         aggrementProvider.fetch();
+      } catch (e) {
+        print(e);
+      }
+      try {
+        Provider.of<LogsProvider>(context, listen: false);
       } catch (e) {
         print(e);
       }

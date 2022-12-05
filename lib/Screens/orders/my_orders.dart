@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/orders/active_orders.dart';
 import 'package:housecontractors/Screens/orders/pending_orders.dart';
+import 'package:housecontractors/models/orders_model.dart';
 import 'package:housecontractors/providers/order_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../helper/size_configuration.dart';
+import '../../providers/current_user_provider.dart';
 import 'completed_orders.dart';
 
 class MyOrders extends StatefulWidget {
@@ -39,11 +41,15 @@ class _MyOrdersState extends State<MyOrders>
     super.dispose();
   }
 
+  List<OrdersModel> activeOrders(List<OrdersModel> ordersList) {
+    return ordersList.where((element) => 'status' == 'Active').toList();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final ordersProvider = Provider.of<OrdersProvider>(context);
-    final ordersList = ordersProvider.getList;
-    print(ordersList);
+    OrdersProvider ordersProvider = Provider.of<OrdersProvider>(context);
+    List<OrdersModel> ordersList = ordersProvider.getList;
+
     return DefaultTabController(
       length: 3,
       initialIndex: 0,
@@ -99,7 +105,7 @@ class _MyOrdersState extends State<MyOrders>
         Icon(icon),
         Text(
           label!,
-          style: TextStyle(fontSize: 15),
+          style: const TextStyle(fontSize: 15),
         ),
         SizedBox(height: getProportionateScreenHeight(5)),
       ],

@@ -4,7 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 
 class ProfileHeader extends StatelessWidget {
-  ProfileHeader({
+  const ProfileHeader({
     Key? key,
     this.title = "",
     this.email = "",
@@ -13,8 +13,8 @@ class ProfileHeader extends StatelessWidget {
     this.rating = const [],
   }) : super(key: key);
   final String title, email, phoneNumber, imageURL;
-  final List<String> rating;
-  double starRating = 3.6;
+  final List<dynamic>? rating;
+  final double starRating = 3.6;
   @override
   Widget build(BuildContext context) {
     return Container(

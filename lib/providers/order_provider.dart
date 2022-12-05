@@ -12,7 +12,8 @@ class OrdersProvider with ChangeNotifier {
   Future<void> fetch() async {
     await FirebaseFirestore.instance
         .collection("orders")
-        .doc(loggedInUser!.uid).collection("orderDetails")
+        .doc(" " + loggedInUser!.uid)
+        .collection("orderDetails")
         .get()
         .then(
           (QuerySnapshot<Map<String, dynamic>> snapshot) => {
@@ -29,7 +30,7 @@ class OrdersProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  List<OrdersModel> getChatByID(String aggrementID) {
+  List<OrdersModel> getOrderByID(String aggrementID) {
     return _list
         .where((element) => element.aggrementID!.trim() == aggrementID.trim())
         .toList();

@@ -12,7 +12,9 @@ import '../../providers/aggrement_provider.dart';
 import '../../providers/authentication_provider.dart';
 import '../../providers/chat_provider.dart';
 import '../../providers/current_user_provider.dart';
+import '../../providers/logs_provider.dart';
 import '../../providers/message_provider.dart';
+import '../../providers/order_provider.dart';
 import '../../providers/worker_provider.dart';
 import '../../widgets/mycontainer.dart';
 import 'mytextfield.dart';
@@ -106,11 +108,10 @@ class _LoginState extends State<Login> {
                   style: ElevatedButton.styleFrom(
                     side: const BorderSide(
                       width: 0,
-                    ), 
-                    elevation: 3, 
+                    ),
+                    elevation: 3,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30)),
-
                   ),
                   onPressed: () async {
                     showDialog(
@@ -161,6 +162,15 @@ class _LoginState extends State<Login> {
                                 Provider.of<MessageProvider>(context,
                                     listen: false);
                             messageProvider.fetch();
+                          } catch (e) {
+                            print(e);
+                          }
+                          final ordersProvider = Provider.of<OrdersProvider>(
+                              context,
+                              listen: false);
+                          await ordersProvider.fetch();
+                          try {
+                            Provider.of<LogsProvider>(context, listen: false);
                           } catch (e) {
                             print(e);
                           }
