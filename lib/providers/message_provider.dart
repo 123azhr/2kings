@@ -9,6 +9,11 @@ class MessageProvider with ChangeNotifier {
 
   List<MessageModel> get getList => _list;
 
+  List<MessageModel> getSortedList() {
+    getList.sort(((a, b) => a.createdAt!.compareTo(b.createdAt!)));
+    return getList.reversed.toList();
+  }
+
   final loggedInUser = FirebaseAuth.instance.currentUser;
   Future<void> fetch() async {
     await FirebaseFirestore.instance

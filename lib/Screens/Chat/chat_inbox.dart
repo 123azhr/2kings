@@ -32,7 +32,7 @@ class _InboxState extends State<Inbox> {
   @override
   Widget build(BuildContext context) {
     final messageProvider = Provider.of<MessageProvider>(context);
-    final messageList = messageProvider.getList;
+    final messageList = messageProvider.getSortedList();
 
     final userProvider = Provider.of<CurrentUserProvider>(context);
     final loggedinUser = userProvider.getCurrentUser();
@@ -68,9 +68,11 @@ class _InboxState extends State<Inbox> {
           ]),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ListView.builder(
+        child: ListView.separated(
           reverse: true,
-
+          separatorBuilder: (context, index) => SizedBox(
+            height: getProportionateScreenHeight(10),
+          ),
           scrollDirection: Axis.vertical,
           itemCount: messageList.length,
           itemBuilder: (context, int index) => ChangeNotifierProvider.value(
@@ -83,17 +85,6 @@ class _InboxState extends State<Inbox> {
                       : OppositeMessages(text: messageList[index].messageTxt!)
                   : AggrementMsg(text: messageList[index].aggrementID!)),
           physics: const BouncingScrollPhysics(),
-          // ),
-          // ListView.builder(
-          //   itemCount: 1,
-          //   itemBuilder: (context, index) => isOpposite
-          //       ? OppositeMessages(
-          //           text: "hello ",
-          //         )
-          //       : MyMessages(
-          //           text: _textController.text,
-          //         ),
-          //   reverse: true,
         ),
       ),
       bottomNavigationBar: Padding(
@@ -103,7 +94,7 @@ class _InboxState extends State<Inbox> {
         child: BottomAppBar(
           child: Container(
             height: setHeight(15),
-            color: Color.fromARGB(255, 239, 203, 0),
+            color: const Color.fromARGB(255, 239, 203, 0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

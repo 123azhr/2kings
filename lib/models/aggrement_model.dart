@@ -5,17 +5,13 @@ class AggrementModel with ChangeNotifier {
   final String? contractorID;
   final String? customerID;
 
-  final List? estimatedCharges;
-  final List? estimatedDays;
   final DateTime? startDate;
-  final List? services;
+  final Map<String, dynamic>? services;
   final DateTime? endDate;
 
   final String? details;
   final bool? status;
   AggrementModel({
-    this.estimatedCharges,
-    this.estimatedDays,
     this.details,
     this.aggrementID,
     this.contractorID,
@@ -36,8 +32,6 @@ class AggrementModel with ChangeNotifier {
       endDate: map["endDate"].toDate(),
       status: map["status"],
       details: map["details"],
-      estimatedDays: map["estimatedDays"],
-      estimatedCharges: map["estimatedCharges"],
     );
   }
 }

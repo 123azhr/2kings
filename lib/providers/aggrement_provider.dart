@@ -41,10 +41,8 @@ class AggrementProvider with ChangeNotifier {
     String? contractorID,
     String? details,
     String? customerID,
-    List? estimatedCharges,
-    List? estimatedDays,
     DateTime? startDate,
-    List? services,
+    Map<String, dynamic>? services,
     DateTime? endDate,
     bool? status,
   }) async {
@@ -55,8 +53,6 @@ class AggrementProvider with ChangeNotifier {
         .collection("aggrements")
         .add({
       "contractorID": contractorID,
-      "estimatedCharges": estimatedCharges,
-      "estimatedDays": estimatedDays,
       "customerID": customerID,
       "startDate": startDate,
       "endDate": endDate,
@@ -69,8 +65,6 @@ class AggrementProvider with ChangeNotifier {
       AggrementModel(
         aggrementID: doc.id,
         contractorID: contractorID,
-        estimatedCharges: estimatedCharges,
-        estimatedDays: estimatedDays,
         customerID: customerID,
         services: services,
         startDate: startDate,

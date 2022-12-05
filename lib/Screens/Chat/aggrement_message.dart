@@ -180,23 +180,31 @@ class SendAggrement extends StatelessWidget {
                             child: ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: aggrementModel.services!.length,
+                              itemCount: aggrementModel.services!.values
+                                  .toList()
+                                  .length,
                               itemBuilder: (context, int index) => Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    aggrementModel.services![index],
+                                    aggrementModel.services!.entries
+                                        .elementAt(index)
+                                        .value,
                                     style: const TextStyle(
                                         color: Colors.black, fontSize: 11),
                                   ),
                                   Text(
-                                    aggrementModel.estimatedDays![index],
+                                    aggrementModel.services!.entries
+                                        .elementAt(index)
+                                        .value,
                                     style: const TextStyle(
                                         color: Colors.black, fontSize: 11),
                                   ),
                                   Text(
-                                    aggrementModel.estimatedCharges![index],
+                                    aggrementModel.services!.entries
+                                        .elementAt(index)
+                                        .value,
                                     style: const TextStyle(
                                         color: Colors.black, fontSize: 11),
                                   ),

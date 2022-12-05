@@ -265,23 +265,35 @@ class _FillAggrementState extends State<FillAggrement> {
           child: Center(
             child: ElevatedButton(
               onPressed: () async {
+                showDialog(
+                    context: context,
+                    builder: (context) =>
+                        const Center(child: CircularProgressIndicator()));
                 String aggrementID =
                     await aggrementProvider.uploadAggrementDataToFireStore(
                         customerID: widget.customerID,
                         contractorID:
                             currentUserProvider.getCurrentUser().userID,
                         details: _textController.text,
+                        endDate: startDate,
+                        startDate: endDate,
+                        services: {
+                          "name": "Plumber",
+                          "estimatedCharges": "4894",
+                          "estimatedDays": "48"
+                        },
                         status: false);
                 _textController.clear();
                 aggrementProvider.fetch();
                 messageProvider.uploadMessageDataToFireStore(
                     chatWith: widget.customerID,
                     createdAt: DateTime.now(),
-                    messagetxt: _textController.text,
+                    messagetxt: "",
                     aggrementID: aggrementID,
                     type: true);
                 _textController.clear();
-                messageProvider.fetch();
+                Navigator.pop(context);
+                Navigator.pop(context);
               },
               child: const Text("Send"),
               style: ElevatedButton.styleFrom(
