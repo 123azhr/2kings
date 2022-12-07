@@ -140,40 +140,41 @@ class _LoginState extends State<Login> {
                           workersProvider.fetch();
                         } catch (e) {
                           print(e);
-                          try {
-                            final chatProvider = Provider.of<ChatProvider>(
-                                context,
-                                listen: false);
-                            await chatProvider.fetch();
-                          } catch (e) {
-                            print(e);
-                          }
-                          try {
-                            final aggrementProvider =
-                                Provider.of<AggrementProvider>(context,
-                                    listen: false);
+                        }
 
-                            aggrementProvider.fetch();
-                          } catch (e) {
-                            print(e);
-                          }
-                          try {
-                            final messageProvider =
-                                Provider.of<MessageProvider>(context,
-                                    listen: false);
-                            messageProvider.fetch();
-                          } catch (e) {
-                            print(e);
-                          }
-                          final ordersProvider = Provider.of<OrdersProvider>(
+                        final ordersProvider =
+                            Provider.of<OrdersProvider>(context, listen: false);
+                        await ordersProvider.fetch();
+                        try {
+                          final chatProvider =
+                              Provider.of<ChatProvider>(context, listen: false);
+                          await chatProvider.fetch();
+                        } catch (e) {
+                          print(e);
+                        }
+
+                        try {
+                          final messageProvider = Provider.of<MessageProvider>(
                               context,
                               listen: false);
-                          await ordersProvider.fetch();
-                          try {
-                            Provider.of<LogsProvider>(context, listen: false);
-                          } catch (e) {
-                            print(e);
-                          }
+
+                          messageProvider.fetch();
+                        } catch (e) {
+                          print(e);
+                        }
+                        try {
+                          final aggrementProvider =
+                              Provider.of<AggrementProvider>(context,
+                                  listen: false);
+
+                          aggrementProvider.fetch();
+                        } catch (e) {
+                          print(e);
+                        }
+                        try {
+                          Provider.of<LogsProvider>(context, listen: false);
+                        } catch (e) {
+                          print(e);
                         }
                         Navigator.pushReplacement(
                             context,
@@ -202,31 +203,7 @@ class _LoginState extends State<Login> {
                                         "Email / Password is incorrect")))),
                       );
                     }
-                  }
-                  // for (int i = 0; i < usersList.length; i++) {
-                  //   if (emailController.text != usersList[i].email &&
-                  //       passController.text != usersList[i].password) {
-                  //     Navigator.pushReplacement(
-                  //       context,
-                  //       MaterialPageRoute(
-                  //           builder: (context) => const Dashboard()),
-                  //     );
-                  //   } else {
-                  //     showCupertinoModalPopup(
-                  //       context: context,
-                  //       builder: (context) => Container(
-                  //           height: getProportionateScreenHeight(100),
-                  //           width: 400,
-                  //           color: Color.fromARGB(0, 244, 67, 54),
-                  //           child: Card(
-                  //               color: Color.fromARGB(255, 255, 82, 59),
-                  //               child: Center(
-                  //                   child:
-                  //                       Text("Email or Password is incorrect")))),
-                  //     );
-                  //   }
-                  // }
-                  ),
+                  }),
             ),
             SizedBox(
               height: getProportionateScreenHeight(20),

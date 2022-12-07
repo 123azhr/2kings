@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../Screens/profile/profile_view.dart';
-import '../../helper/size_configuration.dart';
+import '../../profile/profile_view.dart';
+import '../../../helper/size_configuration.dart';
 
 class PostHeader extends StatelessWidget {
   const PostHeader({
@@ -20,7 +20,7 @@ class PostHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(100)),
+        borderRadius: const BorderRadius.all(Radius.circular(100)),
         child: GestureDetector(
           onTap: () => Navigator.push(
             context,

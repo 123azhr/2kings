@@ -9,7 +9,9 @@ class ServiceProvider with ChangeNotifier {
   List<ServiceModel> _list = [];
 
   List<ServiceModel> get getList => _list;
-
+  void clearList(){
+    _list.clear();
+  }
   Future<void> fetch() async {
     await FirebaseFirestore.instance.collection("c_services").get().then(
           (QuerySnapshot<Map<String, dynamic>> snapshot) => {

@@ -8,7 +8,9 @@ class MessageProvider with ChangeNotifier {
   List<MessageModel> _list = [];
 
   List<MessageModel> get getList => _list;
-
+  void clearList(){
+    _list.clear();
+  }
   List<MessageModel> getSortedList() {
     getList.sort(((a, b) => a.createdAt!.compareTo(b.createdAt!)));
     return getList.reversed.toList();
@@ -16,6 +18,7 @@ class MessageProvider with ChangeNotifier {
 
   final loggedInUser = FirebaseAuth.instance.currentUser;
   Future<void> fetch() async {
+    if(loggedInUser!=null){
     await FirebaseFirestore.instance
         .collection("chats")
         .doc(loggedInUser!.uid)
@@ -33,7 +36,7 @@ class MessageProvider with ChangeNotifier {
               },
           },
         );
-    notifyListeners();
+    notifyListeners();}
   }
 
   Future<void> uploadMessageDataToFireStore({

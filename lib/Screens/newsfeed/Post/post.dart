@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:housecontractors/components/Post/post_bottom.dart';
-import 'package:housecontractors/components/Post/post_header.dart';
-import 'package:housecontractors/components/Post/post_item.dart';
+import 'package:housecontractors/Screens/newsfeed/Post/post_bottom.dart';
+import 'package:housecontractors/Screens/newsfeed/Post/post_header.dart';
+import 'package:housecontractors/Screens/newsfeed/Post/post_item.dart';
 import 'package:housecontractors/models/post_model.dart';
 import 'package:provider/provider.dart';
-import '../../providers/user_provider.dart';
+import '../../../providers/user_provider.dart';
 
 class Post extends StatelessWidget {
   const Post({Key? key}) : super(key: key);

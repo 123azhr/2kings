@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:housecontractors/models/message_model.dart';
 import '../models/chat_model.dart';
 
 class ChatProvider with ChangeNotifier {
@@ -10,6 +9,9 @@ class ChatProvider with ChangeNotifier {
   List<ChatModel> get getList => _list;
   
   final loggedInUser = FirebaseAuth.instance.currentUser;
+    void clearList(){
+    _list.clear();
+  }
   Future<void> fetch() async {
     await FirebaseFirestore.instance
         .collection("chats")

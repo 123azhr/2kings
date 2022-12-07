@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:provider/provider.dart';
-import '../../models/workers_model.dart';
+import '../../../../models/workers_model.dart';
 
 class WorkerTile extends StatelessWidget {
   const WorkerTile({super.key, required this.serviceName});

@@ -85,9 +85,9 @@ class StoryTile extends StatelessWidget {
               PageTransition(
                 type: PageTransitionType.bottomToTop,
                 child: StoryView(
-                    itemURL: storyModel.imageURL!,
-                    userImgUrl: userModel.profileImageURL!,
-                    userName: userModel.name!),
+                  itemURL: storyModel.imageURL,
+                  userModel: userModel,
+                ),
                 duration: const Duration(milliseconds: 400),
               ),
             ),

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:housecontractors/components/Post/post.dart';
+import 'package:housecontractors/Screens/newsfeed/Post/post.dart';
 import 'package:housecontractors/components/profile_header.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:housecontractors/providers/user_provider.dart';

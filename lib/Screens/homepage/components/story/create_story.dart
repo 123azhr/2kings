@@ -20,7 +20,7 @@ class CreateStory extends StatefulWidget {
 class _CreateStoryState extends State<CreateStory> {
   String _imagePath = "";
   File? _selectedImageFile;
-
+  TextEditingController _textController = TextEditingController();
   void pickImage() async {
     final ImagePicker _picker = ImagePicker();
     final _image = await _picker.pickImage(source: ImageSource.gallery);
@@ -41,29 +41,33 @@ class _CreateStoryState extends State<CreateStory> {
   }
 
   uploadStory() async {
-    CurrentUserProvider userProvider =
-        Provider.of<CurrentUserProvider>(context, listen: false);
-    CurrentUserModel loggedInUser = userProvider.getCurrentUser();
-    final storyProvider = Provider.of<StoryProvider>(context, listen: false);
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: ((context) => const Center(child: CircularProgressIndicator())),
-    );
     try {
-      String? imageURL = await storyProvider.uploadImageToStorage(
-          imagePath: _imagePath, userID: loggedInUser.userID);
+      if (_imagePath.isNotEmpty) {
+        CurrentUserProvider userProvider =
+            Provider.of<CurrentUserProvider>(context, listen: false);
+        CurrentUserModel loggedInUser = userProvider.getCurrentUser();
+        final storyProvider =
+            Provider.of<StoryProvider>(context, listen: false);
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: ((context) =>
+              const Center(child: CircularProgressIndicator())),
+        );
+        String? imageURL = await storyProvider.uploadImageToStorage(
+            imagePath: _imagePath, userID: loggedInUser.userID);
 
-      await storyProvider.uploadImageDataToFireStore(
-        imageURL: imageURL,
-        userID: loggedInUser.userID,
-        userName: loggedInUser.name,
-        caption: "",
-      );
+        await storyProvider.uploadImageDataToFireStore(
+          imageURL: imageURL,
+          userID: loggedInUser.userID,
+          userName: loggedInUser.name,
+          caption: _textController.text,
+        );
+        await storyProvider.fetch();
 
-      await storyProvider.fetch();
-      Navigator.pop(context);
-      Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.pop(context);
+      }
 
       // Future.delayed(const Duration(milliseconds: 0)).then((value) async {
       //   await postProvider.fetch();
@@ -78,6 +82,9 @@ class _CreateStoryState extends State<CreateStory> {
 
   @override
   Widget build(BuildContext context) {
+    CurrentUserProvider userProvider =
+        Provider.of<CurrentUserProvider>(context, listen: false);
+    CurrentUserModel loggedInUser = userProvider.getCurrentUser();
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -108,15 +115,15 @@ class _CreateStoryState extends State<CreateStory> {
                     SizedBox(
                       height: getProportionateScreenHeight(60),
                       width: getProportionateScreenWidth(80),
-                      child: const CircleAvatar(
+                      child: CircleAvatar(
                         backgroundImage: CachedNetworkImageProvider(
-                            "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"),
+                            loggedInUser.profileImageURL!),
                       ),
                     ),
                     Column(
                       children: [
                         Text(
-                          "Muhammad Azhar",
+                          loggedInUser.name!,
                           style: Theme.of(context).textTheme.displaySmall,
                         ),
                       ],
@@ -132,19 +139,6 @@ class _CreateStoryState extends State<CreateStory> {
                         ),
                       ),
                       onPressed: () {
-                        // var imageURL = storyProvider.uploadImageToStorage(
-                        //     imagePath: _imagePath, userID: loggedInUser.userID);
-                        // print(imageURL);
-
-                        // storyProvider.uploadImageDataToFireStore(
-                        //     imageURL: imageURL.toString(),
-                        //     userID: loggedInUser.userID,
-                        //     userName: loggedInUser.name);
-                        // Navigator.pop(context);
-                        // Future.delayed(const Duration(milliseconds: 0))
-                        //     .then((value) async {
-                        //   await storyProvider.fetch();
-                        // });
                         uploadStory();
                       },
                       child: Text("Share",
@@ -183,6 +177,7 @@ class _CreateStoryState extends State<CreateStory> {
                         width: setWidth(100),
                       ),
                 TextFormField(
+                  controller: _textController,
                   maxLines: 20,
                   textAlign: TextAlign.start,
                   style: const TextStyle(

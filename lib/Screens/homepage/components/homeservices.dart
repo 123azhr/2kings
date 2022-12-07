@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:housecontractors/components/workers/workers_list.dart';
+import 'package:housecontractors/Screens/homepage/components/workers/workers_list.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';

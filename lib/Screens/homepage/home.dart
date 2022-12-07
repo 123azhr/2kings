@@ -4,6 +4,7 @@ import 'package:housecontractors/Screens/homepage/components/story/stories.dart'
 import 'package:housecontractors/Screens/homepage/components/searchHome.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:page_transition/page_transition.dart';
+import '../profile/edit_services.dart';
 import 'components/construction_services.dart';
 
 class HomePage extends StatelessWidget {
@@ -81,9 +82,23 @@ class HomePage extends StatelessWidget {
                       thickness: getProportionateScreenHeight(0.05),
                       color: Colors.black,
                     ),
-                    Text(
-                      "Home Services",
-                      style: Theme.of(context).textTheme.displaySmall,
+                    Row(
+                      children: [
+                        Text(
+                          "Home Services",
+                          style: Theme.of(context).textTheme.displaySmall,
+                        ),
+                        const Spacer(),
+                        IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const EditServices(),
+                                  ));
+                            },
+                            icon: const Icon(Icons.edit))
+                      ],
                     ),
                     Divider(
                       height: getProportionateScreenHeight(20),
@@ -98,9 +113,23 @@ class HomePage extends StatelessWidget {
                       thickness: getProportionateScreenHeight(0.1),
                       color: Colors.black,
                     ),
-                    Text(
-                      "Construction Services",
-                      style: Theme.of(context).textTheme.displaySmall,
+                    Row(
+                      children: [
+                        Text(
+                          "Construction Services",
+                          style: Theme.of(context).textTheme.displaySmall,
+                        ),
+                        const Spacer(),
+                        IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const EditServices(),
+                                  ));
+                            },
+                            icon: const Icon(Icons.edit))
+                      ],
                     ),
                     Divider(
                       height: getProportionateScreenHeight(20),

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/newsfeed/create_post.dart';
-import 'package:housecontractors/components/Post/post.dart';
+import 'package:housecontractors/Screens/newsfeed/Post/post.dart';
 import 'package:housecontractors/providers/current_user_provider.dart';
 import 'package:housecontractors/providers/post_provider.dart';
 import 'package:page_transition/page_transition.dart';
@@ -15,7 +15,6 @@ class Newsfeed extends StatelessWidget {
   Widget build(BuildContext context) {
     final userProvider = Provider.of<CurrentUserProvider>(context);
     final loggedInUser = userProvider.getCurrentUser();
-    TextEditingController _postController = TextEditingController();
     final postProvider = Provider.of<PostProvider>(context);
     final postsList = postProvider.getList;
     return Scaffold(

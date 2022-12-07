@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../helper/size_configuration.dart';
-import '../../../components/workers/workers_list.dart';
+import 'workers/workers_list.dart';
 
 class HireContractor extends StatelessWidget {
   const HireContractor({

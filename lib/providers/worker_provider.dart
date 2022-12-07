@@ -10,26 +10,31 @@ class WorkerProvider with ChangeNotifier {
   List<WorkerModel> _list = [];
 
   List<WorkerModel> get getList => _list;
-  String userID = FirebaseAuth.instance.currentUser!.uid;
+  String? userID = FirebaseAuth.instance.currentUser?.uid;
+  void clearList() {
+    _list.clear();
+  }
+
   Future<void> fetch() async {
-    print(userID);
-    await FirebaseFirestore.instance
-        .collection("c_workers")
-        .where("userID", isEqualTo: userID.trim())
-        .get()
-        .then(
-          (QuerySnapshot<Map<String, dynamic>> snapshot) => {
-            _list = [],
-            for (var doc in snapshot.docs)
-              {
-                _list.insert(
-                  0,
-                  WorkerModel.fromMap(map: doc.data(), userID: doc.id),
-                ),
-              },
-          },
-        );
-    notifyListeners();
+    if (userID != null) {
+      await FirebaseFirestore.instance
+          .collection("c_workers")
+          .where("userID", isEqualTo: userID!.trim())
+          .get()
+          .then(
+            (QuerySnapshot<Map<String, dynamic>> snapshot) => {
+              _list = [],
+              for (var doc in snapshot.docs)
+                {
+                  _list.insert(
+                    0,
+                    WorkerModel.fromMap(map: doc.data(), userID: doc.id),
+                  ),
+                },
+            },
+          );
+      notifyListeners();
+    }
   }
 
   List<WorkerModel> getWorkerByserviceName(String serviceName) {

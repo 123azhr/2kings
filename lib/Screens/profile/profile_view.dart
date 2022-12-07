@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:housecontractors/components/Post/post.dart';
+import 'package:housecontractors/Screens/newsfeed/Post/post.dart';
 import 'package:housecontractors/components/profile_header.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:provider/provider.dart';
-import '../../providers/current_user_provider.dart';
 import '../../providers/post_provider.dart';
+import '../../providers/user_provider.dart';
 import '../../widgets/chat_call_bottom_bar.dart';
 
 class ProfileView extends StatelessWidget {
@@ -13,12 +13,10 @@ class ProfileView extends StatelessWidget {
   final String? userID;
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<CurrentUserProvider>(context);
-    final user = userProvider.getCurrentUser(); //updateReq
+    final userProvider = Provider.of<UserProvider>(context);
+    final user = userProvider.getUserByID(userID!);
     final postProvider = Provider.of<PostProvider>(context);
     final postsList = postProvider.getPostByID(user.userID!);
-    // final postsList = postProvider.getList;
-    SizeConfig().init(context);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(

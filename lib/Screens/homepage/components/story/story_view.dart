@@ -1,17 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:housecontractors/Screens/profile/profile_view.dart';
 import '../../../../helper/size_configuration.dart';
+import '../../../../models/user_model.dart';
 
 class StoryView extends StatefulWidget {
-  final String? itemURL;
-  final String? userImgUrl;
-  final String? userName;
-
+  final UserModel? userModel;
+  final String? itemURL; 
   const StoryView({
     super.key,
-    required this.itemURL,
-    required this.userImgUrl,
-    required this.userName,
+    required this.userModel, this.itemURL,
   });
 
   @override
@@ -78,17 +76,25 @@ class _StoryViewState extends State<StoryView>
                 value: controller.value,
               ),
               Padding(
-                  padding: EdgeInsets.all(12),
+                  padding: const EdgeInsets.all(12),
                   child: Row(
                     children: [
-                      CircleAvatar(
-                          foregroundImage:
-                              CachedNetworkImageProvider(widget.userImgUrl!)),
+                      GestureDetector(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  ProfileView(userID: widget.userModel!.userID),
+                            )),
+                        child: CircleAvatar(
+                            foregroundImage: CachedNetworkImageProvider(
+                                widget.userModel!.profileImageURL!)),
+                      ),
                       SizedBox(
                         width: getProportionateScreenWidth(10),
                       ),
                       Text(
-                        widget.userName!,
+                        widget.userModel!.name!,
                         style: TextStyle(
                             color: Color.fromARGB(255, 0, 0, 0), fontSize: 18),
                       ),

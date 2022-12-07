@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../helper/size_configuration.dart';
+import '../../../helper/size_configuration.dart';
 import 'comments.dart';
 import 'like.dart';
 

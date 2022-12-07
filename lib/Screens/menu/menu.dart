@@ -170,14 +170,12 @@ class Menu extends StatelessWidget {
             ),
             onTap: () async {
               await context.read<AuthenticationService>().signOut();
-              // chatProvider.clearList();
-              // messageProvider.clearList();
-              // postProvider.clearList();
-              // serviceProvider.clearList();
-              // currentProvider.clearList();
-              // orderstProvider.clearList();
-              // workerProvider.clearList();
-              // storyProvider.clearList();
+              chatProvider.clearList();
+              messageProvider.clearList();
+              serviceProvider.clearList();
+              currentProvider.clearList();
+              orderstProvider.clearList();
+              workerProvider.clearList();
               userProvider.clearList();
               Navigator.pushReplacement(
                 context,

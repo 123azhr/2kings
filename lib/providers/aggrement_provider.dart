@@ -10,7 +10,11 @@ class AggrementProvider with ChangeNotifier {
   List<AggrementModel> get getList => _list;
 
   final loggedInUser = FirebaseAuth.instance.currentUser;
+    void clearList(){
+    _list.clear();
+  }
   Future<void> fetch() async {
+     if(loggedInUser!=null){
     await FirebaseFirestore.instance
         .collection("chats")
         .doc(loggedInUser!.uid)
@@ -28,7 +32,7 @@ class AggrementProvider with ChangeNotifier {
               },
           },
         );
-    notifyListeners();
+    notifyListeners();}
   }
 
   AggrementModel getAggrementByID(String aggrementID) {

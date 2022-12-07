@@ -16,7 +16,7 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
   String _imagePath = "";
-
+ 
   File? _selectedImageFile = null;
 
   List list = [];

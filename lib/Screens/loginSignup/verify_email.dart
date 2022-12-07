@@ -31,7 +31,7 @@ bool _isVerified(BuildContext context) {
 class _VerifyEmailState extends State<VerifyEmail> {
   @override
   void initState() {
-    // FirebaseAuth.instance.currentUser!.sendEmailVerification();
+    FirebaseAuth.instance.currentUser!.sendEmailVerification();
     print("email verification sent");
     // TODO: implement initState
     super.initState();
@@ -56,54 +56,102 @@ class _VerifyEmailState extends State<VerifyEmail> {
         elevation: 1,
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
-      body: SingleChildScrollView(
-          child: Column(children: [
-        ElevatedButton(
-            onPressed: () {
-              setState(() {
-                FirebaseAuth.instance.currentUser!.reload();
-                if (_isVerified(context)) {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Dashboard(),
-                      ));
-                } else {
-                  //FirebaseAuth.instance.currentUser!.sendEmailVerification();
-                  showModalBottomSheet(
-                    backgroundColor: Colors.transparent,
-                    context: context,
-                    builder: (context) => MyContainer(
-                        height: setHeight(10),
-                        width: setWidth(90),
-                        child: Center(
-                            child: Column(
-                          children: [
-                            Text(
-                                "Email not verified kindly check your mail and verify email"),
-                            ElevatedButton(
-                                onPressed: () {
-                                  print("Email sent Successfully");
-                                },
-                                child: const Text("Resent Email"))
-                          ],
-                        ))),
-                  );
-                }
-              });
-            },
-            child: const Text("Verified")),
-        ElevatedButton(
-            onPressed: () {
-              context.read<AuthenticationService>().signOut();
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const Login(),
-                  ));
-            },
-            child: const Text("sign out"))
-      ])),
+      body: Center(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: setHeight(5),
+              ),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: const Size(200, 50),
+                    side: const BorderSide(
+                      width: 0,
+                    ),
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30)),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      FirebaseAuth.instance.currentUser!.reload();
+                      if (_isVerified(context)) {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Dashboard(),
+                            ));
+                      } else {
+                        //FirebaseAuth.instance.currentUser!.sendEmailVerification();
+                        showModalBottomSheet(
+                          backgroundColor: Colors.transparent,
+                          context: context,
+                          builder: (context) => MyContainer(
+                              height: setHeight(15),
+                              width: setWidth(90),
+                              child: Center(
+                                  child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                      "Email not verified kindly check your mail and verify email"),
+                                  ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        fixedSize: const Size(200, 50),
+                                        side: const BorderSide(
+                                          width: 0,
+                                        ),
+                                        elevation: 3,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30)),
+                                      ),
+                                      onPressed: () {
+                                        // FirebaseAuth.instance.currentUser!.sendEmailVerification();
+                                        print("Email sent Successfully");
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text("Resend Email"))
+                                ],
+                              ))),
+                        );
+                      }
+                    });
+                  },
+                  child: const Text("Verified")),
+              SizedBox(
+                height: setHeight(5),
+              ),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: const Size(200, 50),
+                    side: const BorderSide(
+                      width: 0,
+                    ),
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30)),
+                  ),
+                  onPressed: () {
+                    context.read<AuthenticationService>().signOut();
+                    final currentUserProvider =
+                        Provider.of<CurrentUserProvider>(context,
+                            listen: false);
+
+                    currentUserProvider.clearList();
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Login(),
+                        ));
+                  },
+                  child: const Text("sign out"))
+            ]),
+      ),
     ));
   }
 }

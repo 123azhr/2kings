@@ -42,7 +42,9 @@ class LogsProvider with ChangeNotifier {
   List<ServiceLogModel> _servicelist = [];
 
   List<ServiceLogModel> get getServicelist => _servicelist;
-
+  void clearList(){
+    _list.clear();
+  }
   Future<void> fetchServiceLog(String logID) async {
     await FirebaseFirestore.instance
         .collection("orders")

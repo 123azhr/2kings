@@ -9,9 +9,8 @@ import 'package:housecontractors/providers/worker_provider.dart';
 import 'package:housecontractors/widgets/mycontainer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import '../../providers/current_user_provider.dart';
-import '../../providers/post_provider.dart';
-import '../../widgets/bottom_modal_sheet.dart';
+import '../../../../providers/current_user_provider.dart';
+import '../../../../widgets/bottom_modal_sheet.dart';
 
 class AddWorker extends StatefulWidget {
   const AddWorker({
@@ -209,66 +208,66 @@ class _AddWorkerState extends State<AddWorker> {
               color: Colors.black,
             ),
             ListTile(
-                leading: Text(
-                  "Gender:  ",
-                  style: TextStyle(
-                      fontSize: getProportionateScreenHeight(20),
-                      fontWeight: FontWeight.bold),
-                ),
-                title: Text(
-                  genderText,
-                  style: TextStyle(
+              leading: Text(
+                "Gender:  ",
+                style: TextStyle(
                     fontSize: getProportionateScreenHeight(20),
-                  ),
+                    fontWeight: FontWeight.bold),
+              ),
+              title: Text(
+                genderText,
+                style: TextStyle(
+                  fontSize: getProportionateScreenHeight(20),
                 ),
-                trailing: Icon(
-                  Icons.edit,
-                  size: getProportionateScreenHeight(20),
-                ),
-                onTap: () => showCupertinoModalPopup(
-                    context: context,
-                    builder: (context) => SingleChildScrollView(
-                          child: MyContainer(
-                            color: Colors.yellow,
-                            height: setHeight(10),
-                            width: setWidth(90),
-                            child: Column(
-                              children: [
-                                SizedBox(height: setHeight(1)),
-                                InkWell(
-                                  onTap: () {
-                                    genderText = "Male";
-                                    setState(() {});
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text(
-                                    "Male",
-                                    style: TextStyle(
-                                      fontSize:
-                                          getProportionateScreenHeight(20),
-                                    ),
-                                  ),
-                                ),
-                                const Divider(),
-                                InkWell(
-                                  onTap: () {
-                                    genderText = "Famale";
-                                    setState(() {});
-
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text(
-                                    "Female",
-                                    style: TextStyle(
-                                      fontSize:
-                                          getProportionateScreenHeight(20),
-                                    ),
-                                  ),
-                                )
-                              ],
+              ),
+              trailing: Icon(
+                Icons.edit,
+                size: getProportionateScreenHeight(20),
+              ),
+              onTap: () => showCupertinoModalPopup(
+                context: context,
+                builder: (context) => SingleChildScrollView(
+                  child: MyContainer(
+                    color: Colors.yellow,
+                    height: setHeight(10),
+                    width: setWidth(90),
+                    child: Column(
+                      children: [
+                        SizedBox(height: setHeight(1)),
+                        InkWell(
+                          onTap: () {
+                            genderText = "Male";
+                            setState(() {});
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "Male",
+                            style: TextStyle(
+                              fontSize: getProportionateScreenHeight(20),
                             ),
                           ),
-                        ))),
+                        ),
+                        const Divider(),
+                        InkWell(
+                          onTap: () {
+                            genderText = "Famale";
+                            setState(() {});
+
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "Female",
+                            style: TextStyle(
+                              fontSize: getProportionateScreenHeight(20),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
             Divider(
               thickness: getProportionateScreenHeight(0.2),
               color: Colors.black,

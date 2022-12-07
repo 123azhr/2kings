@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/components/workers/Worker_list_tile.dart';
-import 'package:housecontractors/components/workers/add_workers.dart';
+import 'package:housecontractors/Screens/homepage/components/workers/add_workers.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-import '../../providers/worker_provider.dart';
+import '../../../../providers/worker_provider.dart';
 
 class WorkersList extends StatelessWidget {
   const WorkersList({super.key, required this.serviceName});
