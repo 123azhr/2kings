@@ -8,15 +8,30 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
 
-class Newsfeed extends StatelessWidget {
-  Newsfeed({Key? key}) : super(key: key);
+class Newsfeed extends StatefulWidget {
+  const Newsfeed({Key? key}) : super(key: key);
+
+  @override
+  State<Newsfeed> createState() => _NewsfeedState();
+}
+
+class _NewsfeedState extends State<Newsfeed> {
   final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+        GlobalKey<RefreshIndicatorState>();
+
     final userProvider = Provider.of<CurrentUserProvider>(context);
     final loggedInUser = userProvider.getCurrentUser();
     final postProvider = Provider.of<PostProvider>(context);
     final postsList = postProvider.getList;
+    Future<void> _onRefresh() async {
+      setState(() {});
+      await postProvider.fetch();
+    }
+
     return Scaffold(
       appBar: AppBar(
         leadingWidth: getProportionateScreenWidth(40),
@@ -48,6 +63,7 @@ class Newsfeed extends StatelessWidget {
                   imageUrl: loggedInUser.profileImageURL!,
                   fit: BoxFit.fill,
                   height: getProportionateScreenHeight(80),
+                  width: getProportionateScreenWidth(80),
                 ),
               ),
             ),
@@ -79,14 +95,26 @@ class Newsfeed extends StatelessWidget {
           ),
         ),
       ),
-      body: ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: postsList.length,
-        itemBuilder: (context, int index) => ChangeNotifierProvider.value(
-          value: postsList[index],
-          child: const Post(),
+      body: RefreshIndicator(
+        key: _refreshIndicatorKey,
+        color: Colors.white,
+        backgroundColor: Color.fromARGB(255, 251, 225, 54),
+        strokeWidth: 4.0,
+        onRefresh: () async {
+          // Replace this delay with the code to be executed during refresh
+          // and return a Future when code finishs execution.
+          return Future<void>.delayed(const Duration(seconds: 0))
+              .then((value) async => await _onRefresh());
+        },
+        child: ListView.builder(
+          scrollDirection: Axis.vertical,
+          itemCount: postsList.length,
+          itemBuilder: (context, int index) => ChangeNotifierProvider.value(
+            value: postsList[index],
+            child: const Post(),
+          ),
+          // physics: const BouncingScrollPhysics(),
         ),
-        physics: const BouncingScrollPhysics(),
       ),
     );
   }

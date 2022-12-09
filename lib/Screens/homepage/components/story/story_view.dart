@@ -6,10 +6,11 @@ import '../../../../models/user_model.dart';
 
 class StoryView extends StatefulWidget {
   final UserModel? userModel;
-  final String? itemURL; 
+  final String? itemURL;
   const StoryView({
     super.key,
-    required this.userModel, this.itemURL,
+    required this.userModel,
+    this.itemURL,
   });
 
   @override
@@ -71,8 +72,8 @@ class _StoryViewState extends State<StoryView>
                 width: 10,
               ),
               LinearProgressIndicator(
-                color: Color.fromARGB(255, 0, 0, 0),
-                backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                color: const Color.fromARGB(255, 0, 0, 0),
+                backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                 value: controller.value,
               ),
               Padding(
@@ -80,7 +81,7 @@ class _StoryViewState extends State<StoryView>
                   child: Row(
                     children: [
                       GestureDetector(
-                        onTap: () => Navigator.push(
+                        onTap: () => Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) =>

@@ -114,19 +114,24 @@ class _CreateStoryState extends State<CreateStory> {
                   children: [
                     SizedBox(
                       height: getProportionateScreenHeight(60),
-                      width: getProportionateScreenWidth(80),
+                      width: getProportionateScreenWidth(60),
                       child: CircleAvatar(
-                        backgroundImage: CachedNetworkImageProvider(
-                            loggedInUser.profileImageURL!),
+                        child: ClipOval(
+                          child: CachedNetworkImage(
+                            imageUrl: loggedInUser.profileImageURL!,
+                            fit: BoxFit.fill,
+                            height: getProportionateScreenHeight(80),
+                            width: getProportionateScreenWidth(80),
+                          ),
+                        ),
                       ),
                     ),
-                    Column(
-                      children: [
-                        Text(
-                          loggedInUser.name!,
-                          style: Theme.of(context).textTheme.displaySmall,
-                        ),
-                      ],
+                    SizedBox(
+                      width: setWidth(2),
+                    ),
+                    Text(
+                      loggedInUser.name!,
+                      style: Theme.of(context).textTheme.displaySmall,
                     ),
                     const Spacer(),
                     ElevatedButton(

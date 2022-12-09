@@ -17,12 +17,21 @@ class ChatMenu extends StatefulWidget {
 }
 
 class _ChatMenuState extends State<ChatMenu> {
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
   final TextEditingController _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final chatProvider = Provider.of<ChatProvider>(context);
+
     final chatList = chatProvider.getList;
     final userProvider = Provider.of<UserProvider>(context);
+
+    Future<void> _onRefresh() async {
+      setState(() {});
+      await chatProvider.fetch();
+    }
+
     // final user = userProvider.getUserByID(chatList[index].otherID);
     return Scaffold(
       appBar: AppBar(
@@ -52,24 +61,34 @@ class _ChatMenuState extends State<ChatMenu> {
         elevation: 1,
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
-      body: ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: chatList.length,
-        itemBuilder: (context, int index) => ChangeNotifierProvider.value(
-          value: chatList[index],
-          child: ChatMenuTile(
-            chat: chatList[index],
-            subtitle: userProvider
-                .getUserByID(chatList[index].otherID!)
-                .services!
-                .first,
-            user: userProvider.getUserByID(chatList[index].otherID!),
-            image: CachedNetworkImageProvider(userProvider
-                .getUserByID(chatList[index].otherID!)
-                .profileImageURL!),
+      body: RefreshIndicator(
+        key: _refreshIndicatorKey,
+        color: Colors.white,
+        backgroundColor: Color.fromARGB(255, 251, 225, 54),
+        strokeWidth: 4.0,
+        onRefresh: () async {
+          // Replace this delay with the code to be executed during refresh
+          // and return a Future when code finishs execution.
+          return Future<void>.delayed(const Duration(seconds: 0))
+              .then((value) async => await _onRefresh());
+        },
+        child: ListView.builder(
+          itemCount: chatList.length,
+          itemBuilder: (context, int index) => ChangeNotifierProvider.value(
+            value: chatList[index],
+            child: ChatMenuTile(
+              chat: chatList[index],
+              subtitle: userProvider
+                  .getUserByID(chatList[index].otherID!)
+                  .services!
+                  .first,
+              user: userProvider.getUserByID(chatList[index].otherID!),
+              image: CachedNetworkImageProvider(userProvider
+                  .getUserByID(chatList[index].otherID!)
+                  .profileImageURL!),
+            ),
           ),
         ),
-        physics: const BouncingScrollPhysics(),
       ),
     );
   }
@@ -94,8 +113,7 @@ class ChatMenuTile extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-              builder: (context) => Inbox(user: user, chat: chat)),
+          MaterialPageRoute(builder: (context) => Inbox(user: user)),
         );
       },
       title: Text(user.name!),

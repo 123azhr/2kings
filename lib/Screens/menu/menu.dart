@@ -111,7 +111,7 @@ class Menu extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => EditProfilePage(),
+                builder: (context) => const EditProfilePage(),
               ),
             ),
           ),
@@ -138,7 +138,7 @@ class Menu extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => EditServices(),
+                    builder: (context) =>const  EditServices(),
                   ));
             },
           ),

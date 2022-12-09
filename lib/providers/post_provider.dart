@@ -49,7 +49,8 @@ class PostProvider with ChangeNotifier {
   // }
 
   List<PostModel> getPostByID(String userID) {
-    return _list.where((element) => element.userID!.trim() == userID).toList();
+    getList.sort(((a, b) => a.postedTime!.compareTo(b.postedTime!)));
+    return getList.where((element) => element.userID == userID).toList();
   }
 
   Future<void> uploadPostDataToFireStore({

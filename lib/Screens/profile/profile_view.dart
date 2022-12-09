@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/newsfeed/Post/post.dart';
 import 'package:housecontractors/components/profile_header.dart';
@@ -7,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../providers/post_provider.dart';
 import '../../providers/user_provider.dart';
 import '../../widgets/chat_call_bottom_bar.dart';
+import '../Dashboard/dashboard.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key, required this.userID});
@@ -21,7 +21,7 @@ class ProfileView extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text(
-            "My Profile",
+            "Profile",
             style: TextStyle(
               color: Colors.black,
               fontSize: (kToolbarHeight / 100) * 40,
@@ -32,7 +32,11 @@ class ProfileView extends StatelessWidget {
           centerTitle: true,
           leading: GestureDetector(
             onTap: () {
-              Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Dashboard(),
+                  ));
             },
             child: const Icon(Icons.arrow_back, color: Colors.black),
           ),
@@ -97,7 +101,7 @@ class ProfileView extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: bottomCallChat(),
+        bottomNavigationBar:  BottomCallChat(user:user),
       ),
     );
   }

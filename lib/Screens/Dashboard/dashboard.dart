@@ -29,7 +29,6 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   void initState() {
-    
     super.initState();
   }
 
@@ -37,39 +36,42 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
 
-    return SafeArea(
-      child: Scaffold(
-        body: Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const [
-            BottomNavigationBarItem(
-              label: "Home",
-              icon: Icon(Icons.home_filled),
-            ),
-            BottomNavigationBarItem(
-              label: "Chats",
-              icon: Icon(Icons.chat),
-            ),
-            BottomNavigationBarItem(
-              label: "Newsfeed",
-              icon: Icon(Icons.newspaper_outlined),
-            ),
-            BottomNavigationBarItem(
-              label: "Orders",
-              icon: Icon(Icons.bookmark_add),
-            ),
-            BottomNavigationBarItem(
-              label: "Menu",
-              icon: Icon(Icons.menu),
-            )
-          ],
-          type: BottomNavigationBarType.shifting,
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-          selectedItemColor: Colors.black,
-          elevation: 5,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: SafeArea(
+        child: Scaffold(
+          body: Center(
+            child: _widgetOptions.elementAt(_selectedIndex),
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            items: const [
+              BottomNavigationBarItem(
+                label: "Home",
+                icon: Icon(Icons.home_filled),
+              ),
+              BottomNavigationBarItem(
+                label: "Chats",
+                icon: Icon(Icons.chat),
+              ),
+              BottomNavigationBarItem(
+                label: "Newsfeed",
+                icon: Icon(Icons.newspaper_outlined),
+              ),
+              BottomNavigationBarItem(
+                label: "Orders",
+                icon: Icon(Icons.bookmark_add),
+              ),
+              BottomNavigationBarItem(
+                label: "Menu",
+                icon: Icon(Icons.menu),
+              )
+            ],
+            type: BottomNavigationBarType.shifting,
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+            selectedItemColor: Colors.black,
+            elevation: 5,
+          ),
         ),
       ),
     );

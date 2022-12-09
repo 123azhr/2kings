@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
-
-import '../Screens/Chat/chat_menu.dart';
+import 'package:housecontractors/Screens/Chat/chat_inbox.dart';
+import 'package:housecontractors/models/user_model.dart';
+import 'package:provider/provider.dart';
 import '../helper/size_configuration.dart';
+import '../providers/chat_provider.dart';
 
-class bottomCallChat extends StatelessWidget {
-  const bottomCallChat({
+class BottomCallChat extends StatelessWidget {
+  const BottomCallChat({
     Key? key,
+    this.user,
   }) : super(key: key);
+  final UserModel? user;
 
   @override
   Widget build(BuildContext context) {
+    final chatProvider = Provider.of<ChatProvider>(context);
+    final chatList = chatProvider.getList;
     return BottomAppBar(
       child: Row(
         children: [
@@ -19,7 +25,7 @@ class bottomCallChat extends StatelessWidget {
             color: Colors.amber,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 Icon(Icons.call),
                 Text("Call"),
               ],
@@ -28,7 +34,16 @@ class bottomCallChat extends StatelessWidget {
           GestureDetector(
             onTap: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ChatMenu()),
+              MaterialPageRoute(builder: (context) {
+                if (chatList
+                    .every((element) => element.otherID != user!.userID)) {
+                  chatProvider.createNewChat(otherID: user!.userID);
+                  chatProvider.fetch();
+                  return Inbox(user: user!);
+                } else {
+                  return Inbox(user: user!);
+                }
+              }),
             ),
             child: Container(
               height: 50,

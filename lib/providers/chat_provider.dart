@@ -7,15 +7,16 @@ class ChatProvider with ChangeNotifier {
   List<ChatModel> _list = [];
 
   List<ChatModel> get getList => _list;
-  
+
   final loggedInUser = FirebaseAuth.instance.currentUser;
-    void clearList(){
+  void clearList() {
     _list.clear();
   }
+
   Future<void> fetch() async {
     await FirebaseFirestore.instance
         .collection("chats")
-        .doc(loggedInUser!.uid)
+        .doc(loggedInUser!.uid.trim())
         .collection("with")
         .get()
         .then(
@@ -37,5 +38,22 @@ class ChatProvider with ChangeNotifier {
     return _list
         .where((element) => element.otherID!.trim() == otherID.trim())
         .toList();
+  }
+
+  Future<void> createNewChat({
+    String? otherID,
+  }) async {
+    await FirebaseFirestore.instance
+        .collection("chats")
+        .doc(loggedInUser!.uid)
+        .collection("with")
+        .doc(otherID)
+        .set({});
+    _list.insert(
+      0,
+      ChatModel(otherID: otherID),
+    );
+
+    notifyListeners();
   }
 }

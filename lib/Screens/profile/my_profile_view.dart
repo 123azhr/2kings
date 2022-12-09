@@ -1,9 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:housecontractors/Screens/Dashboard/dashboard.dart';
 import 'package:housecontractors/Screens/newsfeed/Post/post.dart';
 import 'package:housecontractors/components/profile_header.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
-import 'package:housecontractors/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import '../../providers/current_user_provider.dart';
 import '../../providers/post_provider.dart';
@@ -20,7 +19,6 @@ class MyProfileView extends StatelessWidget {
     final postProvider = Provider.of<PostProvider>(context);
     final postsList = postProvider.getPostByID(loggedInUser.userID!);
     // final postsList = postProvider.getList;
-    SizeConfig().init(context);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -60,15 +58,15 @@ class MyProfileView extends StatelessWidget {
                     phoneNumber: loggedInUser.contactNumber!,
                     imageURL: loggedInUser.profileImageURL!,
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 1,
                   ),
                   Padding(
                     padding:
                         EdgeInsets.only(left: getProportionateScreenWidth(5.0)),
-                    child: Text("Available Services"),
+                    child: const Text("Available Services"),
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 1,
                   ),
                   Container(

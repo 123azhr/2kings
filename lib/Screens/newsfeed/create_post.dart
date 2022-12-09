@@ -103,7 +103,7 @@ class _CreatePostState extends State<CreatePost> {
                 Row(
                   children: [
                     SizedBox(
-                      height: getProportionateScreenHeight(60),
+                      height: getProportionateScreenHeight(80),
                       width: getProportionateScreenWidth(80),
                       child: CircleAvatar(
                         backgroundImage: CachedNetworkImageProvider(
