@@ -4,53 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/models/service_log_model.dart';
 import '../models/inventory_model.dart';
 
-class LogsProvider with ChangeNotifier {
-  List<InventoryModel> _list = [];
-
-  List<InventoryModel> get getInventoryList => _list;
-
+class ServiceLogsProvider with ChangeNotifier {
   final loggedInUser = FirebaseAuth.instance.currentUser;
-  Future<void> fetchInventory(String logID) async {
-    await FirebaseFirestore.instance
-        .collection("orders")
-        .doc(" " + loggedInUser!.uid)
-        .collection("logs")
-        .doc(logID.trim())
-        .collection("inventory")
-        .get()
-        .then(
-          (QuerySnapshot<Map<String, dynamic>> snapshot) => {
-            _list = [],
-            for (var doc in snapshot.docs)
-              {
-                _list.insert(
-                  0,
-                  InventoryModel.fromMap(map: doc.data(), inventoryID: doc.id),
-                ),
-              },
-          },
-        );
-    notifyListeners();
-  }
-
-  InventoryModel getInventoryByID(String logsID) {
-    return _list
-        .where((element) => element.inventoryID!.trim() == logsID.trim())
-        .first;
-  }
-
   List<ServiceLogModel> _servicelist = [];
 
   List<ServiceLogModel> get getServicelist => _servicelist;
-  void clearList(){
-    _list.clear();
+  void clearList() {
+    _servicelist.clear();
   }
-  Future<void> fetchServiceLog(String logID) async {
+
+  Future<void> fetchServiceLog() async {
     await FirebaseFirestore.instance
         .collection("orders")
         .doc(" " + loggedInUser!.uid)
         .collection("logs")
-        .doc(logID.trim())
+        .doc("M4XynyYl03rreQUdtwg6")
         .collection("services")
         .get()
         .then(

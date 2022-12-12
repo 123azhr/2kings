@@ -7,8 +7,12 @@ class PostModel with ChangeNotifier {
   final DateTime? postedTime;
   final String? userName;
   final String? caption;
+  final List? comments;
+  final List? likes;
   PostModel(
-      {this.userID,
+      {this.comments,
+      this.likes,
+      this.userID,
       this.postID,
       this.imageURL,
       this.postedTime,
@@ -23,6 +27,8 @@ class PostModel with ChangeNotifier {
         postedTime: map["date"].toDate(),
         imageURL: map["imgVideo"],
         userName: map["userName"],
-        caption: map["caption"]);
+        caption: map["caption"],
+        likes: map["likes"],
+        comments: map["comments"]);
   }
 }

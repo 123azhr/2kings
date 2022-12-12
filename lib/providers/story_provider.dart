@@ -43,7 +43,7 @@ class StoryProvider with ChangeNotifier {
       "caption": caption,
     });
   }
- 
+
   Future<String?> uploadImageToStorage({
     required String? imagePath,
     required String? userID,

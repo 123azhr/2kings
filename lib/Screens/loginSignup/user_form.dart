@@ -13,7 +13,7 @@ import '../../providers/aggrement_provider.dart';
 import '../../providers/authentication_provider.dart';
 import '../../providers/chat_provider.dart';
 import '../../providers/current_user_provider.dart';
-import '../../providers/logs_provider.dart';
+import '../../providers/service_log_provider.dart';
 import '../../providers/message_provider.dart';
 import '../../providers/order_provider.dart';
 import '../../providers/worker_provider.dart';
@@ -59,59 +59,51 @@ class _UserFormState extends State<UserForm> {
   }
 
   loadcurrentUser() async {
-  
-                  
-                           try {
-                          final currentUserProvider =
-                              Provider.of<CurrentUserProvider>(context,
-                                  listen: false);
-                          currentUserProvider.fetch();
-                        } catch (e) {
-                          print(e);
-                        }
-                        try {
-                          final workersProvider = Provider.of<WorkerProvider>(
-                              context,
-                              listen: false);
-                          workersProvider.fetch();
-                        } catch (e) {
-                          print(e);
-                        }
+    try {
+      final currentUserProvider =
+          Provider.of<CurrentUserProvider>(context, listen: false);
+      currentUserProvider.fetch();
+    } catch (e) {
+      print(e);
+    }
+    try {
+      final workersProvider =
+          Provider.of<WorkerProvider>(context, listen: false);
+      workersProvider.fetch();
+    } catch (e) {
+      print(e);
+    }
 
-                        final ordersProvider =
-                            Provider.of<OrdersProvider>(context, listen: false);
-                        await ordersProvider.fetch();
-                        try {
-                          final chatProvider =
-                              Provider.of<ChatProvider>(context, listen: false);
-                          await chatProvider.fetch();
-                        } catch (e) {
-                          print(e);
-                        }
+    final ordersProvider = Provider.of<OrdersProvider>(context, listen: false);
+    await ordersProvider.fetch();
+    try {
+      final chatProvider = Provider.of<ChatProvider>(context, listen: false);
+      await chatProvider.fetch();
+    } catch (e) {
+      print(e);
+    }
 
-                        try {
-                          final messageProvider = Provider.of<MessageProvider>(
-                              context,
-                              listen: false);
+    try {
+      final messageProvider =
+          Provider.of<MessageProvider>(context, listen: false);
 
-                          messageProvider.fetch();
-                        } catch (e) {
-                          print(e);
-                        }
-                        try {
-                          final aggrementProvider =
-                              Provider.of<AggrementProvider>(context,
-                                  listen: false);
+      messageProvider.fetch();
+    } catch (e) {
+      print(e);
+    }
+    try {
+      final aggrementProvider =
+          Provider.of<AggrementProvider>(context, listen: false);
 
-                          aggrementProvider.fetch();
-                        } catch (e) {
-                          print(e);
-                        }
-                        try {
-                          Provider.of<LogsProvider>(context, listen: false);
-                        } catch (e) {
-                          print(e);
-                        }
+      aggrementProvider.fetch();
+    } catch (e) {
+      print(e);
+    }
+    try {
+      Provider.of<ServiceLogsProvider>(context, listen: false);
+    } catch (e) {
+      print(e);
+    }
   }
 
   createAccountandLogin() async {

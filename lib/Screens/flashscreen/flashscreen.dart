@@ -2,13 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/login.dart';
 import 'package:housecontractors/providers/aggrement_provider.dart';
+import 'package:housecontractors/providers/inventory_provider.dart';
 import 'package:housecontractors/providers/message_provider.dart';
 import 'package:housecontractors/providers/post_provider.dart';
 import 'package:housecontractors/providers/worker_provider.dart';
 import 'package:provider/provider.dart';
 import '../../providers/chat_provider.dart';
 import '../../providers/current_user_provider.dart';
-import '../../providers/logs_provider.dart';
+import '../../providers/service_log_provider.dart';
 import '../../providers/order_provider.dart';
 import '../../providers/service_provider.dart';
 import '../../providers/story_provider.dart';
@@ -91,7 +92,12 @@ class _FlashScreenState extends State<FlashScreen> {
         print(e);
       }
       try {
-        Provider.of<LogsProvider>(context, listen: false);
+        final serviceLogProvider =
+            Provider.of<ServiceLogsProvider>(context, listen: false);
+        serviceLogProvider.fetchServiceLog();
+        final inventoryProvider =
+            Provider.of<InventoryProvider>(context, listen: false);
+        inventoryProvider.fetchInventory();
       } catch (e) {
         print(e);
       }

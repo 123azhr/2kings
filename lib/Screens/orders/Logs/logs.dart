@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:housecontractors/Screens/orders/viewInventoryLog.dart';
-import 'package:housecontractors/Screens/orders/viewServicesLog.dart';
+import 'package:housecontractors/Screens/orders/Logs/view_inventory_log.dart';
+import 'package:housecontractors/Screens/orders/Logs/view_services_logs.dart';
 import 'package:housecontractors/models/orders_model.dart';
 import '../../../helper/size_configuration.dart';
-import '../../../models/inventory_model.dart';
-import '../../../models/service_log_model.dart';
 
 class Logs extends StatelessWidget {
-  const Logs(
-      {super.key,
-      required this.title,
-      required this.ordersModel,
-      required this.inventoryList,
-      required this.serviceLogList});
+  const Logs({
+    super.key,
+    required this.title,
+    required this.ordersModel,
+  });
   final String title;
   final OrdersModel ordersModel;
-  final List<InventoryModel> inventoryList;
-  final List<ServiceLogModel> serviceLogList;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +53,7 @@ class Logs extends StatelessWidget {
                 GestureDetector(
                   child: SizedBox(
                     height: setHeight(33),
-                    child: ViewInventoryLogs(inventoryList: inventoryList),
+                    child: ViewInventoryLogs(ordersModel: ordersModel),
                   ),
                   onTap: () => Navigator.push(
                     context,
@@ -77,7 +72,9 @@ class Logs extends StatelessWidget {
                           backgroundColor: Colors.transparent,
                         ),
                         body: ViewInventoryLogs(
-                            tog: true, inventoryList: inventoryList),
+                          ordersModel: ordersModel,
+                          tog: true,
+                        ),
                       ),
                     ),
                   ),
@@ -106,7 +103,7 @@ class Logs extends StatelessWidget {
                 GestureDetector(
                   child: SizedBox(
                     height: setHeight(33),
-                    child: ViewServicesLogs(serviceLogList: serviceLogList),
+                    child: ViewServicesLogs(ordersModel: ordersModel),
                   ),
                   onTap: () => Navigator.push(
                     context,
@@ -125,7 +122,9 @@ class Logs extends StatelessWidget {
                           backgroundColor: Colors.transparent,
                         ),
                         body: ViewServicesLogs(
-                            tog: true, serviceLogList: serviceLogList),
+                          tog: true,
+                          ordersModel: ordersModel,
+                        ),
                       ),
                     ),
                   ),
@@ -148,98 +147,11 @@ class Logs extends StatelessWidget {
       bottomSheet: BottomAppBar(
           color: Colors.amberAccent,
           child: SizedBox(
-            height: getProportionateScreenHeight(125),
+            height: setHeight(7),
             child: Column(
               children: [
-                SizedBox(
-                  height: 40,
-                  child: Row(
-                    children: [
-                      const Divider(
-                        thickness: 0.3,
-                        color: Colors.black,
-                        height: 0,
-                      ),
-                      Container(
-                        padding:
-                            EdgeInsets.all(getProportionateScreenHeight(8)),
-                        height: 50,
-                        child: const Text(
-                          "Inventory Total: ",
-                          style: TextStyle(fontSize: 24),
-                        ),
-                      ),
-                      Container(
-                        padding:
-                            EdgeInsets.all(getProportionateScreenHeight(8)),
-                        height: 50,
-                        child: Text(
-                          ordersModel.inventoryTotal!,
-                          style: TextStyle(fontSize: 24),
-                        ),
-                      ),
-                      const Spacer(),
-                      const VerticalDivider(color: Colors.black),
-                      Container(
-                        padding:
-                            EdgeInsets.all(getProportionateScreenHeight(8)),
-                        height: 50,
-                        child: const Text(
-                          "PKR",
-                          style: TextStyle(fontSize: 24),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 40,
-                  child: Row(
-                    children: [
-                      Divider(
-                        thickness: 0.3,
-                        color: Colors.black,
-                        height: 0,
-                      ),
-                      Container(
-                        padding:
-                            EdgeInsets.all(getProportionateScreenHeight(8)),
-                        height: 50,
-                        child: Text(
-                          "Services Total: ",
-                          style: TextStyle(fontSize: 24),
-                        ),
-                      ),
-                      Container(
-                        padding:
-                            EdgeInsets.all(getProportionateScreenHeight(8)),
-                        height: 50,
-                        child: Text(
-                          ordersModel.serviceTotal!,
-                          style: TextStyle(fontSize: 24),
-                        ),
-                      ),
-                      const Spacer(),
-                      const VerticalDivider(color: Colors.black),
-                      Container(
-                        padding:
-                            EdgeInsets.all(getProportionateScreenHeight(8)),
-                        height: 50,
-                        child: const Text(
-                          "PKR",
-                          style: TextStyle(fontSize: 24),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                 Row(
                   children: [
-                    const Divider(
-                      height: 0,
-                      thickness: 0.3,
-                      color: Colors.black,
-                    ),
                     Container(
                       padding: EdgeInsets.all(getProportionateScreenHeight(8)),
                       height: 50,

@@ -26,27 +26,6 @@ class PostProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // addToList({
-  //   String? imageURL,
-  //   String? caption,
-  //   DateTime? postedTime,
-  //   String? postID,
-  //   String? userID,
-  //   String? userName,
-  // }) {
-  //   _list.insert(
-  //     0,
-  //     PostModel(
-  //       imageURL: imageURL,
-  //       caption: caption,
-  //       postedTime: postedTime,
-  //       postID: postID,
-  //       userID: userID,
-  //       userName: userName,
-  //     ),
-  //   );
-  //   notifyListeners();
-  // }
 
   List<PostModel> getPostByID(String userID) {
     getList.sort(((a, b) => a.postedTime!.compareTo(b.postedTime!)));
@@ -81,6 +60,18 @@ class PostProvider with ChangeNotifier {
         userName: userName,
       ),
     );
+    notifyListeners();
+  }
+
+  Future<void> updateLikes({
+    String? postID,
+    List? likes,
+  }) async {
+    FirebaseFirestore.instance
+        .collection("c_post")
+        .doc(postID)
+        .update({'likes': likes});
+
     notifyListeners();
   }
 

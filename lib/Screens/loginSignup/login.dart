@@ -12,7 +12,7 @@ import '../../providers/aggrement_provider.dart';
 import '../../providers/authentication_provider.dart';
 import '../../providers/chat_provider.dart';
 import '../../providers/current_user_provider.dart';
-import '../../providers/logs_provider.dart';
+import '../../providers/service_log_provider.dart';
 import '../../providers/message_provider.dart';
 import '../../providers/order_provider.dart';
 import '../../providers/worker_provider.dart';
@@ -115,6 +115,7 @@ class _LoginState extends State<Login> {
                   ),
                   onPressed: () async {
                     showDialog(
+                        barrierDismissible: true,
                         context: context,
                         builder: (context) =>
                             const Center(child: CircularProgressIndicator()));
@@ -172,7 +173,8 @@ class _LoginState extends State<Login> {
                           print(e);
                         }
                         try {
-                          Provider.of<LogsProvider>(context, listen: false);
+                          Provider.of<ServiceLogsProvider>(context,
+                              listen: false);
                         } catch (e) {
                           print(e);
                         }

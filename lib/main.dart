@@ -8,7 +8,8 @@ import 'package:housecontractors/Screens/flashscreen/flashscreen.dart';
 import 'package:housecontractors/providers/aggrement_provider.dart';
 import 'package:housecontractors/providers/chat_provider.dart';
 import 'package:housecontractors/providers/current_user_provider.dart';
-import 'package:housecontractors/providers/logs_provider.dart';
+import 'package:housecontractors/providers/inventory_provider.dart';
+import 'package:housecontractors/providers/service_log_provider.dart';
 import 'package:housecontractors/providers/message_provider.dart';
 import 'package:housecontractors/providers/order_provider.dart';
 import 'package:housecontractors/providers/post_provider.dart';
@@ -89,7 +90,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => OrdersProvider()),
         ChangeNotifierProvider(create: (_) => MessageProvider()),
         ChangeNotifierProvider(create: (_) => AggrementProvider()),
-        ChangeNotifierProvider(create: (_) => LogsProvider()),
+        ChangeNotifierProvider(create: (_) => ServiceLogsProvider()),
+        
+        ChangeNotifierProvider(create: (_) => InventoryProvider()),
       ],
       child: MaterialApp(
         title: "HouseContractors",

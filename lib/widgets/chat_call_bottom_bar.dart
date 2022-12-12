@@ -38,7 +38,6 @@ class BottomCallChat extends StatelessWidget {
                 if (chatList
                     .every((element) => element.otherID != user!.userID)) {
                   chatProvider.createNewChat(otherID: user!.userID);
-                  chatProvider.fetch();
                   return Inbox(user: user!);
                 } else {
                   return Inbox(user: user!);

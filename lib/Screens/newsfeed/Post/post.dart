@@ -25,7 +25,7 @@ class Post extends StatelessWidget {
               date: postModel.postedTime,
               profilePicURL: user.profileImageURL!),
           PostItem(imageURL: postModel.imageURL, caption: postModel.caption),
-          const PostBottom(),
+           PostBottom(postModel: postModel),
         ],
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/Chat/fill_aggrement_form.dart';
 import 'package:housecontractors/Screens/Chat/aggrement_message.dart';
@@ -7,6 +8,7 @@ import 'package:housecontractors/providers/message_provider.dart';
 import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
 import '../../providers/current_user_provider.dart';
+import '../../widgets/are_you_sure.dart';
 import 'my_messages.dart';
 import 'opposite_messages.dart';
 
@@ -63,8 +65,20 @@ class _InboxState extends State<Inbox> {
             ),
             actions: [
               IconButton(
-                icon: const Icon(Icons.call),
-                onPressed: () {},
+                icon: const Icon(Icons.delete),
+                onPressed: () {
+                  showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) => AreYouSure(
+                        title: "Delete this Conversarion?",
+                        onPressed: () async {
+                          Navigator.pop(context);
+                          await messageProvider.deleteAllMessages(
+                              otherID: widget.user.userID);
+                        }),
+                  );
+                },
               ),
             ]),
         body: Padding(
@@ -80,10 +94,40 @@ class _InboxState extends State<Inbox> {
                 value: messageList[index],
                 child: messageList[index].aggrementID == ""
                     ? messageList[index].type!
-                        ? MyMessages(
-                            text: messageList[index].messageTxt!,
+                        ? GestureDetector(
+                            onLongPress: () => showDialog(
+                              context: context,
+                              builder: (context) => AreYouSure(
+                                  title: "Delete this message? ",
+                                  onPressed: () async {
+                                    await messageProvider.deleteMessage(
+                                        messageID: messageList[index].messageID,
+                                        messagetxt:
+                                            messageList[index].messageTxt);
+                                    Navigator.pop(context);
+                                  }),
+                            ),
+                            child: MyMessages(
+                              text: messageList[index].messageTxt!,
+                            ),
                           )
-                        : OppositeMessages(text: messageList[index].messageTxt!)
+                        : GestureDetector(
+                            onLongPress: () => showDialog(
+                                  barrierDismissible: false,
+                                  context: context,
+                                  builder: (context) => AreYouSure(
+                                      title: "Delete this message? ",
+                                      onPressed: () async {
+                                        await messageProvider.deleteMessage(
+                                            messageID:
+                                                messageList[index].messageID,
+                                            messagetxt:
+                                                messageList[index].messageTxt);
+                                        Navigator.pop(context);
+                                      }),
+                                ),
+                            child: OppositeMessages(
+                                text: messageList[index].messageTxt!))
                     : AggrementMsg(text: messageList[index].aggrementID!)),
             physics: const BouncingScrollPhysics(),
           ),

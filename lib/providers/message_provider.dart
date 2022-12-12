@@ -88,4 +88,44 @@ class MessageProvider with ChangeNotifier {
     );
     notifyListeners();
   }
+
+  Future<void> deleteMessage({
+    required String? messageID,
+    required String? messagetxt,
+  }) async {
+    await FirebaseFirestore.instance
+        .collection("chats")
+        .doc(loggedInUser!.uid)
+        .collection("messages")
+        .doc(messageID)
+        .delete();
+
+    _list.removeWhere(
+      (element) => element.messageTxt == messagetxt,
+    );
+    notifyListeners();
+  }
+
+  Future<void> deleteAllMessages({
+    required String? otherID,
+  }) async {
+    await FirebaseFirestore.instance
+        .collection("chats")
+        .doc(loggedInUser!.uid)
+        .collection("messages")
+        .where('with', isEqualTo: otherID)
+        .get()
+        .then(
+      (QuerySnapshot<Map<String, dynamic>> snapshot) {
+        for (var doc in snapshot.docs) {
+          doc.reference.delete();
+        }
+      },
+    );
+
+    _list.removeWhere(
+      (element) => element.chatWith == otherID,
+    );
+    notifyListeners();
+  }
 }

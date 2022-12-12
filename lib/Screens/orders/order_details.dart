@@ -5,11 +5,12 @@ import 'package:housecontractors/components/profile_header.dart';
 import 'package:housecontractors/models/aggrement_model.dart';
 import 'package:housecontractors/models/orders_model.dart';
 import 'package:housecontractors/models/user_model.dart';
+import 'package:housecontractors/providers/inventory_provider.dart';
 import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
 import '../../models/inventory_model.dart';
 import '../../models/service_log_model.dart';
-import '../../providers/logs_provider.dart';
+import '../../providers/service_log_provider.dart';
 
 Future<dynamic> orderDetails(
     BuildContext context,
@@ -140,28 +141,31 @@ Future<dynamic> orderDetails(
                           ),
                         ),
                         onPressed: () async {
-                          showDialog(
-                              context: context,
-                              builder: (context) => const Center(
-                                  child: CircularProgressIndicator()));
-                          LogsProvider logsProvider =
-                              Provider.of<LogsProvider>(context, listen: false);
-                          await logsProvider
-                              .fetchServiceLog(ordersModel.logsID!);
-                          await logsProvider
-                              .fetchInventory(ordersModel.logsID!);
+                          // showDialog(
+                          //     context: context,
+                          //     builder: (context) => const Center(
+                          //         child: CircularProgressIndicator()));
+                          // ServiceLogsProvider serviceLogsProvider =
+                          //     Provider.of<ServiceLogsProvider>(context,
+                          //         listen: false);
 
-                          List<InventoryModel> inventoryList =
-                              logsProvider.getInventoryList;
-                          List<ServiceLogModel> serviceLogList =
-                              logsProvider.getServicelist;
-                          Navigator.pop(context);
+                          // InventoryProvider inventoryProvider =
+                          //     Provider.of<InventoryProvider>(context,
+                          //         listen: false);
+                          // await serviceLogsProvider
+                          //     .fetchServiceLog(ordersModel.logsID!);
+                          // await inventoryProvider
+                          //     .fetchInventory(ordersModel.logsID!);
+
+                          // List<InventoryModel> inventoryList =
+                          //     inventoryProvider.getInventoryList;
+                          // List<ServiceLogModel> serviceLogList =
+                          //     serviceLogsProvider.getServicelist;
+                          // Navigator.pop(context);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => Logs(
-                                inventoryList: inventoryList,
-                                serviceLogList: serviceLogList,
                                 title: customerModel.name!,
                                 ordersModel: ordersModel,
                               ),

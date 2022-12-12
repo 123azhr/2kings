@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/Chat/chat_inbox.dart';
 import 'package:housecontractors/models/user_model.dart';
+import 'package:housecontractors/providers/message_provider.dart';
+import 'package:housecontractors/widgets/are_you_sure.dart';
 import 'package:provider/provider.dart';
 
 import '../../helper/size_configuration.dart';
@@ -24,6 +26,7 @@ class _ChatMenuState extends State<ChatMenu> {
   Widget build(BuildContext context) {
     final chatProvider = Provider.of<ChatProvider>(context);
 
+    final msgProvider = Provider.of<MessageProvider>(context);
     final chatList = chatProvider.getList;
     final userProvider = Provider.of<UserProvider>(context);
 
@@ -77,6 +80,20 @@ class _ChatMenuState extends State<ChatMenu> {
           itemBuilder: (context, int index) => ChangeNotifierProvider.value(
             value: chatList[index],
             child: ChatMenuTile(
+              onLongPress: () => showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (context) => AreYouSure(
+                    title: "Remove This Conversarion?",
+                    onPressed: () async {
+                      await chatProvider.deleteChat(
+                          otherID: chatList[index].otherID);
+                      await msgProvider.deleteAllMessages(
+                          otherID: chatList[index].otherID);
+
+                      Navigator.pop(context);
+                    }),
+              ),
               chat: chatList[index],
               subtitle: userProvider
                   .getUserByID(chatList[index].otherID!)
@@ -101,15 +118,18 @@ class ChatMenuTile extends StatelessWidget {
     required this.subtitle,
     this.image,
     required this.chat,
+    required this.onLongPress,
   }) : super(key: key);
   final UserModel user;
   final ChatModel chat;
   final String subtitle;
   final ImageProvider<Object>? image;
+  final VoidCallback onLongPress;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onLongPress: onLongPress,
       onTap: () {
         Navigator.push(
           context,
@@ -124,30 +144,6 @@ class ChatMenuTile extends StatelessWidget {
         ),
         foregroundImage: image,
       ),
-      trailing: PopupMenuButton(itemBuilder: (context) {
-        return [
-          PopupMenuItem<int>(
-            value: 0,
-            child: Text("Remove this notification"),
-          ),
-          PopupMenuItem<int>(
-            value: 1,
-            child: Text("Turn off notification about this."),
-          ),
-          PopupMenuItem<int>(
-            value: 2,
-            child: Text("report"),
-          ),
-        ];
-      }, onSelected: (value) {
-        if (value == 0) {
-          print("Remove this notification menu is selected.");
-        } else if (value == 1) {
-          print("Turn off notification about this. menu is selected.");
-        } else if (value == 2) {
-          print("report menu is selected.");
-        }
-      }),
     );
   }
 }
