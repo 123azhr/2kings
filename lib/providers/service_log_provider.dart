@@ -36,6 +36,37 @@ class ServiceLogsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> uploadItemDataToFireStore({
+    String? serviceName,
+    String? noOfDays,
+    String? total,
+    String? perDay,
+  }) async {
+    DocumentReference<Map<String, dynamic>> doc = await FirebaseFirestore
+        .instance
+        .collection("orders")
+        .doc(" " + loggedInUser!.uid)
+        .collection("logs")
+        .doc("M4XynyYl03rreQUdtwg6")
+        .collection("services")
+        .add({
+      "serviceName": serviceName,
+      "noOfDays": noOfDays,
+      "total": total,
+      "perDay": perDay,
+    });
+    _servicelist.insert(
+      0,
+      ServiceLogModel(
+          serviceID: doc.id,
+          serviceName: serviceName,
+          perDay: perDay,
+          noOfDays: noOfDays,
+          total: total),
+    );
+    notifyListeners();
+  }
+
   List<ServiceLogModel> getserviceByID(String serviceLogID) {
     return _servicelist
         .where((element) => element.serviceID!.trim() == serviceLogID.trim())

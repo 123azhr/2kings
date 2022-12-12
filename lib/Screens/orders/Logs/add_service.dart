@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
+import 'package:housecontractors/providers/service_log_provider.dart';
 import 'package:provider/provider.dart';
-
 import '../../../helper/size_configuration.dart';
-import '../../../providers/inventory_provider.dart';
 
-class AddItem extends StatefulWidget {
-  const AddItem({
+class AddServiceItem extends StatefulWidget {
+  const AddServiceItem({
     Key? key,
   }) : super(key: key);
   @override
-  State<AddItem> createState() => _AddItemState();
+  State<AddServiceItem> createState() => _AddItemState();
 }
 
-class _AddItemState extends State<AddItem> {
+class _AddItemState extends State<AddServiceItem> {
   final TextEditingController nameController = TextEditingController();
 
-  final TextEditingController qtyController = TextEditingController();
+  final TextEditingController daysController = TextEditingController();
 
   final TextEditingController priceController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    final inventoryProvider = Provider.of<InventoryProvider>(context);
+    final serviceProvider = Provider.of<ServiceLogsProvider>(context);
+
     bool _isButtonDisabled = nameController.text.isNotEmpty &&
-        qtyController.text.isNotEmpty &&
+        daysController.text.isNotEmpty &&
         priceController.text.isNotEmpty;
     return SafeArea(
       child: Scaffold(
@@ -65,6 +66,9 @@ class _AddItemState extends State<AddItem> {
                         width: setWidth(65),
                         radius: 20,
                         controller: nameController,
+                        onChanged: (p0) {
+                          setState(() {});
+                        },
                       ),
                     ],
                   ),
@@ -79,8 +83,11 @@ class _AddItemState extends State<AddItem> {
                         color: const Color.fromARGB(255, 255, 239, 63),
                         width: setWidth(65),
                         radius: 20,
-                        controller: qtyController,
+                        controller: daysController,
                         inputType: TextInputType.number,
+                        onChanged: (p0) {
+                          setState(() {});
+                        },
                       ),
                     ],
                   ),
@@ -97,6 +104,9 @@ class _AddItemState extends State<AddItem> {
                         radius: 20,
                         controller: priceController,
                         inputType: TextInputType.number,
+                        onChanged: (p0) {
+                          setState(() {});
+                        },
                       ),
                     ],
                   ),
@@ -113,17 +123,17 @@ class _AddItemState extends State<AddItem> {
                       ),
                       onPressed: _isButtonDisabled
                           ? () async {
-                              await inventoryProvider.uploadItemDataToFireStore(
-                                  itemName: nameController.text,
-                                  perItem: priceController.text,
-                                  qty: qtyController.text,
-                                  total: (int.parse(qtyController.text) *
+                              await serviceProvider.uploadItemDataToFireStore(
+                                  serviceName: nameController.text,
+                                  perDay: priceController.text,
+                                  noOfDays: daysController.text,
+                                  total: (int.parse(daysController.text) *
                                           int.parse(priceController.text))
                                       .toString());
                               Navigator.pop(context);
                             }
                           : null,
-                      child: const Text("Add"))
+                      child: const Text("Add")),
                 ],
               ),
             ),

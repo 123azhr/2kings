@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
 class MyTextField extends StatelessWidget {
-  const MyTextField(
-      {this.hintText = "",
-      this.height = 65,
-      required this.width,
-      this.color,
-      this.leading,
-      this.obsecure = false,
-      required this.radius,
-      this.controller})
-      : super();
+  const MyTextField({
+    super.key,
+    this.inputType,
+    this.hintText = "",
+    this.height = 65,
+    required this.width,
+    this.color,
+    this.leading,
+    this.obsecure = false,
+    this.radius = 20,
+    this.controller,
+    this.onChanged,
+  });
 
   final String? hintText;
   final double? height;
@@ -19,17 +22,21 @@ class MyTextField extends StatelessWidget {
   final Widget? leading;
   final double radius;
   final bool obsecure;
+  final TextInputType? inputType;
   final TextEditingController? controller;
+  final Function(String)? onChanged;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: inputType,
       obscureText: obsecure,
       controller: controller,
+      onChanged: onChanged,
       textAlign: TextAlign.start,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 18,
       ),
-      scrollPhysics: ScrollPhysics(),
+      scrollPhysics: const ScrollPhysics(),
       decoration: InputDecoration(
         constraints: BoxConstraints(
           minWidth: width,

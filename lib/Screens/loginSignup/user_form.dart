@@ -327,46 +327,49 @@ class _UserFormState extends State<UserForm> {
                 Center(
                   child: SizedBox(
                     width: 150,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        //background color of button
-                        side: const BorderSide(
-                          width: 1,
-                        ), //border width and color
-                        elevation: 3, //elevation of button
-                        shape: RoundedRectangleBorder(
-                            //to set border radius to button
-                            borderRadius: BorderRadius.circular(30)),
-                        padding: const EdgeInsets.all(20),
+                    child: Visibility(
+                      visible: nameController.text.isNotEmpty &&
+                          cnicController.text.isNotEmpty &&
+                          genderText.isNotEmpty &&
+                          contactController.text.isNotEmpty,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          side: const BorderSide(
+                            width: 1,
+                          ),
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                          padding: const EdgeInsets.all(20),
+                        ),
+                        onPressed: () async {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: ((context) => const Center(
+                                child: CircularProgressIndicator())),
+                          );
+                          await createAccountandLogin();
+                          final loggedInUser =
+                              FirebaseAuth.instance.currentUser;
+                          await uploadUserData(
+                              cnic: cnicController.text,
+                              contactNumber: contactController.text,
+                              email: loggedInUser!.email!,
+                              gender: genderText == "Male" ? true : false,
+                              name: nameController.text,
+                              userID: loggedInUser.uid);
+                          await loadcurrentUser();
 
-                        //content padding inside button
+                          Navigator.pop(context);
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const VerifyEmail(),
+                              ));
+                        },
+                        child: const Text("Submit"),
                       ),
-                      onPressed: () async {
-                        showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: ((context) =>
-                              const Center(child: CircularProgressIndicator())),
-                        );
-                        await createAccountandLogin();
-                        final loggedInUser = FirebaseAuth.instance.currentUser;
-                        await uploadUserData(
-                            cnic: cnicController.text,
-                            contactNumber: contactController.text,
-                            email: loggedInUser!.email!,
-                            gender: genderText == "Male" ? true : false,
-                            name: nameController.text,
-                            userID: loggedInUser.uid);
-                        await loadcurrentUser();
-
-                        Navigator.pop(context);
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const VerifyEmail(),
-                            ));
-                      },
-                      child: const Text("Continue"),
                     ),
                   ),
                 ),

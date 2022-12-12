@@ -39,21 +39,25 @@ class Logs extends StatelessWidget {
                   thickness: 0.2,
                   color: Colors.black,
                 ),
-                Text(
-                  "Inventory",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: setHeight(4),
-                  ),
-                ),
-                const Divider(
-                  thickness: 0.2,
-                  color: Colors.black,
-                ),
                 GestureDetector(
-                  child: SizedBox(
-                    height: setHeight(33),
-                    child: ViewInventoryLogs(ordersModel: ordersModel),
+                  child: Column(
+                    children: [
+                      Text(
+                        "Inventory",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: setHeight(4),
+                        ),
+                      ),
+                      const Divider(
+                        thickness: 0.2,
+                        color: Colors.black,
+                      ),
+                      SizedBox(
+                        height: setHeight(33),
+                        child: ViewInventoryLogs(ordersModel: ordersModel),
+                      ),
+                    ],
                   ),
                   onTap: () => Navigator.push(
                     context,
@@ -84,26 +88,25 @@ class Logs extends StatelessWidget {
                   thickness: 0.3,
                   color: Colors.black,
                 ),
-                const Divider(
-                  thickness: 0.2,
-                  color: Colors.black,
-                  height: 0,
-                ),
-                Text(
-                  "Services ",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: setHeight(4),
-                  ),
-                ),
-                const Divider(
-                  thickness: 0.2,
-                  color: Colors.black,
-                ),
                 GestureDetector(
-                  child: SizedBox(
-                    height: setHeight(33),
-                    child: ViewServicesLogs(ordersModel: ordersModel),
+                  child: Column(
+                    children: [
+                      Text(
+                        "Services ",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: setHeight(4),
+                        ),
+                      ),
+                      const Divider(
+                        thickness: 0.2,
+                        color: Colors.black,
+                      ),
+                      SizedBox(
+                        height: setHeight(33),
+                        child: ViewServicesLogs(ordersModel: ordersModel),
+                      ),
+                    ],
                   ),
                   onTap: () => Navigator.push(
                     context,

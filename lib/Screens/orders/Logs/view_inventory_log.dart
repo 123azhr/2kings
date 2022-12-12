@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/orders/Logs/add_item.dart';
 import 'package:housecontractors/models/orders_model.dart';
 import 'package:housecontractors/providers/inventory_provider.dart';
+import 'package:housecontractors/widgets/are_you_sure.dart';
 import 'package:provider/provider.dart';
 
 import '../../../helper/size_configuration.dart';
@@ -15,69 +16,6 @@ class ViewInventoryLogs extends StatelessWidget {
 
   final OrdersModel ordersModel;
   final bool? tog;
-  // TableRow addTableRow(
-  //     String itemName, String qty, String perUnit, String price) {
-  //   return TableRow(
-  //     children: <Widget>[
-  //       TableCell(
-  //         child: SizedBox(
-  //           height: setHeight(5),
-  //           width: setWidth(40),
-  //           child: Center(
-  //             child: Text(
-  //               itemName,
-  //               style: TextStyle(
-  //                 fontSize: getProportionateScreenHeight(20),
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //       TableCell(
-  //         child: SizedBox(
-  //           height: setHeight(5),
-  //           width: setWidth(10),
-  //           child: Center(
-  //             child: Text(
-  //               qty,
-  //               style: TextStyle(
-  //                 fontSize: getProportionateScreenHeight(20),
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //       TableCell(
-  //         child: SizedBox(
-  //           height: setHeight(5),
-  //           width: setWidth(10),
-  //           child: Center(
-  //             child: Text(
-  //               perUnit,
-  //               style: TextStyle(
-  //                 fontSize: getProportionateScreenHeight(18),
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //       TableCell(
-  //         child: SizedBox(
-  //           height: setHeight(5),
-  //           width: setWidth(10),
-  //           child: Center(
-  //             child: Text(
-  //               price,
-  //               style: TextStyle(
-  //                 fontSize: getProportionateScreenHeight(20),
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +42,26 @@ class ViewInventoryLogs extends StatelessWidget {
                 itemBuilder: (context, index) => ChangeNotifierProvider.value(
                   value: inventoryList[index],
                   builder: (context, child) => InkWell(
-                    onLongPress: () {},
+                    onLongPress: () {
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) => AreYouSure(
+                          title: "Delete this Item",
+                          onPressed: () async {
+                            showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (context) => CircularProgressIndicator(),
+                            );
+                            await inventoryProvider.deleteItem(
+                                inventoryID: inventoryList[index].inventoryID);
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                          },
+                        ),
+                      );
+                    },
                     child: InventoryTableRow(
                         itemName: inventoryList[index].itemName!,
                         perUnit: inventoryList[index].perItem!,
@@ -141,11 +98,9 @@ class ViewInventoryLogs extends StatelessWidget {
                             borderRadius: BorderRadius.circular(30)),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AddItem(),
-                            ));
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (context) => const AddItem());
                       },
                       child: const Text("Add Item")),
                 ),

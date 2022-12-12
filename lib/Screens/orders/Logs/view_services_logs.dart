@@ -3,7 +3,7 @@ import 'package:housecontractors/providers/service_log_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../helper/size_configuration.dart';
 import '../../../models/orders_model.dart';
-import '../../../providers/inventory_provider.dart';
+import 'add_service.dart';
 
 class ViewServicesLogs extends StatelessWidget {
   const ViewServicesLogs({
@@ -97,7 +97,7 @@ class ViewServicesLogs extends StatelessWidget {
               child: const ServicesTableRow(
                   serviceName: "Service",
                   perDay: "Per Day",
-                  noOfDays: "NO. of Days",
+                  noOfDays: "Total Days",
                   totalCharge: "Charges"),
             ),
             SizedBox(
@@ -145,7 +145,11 @@ class ViewServicesLogs extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30)),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (context) => const AddServiceItem());
+                      },
                       child: const Text("Add Service")),
                 ),
               ),
