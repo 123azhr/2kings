@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import '../models/chat_model.dart';
 
@@ -12,6 +11,7 @@ class ChatProvider with ChangeNotifier {
   final loggedInUser = FirebaseAuth.instance.currentUser;
   void clearList() {
     _list.clear();
+    notifyListeners();
   }
 
   Future<void> fetch() async {

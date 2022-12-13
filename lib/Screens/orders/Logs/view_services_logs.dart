@@ -239,7 +239,7 @@ class ServicesTableRow extends StatelessWidget {
               ),
             ),
             TableCell(
-              child: Container(
+              child: SizedBox(
                 height: setHeight(5),
                 width: setWidth(10),
                 child: Center(

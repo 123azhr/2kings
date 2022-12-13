@@ -1,7 +1,9 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:housecontractors/models/orders_model.dart';
-import 'package:housecontractors/models/user_model.dart';
-import 'package:housecontractors/providers/user_provider.dart';
+import 'package:housecontractors/models/contractor_model.dart';
+import 'package:housecontractors/providers/contractor_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../helper/size_configuration.dart';
@@ -34,7 +36,6 @@ class ActiveOrders extends StatelessWidget {
       ),
       physics: const BouncingScrollPhysics(),
     );
-    
   }
 }
 
@@ -50,11 +51,13 @@ class ActiveOrderTile extends StatelessWidget {
         Provider.of<AggrementProvider>(context);
     AggrementModel aggrementModel =
         aggrementProvider.getAggrementByID(ordersModel.aggrementID!);
-    UserProvider userProvider = Provider.of<UserProvider>(context);
-    UserModel customerModel =
+    ContractorsProvider userProvider =
+        Provider.of<ContractorsProvider>(context);
+    ContractorsModel customerModel =
         userProvider.getUserByID(aggrementModel.customerID!);
     return ListTile(
-      onTap: () => orderDetails(context, aggrementModel,customerModel,ordersModel),
+      onTap: () =>
+          orderDetails(context, aggrementModel, customerModel, ordersModel),
       leading: const Icon(Icons.area_chart),
       title: Text(customerModel.name!,
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
@@ -63,10 +66,7 @@ class ActiveOrderTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-           aggrementModel.startDate
-                                .toString()
-                                .split(" ")
-                                .first,
+            aggrementModel.startDate.toString().split(" ").first,
           ),
           const SizedBox(
             height: 2,
@@ -78,15 +78,15 @@ class ActiveOrderTile extends StatelessWidget {
       ),
       trailing: PopupMenuButton(itemBuilder: (context) {
         return [
-          PopupMenuItem<int>(
+          const PopupMenuItem<int>(
             value: 0,
             child: Text("Remove this notification"),
           ),
-          PopupMenuItem<int>(
+          const PopupMenuItem<int>(
             value: 1,
             child: Text("Turn off notification about this."),
           ),
-          PopupMenuItem<int>(
+          const PopupMenuItem<int>(
             value: 2,
             child: Text("report"),
           ),

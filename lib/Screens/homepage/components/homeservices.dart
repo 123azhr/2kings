@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/homepage/components/workers/workers_list.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
@@ -16,7 +17,7 @@ class HomeServices extends StatelessWidget {
     final serviceList = serviceProvider.getList;
 
     final currentProvider = Provider.of<CurrentUserProvider>(context);
-    final loggedInUser = currentProvider.getCurrentUser();
+    final loggedInUser = currentProvider.getCurrentUser(FirebaseAuth.instance.currentUser!.uid.trim());
     List<ServiceModel> tempList = List<ServiceModel>.generate(
       0,
       (index) => serviceList.first,
@@ -32,20 +33,6 @@ class HomeServices extends StatelessWidget {
       return tempList;
     }
 
-    List<ServiceModel> _allService(String serviceID) {
-      List<ServiceModel> tempList = List<ServiceModel>.generate(
-        0,
-        (index) => serviceList.first,
-      );
-
-      for (int i = 0; i < serviceList.length; i++) {
-        if (serviceList[i].serviceCategroy == true &&
-            serviceList[i].serviceID == serviceID) {
-          tempList.add(serviceList[i]);
-        }
-      }
-      return tempList;
-    }
 
     return SizedBox(
       child: GridView.builder(
@@ -60,7 +47,7 @@ class HomeServices extends StatelessWidget {
           itemCount: _allHomeService().length,
           itemBuilder: (context, int index) => ChangeNotifierProvider.value(
                 value: _allHomeService()[index],
-                child: WorkerSlide(),
+                child: const WorkerSlide(),
               )),
     );
   }
@@ -87,7 +74,7 @@ class WorkerSlide extends StatelessWidget {
             ctx: context),
       ),
       child: Card(
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20))),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

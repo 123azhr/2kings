@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -5,8 +7,6 @@ import 'package:housecontractors/Screens/Dashboard/dashboard.dart';
 import 'package:housecontractors/Screens/loginSignup/signup.dart';
 import 'package:housecontractors/Screens/loginSignup/verify_email.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
-import 'package:housecontractors/models/current_user.dart';
-import 'package:housecontractors/models/workers_model.dart';
 import 'package:provider/provider.dart';
 import '../../providers/aggrement_provider.dart';
 import '../../providers/authentication_provider.dart';
@@ -15,6 +15,7 @@ import '../../providers/current_user_provider.dart';
 import '../../providers/service_log_provider.dart';
 import '../../providers/message_provider.dart';
 import '../../providers/order_provider.dart';
+import '../../providers/contractor_provider.dart';
 import '../../providers/worker_provider.dart';
 import '../../widgets/mycontainer.dart';
 import 'mytextfield.dart';
@@ -40,6 +41,8 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<ContractorsProvider>(context);
+    userProvider.fetch();
     SizeConfig().init(context);
     return GestureDetector(
       onTap: () {
@@ -114,95 +117,119 @@ class _LoginState extends State<Login> {
                         borderRadius: BorderRadius.circular(30)),
                   ),
                   onPressed: () async {
-                    showDialog(
-                        barrierDismissible: true,
-                        context: context,
-                        builder: (context) =>
-                            const Center(child: CircularProgressIndicator()));
-                    String isSignedin = await context
-                        .read<AuthenticationService>()
-                        .signIn(
-                            email: emailController.text.trim(),
-                            password: passController.text.trim());
-                    if (isSignedin == "signed in") {
-                      if (FirebaseAuth.instance.currentUser!.emailVerified) {
-                        try {
-                          final currentUserProvider =
-                              Provider.of<CurrentUserProvider>(context,
-                                  listen: false);
-                          currentUserProvider.fetch();
-                        } catch (e) {
-                          print(e);
-                        }
-                        try {
-                          final workersProvider = Provider.of<WorkerProvider>(
+                    bool isAvailable = false;
+
+                    for (var item in userProvider.getList) {
+                      if (item.email == emailController.text.trim()) {
+                        isAvailable = true;
+                      }
+                    }
+                    if (isAvailable == true) {
+                      showDialog(
+                          barrierDismissible: true,
+                          context: context,
+                          builder: (context) =>
+                              const Center(child: CircularProgressIndicator()));
+                      String isSignedin = await context
+                          .read<AuthenticationService>()
+                          .signIn(
+                              email: emailController.text.trim(),
+                              password: passController.text.trim());
+                      if (isSignedin == "signed in") {
+                        await FirebaseAuth.instance.currentUser!.reload();
+                        if (FirebaseAuth.instance.currentUser!.emailVerified) {
+                          try {
+                            final currentUserProvider =
+                                Provider.of<CurrentUserProvider>(context,
+                                    listen: false);
+                            await currentUserProvider.fetch(
+                                FirebaseAuth.instance.currentUser!.uid.trim());
+                          } catch (e) {
+                            print(e);
+                          }
+                          try {
+                            final workersProvider = Provider.of<WorkerProvider>(
+                                context,
+                                listen: false);
+                            await workersProvider.fetch();
+                          } catch (e) {
+                            print(e);
+                          }
+
+                          final ordersProvider = Provider.of<OrdersProvider>(
                               context,
                               listen: false);
-                          workersProvider.fetch();
-                        } catch (e) {
-                          print(e);
-                        }
+                          await ordersProvider.fetch();
+                          try {
+                            final chatProvider = Provider.of<ChatProvider>(
+                                context,
+                                listen: false);
+                            await chatProvider.fetch();
+                          } catch (e) {
+                            print(e);
+                          }
 
-                        final ordersProvider =
-                            Provider.of<OrdersProvider>(context, listen: false);
-                        await ordersProvider.fetch();
-                        try {
-                          final chatProvider =
-                              Provider.of<ChatProvider>(context, listen: false);
-                          await chatProvider.fetch();
-                        } catch (e) {
-                          print(e);
-                        }
+                          try {
+                            final messageProvider =
+                                Provider.of<MessageProvider>(context,
+                                    listen: false);
 
-                        try {
-                          final messageProvider = Provider.of<MessageProvider>(
+                            await messageProvider.fetch();
+                          } catch (e) {
+                            print(e);
+                          }
+                          try {
+                            final aggrementProvider =
+                                Provider.of<AggrementProvider>(context,
+                                    listen: false);
+
+                            await aggrementProvider.fetch();
+                          } catch (e) {
+                            print(e);
+                          }
+                          try {
+                            Provider.of<ServiceLogsProvider>(context,
+                                listen: false);
+                          } catch (e) {
+                            print(e);
+                          }
+                          Navigator.pushReplacement(
                               context,
-                              listen: false);
-
-                          messageProvider.fetch();
-                        } catch (e) {
-                          print(e);
+                              MaterialPageRoute(
+                                builder: (context) => const Dashboard(),
+                              ));
+                        } else {
+                          Navigator.pop(context);
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const VerifyEmail(),
+                              ));
                         }
-                        try {
-                          final aggrementProvider =
-                              Provider.of<AggrementProvider>(context,
-                                  listen: false);
-
-                          aggrementProvider.fetch();
-                        } catch (e) {
-                          print(e);
-                        }
-                        try {
-                          Provider.of<ServiceLogsProvider>(context,
-                              listen: false);
-                        } catch (e) {
-                          print(e);
-                        }
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Dashboard(),
-                            ));
                       } else {
                         Navigator.pop(context);
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const VerifyEmail(),
-                            ));
+                        showModalBottomSheet(
+                          backgroundColor: Colors.transparent,
+                          context: context,
+                          builder: (context) => MyContainer(
+                              height: setHeight(10),
+                              width: setWidth(90),
+                              child: const Center(
+                                  child: Center(
+                                      child: Text(
+                                          "Email / Password is incorrect")))),
+                        );
                       }
                     } else {
-                      Navigator.pop(context);
                       showModalBottomSheet(
                         backgroundColor: Colors.transparent,
                         context: context,
                         builder: (context) => MyContainer(
-                            height: setHeight(10),
-                            width: setWidth(90),
+                            color: Colors.yellow,
+                            height: setHeight(20),
+                            width: setWidth(50),
                             child: const Center(
-                                child: Center(
-                                    child: Text(
-                                        "Email / Password is incorrect")))),
+                                child: Text("No User found with this email"))),
                       );
                     }
                   }),
@@ -221,7 +248,6 @@ class _LoginState extends State<Login> {
                     text: 'signup here',
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.blue),
-                    // ignore: avoid_print
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         Navigator.pushReplacement(

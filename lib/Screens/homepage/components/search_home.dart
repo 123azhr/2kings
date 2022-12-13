@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class SearchHome extends StatelessWidget {
   SearchHome({super.key});
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   _searchPeople(TextEditingController search) {
     
   }
@@ -10,9 +10,9 @@ class SearchHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         title: TextFormField(
-            style: TextStyle(fontSize: 20), controller: _searchController),
+            style: const TextStyle(fontSize: 20), controller: _searchController),
         actions: [
           IconButton(
             color: Colors.black,
@@ -31,7 +31,7 @@ class SearchHome extends StatelessWidget {
       body: ListView.builder(
           itemCount: 1,
           itemBuilder: (context, index) {
-            return SearchTile(
+            return const SearchTile(
               title: "Areeb",
               subtitle: "Electrician",
               image: NetworkImage(
@@ -44,7 +44,7 @@ class SearchHome extends StatelessWidget {
 }
 
 class SearchTile extends StatelessWidget {
-  SearchTile({
+  const SearchTile({
     Key? key,
     required this.title,
     required this.subtitle,
@@ -60,33 +60,30 @@ class SearchTile extends StatelessWidget {
       title: Text(title),
       subtitle: Text(subtitle),
       leading: CircleAvatar(
-        backgroundImage: AssetImage(
+        backgroundImage: const AssetImage(
           "assets/images/logo-black-half.png",
         ),
         foregroundImage: image,
       ),
       trailing: PopupMenuButton(itemBuilder: (context) {
         return [
-          PopupMenuItem<int>(
+          const PopupMenuItem<int>(
             value: 0,
             child: Text("Remove this notification"),
           ),
-          PopupMenuItem<int>(
+          const PopupMenuItem<int>(
             value: 1,
             child: Text("Turn off notification about this."),
           ),
-          PopupMenuItem<int>(
+          const PopupMenuItem<int>(
             value: 2,
             child: Text("report"),
           ),
         ];
       }, onSelected: (value) {
         if (value == 0) {
-          print("Remove this notification menu is selected.");
         } else if (value == 1) {
-          print("Turn off notification about this. menu is selected.");
         } else if (value == 2) {
-          print("report menu is selected.");
         }
       }),
     );

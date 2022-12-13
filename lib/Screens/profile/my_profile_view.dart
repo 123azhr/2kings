@@ -1,5 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:housecontractors/Screens/Dashboard/dashboard.dart';
 import 'package:housecontractors/Screens/newsfeed/Post/post.dart';
 import 'package:housecontractors/components/profile_header.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
@@ -14,7 +14,7 @@ class MyProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     CurrentUserProvider userProvider =
         Provider.of<CurrentUserProvider>(context);
-    final loggedInUser = userProvider.getCurrentUser();
+    final loggedInUser = userProvider.getCurrentUser(FirebaseAuth.instance.currentUser!.uid.trim());
 
     final postProvider = Provider.of<PostProvider>(context);
     final postsList = postProvider.getPostByID(loggedInUser.userID!);

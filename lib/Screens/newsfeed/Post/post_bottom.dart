@@ -1,5 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:housecontractors/models/current_user.dart';
 import 'package:housecontractors/models/post_model.dart';
 import 'package:housecontractors/providers/current_user_provider.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +23,7 @@ class _PostBottomState extends State<PostBottom> {
   @override
   Widget build(BuildContext context) {
     final currentUserProvider = Provider.of<CurrentUserProvider>(context);
-    String loggedinUserID = currentUserProvider.getCurrentUser().userID!;
+    String loggedinUserID = currentUserProvider.getCurrentUser(FirebaseAuth.instance.currentUser!.uid.trim()).userID!;
     return Padding(
       padding: EdgeInsets.only(
           left: getProportionateScreenWidth(50),
@@ -50,8 +50,8 @@ class _PostBottomState extends State<PostBottom> {
             ),
           ),
           GestureDetector(
-            onTap: () => Comments(isClicked: true),
-            child: Comments(isClicked: false),
+            onTap: () => const Comments(isClicked: true),
+            child: const Comments(isClicked: false),
           ),
         ],
       ),

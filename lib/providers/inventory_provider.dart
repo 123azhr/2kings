@@ -11,6 +11,7 @@ class InventoryProvider with ChangeNotifier {
   List<InventoryModel> get getInventoryList => _list;
   void clearList() {
     _list.clear();
+    notifyListeners();
   }
 
   Future<void> fetchInventory() async {

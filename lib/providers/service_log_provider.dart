@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/models/service_log_model.dart';
-import '../models/inventory_model.dart';
 
 class ServiceLogsProvider with ChangeNotifier {
   final loggedInUser = FirebaseAuth.instance.currentUser;
@@ -11,6 +10,7 @@ class ServiceLogsProvider with ChangeNotifier {
   List<ServiceLogModel> get getServicelist => _servicelist;
   void clearList() {
     _servicelist.clear();
+    notifyListeners();
   }
 
   Future<void> fetchServiceLog() async {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MyTheme {
+  // ignore: non_constant_identifier_names
   static ThemeData Mytheme() {
     return ThemeData(
       primaryColor: const Color.fromARGB(255, 255, 255, 255),
@@ -21,7 +22,7 @@ class MyTheme {
 
       // Define the default `TextTheme`. Use this to specify the default
       // text styling for headlines, titles, bodies of text, and more.
-      textTheme: TextTheme(
+      textTheme: const TextTheme(
         displayLarge: TextStyle(
             fontSize: 52.0, fontWeight: FontWeight.bold, color: Colors.black87),
         displayMedium: TextStyle(

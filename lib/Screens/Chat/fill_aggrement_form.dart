@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
-import 'package:housecontractors/models/user_model.dart';
+import 'package:housecontractors/models/contractor_model.dart';
 import 'package:housecontractors/providers/aggrement_provider.dart';
-import 'package:housecontractors/providers/user_provider.dart';
+import 'package:housecontractors/providers/contractor_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
 import '../../models/current_user.dart';
@@ -32,13 +32,15 @@ class _FillAggrementState extends State<FillAggrement> {
 
     CurrentUserProvider currentUserProvider =
         Provider.of<CurrentUserProvider>(context);
-    CurrentUserModel contractorModel = currentUserProvider.getCurrentUser();
+    CurrentUserModel contractorModel = currentUserProvider.getCurrentUser(FirebaseAuth.instance.currentUser!.uid.trim());
     List<dynamic>? myServices = contractorModel.services;
     AggrementProvider aggrementProvider =
         Provider.of<AggrementProvider>(context);
 
-    UserProvider userProvider = Provider.of<UserProvider>(context);
-    UserModel customerModel = userProvider.getUserByID(widget.customerID);
+    ContractorsProvider userProvider =
+        Provider.of<ContractorsProvider>(context);
+    ContractorsModel customerModel =
+        userProvider.getUserByID(widget.customerID);
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
@@ -81,20 +83,20 @@ class _FillAggrementState extends State<FillAggrement> {
                           Text(
                             softWrap: true,
                             "Name: " + customerModel.name!,
-                            style: TextStyle(color: Colors.black, fontSize: 16),
+                            style: const TextStyle(color: Colors.black, fontSize: 16),
                           ),
                           const Spacer(),
                           Text(
                             softWrap: true,
                             "ID: " + customerModel.userID!,
-                            style: TextStyle(color: Colors.black, fontSize: 16),
+                            style: const TextStyle(color: Colors.black, fontSize: 16),
                           ),
                         ],
                       ),
                       Text(
                         softWrap: true,
                         "CNIC: " + customerModel.cnic!,
-                        style: TextStyle(color: Colors.black, fontSize: 16),
+                        style: const TextStyle(color: Colors.black, fontSize: 16),
                       ),
                       const Divider(thickness: 0.4),
                       const Center(
@@ -109,13 +111,13 @@ class _FillAggrementState extends State<FillAggrement> {
                           Text(
                             softWrap: true,
                             "Name: " + contractorModel.name!,
-                            style: TextStyle(color: Colors.black, fontSize: 16),
+                            style: const TextStyle(color: Colors.black, fontSize: 16),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Text(
                             softWrap: true,
                             "ID: " + contractorModel.userID!,
-                            style: TextStyle(color: Colors.black, fontSize: 16),
+                            style: const TextStyle(color: Colors.black, fontSize: 16),
                           ),
                         ],
                       ),
@@ -128,7 +130,7 @@ class _FillAggrementState extends State<FillAggrement> {
                       const Divider(thickness: 0.4),
                       Row(
                         children: [
-                          Text(
+                          const Text(
                             "Start Date: ",
                             style: TextStyle(color: Colors.black, fontSize: 16),
                           ),
@@ -154,12 +156,12 @@ class _FillAggrementState extends State<FillAggrement> {
                                         startDate.month.toString() +
                                         "/" +
                                         startDate.year.toString(),
-                                style: TextStyle(color: Colors.blue),
+                                style: const TextStyle(color: Colors.blue),
                               )),
                           const Spacer(),
-                          Text(
+                          const Text(
                             "End Date: ",
-                            style: const TextStyle(
+                            style: TextStyle(
                                 color: Colors.black, fontSize: 16),
                           ),
                           TextButton(
@@ -273,7 +275,7 @@ class _FillAggrementState extends State<FillAggrement> {
                     await aggrementProvider.uploadAggrementDataToFireStore(
                         customerID: widget.customerID,
                         contractorID:
-                            currentUserProvider.getCurrentUser().userID,
+                           FirebaseAuth.instance.currentUser!.uid.trim(),
                         details: _textController.text,
                         endDate: startDate,
                         startDate: endDate,
@@ -324,8 +326,6 @@ class _ServiceSlideState extends State<ServiceSlide> {
   bool? isCheck = false;
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<CurrentUserProvider>(context);
-    CurrentUserModel user = userProvider.getCurrentUser();
 
     return Card(
       shape: const RoundedRectangleBorder(

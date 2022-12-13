@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import '../models/current_user.dart';
 
@@ -7,20 +6,18 @@ class CurrentUserProvider with ChangeNotifier {
   List<CurrentUserModel> _list = [];
 
   List<CurrentUserModel> get getList => _list;
-
-  final String? _user = FirebaseAuth.instance.currentUser?.uid;
   void clearList() {
     _list.clear();
+    notifyListeners();
   }
 
-  Future<void> fetch() async {
-    clearList();
-    if (_user != null) {
+  Future<void> fetch(String? userID) async {
+    if (userID != null) {
       await FirebaseFirestore.instance
           .collection("users")
           .doc("Y1DImckjzK5z2khAEi7o")
           .collection("contractors")
-          .doc(_user) //userID
+          .doc(userID.trim()) //userID
           .get()
           .then((DocumentSnapshot snapshot) {
         _list = [];
@@ -32,9 +29,9 @@ class CurrentUserProvider with ChangeNotifier {
     }
   }
 
-  CurrentUserModel getCurrentUser() {
+  CurrentUserModel getCurrentUser(String userID) {
     return _list
-        .where((element) => element.userID!.trim() == _user)
+        .where((element) => element.userID!.trim() == userID)
         .toList()
         .elementAt(0);
   }

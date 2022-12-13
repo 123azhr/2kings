@@ -24,6 +24,7 @@ class WorkerTile extends StatelessWidget {
     );
   }
 
+  // ignore: non_constant_identifier_names
   Future<dynamic> worker_tile_details(
       BuildContext context, WorkerModel workerModel) {
     return showModalBottomSheet(

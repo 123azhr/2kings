@@ -52,7 +52,7 @@ class ViewInventoryLogs extends StatelessWidget {
                             showDialog(
                               barrierDismissible: false,
                               context: context,
-                              builder: (context) => CircularProgressIndicator(),
+                              builder: (context) => const CircularProgressIndicator(),
                             );
                             await inventoryProvider.deleteItem(
                                 inventoryID: inventoryList[index].inventoryID);

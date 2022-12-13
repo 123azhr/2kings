@@ -1,3 +1,6 @@
+// ignore_for_file: avoid_print
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/providers/current_user_provider.dart';
 import 'package:provider/provider.dart';
@@ -25,19 +28,20 @@ class _LoadingScreenState extends State<LoadingScreen> {
   loadData() async {
     await Future.delayed(const Duration(milliseconds: 0)).then((value) async {
       try {
-      final currentUserProvider =
-          Provider.of<CurrentUserProvider>(context, listen: false);
-      currentUserProvider.fetch();
-    } catch (e) {
-      print(e);
-    }
-    try {
-      final workersProvider =
-          Provider.of<WorkerProvider>(context, listen: false);
-      workersProvider.fetch();
-    } catch (e) {
-      print(e);
-    }
+        final currentUserProvider =
+            Provider.of<CurrentUserProvider>(context, listen: false);
+        currentUserProvider
+            .fetch(FirebaseAuth.instance.currentUser!.uid.trim());
+      } catch (e) {
+        print(e);
+      }
+      try {
+        final workersProvider =
+            Provider.of<WorkerProvider>(context, listen: false);
+        workersProvider.fetch();
+      } catch (e) {
+        print(e);
+      }
 
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const Dashboard()));

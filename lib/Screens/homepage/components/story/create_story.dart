@@ -1,3 +1,5 @@
+// ignore_for_file: unused_catch_clause
+
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +22,7 @@ class CreateStory extends StatefulWidget {
 class _CreateStoryState extends State<CreateStory> {
   String _imagePath = "";
   File? _selectedImageFile;
-  TextEditingController _textController = TextEditingController();
+  final TextEditingController _textController = TextEditingController();
   void pickImage() async {
     final ImagePicker _picker = ImagePicker();
     final _image = await _picker.pickImage(source: ImageSource.gallery);
@@ -45,7 +47,8 @@ class _CreateStoryState extends State<CreateStory> {
       if (_imagePath.isNotEmpty) {
         CurrentUserProvider userProvider =
             Provider.of<CurrentUserProvider>(context, listen: false);
-        CurrentUserModel loggedInUser = userProvider.getCurrentUser();
+        CurrentUserModel loggedInUser = userProvider
+            .getCurrentUser(FirebaseAuth.instance.currentUser!.uid.trim());
         final storyProvider =
             Provider.of<StoryProvider>(context, listen: false);
         showDialog(
@@ -72,11 +75,10 @@ class _CreateStoryState extends State<CreateStory> {
       // Future.delayed(const Duration(milliseconds: 0)).then((value) async {
       //   await postProvider.fetch();
       // });
+    // ignore: empty_catches
     } on FirebaseException catch (e) {
-      print(e.message);
-      print(e.code);
+    // ignore: empty_catches
     } catch (e) {
-      print(e.toString());
     }
   }
 
@@ -84,7 +86,8 @@ class _CreateStoryState extends State<CreateStory> {
   Widget build(BuildContext context) {
     CurrentUserProvider userProvider =
         Provider.of<CurrentUserProvider>(context, listen: false);
-    CurrentUserModel loggedInUser = userProvider.getCurrentUser();
+    CurrentUserModel loggedInUser = userProvider
+        .getCurrentUser(FirebaseAuth.instance.currentUser!.uid.trim());
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -146,7 +149,7 @@ class _CreateStoryState extends State<CreateStory> {
                       onPressed: () {
                         uploadStory();
                       },
-                      child: Text("Share",
+                      child: const Text("Share",
                           style:
                               TextStyle(fontSize: 18, color: Colors.black87)),
                     ),

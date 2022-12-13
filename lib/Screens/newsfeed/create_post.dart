@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,7 +36,7 @@ class _CreatePostState extends State<CreatePost> {
   uploadPost() async {
     final userProvider =
         Provider.of<CurrentUserProvider>(context, listen: false);
-    final loggedInUser = userProvider.getCurrentUser();
+    final loggedInUser = userProvider.getCurrentUser(FirebaseAuth.instance.currentUser!.uid.trim());
     final postProvider = Provider.of<PostProvider>(context, listen: false);
     showDialog(
       context: context,
@@ -74,7 +76,7 @@ class _CreatePostState extends State<CreatePost> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<CurrentUserProvider>(context);
-    final loggedInUser = userProvider.getCurrentUser();
+    final loggedInUser = userProvider.getCurrentUser(FirebaseAuth.instance.currentUser!.uid.trim());
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,

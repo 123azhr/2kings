@@ -1,10 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/login.dart';
 import 'package:housecontractors/Screens/profile/edit_profile.dart';
 import 'package:housecontractors/Screens/profile/edit_services.dart';
-import 'package:housecontractors/models/current_user.dart';
 import 'package:housecontractors/providers/authentication_provider.dart';
 import 'package:housecontractors/providers/message_provider.dart';
 import 'package:provider/provider.dart';
@@ -12,10 +10,8 @@ import '../../helper/size_configuration.dart';
 import '../../providers/chat_provider.dart';
 import '../../providers/current_user_provider.dart';
 import '../../providers/order_provider.dart';
-import '../../providers/post_provider.dart';
 import '../../providers/service_provider.dart';
-import '../../providers/story_provider.dart';
-import '../../providers/user_provider.dart';
+import '../../providers/contractor_provider.dart';
 import '../../providers/worker_provider.dart';
 import '../profile/my_profile_view.dart';
 
@@ -29,14 +25,12 @@ class Menu extends StatelessWidget {
     final chatProvider = Provider.of<ChatProvider>(context);
     final currentProvider = Provider.of<CurrentUserProvider>(context);
 
-    final userProvider = Provider.of<UserProvider>(context);
-    final storyProvider = Provider.of<StoryProvider>(context);
-    final postProvider = Provider.of<PostProvider>(context);
+    final userProvider = Provider.of<ContractorsProvider>(context);
     final orderstProvider = Provider.of<OrdersProvider>(context);
     final messageProvider = Provider.of<MessageProvider>(context);
     final workerProvider = Provider.of<WorkerProvider>(context);
 
-    final loggedInUser = currentProvider.getCurrentUser();
+    final loggedInUser = currentProvider.getCurrentUser(FirebaseAuth.instance.currentUser!.uid.trim());
     return Scaffold(
       appBar: AppBar(
         leadingWidth: getProportionateScreenWidth(40),
@@ -53,7 +47,7 @@ class Menu extends StatelessWidget {
         ),
         centerTitle: true,
         elevation: 1,
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -62,7 +56,7 @@ class Menu extends StatelessWidget {
         children: [
           InkWell(
             child: ListTile(
-              visualDensity: VisualDensity(vertical: 4),
+              visualDensity: const VisualDensity(vertical: 4),
               dense: true,
               leading: CircleAvatar(
                 child: ClipOval(
@@ -76,11 +70,11 @@ class Menu extends StatelessWidget {
               ),
               title: Text(
                 loggedInUser.name!,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                 ),
               ),
-              subtitle: Text("View profile"),
+              subtitle: const Text("View profile"),
             ),
             onTap: () => Navigator.push(
                 context,
@@ -97,12 +91,12 @@ class Menu extends StatelessWidget {
             height: 0,
           ),
           ListTile(
-            visualDensity: VisualDensity(vertical: 4),
+            visualDensity: const VisualDensity(vertical: 4),
             dense: true,
-            leading: CircleAvatar(
+            leading: const CircleAvatar(
               child: Icon(Icons.person),
             ),
-            title: Text(
+            title: const Text(
               "Edit Profile",
               style: TextStyle(
                 fontSize: 18,
@@ -123,12 +117,12 @@ class Menu extends StatelessWidget {
             height: 0,
           ),
           ListTile(
-            visualDensity: VisualDensity(vertical: 4),
+            visualDensity: const VisualDensity(vertical: 4),
             dense: true,
-            leading: CircleAvatar(
+            leading: const CircleAvatar(
               child: Icon(Icons.construction),
             ),
-            title: Text(
+            title: const Text(
               "Edit Services",
               style: TextStyle(
                 fontSize: 18,
@@ -138,7 +132,7 @@ class Menu extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>const  EditServices(),
+                    builder: (context) => const EditServices(),
                   ));
             },
           ),
@@ -157,12 +151,12 @@ class Menu extends StatelessWidget {
             height: 0,
           ),
           ListTile(
-            visualDensity: VisualDensity(vertical: 4),
+            visualDensity: const VisualDensity(vertical: 4),
             dense: true,
-            leading: CircleAvatar(
+            leading: const CircleAvatar(
               child: Icon(Icons.logout),
             ),
-            title: Text(
+            title: const Text(
               "Logout",
               style: TextStyle(
                 fontSize: 18,
@@ -174,7 +168,7 @@ class Menu extends StatelessWidget {
               messageProvider.clearList();
               serviceProvider.clearList();
               currentProvider.clearList();
-              orderstProvider.clearList(); 
+              orderstProvider.clearList();
               workerProvider.clearList();
               userProvider.clearList();
               Navigator.pushReplacement(

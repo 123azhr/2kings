@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/Chat/chat_inbox.dart';
-import 'package:housecontractors/models/user_model.dart';
+import 'package:housecontractors/models/contractor_model.dart';
 import 'package:provider/provider.dart';
 import '../helper/size_configuration.dart';
 import '../providers/chat_provider.dart';
@@ -10,7 +10,7 @@ class BottomCallChat extends StatelessWidget {
     Key? key,
     this.user,
   }) : super(key: key);
-  final UserModel? user;
+  final ContractorsModel? user;
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +47,10 @@ class BottomCallChat extends StatelessWidget {
             child: Container(
               height: 50,
               width: getProportionateScreenWidth(375 / 2),
-              color: Color.fromARGB(255, 172, 255, 7),
+              color: const Color.fromARGB(255, 172, 255, 7),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: const [
                   Icon(Icons.chat),
                   Text("Chat"),
                 ],

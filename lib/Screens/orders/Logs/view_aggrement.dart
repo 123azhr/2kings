@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -29,7 +31,7 @@ class ViewAggrement extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             "Aggrement",
             style: TextStyle(
               color: Colors.black,
@@ -52,18 +54,18 @@ class ViewAggrement extends StatelessWidget {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Divider(
+                        const Divider(
                           thickness: 0.4,
                         ),
-                        Center(
+                        const Center(
                           child: Text(
                             "Customer details",
                             style: TextStyle(color: Colors.black, fontSize: 16),
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Row(
-                          children: [
+                          children: const [
                             Text(
                               "Name: Areeb uz Zaman",
                               style:
@@ -77,20 +79,20 @@ class ViewAggrement extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Text(
+                        const Text(
                           "CNIC: 412856448156",
                           style: TextStyle(color: Colors.black, fontSize: 16),
                         ),
-                        Divider(thickness: 0.4),
-                        Center(
+                        const Divider(thickness: 0.4),
+                        const Center(
                           child: Text(
                             "Contractor details",
                             style: TextStyle(color: Colors.black, fontSize: 16),
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Row(
-                          children: [
+                          children: const [
                             Text(
                               "Name: Arsalan Ahmed",
                               style:
@@ -104,13 +106,13 @@ class ViewAggrement extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Text(
+                        const Text(
                           "CNIC: 894684867",
                           style: TextStyle(color: Colors.black, fontSize: 16),
                         ),
-                        Divider(thickness: 0.4),
+                        const Divider(thickness: 0.4),
                         Row(
-                          children: [
+                          children: const [
                             Text(
                               "Start Date: 9/8/2022",
                               style:
@@ -124,16 +126,16 @@ class ViewAggrement extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Divider(thickness: 0.4),
+                        const Divider(thickness: 0.4),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
+                          children: const [
                             Text("service name"),
                             Text("service Price"),
                             Text("service days"),
                           ],
                         ),
-                        Divider(thickness: 0.4),
+                        const Divider(thickness: 0.4),
                         // ListView.builder(
                         //   physics: const NeverScrollableScrollPhysics(),
                         //   shrinkWrap: true,
@@ -148,7 +150,7 @@ class ViewAggrement extends StatelessWidget {
                         //   ),
                         // ),
                         // Divider(thickness: 0.4),
-                        SizedBox(
+                        const SizedBox(
                           height: 50,
                           child: Center(
                             child: Text(
@@ -162,7 +164,7 @@ class ViewAggrement extends StatelessWidget {
                           keyboardType: TextInputType.multiline,
                           maxLines: null,
                           textAlign: TextAlign.start,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 18,
                           ),
                           decoration: InputDecoration(
@@ -180,7 +182,7 @@ class ViewAggrement extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
-          child: Icon(Icons.share),
+          child: const Icon(Icons.share),
         ),
       ),
     );

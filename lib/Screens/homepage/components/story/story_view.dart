@@ -2,10 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/profile/profile_view.dart';
 import '../../../../helper/size_configuration.dart';
-import '../../../../models/user_model.dart';
+import '../../../../models/contractor_model.dart';
 
 class StoryView extends StatefulWidget {
-  final UserModel? userModel;
+  final ContractorsModel? userModel;
   final String? itemURL;
   const StoryView({
     super.key,
@@ -65,10 +65,10 @@ class _StoryViewState extends State<StoryView>
         return true;
       },
       child: Material(
-          color: Color.fromARGB(255, 255, 255, 255),
+          color: const Color.fromARGB(255, 255, 255, 255),
           child: Center(
             child: Stack(children: [
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               LinearProgressIndicator(
@@ -96,7 +96,7 @@ class _StoryViewState extends State<StoryView>
                       ),
                       Text(
                         widget.userModel!.name!,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Color.fromARGB(255, 0, 0, 0), fontSize: 18),
                       ),
                       const Spacer(),

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,7 +8,7 @@ import 'package:housecontractors/Screens/loginSignup/verify_email.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
-import 'package:housecontractors/providers/user_provider.dart';
+import 'package:housecontractors/providers/contractor_provider.dart';
 
 import '../../helper/size_configuration.dart';
 import '../../providers/aggrement_provider.dart';
@@ -62,7 +64,7 @@ class _UserFormState extends State<UserForm> {
     try {
       final currentUserProvider =
           Provider.of<CurrentUserProvider>(context, listen: false);
-      currentUserProvider.fetch();
+      currentUserProvider.fetch(FirebaseAuth.instance.currentUser!.uid.trim());
     } catch (e) {
       print(e);
     }
@@ -123,7 +125,8 @@ class _UserFormState extends State<UserForm> {
       bool? gender,
       String? name,
       String? userID}) async {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final userProvider =
+        Provider.of<ContractorsProvider>(context, listen: false);
 
     try {
       DateTime date = DateTime.now();

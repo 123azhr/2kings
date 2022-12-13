@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class UserModel with ChangeNotifier {
+class ContractorsModel with ChangeNotifier {
   final String? userID;
   final String? email;
   final String? password;
@@ -13,7 +13,7 @@ class UserModel with ChangeNotifier {
   final String? contactNumber;
   final String? cnic;
   final DateTime? createdDate;
-  UserModel({
+  ContractorsModel({
     this.cnic,
     this.status,
     this.createdDate,
@@ -27,13 +27,13 @@ class UserModel with ChangeNotifier {
     this.gender,
     this.contactNumber,
   });
-  factory UserModel.fromMap(
+  factory ContractorsModel.fromMap(
       {required Map<String, dynamic> map, required String userID}) {
-    return UserModel(
+    return ContractorsModel(
       userID: userID,
       cnic: map["cnic"],
       name: map["name"],
-      email: map["email"], 
+      email: map["email"],
       rating: map["rating"],
       services: map["services"],
       profileImageURL: map["profileImageURL"],

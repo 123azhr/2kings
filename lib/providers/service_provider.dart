@@ -11,6 +11,7 @@ class ServiceProvider with ChangeNotifier {
   List<ServiceModel> get getList => _list;
   void clearList(){
     _list.clear();
+    notifyListeners();
   }
   Future<void> fetch() async {
     await FirebaseFirestore.instance.collection("c_services").get().then(

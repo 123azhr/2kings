@@ -4,7 +4,7 @@ import 'package:housecontractors/components/profile_header.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:provider/provider.dart';
 import '../../providers/post_provider.dart';
-import '../../providers/user_provider.dart';
+import '../../providers/contractor_provider.dart';
 import '../../widgets/chat_call_bottom_bar.dart';
 import '../Dashboard/dashboard.dart';
 
@@ -13,7 +13,7 @@ class ProfileView extends StatelessWidget {
   final String? userID;
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context);
+    final userProvider = Provider.of<ContractorsProvider>(context);
     final user = userProvider.getUserByID(userID!);
     final postProvider = Provider.of<PostProvider>(context);
     final postsList = postProvider.getPostByID(user.userID!);
@@ -56,15 +56,15 @@ class ProfileView extends StatelessWidget {
                     phoneNumber: user.contactNumber!,
                     imageURL: user.profileImageURL!,
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 1,
                   ),
                   Padding(
                     padding:
                         EdgeInsets.only(left: getProportionateScreenWidth(5.0)),
-                    child: Text("Services"),
+                    child: const Text("Services"),
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 1,
                   ),
                   Container(
@@ -101,7 +101,7 @@ class ProfileView extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar:  BottomCallChat(user:user),
+        bottomNavigationBar: BottomCallChat(user: user),
       ),
     );
   }

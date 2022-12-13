@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/homepage/components/homeservices.dart';
 import 'package:housecontractors/Screens/homepage/components/story/stories.dart';
-import 'package:housecontractors/Screens/homepage/components/searchHome.dart';
+import 'package:housecontractors/Screens/homepage/components/search_home.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:page_transition/page_transition.dart';
 import '../profile/edit_services.dart';

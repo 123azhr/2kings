@@ -26,11 +26,11 @@ class AreYouSure extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(children: [
             Text(title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   color: Color.fromARGB(255, 0, 0, 0),
                 )),
-            Spacer(),
+            const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [

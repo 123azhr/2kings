@@ -10,6 +10,7 @@ class MessageProvider with ChangeNotifier {
   List<MessageModel> get getList => _list;
   void clearList() {
     _list.clear();
+    notifyListeners();
   }
 
   List<MessageModel> getSortedList(String? otherID) {

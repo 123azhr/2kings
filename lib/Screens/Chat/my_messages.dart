@@ -27,51 +27,5 @@ class MyMessages extends StatelessWidget {
         ),
       ],
     );
-
-    //  isOpposite?
-    // Column(
-
-    //   crossAxisAlignment: CrossAxisAlignment.start,
-    //   children: [
-    //     Container(
-    //       color: Colors.amberAccent,
-    //       height: 20,
-    //       width: 20,
-    //     ),
-    //   ],
-    // ):
-    // Column(
-    //   crossAxisAlignment: CrossAxisAlignment.end,
-    //   children: [
-    //     Container(
-    //       color: Colors.amberAccent,
-    //       height: 20,
-    //       width: 20,
-    //     ),
-    //   ],
-    // );
-
-    // return Card(
-    //   shape: RoundedRectangleBorder(
-    //     borderRadius: BorderRadius.all(
-    //       Radius.circular(
-    //         getProportionateScreenWidth(20),
-    //       ),
-    //     ),
-    //   ),
-    //   child: Container(
-    //     height: setHeight(5),
-    //     decoration: BoxDecoration(
-    //       color: Colors.amber,
-    //       border: Border.all(),
-    //       borderRadius: const BorderRadius.all(
-    //         Radius.circular(20),
-    //       ),
-    //     ),
-    //     child: Center(
-    //         child: text,
-    //         ),
-    //   ),
-    // );
   }
 }

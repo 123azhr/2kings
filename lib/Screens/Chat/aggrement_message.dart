@@ -1,17 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:housecontractors/Screens/Chat/fill_aggrement_form.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:housecontractors/models/aggrement_model.dart';
-import 'package:housecontractors/models/user_model.dart';
+import 'package:housecontractors/models/contractor_model.dart';
 import 'package:provider/provider.dart';
-import 'package:screenshot/screenshot.dart';
 import '../../models/current_user.dart';
 import '../../providers/aggrement_provider.dart';
 import '../../providers/current_user_provider.dart';
 
-import '../../helper/size_configuration.dart';
-import '../../providers/user_provider.dart';
+import '../../providers/contractor_provider.dart';
 
 class AggrementMsg extends StatelessWidget {
   const AggrementMsg({super.key, required this.text});
@@ -49,13 +46,14 @@ class SendAggrement extends StatelessWidget {
     AggrementModel aggrementModel =
         aggrementProvider.getAggrementByID(aggrementID);
 
-    UserProvider userProvider = Provider.of<UserProvider>(context);
-    UserModel customerModel =
+    ContractorsProvider userProvider =
+        Provider.of<ContractorsProvider>(context);
+    ContractorsModel customerModel =
         userProvider.getUserByID(aggrementModel.customerID!);
 
     CurrentUserProvider currentUserProvider =
         Provider.of<CurrentUserProvider>(context);
-    CurrentUserModel contractorModel = currentUserProvider.getCurrentUser();
+    CurrentUserModel contractorModel = currentUserProvider.getCurrentUser(FirebaseAuth.instance.currentUser!.uid.trim());
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
@@ -100,17 +98,17 @@ class SendAggrement extends StatelessWidget {
                           Text(
                             softWrap: true,
                             "Name: " + customerModel.name!,
-                            style: TextStyle(color: Colors.black, fontSize: 16),
+                            style: const TextStyle(color: Colors.black, fontSize: 16),
                           ),
                           Text(
                             softWrap: true,
                             "ID: " + customerModel.userID!,
-                            style: TextStyle(color: Colors.black, fontSize: 16),
+                            style: const TextStyle(color: Colors.black, fontSize: 16),
                           ),
                           Text(
                             softWrap: true,
                             "CNIC: " + customerModel.cnic!,
-                            style: TextStyle(color: Colors.black, fontSize: 16),
+                            style: const TextStyle(color: Colors.black, fontSize: 16),
                           ),
                           const Divider(thickness: 0.4),
                           const Center(
@@ -124,22 +122,22 @@ class SendAggrement extends StatelessWidget {
                           Text(
                             softWrap: true,
                             "Name: " + contractorModel.name!,
-                            style: TextStyle(color: Colors.black, fontSize: 16),
+                            style: const TextStyle(color: Colors.black, fontSize: 16),
                           ),
                           Text(
                             softWrap: true,
                             "ID: " + contractorModel.userID!,
-                            style: TextStyle(color: Colors.black, fontSize: 16),
+                            style: const TextStyle(color: Colors.black, fontSize: 16),
                           ),
                           Text(
                             softWrap: true,
                             "CNIC: " + contractorModel.cnic!,
-                            style: TextStyle(color: Colors.black, fontSize: 16),
+                            style: const TextStyle(color: Colors.black, fontSize: 16),
                           ),
                           const Divider(thickness: 0.4),
                           Text(
                             "Start Date:" + aggrementModel.startDate.toString(),
-                            style: TextStyle(color: Colors.black, fontSize: 16),
+                            style: const TextStyle(color: Colors.black, fontSize: 16),
                           ),
                           Text(
                             "End Date: " + aggrementModel.startDate.toString(),
@@ -157,7 +155,7 @@ class SendAggrement extends StatelessWidget {
                           const Divider(thickness: 0.4),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
+                            children: const [
                               Text(
                                 "Name",
                                 style: TextStyle(

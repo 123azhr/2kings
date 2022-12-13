@@ -4,7 +4,7 @@ import 'package:housecontractors/Screens/newsfeed/Post/post_header.dart';
 import 'package:housecontractors/Screens/newsfeed/Post/post_item.dart';
 import 'package:housecontractors/models/post_model.dart';
 import 'package:provider/provider.dart';
-import '../../../providers/user_provider.dart';
+import '../../../providers/contractor_provider.dart';
 
 class Post extends StatelessWidget {
   const Post({Key? key}) : super(key: key);
@@ -12,7 +12,7 @@ class Post extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final postModel = Provider.of<PostModel>(context);
-    final userProvider = Provider.of<UserProvider>(context);
+    final userProvider = Provider.of<ContractorsProvider>(context);
     final user = userProvider.getUserByID(postModel.userID!);
     return Card(
       color: const Color.fromARGB(255, 255, 230, 149),
@@ -25,7 +25,7 @@ class Post extends StatelessWidget {
               date: postModel.postedTime,
               profilePicURL: user.profileImageURL!),
           PostItem(imageURL: postModel.imageURL, caption: postModel.caption),
-           PostBottom(postModel: postModel),
+          PostBottom(postModel: postModel),
         ],
       ),
     );

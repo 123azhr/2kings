@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/newsfeed/create_post.dart';
 import 'package:housecontractors/Screens/newsfeed/Post/post.dart';
@@ -24,7 +25,7 @@ class _NewsfeedState extends State<Newsfeed> {
         GlobalKey<RefreshIndicatorState>();
 
     final userProvider = Provider.of<CurrentUserProvider>(context);
-    final loggedInUser = userProvider.getCurrentUser();
+    final loggedInUser = userProvider.getCurrentUser(FirebaseAuth.instance.currentUser!.uid.trim());
     final postProvider = Provider.of<PostProvider>(context);
     final postsList = postProvider.getList;
     Future<void> _onRefresh() async {
@@ -98,7 +99,7 @@ class _NewsfeedState extends State<Newsfeed> {
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
         color: Colors.white,
-        backgroundColor: Color.fromARGB(255, 251, 225, 54),
+        backgroundColor: const Color.fromARGB(255, 251, 225, 54),
         strokeWidth: 4.0,
         onRefresh: () async {
           // Replace this delay with the code to be executed during refresh

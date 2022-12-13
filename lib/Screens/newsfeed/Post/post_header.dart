@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../profile/profile_view.dart';
@@ -21,6 +22,7 @@ class PostHeader extends StatelessWidget {
     return SizedBox(
       height: setHeight(7),
       child: ListTile(
+        minLeadingWidth: setWidth(10),
         leading: ClipRRect(
           borderRadius: const BorderRadius.all(Radius.circular(100)),
           child: GestureDetector(
@@ -31,8 +33,10 @@ class PostHeader extends StatelessWidget {
                         userID: userID!,
                       )),
             ),
-            child: Image.network(
-              profilePicURL,
+            child: CachedNetworkImage(
+              progressIndicatorBuilder: (context, url, progress) =>
+                  const Center(child: CircularProgressIndicator()),
+              imageUrl: profilePicURL,
               fit: BoxFit.cover,
               width: getProportionateScreenWidth(40),
               height: getProportionateScreenWidth(40),
@@ -43,26 +47,23 @@ class PostHeader extends StatelessWidget {
         subtitle: Text(date.toString()),
         trailing: PopupMenuButton(itemBuilder: (context) {
           return [
-            PopupMenuItem<int>(
+            const PopupMenuItem<int>(
               value: 0,
               child: Text("Remove this post"),
             ),
-            PopupMenuItem<int>(
+            const PopupMenuItem<int>(
               value: 1,
               child: Text("Edit this post."),
             ),
-            PopupMenuItem<int>(
+            const PopupMenuItem<int>(
               value: 2,
               child: Text("report"),
             ),
           ];
         }, onSelected: (value) {
           if (value == 0) {
-            print("Remove this notification menu is selected.");
           } else if (value == 1) {
-            print("Turn off notification about this. menu is selected.");
           } else if (value == 2) {
-            print("report menu is selected.");
           }
         }),
       ),

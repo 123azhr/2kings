@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/Chat/fill_aggrement_form.dart';
 import 'package:housecontractors/Screens/Chat/aggrement_message.dart';
 import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
-import 'package:housecontractors/models/user_model.dart';
+import 'package:housecontractors/models/contractor_model.dart';
 import 'package:housecontractors/providers/message_provider.dart';
 import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
@@ -14,7 +14,7 @@ import 'opposite_messages.dart';
 
 class Inbox extends StatefulWidget {
   const Inbox({super.key, required this.user});
-  final UserModel user;
+  final ContractorsModel user;
 
   @override
   State<Inbox> createState() => _InboxState();
@@ -24,9 +24,6 @@ class _InboxState extends State<Inbox> {
   final TextEditingController _textController = TextEditingController();
 
   final bool isOpposite = true;
-  _onRefresh() {
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +33,7 @@ class _InboxState extends State<Inbox> {
     final messageList = messageProvider.getSortedList(widget.user.userID);
     messageProvider.fetch();
     final userProvider = Provider.of<CurrentUserProvider>(context);
-    final loggedinUser = userProvider.getCurrentUser();
+    final loggedinUser = userProvider.getCurrentUser(FirebaseAuth.instance.currentUser!.uid.trim());
 
     // String selectedValue = "Services";
     List<DropdownMenuItem<String>> menuItems = [
@@ -71,11 +68,12 @@ class _InboxState extends State<Inbox> {
                     barrierDismissible: false,
                     context: context,
                     builder: (context) => AreYouSure(
-                        title: "Delete this Conversarion?",
+                        title: "Delete this Conversation?",
                         onPressed: () async {
-                          Navigator.pop(context);
                           await messageProvider.deleteAllMessages(
                               otherID: widget.user.userID);
+
+                          Navigator.pop(context);
                         }),
                   );
                 },
@@ -91,44 +89,60 @@ class _InboxState extends State<Inbox> {
             scrollDirection: Axis.vertical,
             itemCount: messageList.length,
             itemBuilder: (context, int index) => ChangeNotifierProvider.value(
-                value: messageList[index],
-                child: messageList[index].aggrementID == ""
-                    ? messageList[index].type!
-                        ? GestureDetector(
-                            onLongPress: () => showDialog(
-                              context: context,
-                              builder: (context) => AreYouSure(
-                                  title: "Delete this message? ",
-                                  onPressed: () async {
-                                    await messageProvider.deleteMessage(
-                                        messageID: messageList[index].messageID,
-                                        messagetxt:
-                                            messageList[index].messageTxt);
-                                    Navigator.pop(context);
-                                  }),
-                            ),
-                            child: MyMessages(
-                              text: messageList[index].messageTxt!,
-                            ),
-                          )
-                        : GestureDetector(
-                            onLongPress: () => showDialog(
-                                  barrierDismissible: false,
-                                  context: context,
-                                  builder: (context) => AreYouSure(
-                                      title: "Delete this message? ",
-                                      onPressed: () async {
-                                        await messageProvider.deleteMessage(
-                                            messageID:
-                                                messageList[index].messageID,
-                                            messagetxt:
-                                                messageList[index].messageTxt);
-                                        Navigator.pop(context);
-                                      }),
-                                ),
-                            child: OppositeMessages(
-                                text: messageList[index].messageTxt!))
-                    : AggrementMsg(text: messageList[index].aggrementID!)),
+              value: messageList[index],
+              child: messageList[index].aggrementID == ""
+                  ? messageList[index].type!
+                      ? GestureDetector(
+                          onLongPress: () => showDialog(
+                            context: context,
+                            builder: (context) => AreYouSure(
+                                title: "Delete this message?",
+                                onPressed: () async {
+                                  await messageProvider.deleteMessage(
+                                      messageID: messageList[index].messageID,
+                                      messagetxt:
+                                          messageList[index].messageTxt);
+                                  Navigator.pop(context);
+                                }),
+                          ),
+                          child: MyMessages(
+                            text: messageList[index].messageTxt!,
+                          ),
+                        )
+                      : GestureDetector(
+                          onLongPress: () => showDialog(
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (context) => AreYouSure(
+                                    title: "Delete this message? ",
+                                    onPressed: () async {
+                                      await messageProvider.deleteMessage(
+                                          messageID:
+                                              messageList[index].messageID,
+                                          messagetxt:
+                                              messageList[index].messageTxt);
+                                      Navigator.pop(context);
+                                    }),
+                              ),
+                          child: OppositeMessages(
+                              text: messageList[index].messageTxt!))
+                  : GestureDetector(
+                      onLongPress: () => showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) => AreYouSure(
+                            title: "Delete this Aggrement? ",
+                            onPressed: () async {
+                              await messageProvider.deleteMessage(
+                                  messageID: messageList[index].messageID,
+                                  messagetxt: messageList[index].messageTxt);
+                              Navigator.pop(context);
+                            }),
+                      ),
+                      child:
+                          AggrementMsg(text: messageList[index].aggrementID!),
+                    ),
+            ),
             physics: const BouncingScrollPhysics(),
           ),
         ),
@@ -144,7 +158,7 @@ class _InboxState extends State<Inbox> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Container(
-                    color: Color.fromARGB(255, 251, 237, 105),
+                    color: const Color.fromARGB(255, 251, 237, 105),
                     height: setHeight(7),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,

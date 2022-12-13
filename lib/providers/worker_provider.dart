@@ -13,6 +13,7 @@ class WorkerProvider with ChangeNotifier {
   String? userID = FirebaseAuth.instance.currentUser?.uid;
   void clearList() {
     _list.clear();
+    notifyListeners();
   }
 
   Future<void> fetch() async {

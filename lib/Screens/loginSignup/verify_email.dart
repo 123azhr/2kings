@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/Dashboard/dashboard.dart';
@@ -21,7 +23,7 @@ bool _isVerified(BuildContext context) {
     final currentUserProvider =
         Provider.of<CurrentUserProvider>(context, listen: false);
 
-    currentUserProvider.fetch();
+    currentUserProvider.fetch(FirebaseAuth.instance.currentUser!.uid.trim());
     return true;
   } else {
     return false;
@@ -33,7 +35,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
   void initState() {
     FirebaseAuth.instance.currentUser!.sendEmailVerification();
     print("email verification sent");
-    // TODO: implement initState
+    // 
     super.initState();
   }
 

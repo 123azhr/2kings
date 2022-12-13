@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/Chat/chat_inbox.dart';
-import 'package:housecontractors/models/user_model.dart';
+import 'package:housecontractors/models/contractor_model.dart';
 import 'package:housecontractors/providers/message_provider.dart';
 import 'package:housecontractors/widgets/are_you_sure.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
 import '../../models/chat_model.dart';
 import '../../providers/chat_provider.dart';
-import '../../providers/user_provider.dart';
+import '../../providers/contractor_provider.dart';
 
 class ChatMenu extends StatefulWidget {
   const ChatMenu({super.key});
@@ -21,14 +21,13 @@ class ChatMenu extends StatefulWidget {
 class _ChatMenuState extends State<ChatMenu> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-  final TextEditingController _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final chatProvider = Provider.of<ChatProvider>(context);
 
     final msgProvider = Provider.of<MessageProvider>(context);
     final chatList = chatProvider.getList;
-    final userProvider = Provider.of<UserProvider>(context);
+    final userProvider = Provider.of<ContractorsProvider>(context);
 
     Future<void> _onRefresh() async {
       setState(() {});
@@ -67,7 +66,7 @@ class _ChatMenuState extends State<ChatMenu> {
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
         color: Colors.white,
-        backgroundColor: Color.fromARGB(255, 251, 225, 54),
+        backgroundColor: const Color.fromARGB(255, 251, 225, 54),
         strokeWidth: 4.0,
         onRefresh: () async {
           // Replace this delay with the code to be executed during refresh
@@ -80,6 +79,7 @@ class _ChatMenuState extends State<ChatMenu> {
           itemBuilder: (context, int index) => ChangeNotifierProvider.value(
             value: chatList[index],
             child: ChatMenuTile(
+
               onLongPress: () => showDialog(
                 barrierDismissible: false,
                 context: context,
@@ -100,7 +100,9 @@ class _ChatMenuState extends State<ChatMenu> {
                   .services!
                   .first,
               user: userProvider.getUserByID(chatList[index].otherID!),
-              image: CachedNetworkImageProvider(userProvider
+              image: CachedNetworkImageProvider(
+                
+                userProvider
                   .getUserByID(chatList[index].otherID!)
                   .profileImageURL!),
             ),
@@ -120,7 +122,7 @@ class ChatMenuTile extends StatelessWidget {
     required this.chat,
     required this.onLongPress,
   }) : super(key: key);
-  final UserModel user;
+  final ContractorsModel user;
   final ChatModel chat;
   final String subtitle;
   final ImageProvider<Object>? image;
@@ -139,6 +141,7 @@ class ChatMenuTile extends StatelessWidget {
       title: Text(user.name!),
       subtitle: Text(subtitle),
       leading: CircleAvatar(
+        
         backgroundImage: const AssetImage(
           "assets/images/logo-black-half.png",
         ),

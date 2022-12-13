@@ -27,7 +27,14 @@ class PostItem extends StatelessWidget {
                           alignment: AlignmentDirectional.topEnd,
                           children: [
                             Center(
-                                child: CachedNetworkImage(imageUrl: imageURL!)),
+                                child: CachedNetworkImage(
+                              imageUrl: imageURL!,
+                              progressIndicatorBuilder:
+                                  (context, url, progress) => const Center(
+                                      child: CircularProgressIndicator(
+                                color: Colors.white,
+                              )),
+                            )),
                             const Icon(
                               Icons.cancel,
                               color: Colors.white,
@@ -40,7 +47,7 @@ class PostItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Divider(
+              const Divider(
                 height: 0,
               ),
               SizedBox(
@@ -51,7 +58,7 @@ class PostItem extends StatelessWidget {
                 height: getProportionateScreenHeight(10),
               ),
               Container(
-                color: Color.fromARGB(255, 0, 0, 0),
+                color: const Color.fromARGB(255, 0, 0, 0),
                 height: setHeight(31),
                 width: setWidth(100),
                 // child: Image.network(

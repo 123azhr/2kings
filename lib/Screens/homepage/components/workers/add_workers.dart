@@ -1,10 +1,11 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
-import 'package:housecontractors/providers/user_provider.dart';
 import 'package:housecontractors/providers/worker_provider.dart';
 import 'package:housecontractors/widgets/mycontainer.dart';
 import 'package:image_picker/image_picker.dart';
@@ -36,7 +37,7 @@ class _AddWorkerState extends State<AddWorker> {
   uploadWokerData() async {
     final userProvider =
         Provider.of<CurrentUserProvider>(context, listen: false);
-    final loggedInUser = userProvider.getCurrentUser();
+    final loggedInUser = userProvider.getCurrentUser(FirebaseAuth.instance.currentUser!.uid.trim());
     final workerProvider = Provider.of<WorkerProvider>(context, listen: false);
     showDialog(
       context: context,
@@ -152,7 +153,7 @@ class _AddWorkerState extends State<AddWorker> {
                 onTap: () {
                   customBottomModalSheet(
                     button: IconButton(
-                      icon: Icon(Icons.arrow_right),
+                      icon: const Icon(Icons.arrow_right),
                       onPressed: () {
                         setState(() {});
                         Navigator.pop(context);
@@ -188,7 +189,7 @@ class _AddWorkerState extends State<AddWorker> {
               ),
               onTap: () => customBottomModalSheet(
                 button: IconButton(
-                  icon: Icon(Icons.arrow_right),
+                  icon: const Icon(Icons.arrow_right),
                   onPressed: () {
                     setState(() {
                       nameController.text;
@@ -291,7 +292,7 @@ class _AddWorkerState extends State<AddWorker> {
               ),
               onTap: () => customBottomModalSheet(
                 button: IconButton(
-                  icon: Icon(Icons.arrow_right),
+                  icon: const Icon(Icons.arrow_right),
                   onPressed: () {
                     setState(() {
                       nameController.text;
@@ -329,7 +330,7 @@ class _AddWorkerState extends State<AddWorker> {
               ),
               onTap: () => customBottomModalSheet(
                 button: IconButton(
-                  icon: Icon(Icons.arrow_right),
+                  icon: const Icon(Icons.arrow_right),
                   onPressed: () {
                     setState(() {
                       nameController.text;
@@ -367,7 +368,7 @@ class _AddWorkerState extends State<AddWorker> {
               ),
               onTap: () => customBottomModalSheet(
                 button: IconButton(
-                  icon: Icon(Icons.arrow_right),
+                  icon: const Icon(Icons.arrow_right),
                   onPressed: () {
                     setState(() {});
                     Navigator.pop(context);
@@ -390,14 +391,14 @@ class _AddWorkerState extends State<AddWorker> {
                 ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
-                      Color.fromARGB(255, 18, 18, 18),
+                      const Color.fromARGB(255, 18, 18, 18),
                     ),
                     fixedSize: MaterialStateProperty.all(
                       Size(setWidth(30), setHeight(6)),
                     ),
                   ),
                   onPressed: () {},
-                  child: Text("Discard",
+                  child: const Text("Discard",
                       style: TextStyle(
                         fontSize: 18,
                         color: Color.fromARGB(255, 255, 210, 32),
@@ -406,7 +407,7 @@ class _AddWorkerState extends State<AddWorker> {
                 ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
-                      Color.fromARGB(255, 255, 210, 32),
+                      const Color.fromARGB(255, 255, 210, 32),
                     ),
                     fixedSize: MaterialStateProperty.all(
                       Size(setWidth(30), setHeight(6)),
@@ -429,7 +430,7 @@ class _AddWorkerState extends State<AddWorker> {
                     //   );
                     uploadWokerData();
                   },
-                  child: Text("Save",
+                  child: const Text("Save",
                       style: TextStyle(fontSize: 18, color: Colors.black87)),
                 ),
               ],

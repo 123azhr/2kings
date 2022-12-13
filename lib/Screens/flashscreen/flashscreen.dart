@@ -1,3 +1,5 @@
+// ignore_for_file: empty_catches
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/login.dart';
@@ -13,7 +15,7 @@ import '../../providers/service_log_provider.dart';
 import '../../providers/order_provider.dart';
 import '../../providers/service_provider.dart';
 import '../../providers/story_provider.dart';
-import '../../providers/user_provider.dart';
+import '../../providers/contractor_provider.dart';
 import '../Dashboard/dashboard.dart';
 import '../loginSignup/verify_email.dart';
 
@@ -30,7 +32,6 @@ class _FlashScreenState extends State<FlashScreen> {
     try {
       loadData();
     } catch (e) {
-      print("cannot load data");
     }
     super.initState();
   }
@@ -40,24 +41,23 @@ class _FlashScreenState extends State<FlashScreen> {
       try {
         final currentUserProvider =
             Provider.of<CurrentUserProvider>(context, listen: false);
-        currentUserProvider.fetch();
+        currentUserProvider
+            .fetch(FirebaseAuth.instance.currentUser!.uid.trim());
       } catch (e) {
-        print(e);
       }
       try {
         final workersProvider =
             Provider.of<WorkerProvider>(context, listen: false);
         workersProvider.fetch();
       } catch (e) {
-        print(e);
       }
       final postProvider = Provider.of<PostProvider>(context, listen: false);
       await postProvider.fetch();
       try {
-        final userProvider = Provider.of<UserProvider>(context, listen: false);
+        final userProvider =
+            Provider.of<ContractorsProvider>(context, listen: false);
         await userProvider.fetch();
       } catch (e) {
-        print(e);
       }
 
       final serviceProvider =
@@ -70,7 +70,6 @@ class _FlashScreenState extends State<FlashScreen> {
         final chatProvider = Provider.of<ChatProvider>(context, listen: false);
         await chatProvider.fetch();
       } catch (e) {
-        print(e);
       }
       final storyProvider = Provider.of<StoryProvider>(context, listen: false);
       await storyProvider.fetch();
@@ -81,7 +80,6 @@ class _FlashScreenState extends State<FlashScreen> {
 
         messageProvider.fetch();
       } catch (e) {
-        print(e);
       }
       try {
         final aggrementProvider =
@@ -89,7 +87,6 @@ class _FlashScreenState extends State<FlashScreen> {
 
         aggrementProvider.fetch();
       } catch (e) {
-        print(e);
       }
       try {
         final serviceLogProvider =
@@ -99,7 +96,6 @@ class _FlashScreenState extends State<FlashScreen> {
             Provider.of<InventoryProvider>(context, listen: false);
         inventoryProvider.fetchInventory();
       } catch (e) {
-        print(e);
       }
       Navigator.pushReplacement(
           context,

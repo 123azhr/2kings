@@ -6,9 +6,9 @@ import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../../../models/story_model.dart';
-import '../../../../models/user_model.dart';
+import '../../../../models/contractor_model.dart';
 import '../../../../providers/story_provider.dart';
-import '../../../../providers/user_provider.dart';
+import '../../../../providers/contractor_provider.dart';
 import 'create_story.dart';
 
 class Stories extends StatelessWidget {
@@ -19,7 +19,7 @@ class Stories extends StatelessWidget {
     final storyProvider = Provider.of<StoryProvider>(context);
     final storyList = storyProvider.getList;
 
-    final userProvider = Provider.of<UserProvider>(context);
+    final userProvider = Provider.of<ContractorsProvider>(context);
 
     return SizedBox(
         height: getProportionateScreenHeight(140),
@@ -67,7 +67,7 @@ class StoryTile extends StatelessWidget {
     Key? key,
     required this.user,
   }) : super(key: key);
-  final UserModel user;
+  final ContractorsModel user;
   @override
   Widget build(BuildContext context) {
     final storyModel = Provider.of<StoryModel>(context);

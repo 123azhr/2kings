@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -16,8 +17,8 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
   String _imagePath = "";
- 
-  File? _selectedImageFile = null;
+
+  File? _selectedImageFile;
 
   List list = [];
 
@@ -107,7 +108,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<CurrentUserProvider>(context);
-    final loggedInUser = userProvider.getCurrentUser();
+    final loggedInUser = userProvider
+        .getCurrentUser(FirebaseAuth.instance.currentUser!.uid.trim());
     SizeConfig().init(context);
 
     return SafeArea(
@@ -294,10 +296,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         .collection("users")
                         .doc("Y1DImckjzK5z2khAEi7o")
                         .collection("contractors")
-                        .doc(userProvider.getCurrentUser().userID)
+                        .doc(FirebaseAuth.instance.currentUser!.uid.trim())
                         .update({"profileImageURL": _imagePath});
 
-                    await userProvider.fetch();
+                    await userProvider
+                        .fetch(FirebaseAuth.instance.currentUser!.uid.trim());
                     Navigator.pop(context);
                     Navigator.pop(context);
                   },

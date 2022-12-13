@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/orders/active_orders.dart';
 import 'package:housecontractors/Screens/orders/pending_orders.dart';
 import 'package:housecontractors/models/orders_model.dart';
-import 'package:housecontractors/providers/order_provider.dart';
-import 'package:provider/provider.dart';
 
 import '../../helper/size_configuration.dart';
-import '../../providers/current_user_provider.dart';
 import 'completed_orders.dart';
 
 class MyOrders extends StatefulWidget {
@@ -47,8 +44,6 @@ class _MyOrdersState extends State<MyOrders>
 
   @override
   Widget build(BuildContext context) {
-    OrdersProvider ordersProvider = Provider.of<OrdersProvider>(context);
-    List<OrdersModel> ordersList = ordersProvider.getList;
 
     return DefaultTabController(
       length: 3,
@@ -61,7 +56,7 @@ class _MyOrdersState extends State<MyOrders>
             "assets/images/logo-black-half.png",
             fit: BoxFit.contain,
           ),
-          title: Text(
+          title: const Text(
             "My Orders",
             style: TextStyle(
               color: Colors.black,
@@ -70,11 +65,11 @@ class _MyOrdersState extends State<MyOrders>
           ),
           centerTitle: true,
           elevation: 1,
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           bottom: TabBar(
-            indicatorColor: Color.fromARGB(255, 255, 230, 0),
+            indicatorColor: const Color.fromARGB(255, 255, 230, 0),
             controller: _tabController,
-            labelColor: Color.fromARGB(255, 255, 230, 0),
+            labelColor: const Color.fromARGB(255, 255, 230, 0),
             unselectedLabelColor: Colors.black87,
             tabs: [
               _tabBarOptionWidget(

@@ -1,18 +1,17 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
-import '../models/user_model.dart';
-
 import 'package:path/path.dart';
 
-class UserProvider with ChangeNotifier {
-  List<UserModel> _list = [];
+import '../models/customer_model.dart';
 
-  List<UserModel> get getList => _list;
+class CustomerProvider with ChangeNotifier {
+  List<CustomerModel> _list = [];
 
-  void clearList(){
+  List<CustomerModel> get getList => _list;
+
+  void clearList() {
     _list.clear();
   }
 
@@ -20,24 +19,20 @@ class UserProvider with ChangeNotifier {
     await FirebaseFirestore.instance
         .collection("users")
         .doc("Y1DImckjzK5z2khAEi7o")
-        .collection("contractors")
+        .collection("customers")
         .get()
         .then((QuerySnapshot snapshot) {
       _list = [];
       for (var documents in snapshot.docs) {
         Map<String, dynamic> dataMap = documents.data() as Map<String, dynamic>;
-        _list.insert(
-            0, UserModel.fromMap(map: dataMap, userID: documents.id.trim()));
+        _list.insert(0,
+            CustomerModel.fromMap(map: dataMap, userID: documents.id.trim()));
       }
-      // Map<String, dynamic> dataMap =
-      //     snapshot.docs.data() as Map<String, dynamic>;
-      // _list.insert(
-      //     0, UserModel.fromMap(map: dataMap, userID: snapshot.id.trim()));
     });
     notifyListeners();
   }
 
-  UserModel getUserByID(String userID) {
+  CustomerModel getUserByID(String userID) {
     return _list
         .where((element) => element.userID!.trim() == userID.trim())
         .first;
@@ -48,8 +43,6 @@ class UserProvider with ChangeNotifier {
     String? email,
     String? password,
     bool? status,
-    List? rating,
-    List? services,
     String? profileImageURL,
     bool? gender,
     String? name,
@@ -70,8 +63,6 @@ class UserProvider with ChangeNotifier {
       "gender": gender,
       "cnic": cnic,
       "contactNumber": contactNumber,
-      "rating": rating,
-      "services": services,
       "createdDate": createdDate
     });
   }

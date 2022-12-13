@@ -17,7 +17,7 @@ class _DashboardState extends State<Dashboard> {
   static final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
     const ChatMenu(),
-    Newsfeed(),
+    const Newsfeed(),
     const MyOrders(),
     const Menu(),
   ];

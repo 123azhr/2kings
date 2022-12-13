@@ -4,18 +4,13 @@ import 'package:housecontractors/Screens/orders/Logs/logs.dart';
 import 'package:housecontractors/components/profile_header.dart';
 import 'package:housecontractors/models/aggrement_model.dart';
 import 'package:housecontractors/models/orders_model.dart';
-import 'package:housecontractors/models/user_model.dart';
-import 'package:housecontractors/providers/inventory_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:housecontractors/models/contractor_model.dart';
 import '../../helper/size_configuration.dart';
-import '../../models/inventory_model.dart';
-import '../../models/service_log_model.dart';
-import '../../providers/service_log_provider.dart';
 
 Future<dynamic> orderDetails(
     BuildContext context,
     AggrementModel aggrementModel,
-    UserModel customerModel,
+    ContractorsModel customerModel,
     OrdersModel ordersModel) {
   return showModalBottomSheet(
     context: context,
@@ -70,7 +65,7 @@ Future<dynamic> orderDetails(
               ),
               Container(
                   height: setHeight(30),
-                  color: Color.fromARGB(255, 255, 255, 255),
+                  color: const Color.fromARGB(255, 255, 255, 255),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
