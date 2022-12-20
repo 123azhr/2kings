@@ -9,7 +9,7 @@ import 'package:housecontractors/widgets/mycontainer.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/authentication_provider.dart';
-import '../../providers/current_user_provider.dart';
+import '../../providers/contractor_provider.dart';
 
 class VerifyEmail extends StatefulWidget {
   const VerifyEmail({super.key});
@@ -21,9 +21,9 @@ class VerifyEmail extends StatefulWidget {
 bool _isVerified(BuildContext context) {
   if (FirebaseAuth.instance.currentUser!.emailVerified) {
     final currentUserProvider =
-        Provider.of<CurrentUserProvider>(context, listen: false);
+        Provider.of<ContractorsProvider>(context, listen: false);
 
-    currentUserProvider.fetch(FirebaseAuth.instance.currentUser!.uid.trim());
+    currentUserProvider.fetch();
     return true;
   } else {
     return false;
@@ -35,7 +35,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
   void initState() {
     FirebaseAuth.instance.currentUser!.sendEmailVerification();
     print("email verification sent");
-    // 
+    //
     super.initState();
   }
 
@@ -141,7 +141,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                   onPressed: () {
                     context.read<AuthenticationService>().signOut();
                     final currentUserProvider =
-                        Provider.of<CurrentUserProvider>(context,
+                        Provider.of<ContractorsProvider>(context,
                             listen: false);
 
                     currentUserProvider.clearList();

@@ -3,49 +3,48 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:housecontractors/models/contractor_model.dart';
-import 'package:housecontractors/providers/aggrement_provider.dart';
+import 'package:housecontractors/providers/agreement_provider.dart';
 import 'package:housecontractors/providers/contractor_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
-import '../../models/current_user.dart';
-import '../../providers/current_user_provider.dart';
+import '../../models/customer_model.dart';
+import '../../providers/customer_provider.dart';
 import '../../providers/message_provider.dart';
 
-class FillAggrement extends StatefulWidget {
-  const FillAggrement({super.key, required this.customerID});
+class FillAgreement extends StatefulWidget {
+  const FillAgreement({super.key, required this.customerID});
 
   final String customerID;
 
   @override
-  State<FillAggrement> createState() => _FillAggrementState();
+  State<FillAgreement> createState() => _FillAgreementState();
 }
 
-class _FillAggrementState extends State<FillAggrement> {
+class _FillAgreementState extends State<FillAgreement> {
   final ScreenshotController screenshotController = ScreenshotController();
 
+  final TextEditingController _textController = TextEditingController();
   DateTime startDate = DateTime(19);
   DateTime endDate = DateTime(19);
   @override
   Widget build(BuildContext context) {
-    TextEditingController _textController = TextEditingController();
     final messageProvider = Provider.of<MessageProvider>(context);
 
-    CurrentUserProvider currentUserProvider =
-        Provider.of<CurrentUserProvider>(context);
-    CurrentUserModel contractorModel = currentUserProvider.getCurrentUser(FirebaseAuth.instance.currentUser!.uid.trim());
-    List<dynamic>? myServices = contractorModel.services;
-    AggrementProvider aggrementProvider =
-        Provider.of<AggrementProvider>(context);
-
-    ContractorsProvider userProvider =
+    ContractorsProvider currentUserProvider =
         Provider.of<ContractorsProvider>(context);
-    ContractorsModel customerModel =
-        userProvider.getUserByID(widget.customerID);
+    ContractorsModel contractorModel = currentUserProvider
+        .getUserByID(FirebaseAuth.instance.currentUser!.uid.trim());
+    List<dynamic>? myServices = contractorModel.services;
+    AgreementProvider aggrementProvider =
+        Provider.of<AgreementProvider>(context);
+
+    CustomerProvider userProvider = Provider.of<CustomerProvider>(context);
+    CustomerModel customerModel = userProvider.getUserByID(widget.customerID);
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Aggrement",
+          "Agreement",
           style: TextStyle(
             color: Colors.black,
             fontSize: (kToolbarHeight / 100) * 40,
@@ -83,20 +82,23 @@ class _FillAggrementState extends State<FillAggrement> {
                           Text(
                             softWrap: true,
                             "Name: " + customerModel.name!,
-                            style: const TextStyle(color: Colors.black, fontSize: 16),
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 16),
                           ),
                           const Spacer(),
                           Text(
                             softWrap: true,
                             "ID: " + customerModel.userID!,
-                            style: const TextStyle(color: Colors.black, fontSize: 16),
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 16),
                           ),
                         ],
                       ),
                       Text(
                         softWrap: true,
                         "CNIC: " + customerModel.cnic!,
-                        style: const TextStyle(color: Colors.black, fontSize: 16),
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 16),
                       ),
                       const Divider(thickness: 0.4),
                       const Center(
@@ -111,13 +113,15 @@ class _FillAggrementState extends State<FillAggrement> {
                           Text(
                             softWrap: true,
                             "Name: " + contractorModel.name!,
-                            style: const TextStyle(color: Colors.black, fontSize: 16),
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 16),
                           ),
                           const Spacer(),
                           Text(
                             softWrap: true,
                             "ID: " + contractorModel.userID!,
-                            style: const TextStyle(color: Colors.black, fontSize: 16),
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 16),
                           ),
                         ],
                       ),
@@ -161,8 +165,7 @@ class _FillAggrementState extends State<FillAggrement> {
                           const Spacer(),
                           const Text(
                             "End Date: ",
-                            style: TextStyle(
-                                color: Colors.black, fontSize: 16),
+                            style: TextStyle(color: Colors.black, fontSize: 16),
                           ),
                           TextButton(
                               onPressed: () async {
@@ -235,7 +238,7 @@ class _FillAggrementState extends State<FillAggrement> {
                         height: 50,
                         child: Center(
                           child: Text(
-                            "Aggrement details",
+                            "Agreement details",
                             style: TextStyle(color: Colors.black, fontSize: 16),
                           ),
                         ),
@@ -255,59 +258,63 @@ class _FillAggrementState extends State<FillAggrement> {
                           hintText: "Type here..",
                         ),
                       ),
+                      SizedBox(
+                          height: setHeight(10),
+                          width: setWidth(100),
+                          child: Center(
+                            child: ElevatedButton(
+                              onPressed: startDate.year != 19 &&
+                                      endDate.year != 19 &&
+                                      list.isNotEmpty
+                                  ? () async {
+                                      showDialog(
+                                          barrierDismissible: false,
+                                          context: context,
+                                          builder: (context) => const Center(
+                                              child:
+                                                  CircularProgressIndicator()));
+                                      String aggrementID =
+                                          await aggrementProvider
+                                              .uploadAgreementDataToFireStore(
+                                                  customerID: widget.customerID,
+                                                  contractorID: FirebaseAuth
+                                                      .instance.currentUser!.uid
+                                                      .trim(),
+                                                  details: _textController.text,
+                                                  endDate: startDate,
+                                                  startDate: endDate,
+                                                  services: list,
+                                                  status: false);
+                                      aggrementProvider.fetch();
+                                      messageProvider
+                                          .uploadMessageDataToFireStore(
+                                              chatWith: widget.customerID,
+                                              createdAt: DateTime.now(),
+                                              messagetxt: "",
+                                              agreementID: aggrementID,
+                                              type: true);
+                                      _textController.clear();
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                    }
+                                  : null,
+                              child: const Text("Send"),
+                              style: ElevatedButton.styleFrom(
+                                side: const BorderSide(
+                                  width: 0,
+                                ),
+                                elevation: 3,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30)),
+                              ),
+                            ),
+                          )),
                     ]),
               ),
             ),
           ),
         ),
       ),
-      bottomSheet: SizedBox(
-          height: setHeight(10),
-          width: setWidth(100),
-          child: Center(
-            child: ElevatedButton(
-              onPressed: () async {
-                showDialog(
-                    context: context,
-                    builder: (context) =>
-                        const Center(child: CircularProgressIndicator()));
-                String aggrementID =
-                    await aggrementProvider.uploadAggrementDataToFireStore(
-                        customerID: widget.customerID,
-                        contractorID:
-                           FirebaseAuth.instance.currentUser!.uid.trim(),
-                        details: _textController.text,
-                        endDate: startDate,
-                        startDate: endDate,
-                        services: {
-                          "name": "Plumber",
-                          "estimatedCharges": "4894",
-                          "estimatedDays": "48"
-                        },
-                        status: false);
-                _textController.clear();
-                aggrementProvider.fetch();
-                messageProvider.uploadMessageDataToFireStore(
-                    chatWith: widget.customerID,
-                    createdAt: DateTime.now(),
-                    messagetxt: "",
-                    aggrementID: aggrementID,
-                    type: true);
-                _textController.clear();
-                Navigator.pop(context);
-                Navigator.pop(context);
-              },
-              child: const Text("Send"),
-              style: ElevatedButton.styleFrom(
-                side: const BorderSide(
-                  width: 0,
-                ),
-                elevation: 3,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30)),
-              ),
-            ),
-          )),
     ));
   }
 }
@@ -326,7 +333,6 @@ class _ServiceSlideState extends State<ServiceSlide> {
   bool? isCheck = false;
   @override
   Widget build(BuildContext context) {
-
     return Card(
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),

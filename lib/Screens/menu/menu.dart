@@ -8,7 +8,6 @@ import 'package:housecontractors/providers/message_provider.dart';
 import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
 import '../../providers/chat_provider.dart';
-import '../../providers/current_user_provider.dart';
 import '../../providers/order_provider.dart';
 import '../../providers/service_provider.dart';
 import '../../providers/contractor_provider.dart';
@@ -23,14 +22,15 @@ class Menu extends StatelessWidget {
   Widget build(BuildContext context) {
     final serviceProvider = Provider.of<ServiceProvider>(context);
     final chatProvider = Provider.of<ChatProvider>(context);
-    final currentProvider = Provider.of<CurrentUserProvider>(context);
+    final currentProvider = Provider.of<ContractorsProvider>(context);
 
     final userProvider = Provider.of<ContractorsProvider>(context);
     final orderstProvider = Provider.of<OrdersProvider>(context);
     final messageProvider = Provider.of<MessageProvider>(context);
     final workerProvider = Provider.of<WorkerProvider>(context);
 
-    final loggedInUser = currentProvider.getCurrentUser(FirebaseAuth.instance.currentUser!.uid.trim());
+    final loggedInUser = currentProvider
+        .getUserByID(FirebaseAuth.instance.currentUser!.uid.trim());
     return Scaffold(
       appBar: AppBar(
         leadingWidth: getProportionateScreenWidth(40),

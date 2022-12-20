@@ -58,6 +58,18 @@ class ChatProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> createOtherChat({
+    required String? otherID,
+  }) async {
+    await FirebaseFirestore.instance
+        .collection("chats")
+        .doc(otherID)
+        .collection("with")
+        .doc(loggedInUser!.uid)
+        .set({});
+    notifyListeners();
+  }
+
   Future<void> deleteChat({
     String? otherID,
   }) async {

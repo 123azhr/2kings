@@ -3,14 +3,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/login.dart';
-import 'package:housecontractors/providers/aggrement_provider.dart';
+import 'package:housecontractors/providers/agreement_provider.dart';
+import 'package:housecontractors/providers/customer_provider.dart';
 import 'package:housecontractors/providers/inventory_provider.dart';
 import 'package:housecontractors/providers/message_provider.dart';
 import 'package:housecontractors/providers/post_provider.dart';
 import 'package:housecontractors/providers/worker_provider.dart';
 import 'package:provider/provider.dart';
 import '../../providers/chat_provider.dart';
-import '../../providers/current_user_provider.dart';
 import '../../providers/service_log_provider.dart';
 import '../../providers/order_provider.dart';
 import '../../providers/service_provider.dart';
@@ -31,34 +31,28 @@ class _FlashScreenState extends State<FlashScreen> {
   void initState() {
     try {
       loadData();
-    } catch (e) {
-    }
+    } catch (e) {}
     super.initState();
   }
 
   loadData() async {
     await Future.delayed(const Duration(milliseconds: 0)).then((value) async {
       try {
-        final currentUserProvider =
-            Provider.of<CurrentUserProvider>(context, listen: false);
-        currentUserProvider
-            .fetch(FirebaseAuth.instance.currentUser!.uid.trim());
-      } catch (e) {
-      }
-      try {
         final workersProvider =
             Provider.of<WorkerProvider>(context, listen: false);
         workersProvider.fetch();
-      } catch (e) {
-      }
+      } catch (e) {}
       final postProvider = Provider.of<PostProvider>(context, listen: false);
       await postProvider.fetch();
       try {
         final userProvider =
             Provider.of<ContractorsProvider>(context, listen: false);
         await userProvider.fetch();
-      } catch (e) {
-      }
+      } catch (e) {}
+      try {
+        final cProvider = Provider.of<CustomerProvider>(context, listen: false);
+        await cProvider.fetch();
+      } catch (e) {}
 
       final serviceProvider =
           Provider.of<ServiceProvider>(context, listen: false);
@@ -69,8 +63,7 @@ class _FlashScreenState extends State<FlashScreen> {
       try {
         final chatProvider = Provider.of<ChatProvider>(context, listen: false);
         await chatProvider.fetch();
-      } catch (e) {
-      }
+      } catch (e) {}
       final storyProvider = Provider.of<StoryProvider>(context, listen: false);
       await storyProvider.fetch();
 
@@ -79,15 +72,13 @@ class _FlashScreenState extends State<FlashScreen> {
             Provider.of<MessageProvider>(context, listen: false);
 
         messageProvider.fetch();
-      } catch (e) {
-      }
+      } catch (e) {}
       try {
         final aggrementProvider =
-            Provider.of<AggrementProvider>(context, listen: false);
+            Provider.of<AgreementProvider>(context, listen: false);
 
         aggrementProvider.fetch();
-      } catch (e) {
-      }
+      } catch (e) {}
       try {
         final serviceLogProvider =
             Provider.of<ServiceLogsProvider>(context, listen: false);
@@ -95,8 +86,7 @@ class _FlashScreenState extends State<FlashScreen> {
         final inventoryProvider =
             Provider.of<InventoryProvider>(context, listen: false);
         inventoryProvider.fetchInventory();
-      } catch (e) {
-      }
+      } catch (e) {}
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(

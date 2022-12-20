@@ -1,20 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/Chat/fill_aggrement_form.dart';
-import 'package:housecontractors/Screens/Chat/aggrement_message.dart';
+import 'package:housecontractors/Screens/Chat/agreement_message.dart';
 import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
-import 'package:housecontractors/models/contractor_model.dart';
+import 'package:housecontractors/models/customer_model.dart';
 import 'package:housecontractors/providers/message_provider.dart';
 import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
-import '../../providers/current_user_provider.dart';
+import '../../providers/chat_provider.dart';
+import '../../providers/contractor_provider.dart';
 import '../../widgets/are_you_sure.dart';
 import 'my_messages.dart';
 import 'opposite_messages.dart';
 
 class Inbox extends StatefulWidget {
   const Inbox({super.key, required this.user});
-  final ContractorsModel user;
+  final CustomerModel user;
 
   @override
   State<Inbox> createState() => _InboxState();
@@ -32,9 +33,10 @@ class _InboxState extends State<Inbox> {
     final messageProvider = Provider.of<MessageProvider>(context);
     final messageList = messageProvider.getSortedList(widget.user.userID);
     messageProvider.fetch();
-    final userProvider = Provider.of<CurrentUserProvider>(context);
-    final loggedinUser = userProvider.getCurrentUser(FirebaseAuth.instance.currentUser!.uid.trim());
-
+    final userProvider = Provider.of<ContractorsProvider>(context);
+    final loggedinUser =
+        userProvider.getUserByID(FirebaseAuth.instance.currentUser!.uid.trim());
+    final chatProvider = Provider.of<ChatProvider>(context);
     // String selectedValue = "Services";
     List<DropdownMenuItem<String>> menuItems = [
       const DropdownMenuItem(child: Text("Services"), value: "Services"),
@@ -131,7 +133,7 @@ class _InboxState extends State<Inbox> {
                         barrierDismissible: false,
                         context: context,
                         builder: (context) => AreYouSure(
-                            title: "Delete this Aggrement? ",
+                            title: "Delete this Agreement? ",
                             onPressed: () async {
                               await messageProvider.deleteMessage(
                                   messageID: messageList[index].messageID,
@@ -140,7 +142,7 @@ class _InboxState extends State<Inbox> {
                             }),
                       ),
                       child:
-                          AggrementMsg(text: messageList[index].aggrementID!),
+                          AgreementMsg(text: messageList[index].aggrementID!),
                     ),
             ),
             physics: const BouncingScrollPhysics(),
@@ -168,7 +170,7 @@ class _InboxState extends State<Inbox> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => FillAggrement(
+                                    builder: (context) => FillAgreement(
                                         customerID: widget.user.userID!),
                                   ));
                             },
@@ -205,9 +207,11 @@ class _InboxState extends State<Inbox> {
                                       chatWith: widget.user.userID,
                                       createdAt: DateTime.now(),
                                       messagetxt: _textController.text,
-                                      aggrementID: "",
+                                      agreementID: "",
                                       type: true);
                                   _textController.clear();
+                                  chatProvider.createOtherChat(
+                                      otherID: widget.user.userID);
                                 }
                               },
                               child: const Icon(Icons.send),

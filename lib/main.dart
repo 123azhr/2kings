@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:housecontractors/Screens/flashscreen/flashscreen.dart';
-import 'package:housecontractors/providers/aggrement_provider.dart';
+import 'package:housecontractors/providers/agreement_provider.dart';
 import 'package:housecontractors/providers/chat_provider.dart';
-import 'package:housecontractors/providers/current_user_provider.dart';
+import 'package:housecontractors/providers/customer_provider.dart';
 import 'package:housecontractors/providers/inventory_provider.dart';
 import 'package:housecontractors/providers/service_log_provider.dart';
 import 'package:housecontractors/providers/message_provider.dart';
@@ -79,15 +79,15 @@ class MyApp extends StatelessWidget {
           initialData: null,
         ),
         ChangeNotifierProvider(create: (_) => PostProvider()),
-        ChangeNotifierProvider(create: (_) => ContractorsProvider()),
+        ChangeNotifierProvider(create: (_) => CustomerProvider()),
         ChangeNotifierProvider(create: (_) => ServiceProvider()),
         ChangeNotifierProvider(create: (_) => WorkerProvider()),
         ChangeNotifierProvider(create: (_) => ChatProvider()),
         ChangeNotifierProvider(create: (_) => StoryProvider()),
-        ChangeNotifierProvider(create: (_) => CurrentUserProvider()),
+        ChangeNotifierProvider(create: (_) => ContractorsProvider()),
         ChangeNotifierProvider(create: (_) => OrdersProvider()),
         ChangeNotifierProvider(create: (_) => MessageProvider()),
-        ChangeNotifierProvider(create: (_) => AggrementProvider()),
+        ChangeNotifierProvider(create: (_) => AgreementProvider()),
         ChangeNotifierProvider(create: (_) => ServiceLogsProvider()),
         ChangeNotifierProvider(create: (_) => InventoryProvider()),
       ],

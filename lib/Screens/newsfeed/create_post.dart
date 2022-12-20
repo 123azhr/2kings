@@ -8,7 +8,7 @@ import 'package:housecontractors/widgets/mycontainer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
-import '../../providers/current_user_provider.dart';
+import '../../providers/contractor_provider.dart';
 import '../../providers/post_provider.dart';
 
 class CreatePost extends StatefulWidget {
@@ -35,8 +35,9 @@ class _CreatePostState extends State<CreatePost> {
 
   uploadPost() async {
     final userProvider =
-        Provider.of<CurrentUserProvider>(context, listen: false);
-    final loggedInUser = userProvider.getCurrentUser(FirebaseAuth.instance.currentUser!.uid.trim());
+        Provider.of<ContractorsProvider>(context, listen: false);
+    final loggedInUser =
+        userProvider.getUserByID(FirebaseAuth.instance.currentUser!.uid.trim());
     final postProvider = Provider.of<PostProvider>(context, listen: false);
     showDialog(
       context: context,
@@ -75,8 +76,9 @@ class _CreatePostState extends State<CreatePost> {
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<CurrentUserProvider>(context);
-    final loggedInUser = userProvider.getCurrentUser(FirebaseAuth.instance.currentUser!.uid.trim());
+    final userProvider = Provider.of<ContractorsProvider>(context);
+    final loggedInUser =
+        userProvider.getUserByID(FirebaseAuth.instance.currentUser!.uid.trim());
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,

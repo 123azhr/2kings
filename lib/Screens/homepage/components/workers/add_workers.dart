@@ -10,7 +10,7 @@ import 'package:housecontractors/providers/worker_provider.dart';
 import 'package:housecontractors/widgets/mycontainer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import '../../../../providers/current_user_provider.dart';
+import '../../../../providers/contractor_provider.dart';
 import '../../../../widgets/bottom_modal_sheet.dart';
 
 class AddWorker extends StatefulWidget {
@@ -36,8 +36,9 @@ class _AddWorkerState extends State<AddWorker> {
 
   uploadWokerData() async {
     final userProvider =
-        Provider.of<CurrentUserProvider>(context, listen: false);
-    final loggedInUser = userProvider.getCurrentUser(FirebaseAuth.instance.currentUser!.uid.trim());
+        Provider.of<ContractorsProvider>(context, listen: false);
+    final loggedInUser =
+        userProvider.getUserByID(FirebaseAuth.instance.currentUser!.uid.trim());
     final workerProvider = Provider.of<WorkerProvider>(context, listen: false);
     showDialog(
       context: context,

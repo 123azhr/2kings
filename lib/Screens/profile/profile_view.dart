@@ -101,7 +101,7 @@ class ProfileView extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: BottomCallChat(user: user),
+        // bottomNavigationBar: BottomCallChat(user: user),
       ),
     );
   }

@@ -8,10 +8,9 @@ import 'package:housecontractors/Screens/loginSignup/signup.dart';
 import 'package:housecontractors/Screens/loginSignup/verify_email.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:provider/provider.dart';
-import '../../providers/aggrement_provider.dart';
+import '../../providers/agreement_provider.dart';
 import '../../providers/authentication_provider.dart';
 import '../../providers/chat_provider.dart';
-import '../../providers/current_user_provider.dart';
 import '../../providers/service_log_provider.dart';
 import '../../providers/message_provider.dart';
 import '../../providers/order_provider.dart';
@@ -140,10 +139,9 @@ class _LoginState extends State<Login> {
                         if (FirebaseAuth.instance.currentUser!.emailVerified) {
                           try {
                             final currentUserProvider =
-                                Provider.of<CurrentUserProvider>(context,
+                                Provider.of<ContractorsProvider>(context,
                                     listen: false);
-                            await currentUserProvider.fetch(
-                                FirebaseAuth.instance.currentUser!.uid.trim());
+                            await currentUserProvider.fetch();
                           } catch (e) {
                             print(e);
                           }
@@ -180,7 +178,7 @@ class _LoginState extends State<Login> {
                           }
                           try {
                             final aggrementProvider =
-                                Provider.of<AggrementProvider>(context,
+                                Provider.of<AgreementProvider>(context,
                                     listen: false);
 
                             await aggrementProvider.fetch();

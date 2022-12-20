@@ -1,15 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/Chat/chat_inbox.dart';
-import 'package:housecontractors/models/contractor_model.dart';
+import 'package:housecontractors/models/customer_model.dart';
+import 'package:housecontractors/providers/customer_provider.dart';
 import 'package:housecontractors/providers/message_provider.dart';
 import 'package:housecontractors/widgets/are_you_sure.dart';
 import 'package:provider/provider.dart';
-
 import '../../helper/size_configuration.dart';
 import '../../models/chat_model.dart';
 import '../../providers/chat_provider.dart';
-import '../../providers/contractor_provider.dart';
 
 class ChatMenu extends StatefulWidget {
   const ChatMenu({super.key});
@@ -27,7 +26,7 @@ class _ChatMenuState extends State<ChatMenu> {
 
     final msgProvider = Provider.of<MessageProvider>(context);
     final chatList = chatProvider.getList;
-    final userProvider = Provider.of<ContractorsProvider>(context);
+    final userProvider = Provider.of<CustomerProvider>(context);
 
     Future<void> _onRefresh() async {
       setState(() {});
@@ -79,7 +78,6 @@ class _ChatMenuState extends State<ChatMenu> {
           itemBuilder: (context, int index) => ChangeNotifierProvider.value(
             value: chatList[index],
             child: ChatMenuTile(
-
               onLongPress: () => showDialog(
                 barrierDismissible: false,
                 context: context,
@@ -95,14 +93,12 @@ class _ChatMenuState extends State<ChatMenu> {
                     }),
               ),
               chat: chatList[index],
-              subtitle: userProvider
-                  .getUserByID(chatList[index].otherID!)
-                  .services!
-                  .first,
+              // subtitle: userProvider
+              //     .getUserByID(chatList[index].otherID!)
+              //     .services!
+              //     .first,
               user: userProvider.getUserByID(chatList[index].otherID!),
-              image: CachedNetworkImageProvider(
-                
-                userProvider
+              image: CachedNetworkImageProvider(userProvider
                   .getUserByID(chatList[index].otherID!)
                   .profileImageURL!),
             ),
@@ -117,12 +113,12 @@ class ChatMenuTile extends StatelessWidget {
   const ChatMenuTile({
     Key? key,
     required this.user,
-    required this.subtitle,
+    this.subtitle = "",
     this.image,
     required this.chat,
     required this.onLongPress,
   }) : super(key: key);
-  final ContractorsModel user;
+  final CustomerModel user;
   final ChatModel chat;
   final String subtitle;
   final ImageProvider<Object>? image;
@@ -141,7 +137,6 @@ class ChatMenuTile extends StatelessWidget {
       title: Text(user.name!),
       subtitle: Text(subtitle),
       leading: CircleAvatar(
-        
         backgroundImage: const AssetImage(
           "assets/images/logo-black-half.png",
         ),

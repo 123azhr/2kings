@@ -1,9 +1,8 @@
 // ignore_for_file: avoid_print
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:housecontractors/providers/current_user_provider.dart';
 import 'package:provider/provider.dart';
+import '../../providers/contractor_provider.dart';
 import '../../providers/worker_provider.dart';
 import '../Dashboard/dashboard.dart';
 
@@ -29,9 +28,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
     await Future.delayed(const Duration(milliseconds: 0)).then((value) async {
       try {
         final currentUserProvider =
-            Provider.of<CurrentUserProvider>(context, listen: false);
+            Provider.of<ContractorsProvider>(context, listen: false);
         currentUserProvider
-            .fetch(FirebaseAuth.instance.currentUser!.uid.trim());
+            .fetch();
       } catch (e) {
         print(e);
       }

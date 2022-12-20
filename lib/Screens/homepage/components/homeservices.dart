@@ -6,7 +6,7 @@ import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../../models/service_model.dart';
-import '../../../providers/current_user_provider.dart';
+import '../../../providers/contractor_provider.dart';
 import '../../../providers/service_provider.dart';
 
 class HomeServices extends StatelessWidget {
@@ -16,8 +16,9 @@ class HomeServices extends StatelessWidget {
     final serviceProvider = Provider.of<ServiceProvider>(context);
     final serviceList = serviceProvider.getList;
 
-    final currentProvider = Provider.of<CurrentUserProvider>(context);
-    final loggedInUser = currentProvider.getCurrentUser(FirebaseAuth.instance.currentUser!.uid.trim());
+    final currentProvider = Provider.of<ContractorsProvider>(context);
+    final loggedInUser = currentProvider
+        .getUserByID(FirebaseAuth.instance.currentUser!.uid.trim());
     List<ServiceModel> tempList = List<ServiceModel>.generate(
       0,
       (index) => serviceList.first,
@@ -32,7 +33,6 @@ class HomeServices extends StatelessWidget {
       }
       return tempList;
     }
-
 
     return SizedBox(
       child: GridView.builder(

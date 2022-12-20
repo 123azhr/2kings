@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/orders/Logs/view_aggrement.dart';
 import 'package:housecontractors/Screens/orders/Logs/logs.dart';
 import 'package:housecontractors/components/profile_header.dart';
-import 'package:housecontractors/models/aggrement_model.dart';
+import 'package:housecontractors/models/agreement_model.dart';
 import 'package:housecontractors/models/orders_model.dart';
 import 'package:housecontractors/models/contractor_model.dart';
 import '../../helper/size_configuration.dart';
 
 Future<dynamic> orderDetails(
     BuildContext context,
-    AggrementModel aggrementModel,
+    AgreementModel aggrementModel,
     ContractorsModel customerModel,
     OrdersModel ordersModel) {
   return showModalBottomSheet(

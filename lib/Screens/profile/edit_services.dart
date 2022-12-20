@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:housecontractors/models/current_user.dart';
 import 'package:provider/provider.dart';
 
 import '../../helper/size_configuration.dart';
+import '../../models/contractor_model.dart';
 import '../../models/service_model.dart';
-import '../../providers/current_user_provider.dart';
+import '../../providers/contractor_provider.dart';
 import '../../providers/service_provider.dart';
 
 class EditServices extends StatelessWidget {
@@ -72,7 +72,7 @@ class EditServices extends StatelessWidget {
                         const Center(child: CircularProgressIndicator())),
                   );
                   final userProvider =
-                      Provider.of<CurrentUserProvider>(context, listen: false);
+                      Provider.of<ContractorsProvider>(context, listen: false);
                   await FirebaseFirestore.instance
                       .collection("users")
                       .doc("Y1DImckjzK5z2khAEi7o")
@@ -80,7 +80,7 @@ class EditServices extends StatelessWidget {
                       .doc(FirebaseAuth.instance.currentUser!.uid.trim())
                       .update({"services": list});
 
-                  await userProvider.fetch(FirebaseAuth.instance.currentUser!.uid.trim());
+                  await userProvider.fetch();
                   Navigator.pop(context);
                   Navigator.pop(context);
                 },
@@ -151,8 +151,9 @@ class _ServiceSlideState extends State<ServiceSlide> {
   @override
   Widget build(BuildContext context) {
     final serviceModel = Provider.of<ServiceModel>(context);
-    final userProvider = Provider.of<CurrentUserProvider>(context);
-    CurrentUserModel user = userProvider.getCurrentUser(FirebaseAuth.instance.currentUser!.uid.trim());
+    final userProvider = Provider.of<ContractorsProvider>(context);
+    ContractorsModel user =
+        userProvider.getUserByID(FirebaseAuth.instance.currentUser!.uid.trim());
     bool initialValue =
         user.services!.contains(serviceModel.serviceName!) ? true : false;
     return Card(

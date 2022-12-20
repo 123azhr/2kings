@@ -11,10 +11,9 @@ import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
 import 'package:housecontractors/providers/contractor_provider.dart';
 
 import '../../helper/size_configuration.dart';
-import '../../providers/aggrement_provider.dart';
+import '../../providers/agreement_provider.dart';
 import '../../providers/authentication_provider.dart';
 import '../../providers/chat_provider.dart';
-import '../../providers/current_user_provider.dart';
 import '../../providers/service_log_provider.dart';
 import '../../providers/message_provider.dart';
 import '../../providers/order_provider.dart';
@@ -63,8 +62,8 @@ class _UserFormState extends State<UserForm> {
   loadcurrentUser() async {
     try {
       final currentUserProvider =
-          Provider.of<CurrentUserProvider>(context, listen: false);
-      currentUserProvider.fetch(FirebaseAuth.instance.currentUser!.uid.trim());
+          Provider.of<ContractorsProvider>(context, listen: false);
+      currentUserProvider.fetch();
     } catch (e) {
       print(e);
     }
@@ -95,7 +94,7 @@ class _UserFormState extends State<UserForm> {
     }
     try {
       final aggrementProvider =
-          Provider.of<AggrementProvider>(context, listen: false);
+          Provider.of<AgreementProvider>(context, listen: false);
 
       aggrementProvider.fetch();
     } catch (e) {
