@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:housecontractors/models/service_log_model.dart';
+
+import '../models/service_log_model.dart';
 
 class ServiceLogsProvider with ChangeNotifier {
   final loggedInUser = FirebaseAuth.instance.currentUser;
@@ -13,12 +14,12 @@ class ServiceLogsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchServiceLog() async {
+  Future<void> fetchServiceLog(String logsID) async {
     await FirebaseFirestore.instance
         .collection("orders")
-        .doc(" " + loggedInUser!.uid)
+        .doc(loggedInUser!.uid)
         .collection("logs")
-        .doc("M4XynyYl03rreQUdtwg6")
+        .doc(logsID)
         .collection("services")
         .get()
         .then(
@@ -33,6 +34,11 @@ class ServiceLogsProvider with ChangeNotifier {
               },
           },
         );
+    _servicelist.removeWhere((element) =>
+        element.serviceName == "" &&
+        element.total == "" &&
+        element.perDay == "" &&
+        element.noOfDays == "");
     notifyListeners();
   }
 
@@ -41,13 +47,27 @@ class ServiceLogsProvider with ChangeNotifier {
     String? noOfDays,
     String? total,
     String? perDay,
+    String? logsID,
+    String? customerID,
   }) async {
     DocumentReference<Map<String, dynamic>> doc = await FirebaseFirestore
         .instance
         .collection("orders")
-        .doc(" " + loggedInUser!.uid)
+        .doc(loggedInUser!.uid)
         .collection("logs")
-        .doc("M4XynyYl03rreQUdtwg6")
+        .doc(logsID)
+        .collection("services")
+        .add({
+      "serviceName": serviceName,
+      "noOfDays": noOfDays,
+      "total": total,
+      "perDay": perDay,
+    });
+    await FirebaseFirestore.instance
+        .collection("orders")
+        .doc(customerID!)
+        .collection("logs")
+        .doc(logsID)
         .collection("services")
         .add({
       "serviceName": serviceName,
@@ -58,16 +78,44 @@ class ServiceLogsProvider with ChangeNotifier {
     _servicelist.insert(
       0,
       ServiceLogModel(
-          serviceID: doc.id,
-          serviceName: serviceName,
-          perDay: perDay,
-          noOfDays: noOfDays,
-          total: total),
+        serviceID: doc.id,
+        serviceName: serviceName,
+        perDay: perDay,
+        noOfDays: noOfDays,
+        total: total,
+      ),
     );
+
     notifyListeners();
   }
 
-  List<ServiceLogModel> getserviceByID(String serviceLogID) {
+  Future<void> deleteItem(
+      {required String? serviceID, required String logsID}) async {
+    await FirebaseFirestore.instance
+        .collection("orders")
+        .doc(loggedInUser!.uid)
+        .collection("logs")
+        .doc(logsID)
+        .collection("services")
+        .doc(serviceID)
+        .delete();
+
+    _servicelist.removeWhere(
+      (element) => element.serviceID == serviceID,
+    );
+
+    notifyListeners();
+  }
+
+  String serviceTotal() {
+    double _sumofService = 0;
+    for (var element in _servicelist) {
+      _sumofService += double.parse(element.total!);
+    }
+    return _sumofService.toString();
+  }
+
+  List<ServiceLogModel> getserviceByServiceID(String serviceLogID) {
     return _servicelist
         .where((element) => element.serviceID!.trim() == serviceLogID.trim())
         .toList();

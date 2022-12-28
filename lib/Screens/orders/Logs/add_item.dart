@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
+import 'package:housecontractors/models/orders_model.dart';
+import 'package:housecontractors/providers/order_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../helper/size_configuration.dart';
+import '../../../models/agreement_model.dart';
+import '../../../providers/agreement_provider.dart';
 import '../../../providers/inventory_provider.dart';
 
 class AddItem extends StatefulWidget {
   const AddItem({
     Key? key,
+    required this.ordersModel,
   }) : super(key: key);
+  final OrdersModel ordersModel;
   @override
   State<AddItem> createState() => _AddItemState();
 }
@@ -22,6 +28,10 @@ class _AddItemState extends State<AddItem> {
   @override
   Widget build(BuildContext context) {
     final inventoryProvider = Provider.of<InventoryProvider>(context);
+    final agreementProvider = Provider.of<AgreementProvider>(context);
+
+    AgreementModel agreementModel =
+        agreementProvider.getAgreementByID(widget.ordersModel.aggrementID!);
     bool _isButtonDisabled = nameController.text.isNotEmpty &&
         qtyController.text.isNotEmpty &&
         priceController.text.isNotEmpty;
@@ -65,6 +75,9 @@ class _AddItemState extends State<AddItem> {
                         width: setWidth(65),
                         radius: 20,
                         controller: nameController,
+                        onChanged: (p0) {
+                          setState(() {});
+                        },
                       ),
                     ],
                   ),
@@ -81,6 +94,9 @@ class _AddItemState extends State<AddItem> {
                         radius: 20,
                         controller: qtyController,
                         inputType: TextInputType.number,
+                        onChanged: (p0) {
+                          setState(() {});
+                        },
                       ),
                     ],
                   ),
@@ -97,6 +113,9 @@ class _AddItemState extends State<AddItem> {
                         radius: 20,
                         controller: priceController,
                         inputType: TextInputType.number,
+                        onChanged: (p0) {
+                          setState(() {});
+                        },
                       ),
                     ],
                   ),
@@ -113,13 +132,33 @@ class _AddItemState extends State<AddItem> {
                       ),
                       onPressed: _isButtonDisabled
                           ? () async {
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: ((context) => WillPopScope(
+                                      onWillPop: () async => false,
+                                      child: const Center(
+                                          child: CircularProgressIndicator()),
+                                    )),
+                              );
                               await inventoryProvider.uploadItemDataToFireStore(
                                   itemName: nameController.text,
                                   perItem: priceController.text,
                                   qty: qtyController.text,
+                                  logsID: widget.ordersModel.logsID,
+                                  customerID: agreementModel.customerID,
                                   total: (int.parse(qtyController.text) *
                                           int.parse(priceController.text))
                                       .toString());
+                              final orderProvider = Provider.of<OrdersProvider>(
+                                  context,
+                                  listen: false);
+                              await orderProvider.updateTotal(
+                                  widget.ordersModel.orderID!,
+                                  inventoryProvider.inventoryTotal(),
+                                  widget.ordersModel.serviceTotal!,
+                                  agreementModel.customerID!);
+                              Navigator.pop(context);
                               Navigator.pop(context);
                             }
                           : null,

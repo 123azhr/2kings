@@ -3,6 +3,7 @@ import 'package:housecontractors/providers/service_log_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../helper/size_configuration.dart';
 import '../../../models/orders_model.dart';
+import '../../../widgets/are_you_sure.dart';
 import 'add_service.dart';
 
 class ViewServicesLogs extends StatelessWidget {
@@ -109,7 +110,28 @@ class ViewServicesLogs extends StatelessWidget {
                 itemBuilder: (context, index) => ChangeNotifierProvider.value(
                   value: serviceList[index],
                   builder: (context, child) => InkWell(
-                    onLongPress: () {},
+                    onLongPress: () {
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) => AreYouSure(
+                          title: "Delete this Item",
+                          onPressed: () async {
+                            showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (context) =>
+                                  const CircularProgressIndicator(),
+                            );
+                            await serviceProvider.deleteItem(
+                                logsID: ordersModel.logsID!,
+                                serviceID: serviceList[index].serviceID);
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                          },
+                        ),
+                      );
+                    },
                     child: ServicesTableRow(
                         serviceName: serviceList[index].serviceName!,
                         perDay: serviceList[index].perDay!,
@@ -133,24 +155,31 @@ class ViewServicesLogs extends StatelessWidget {
             children: [
               SizedBox(
                 height: setHeight(7),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: Size(setWidth(40), setHeight(5)),
-                        side: const BorderSide(
-                          width: 0,
-                        ),
-                        elevation: 3,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)),
-                      ),
-                      onPressed: () {
-                        showModalBottomSheet(
-                            context: context,
-                            builder: (context) => const AddServiceItem());
-                      },
-                      child: const Text("Add Service")),
+                child: Row(
+                  children: [
+                    const Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            fixedSize: Size(setWidth(40), setHeight(5)),
+                            side: const BorderSide(
+                              width: 0,
+                            ),
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                          ),
+                          onPressed: () {
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (context) => AddServiceItem(
+                                      ordersModel: ordersModel,
+                                    ));
+                          },
+                          child: const Text("Add Service")),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
@@ -174,7 +203,7 @@ class ViewServicesLogs extends StatelessWidget {
                       padding: EdgeInsets.all(getProportionateScreenHeight(8)),
                       height: 50,
                       child: Text(
-                        ordersModel.inventoryTotal!,
+                        serviceProvider.serviceTotal(),
                         style: const TextStyle(fontSize: 24),
                       ),
                     ),

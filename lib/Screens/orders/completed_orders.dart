@@ -8,7 +8,9 @@ import 'package:provider/provider.dart';
 
 import '../../helper/size_configuration.dart';
 import '../../models/agreement_model.dart';
+import '../../models/customer_model.dart';
 import '../../providers/agreement_provider.dart';
+import '../../providers/customer_provider.dart';
 import '../../providers/order_provider.dart';
 import 'order_details.dart';
 
@@ -66,9 +68,8 @@ class ActiveOrderTile extends StatelessWidget {
         Provider.of<AgreementProvider>(context);
     AgreementModel aggrementModel =
         aggrementProvider.getAgreementByID(ordersModel.aggrementID!);
-    ContractorsProvider userProvider =
-        Provider.of<ContractorsProvider>(context);
-    ContractorsModel customerModel =
+      CustomerProvider userProvider = Provider.of<CustomerProvider>(context);
+    CustomerModel customerModel =
         userProvider.getUserByID(aggrementModel.customerID!);
     return ListTile(
       onTap: () =>

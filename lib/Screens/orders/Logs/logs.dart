@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/orders/Logs/view_inventory_log.dart';
 import 'package:housecontractors/Screens/orders/Logs/view_services_logs.dart';
 import 'package:housecontractors/models/orders_model.dart';
+import 'package:provider/provider.dart';
 import '../../../helper/size_configuration.dart';
+import '../../../providers/inventory_provider.dart';
+import '../../../providers/service_log_provider.dart';
 
 class Logs extends StatelessWidget {
   const Logs({
@@ -14,6 +17,12 @@ class Logs extends StatelessWidget {
   final OrdersModel ordersModel;
   @override
   Widget build(BuildContext context) {
+    ServiceLogsProvider servicelogsProvider =
+        Provider.of<ServiceLogsProvider>(context);
+    servicelogsProvider.fetchServiceLog(ordersModel.logsID!);
+    InventoryProvider inventoryProvider =
+        Provider.of<InventoryProvider>(context);
+    inventoryProvider.fetchInventory(ordersModel.logsID!);
     return Scaffold(
       appBar: AppBar(
         title: const Text(

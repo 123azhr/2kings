@@ -21,6 +21,7 @@ class ViewInventoryLogs extends StatelessWidget {
   Widget build(BuildContext context) {
     final inventoryProvider = Provider.of<InventoryProvider>(context);
     final inventoryList = inventoryProvider.getInventoryList;
+    
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -52,9 +53,11 @@ class ViewInventoryLogs extends StatelessWidget {
                             showDialog(
                               barrierDismissible: false,
                               context: context,
-                              builder: (context) => const CircularProgressIndicator(),
+                              builder: (context) =>
+                                  const CircularProgressIndicator(),
                             );
                             await inventoryProvider.deleteItem(
+                                logsID: ordersModel.logsID!,
                                 inventoryID: inventoryList[index].inventoryID);
                             Navigator.pop(context);
                             Navigator.pop(context);
@@ -85,24 +88,31 @@ class ViewInventoryLogs extends StatelessWidget {
             children: [
               SizedBox(
                 height: setHeight(7),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: Size(setWidth(40), setHeight(5)),
-                        side: const BorderSide(
-                          width: 0,
-                        ),
-                        elevation: 3,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)),
-                      ),
-                      onPressed: () {
-                        showModalBottomSheet(
-                            context: context,
-                            builder: (context) => const AddItem());
-                      },
-                      child: const Text("Add Item")),
+                child: Row(
+                  children: [
+                    const Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            fixedSize: Size(setWidth(40), setHeight(5)),
+                            side: const BorderSide(
+                              width: 0,
+                            ),
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                          ),
+                          onPressed: () {
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (context) => AddItem(
+                                      ordersModel: ordersModel,
+                                    ));
+                          },
+                          child: const Text("Add Item")),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
@@ -126,7 +136,7 @@ class ViewInventoryLogs extends StatelessWidget {
                       padding: EdgeInsets.all(getProportionateScreenHeight(8)),
                       height: 50,
                       child: Text(
-                        ordersModel.inventoryTotal!,
+                        inventoryProvider.inventoryTotal(),
                         style: const TextStyle(fontSize: 24),
                       ),
                     ),

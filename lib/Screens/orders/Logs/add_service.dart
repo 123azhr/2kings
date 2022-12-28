@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
+import 'package:housecontractors/models/agreement_model.dart';
+import 'package:housecontractors/providers/agreement_provider.dart';
 import 'package:housecontractors/providers/service_log_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../helper/size_configuration.dart';
+import '../../../models/orders_model.dart';
+import '../../../providers/order_provider.dart';
 
 class AddServiceItem extends StatefulWidget {
   const AddServiceItem({
     Key? key,
+    required this.ordersModel,
   }) : super(key: key);
+  final OrdersModel ordersModel;
+
   @override
   State<AddServiceItem> createState() => _AddItemState();
 }
@@ -23,6 +30,11 @@ class _AddItemState extends State<AddServiceItem> {
   Widget build(BuildContext context) {
     final serviceProvider = Provider.of<ServiceLogsProvider>(context);
 
+    final agreementProvider = Provider.of<AgreementProvider>(context);
+
+    AgreementModel agreementModel =
+        agreementProvider.getAgreementByID(widget.ordersModel.aggrementID!);
+
     bool _isButtonDisabled = nameController.text.isNotEmpty &&
         daysController.text.isNotEmpty &&
         priceController.text.isNotEmpty;
@@ -35,7 +47,7 @@ class _AddItemState extends State<AddServiceItem> {
             fit: BoxFit.contain,
           ),
           title: const Text(
-            "Add Item",
+            "Add Service",
             style: TextStyle(
               color: Colors.black,
               fontSize: 20,
@@ -75,7 +87,7 @@ class _AddItemState extends State<AddServiceItem> {
                   Row(
                     children: [
                       const Text(
-                        "Quantity: ",
+                        "Days: ",
                         style: TextStyle(fontSize: 24),
                       ),
                       const Spacer(),
@@ -94,7 +106,7 @@ class _AddItemState extends State<AddServiceItem> {
                   Row(
                     children: [
                       const Text(
-                        "Per Item: ",
+                        "Per Day: ",
                         style: TextStyle(fontSize: 24),
                       ),
                       const Spacer(),
@@ -123,13 +135,33 @@ class _AddItemState extends State<AddServiceItem> {
                       ),
                       onPressed: _isButtonDisabled
                           ? () async {
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: ((context) => WillPopScope(
+                                      onWillPop: () async => false,
+                                      child: const Center(
+                                          child: CircularProgressIndicator()),
+                                    )),
+                              );
                               await serviceProvider.uploadItemDataToFireStore(
                                   serviceName: nameController.text,
                                   perDay: priceController.text,
                                   noOfDays: daysController.text,
+                                  customerID: agreementModel.customerID,
+                                  logsID: widget.ordersModel.logsID,
                                   total: (int.parse(daysController.text) *
                                           int.parse(priceController.text))
                                       .toString());
+                              final orderProvider = Provider.of<OrdersProvider>(
+                                  context,
+                                  listen: false);
+                             await orderProvider.updateTotal(
+                                  widget.ordersModel.orderID!,
+                                  widget.ordersModel.inventoryTotal!,
+                                  serviceProvider.serviceTotal(),
+                                  agreementModel.customerID!);
+                              Navigator.pop(context);
                               Navigator.pop(context);
                             }
                           : null,

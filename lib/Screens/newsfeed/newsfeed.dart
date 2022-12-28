@@ -18,12 +18,11 @@ class Newsfeed extends StatefulWidget {
 
 class _NewsfeedState extends State<Newsfeed> {
   final ScrollController _scrollController = ScrollController();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-        GlobalKey<RefreshIndicatorState>();
-
     final userProvider = Provider.of<ContractorsProvider>(context);
     final loggedInUser =
         userProvider.getUserByID(FirebaseAuth.instance.currentUser!.uid.trim());

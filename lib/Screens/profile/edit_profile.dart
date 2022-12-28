@@ -286,8 +286,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     showDialog(
                       context: context,
                       barrierDismissible: false,
-                      builder: ((context) =>
-                          const Center(child: CircularProgressIndicator())),
+                      builder: ((context) => WillPopScope(
+                            onWillPop: () async => false,
+                            child: const Center(
+                                child: CircularProgressIndicator()),
+                          )),
                     );
                     final userProvider = Provider.of<ContractorsProvider>(
                         context,
@@ -299,8 +302,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         .doc(FirebaseAuth.instance.currentUser!.uid.trim())
                         .update({"profileImageURL": _imagePath});
 
-                    await userProvider
-                        .fetch();
+                    await userProvider.fetch();
                     Navigator.pop(context);
                     Navigator.pop(context);
                   },

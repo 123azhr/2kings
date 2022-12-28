@@ -9,17 +9,18 @@ class InventoryProvider with ChangeNotifier {
   List<InventoryModel> _list = [];
 
   List<InventoryModel> get getInventoryList => _list;
+
   void clearList() {
     _list.clear();
     notifyListeners();
   }
 
-  Future<void> fetchInventory() async {
+  Future<void> fetchInventory(String logsID) async {
     await FirebaseFirestore.instance
         .collection("orders")
-        .doc(" " + loggedInUser!.uid)
+        .doc(loggedInUser!.uid)
         .collection("logs")
-        .doc("M4XynyYl03rreQUdtwg6")
+        .doc(logsID)
         .collection("inventory")
         .get()
         .then(
@@ -34,21 +35,39 @@ class InventoryProvider with ChangeNotifier {
               },
           },
         );
+    _list.removeWhere((element) =>
+        element.itemName == "" &&
+        element.total == "" &&
+        element.qty == "" &&
+        element.perItem == "");
     notifyListeners();
   }
 
-  Future<void> uploadItemDataToFireStore({
-    String? itemName,
-    String? qty,
-    String? total,
-    String? perItem,
-  }) async {
+  Future<void> uploadItemDataToFireStore(
+      {String? itemName,
+      String? qty,
+      String? total,
+      String? perItem,
+      String? logsID,
+      String? customerID}) async {
     DocumentReference<Map<String, dynamic>> doc = await FirebaseFirestore
         .instance
         .collection("orders")
-        .doc(" " + loggedInUser!.uid)
+        .doc(loggedInUser!.uid)
         .collection("logs")
-        .doc("M4XynyYl03rreQUdtwg6")
+        .doc(logsID)
+        .collection("inventory")
+        .add({
+      "itemName": itemName,
+      "qty": qty,
+      "total": total,
+      "perItem": perItem,
+    });
+    await FirebaseFirestore.instance
+        .collection("orders")
+        .doc(customerID!)
+        .collection("logs")
+        .doc(logsID)
         .collection("inventory")
         .add({
       "itemName": itemName,
@@ -59,23 +78,33 @@ class InventoryProvider with ChangeNotifier {
     _list.insert(
       0,
       InventoryModel(
-          inventoryID: doc.id,
-          itemName: itemName,
-          perItem: perItem,
-          qty: qty,
-          total: total),
+        inventoryID: doc.id,
+        itemName: itemName,
+        perItem: perItem,
+        qty: qty,
+        total: total,
+      ),
     );
     notifyListeners();
   }
 
-  Future<void> deleteItem({
-    required String? inventoryID,
-  }) async {
+  String inventoryTotal() {
+    double _sumOfInventory = 0;
+    for (var element in _list) {
+      if (element.total != "") {
+        _sumOfInventory += double.parse(element.total!);
+      }
+    }
+    return _sumOfInventory.toString();
+  }
+
+  Future<void> deleteItem(
+      {required String? inventoryID, required String logsID}) async {
     await FirebaseFirestore.instance
         .collection("orders")
-        .doc(" " + loggedInUser!.uid)
+        .doc(loggedInUser!.uid)
         .collection("logs")
-        .doc("M4XynyYl03rreQUdtwg6")
+        .doc(logsID)
         .collection("inventory")
         .doc(inventoryID)
         .delete();
@@ -86,9 +115,9 @@ class InventoryProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  InventoryModel getInventoryByID(String logsID) {
+  InventoryModel getInventoryByID(String inventoryID) {
     return _list
-        .where((element) => element.inventoryID!.trim() == logsID.trim())
+        .where((element) => element.inventoryID!.trim() == inventoryID.trim())
         .first;
   }
 }

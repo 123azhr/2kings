@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/models/post_model.dart';
+import 'package:housecontractors/providers/comments_provider.dart';
 import 'package:housecontractors/widgets/mycontainer.dart';
 import '../../../helper/size_configuration.dart';
 import '../../../providers/post_provider.dart';
@@ -10,24 +12,33 @@ class Comments extends StatelessWidget {
     required this.postModel,
     required this.postProvider,
     Key? key,
+    required this.commentsProvider,
   }) : super(key: key);
 
   final PostModel postModel;
   final PostProvider postProvider;
+  final CommentsProvider commentsProvider;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => showModalBottomSheet(
-        backgroundColor: Colors.transparent,
-        context: context,
-        builder: (context) => MyContainer(
-            padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom),
-            color: const Color.fromARGB(255, 255, 230, 149),
-            width: setWidth(100),
-            height: setHeight(60),
-            child: OpenComments()),
-      ),
+      onTap: () {
+        if (commentsProvider.getList.isNotEmpty) {
+          showCupertinoModalPopup(
+            context: context,
+            builder: (context) => MyContainer(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                color: const Color.fromARGB(255, 255, 230, 149),
+                width: setWidth(100),
+                height: setHeight(60),
+                child: OpenComments(
+                  commentsProvider: commentsProvider,
+                  postModel: postModel,
+                  postProvider: postProvider,
+                )),
+          );
+        }
+      },
       child: Container(
         color: Colors.transparent,
         height: setHeight(5),

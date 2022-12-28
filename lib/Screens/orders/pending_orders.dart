@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:housecontractors/models/customer_model.dart';
 import 'package:housecontractors/models/orders_model.dart';
-import 'package:housecontractors/models/contractor_model.dart';
-import 'package:housecontractors/providers/contractor_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../helper/size_configuration.dart';
 import '../../models/agreement_model.dart';
 import '../../providers/agreement_provider.dart';
+import '../../providers/customer_provider.dart';
 import '../../providers/order_provider.dart';
 import 'order_details.dart';
 
-class PendingOrders extends StatelessWidget {
+class PendingOrders extends StatefulWidget {
   const PendingOrders({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<PendingOrders> createState() => _PendingOrdersState();
+}
+
+class _PendingOrdersState extends State<PendingOrders> {
+  @override
   Widget build(BuildContext context) {
     OrdersProvider ordersProvider = Provider.of<OrdersProvider>(context);
+    ordersProvider.fetch();
     List<OrdersModel> ordersList = ordersProvider.getList
         .where((element) => element.status == "Pending")
         .toList();
@@ -30,7 +36,7 @@ class PendingOrders extends StatelessWidget {
       itemCount: ordersList.length,
       itemBuilder: (context, int index) => ChangeNotifierProvider.value(
         value: ordersList[index],
-        child: ActiveOrderTile(ordersModel: ordersList[index]),
+        child: PendingOrderTile(ordersModel: ordersList[index]),
       ),
       physics: const BouncingScrollPhysics(),
     );
@@ -45,15 +51,15 @@ class PendingOrders extends StatelessWidget {
     //     crossAxisAlignment: CrossAxisAlignment.start,
     //     textDirection: TextDirection.ltr,
     //     children: [
-    //       activeOrderTile(),
+    //       PendingOrderTile(),
     //     ],
     //   )),
     // );
   }
 }
 
-class ActiveOrderTile extends StatelessWidget {
-  const ActiveOrderTile({
+class PendingOrderTile extends StatelessWidget {
+  const PendingOrderTile({
     Key? key,
     required this.ordersModel,
   }) : super(key: key);
@@ -64,13 +70,12 @@ class ActiveOrderTile extends StatelessWidget {
         Provider.of<AgreementProvider>(context);
     AgreementModel aggrementModel =
         aggrementProvider.getAgreementByID(ordersModel.aggrementID!);
-    ContractorsProvider userProvider =
-        Provider.of<ContractorsProvider>(context);
-    ContractorsModel customerModel =
+    CustomerProvider userProvider = Provider.of<CustomerProvider>(context);
+    CustomerModel customerModel =
         userProvider.getUserByID(aggrementModel.customerID!);
     return ListTile(
       onTap: () =>
-          orderDetails(context, aggrementModel, customerModel, ordersModel),
+          orderDetails(context, aggrementModel, customerModel, ordersModel,),
       leading: const Icon(Icons.area_chart),
       title: Text(customerModel.name!,
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),

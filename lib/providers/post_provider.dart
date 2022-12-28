@@ -11,7 +11,7 @@ class PostProvider with ChangeNotifier {
   List<PostModel> get getList => _list;
 
   Future<void> fetch() async {
-    await FirebaseFirestore.instance.collection("c_post").get().then(
+    await FirebaseFirestore.instance.collection("post").get().then(
           (QuerySnapshot<Map<String, dynamic>> snapshot) => {
             _list = [],
             for (var doc in snapshot.docs)
@@ -26,7 +26,6 @@ class PostProvider with ChangeNotifier {
     notifyListeners();
   }
 
-
   List<PostModel> getPostByID(String userID) {
     getList.sort(((a, b) => a.postedTime!.compareTo(b.postedTime!)));
     return getList.where((element) => element.userID == userID).toList();
@@ -40,7 +39,7 @@ class PostProvider with ChangeNotifier {
     DateTime? date,
   }) async {
     DocumentReference<Map<String, dynamic>> doc =
-        await FirebaseFirestore.instance.collection("c_post").add({
+        await FirebaseFirestore.instance.collection("post").add({
       "imgVideo": imageURL,
       "userName": userName,
       "userID": userID,
@@ -68,7 +67,7 @@ class PostProvider with ChangeNotifier {
     List? likes,
   }) async {
     FirebaseFirestore.instance
-        .collection("c_post")
+        .collection("post")
         .doc(postID)
         .update({'likes': likes});
 

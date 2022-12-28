@@ -4,13 +4,16 @@ import 'package:housecontractors/Screens/orders/Logs/logs.dart';
 import 'package:housecontractors/components/profile_header.dart';
 import 'package:housecontractors/models/agreement_model.dart';
 import 'package:housecontractors/models/orders_model.dart';
-import 'package:housecontractors/models/contractor_model.dart';
+import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
+import '../../models/customer_model.dart';
+import '../../providers/order_provider.dart';
+import '../../widgets/mycontainer.dart';
 
 Future<dynamic> orderDetails(
     BuildContext context,
     AgreementModel aggrementModel,
-    ContractorsModel customerModel,
+    CustomerModel customerModel,
     OrdersModel ordersModel) {
   return showModalBottomSheet(
     context: context,
@@ -57,11 +60,11 @@ Future<dynamic> orderDetails(
                 color: Colors.greenAccent,
                 height: setHeight(10),
                 child: ProfileHeader(
-                    title: customerModel.name!,
-                    imageURL: customerModel.profileImageURL!,
-                    email: customerModel.email!,
-                    phoneNumber: customerModel.contactNumber!,
-                    rating: customerModel.rating!),
+                  title: customerModel.name!,
+                  imageURL: customerModel.profileImageURL!,
+                  email: customerModel.email!,
+                  phoneNumber: customerModel.contactNumber!,
+                ),
               ),
               Container(
                   height: setHeight(30),
@@ -82,7 +85,7 @@ Future<dynamic> orderDetails(
                         height: getProportionateScreenHeight(2),
                       ),
                       Text(
-                        "Started: " +
+                        "Start Date: " +
                             aggrementModel.startDate
                                 .toString()
                                 .split(" ")
@@ -92,11 +95,8 @@ Future<dynamic> orderDetails(
                         ),
                       ),
                       Text(
-                        "Ended:   " +
-                            aggrementModel.startDate
-                                .toString()
-                                .split(" ")
-                                .first,
+                        "End Date:   " +
+                            aggrementModel.endDate.toString().split(" ").first,
                         style: TextStyle(
                           fontSize: getProportionateScreenHeight(16),
                         ),
@@ -126,56 +126,92 @@ Future<dynamic> orderDetails(
                 color: const Color.fromARGB(255, 255, 255, 255),
                 child: Row(
                   children: [
-                    SizedBox(
-                      height: setHeight(7),
-                      width: setWidth(30),
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                            Colors.amberAccent,
-                          ),
-                        ),
-                        onPressed: () async {
-                          // showDialog(
-                          //     context: context,
-                          //     builder: (context) => const Center(
-                          //         child: CircularProgressIndicator()));
-                          // ServiceLogsProvider serviceLogsProvider =
-                          //     Provider.of<ServiceLogsProvider>(context,
-                          //         listen: false);
-
-                          // InventoryProvider inventoryProvider =
-                          //     Provider.of<InventoryProvider>(context,
-                          //         listen: false);
-                          // await serviceLogsProvider
-                          //     .fetchServiceLog(ordersModel.logsID!);
-                          // await inventoryProvider
-                          //     .fetchInventory(ordersModel.logsID!);
-
-                          // List<InventoryModel> inventoryList =
-                          //     inventoryProvider.getInventoryList;
-                          // List<ServiceLogModel> serviceLogList =
-                          //     serviceLogsProvider.getServicelist;
-                          // Navigator.pop(context);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Logs(
-                                title: customerModel.name!,
-                                ordersModel: ordersModel,
+                    ordersModel.status != "Pending"
+                        ? SizedBox(
+                            height: setHeight(7),
+                            width: setWidth(30),
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                  Colors.amberAccent,
+                                ),
+                              ),
+                              onPressed: () async {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Logs(
+                                      title: customerModel.name!,
+                                      ordersModel: ordersModel,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "View Logs",
+                                style: TextStyle(
+                                    color: Colors.black87,
+                                    fontSize: getProportionateScreenHeight(18),
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
-                          );
-                        },
-                        child: Text(
-                          "View Logs",
-                          style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: getProportionateScreenHeight(18),
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
+                          )
+                        : SizedBox(
+                            height: setHeight(7),
+                            width: setWidth(30),
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                  Colors.amberAccent,
+                                ),
+                              ),
+                              onPressed: () async {
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: ((context) => WillPopScope(
+                                        onWillPop: () async => false,
+                                        child: const Center(
+                                            child: CircularProgressIndicator()),
+                                      )),
+                                );
+                                try {
+                                  OrdersProvider orderProvider =
+                                      Provider.of<OrdersProvider>(context,
+                                          listen: false);
+                                  orderProvider.updateStatus(
+                                      ordersModel.orderID!,
+                                      "Active",
+                                      aggrementModel.customerID!);
+
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                  orderProvider.removeListener(() {});
+                                } catch (e) {
+                                  Navigator.pop(context);
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => Center(
+                                        child: MyContainer(
+                                      height: setHeight(10),
+                                      width: setWidth(50),
+                                      child: Text("Error Accepting Order " +
+                                          e.toString()),
+                                    )),
+                                  );
+                                }
+                              },
+                              child: Text(
+                                "Activate Order Now",
+                                style: TextStyle(
+                                    color: Colors.black87,
+                                    fontSize: getProportionateScreenHeight(18),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
                     const Spacer(),
                     SizedBox(
                       height: setHeight(7),

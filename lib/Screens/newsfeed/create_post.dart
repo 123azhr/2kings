@@ -42,7 +42,10 @@ class _CreatePostState extends State<CreatePost> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: ((context) => const Center(child: CircularProgressIndicator())),
+      builder: ((context) => WillPopScope(
+            onWillPop: () async => false,
+            child: const Center(child: CircularProgressIndicator()),
+          )),
     );
     try {
       DateTime date = DateTime.now();

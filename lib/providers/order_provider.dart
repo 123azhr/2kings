@@ -17,7 +17,7 @@ class OrdersProvider with ChangeNotifier {
     if (loggedInUser != null) {
       await FirebaseFirestore.instance
           .collection("orders")
-          .doc(" " + loggedInUser!.uid)
+          .doc(loggedInUser!.uid)
           .collection("orderDetails")
           .get()
           .then(
@@ -34,6 +34,49 @@ class OrdersProvider with ChangeNotifier {
           );
       notifyListeners();
     }
+  }
+
+  updateStatus(String orderID, String status, String customerID) async {
+    await FirebaseFirestore.instance
+        .collection("orders")
+        .doc(loggedInUser!.uid)
+        .collection("orderDetails")
+        .doc(orderID)
+        .update({"status": status});
+    await FirebaseFirestore.instance
+        .collection("chats")
+        .doc(customerID)
+        .collection("agreements")
+        .doc(orderID)
+        .update({"status": status});
+    fetch();
+  }
+
+  updateTotal(String orderID, String inventoryTotal, String serviceTotal,
+      String customerID) async {
+    double grandTotal =
+        double.parse(inventoryTotal) + double.parse(serviceTotal);
+    await FirebaseFirestore.instance
+        .collection("orders")
+        .doc(loggedInUser!.uid)
+        .collection("orderDetails")
+        .doc(orderID)
+        .update({
+      "inventoryTotal": inventoryTotal,
+      "serviceTotal": serviceTotal,
+      "grandTotal": grandTotal.toString()
+    });
+    await FirebaseFirestore.instance
+        .collection("chats")
+        .doc(customerID)
+        .collection("agreements")
+        .doc(orderID)
+        .update({
+      "inventoryTotal": inventoryTotal,
+      "serviceTotal": serviceTotal,
+      "grandTotal": grandTotal.toString()
+    });
+    fetch();
   }
 
   List<OrdersModel> getOrderByID(String aggrementID) {
