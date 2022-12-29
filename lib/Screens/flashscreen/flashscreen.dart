@@ -45,6 +45,9 @@ class _FlashScreenState extends State<FlashScreen> {
       } catch (e) {}
       final postProvider = Provider.of<PostProvider>(context, listen: false);
       await postProvider.fetch();
+
+      Provider.of<CommentsProvider>(context, listen: false);
+
       try {
         final userProvider =
             Provider.of<ContractorsProvider>(context, listen: false);
@@ -89,7 +92,6 @@ class _FlashScreenState extends State<FlashScreen> {
 
         Provider.of<InventoryProvider>(context, listen: false);
       } catch (e) {}
-      Provider.of<CommentsProvider>(context, listen: false);
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(

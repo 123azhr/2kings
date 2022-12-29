@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:housecontractors/Screens/newsfeed/Post/post_bottom.dart';
 import '../../../helper/size_configuration.dart';
 import '../../../models/post_model.dart';
 import 'like.dart';

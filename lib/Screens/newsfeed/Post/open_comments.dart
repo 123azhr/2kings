@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
+import 'package:housecontractors/models/comments_model.dart';
 import 'package:housecontractors/providers/comments_provider.dart';
 import 'package:housecontractors/providers/customer_provider.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +26,6 @@ class OpenComments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final commentsList = commentsProvider.getList;
-    final customerProvider = Provider.of<CustomerProvider>(context);
 
     return SingleChildScrollView(
       child: SizedBox(
@@ -41,43 +41,55 @@ class OpenComments extends StatelessWidget {
               ),
               height: setHeight(52),
               child: ListView.separated(
-                shrinkWrap: true,
                 separatorBuilder: (context, index) => const Divider(),
                 scrollDirection: Axis.vertical,
                 itemCount: commentsList.length,
                 itemBuilder: (context, int index) {
-                  final user =
-                      customerProvider.getUserByID(commentsList[index].userID!);
                   return ChangeNotifierProvider.value(
-                    value: commentsList[index],
-                    child: ListTile(
-                      leading: ClipOval(
-                        child: CachedNetworkImage(
-                          imageUrl: user.profileImageURL!,
-                        ),
-                      ),
-                      title: Text(user.name!),
-                      subtitle: Text(commentsList[index].text!),
-                    ),
-                  );
+                      value: commentsList[index],
+                      child: CommentTile(commentsModel: commentsList[index]));
                 },
                 physics: const BouncingScrollPhysics(),
               ),
             ),
-            SizedBox(
-              height: setHeight(7),
-              child: MyTextField(
-                  width: setWidth(
-                    99,
-                  ),
-                  hintText: "Comment your view",
-                  leading: const Icon(Icons.send_sharp),
-                  radius: getProportionateScreenWidth(20),
-                  controller: commentController),
-            ),
+            // SizedBox(
+            //   height: setHeight(7),
+            //   child: MyTextField(
+            //       width: setWidth(
+            //         99,
+            //       ),
+            //       hintText: "Comment your view",
+            //       leading: const Icon(Icons.send_sharp),
+            //       radius: getProportionateScreenWidth(20),
+            //       controller: commentController),
+            // ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class CommentTile extends StatelessWidget {
+  const CommentTile({
+    Key? key,
+    required this.commentsModel,
+  }) : super(key: key);
+
+  final CommentsModel commentsModel;
+
+  @override
+  Widget build(BuildContext context) {
+    final customerProvider = Provider.of<CustomerProvider>(context);
+    final user = customerProvider.getUserByID(commentsModel.userID!);
+    return ListTile(
+      leading: ClipOval(
+        child: CachedNetworkImage(
+          imageUrl: user.profileImageURL!,
+        ),
+      ),
+      title: Text(user.name!),
+      subtitle: Text(commentsModel.text!),
     );
   }
 }

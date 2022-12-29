@@ -21,9 +21,10 @@ class Comments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        if (commentsProvider.getList.isNotEmpty) {
-          showCupertinoModalPopup(
+      onTap: () async{
+        try {
+          
+          showModalBottomSheet(
             context: context,
             builder: (context) => MyContainer(
                 padding: EdgeInsets.only(
@@ -37,7 +38,7 @@ class Comments extends StatelessWidget {
                   postProvider: postProvider,
                 )),
           );
-        }
+        } catch (e) {}
       },
       child: Container(
         color: Colors.transparent,

@@ -34,7 +34,6 @@ class _PostBottomState extends State<PostBottom> {
         .getUserByID(FirebaseAuth.instance.currentUser!.uid.trim())
         .userID!;
     final postProvider = Provider.of<PostProvider>(context);
-
     return SizedBox(
       height: setHeight(7),
       width: setWidth(100),
