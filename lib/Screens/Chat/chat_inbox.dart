@@ -28,8 +28,6 @@ class _InboxState extends State<Inbox> {
 
   @override
   Widget build(BuildContext context) {
-    // Future<void>.delayed(const Duration(seconds: 1))
-    //     .then((value) => _onRefresh());
     final messageProvider = Provider.of<MessageProvider>(context);
     final messageList = messageProvider.getSortedList(widget.user.userID);
     messageProvider.fetch();

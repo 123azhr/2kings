@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:housecontractors/Screens/flashscreen/flashscreen.dart';
+import 'package:housecontractors/providers/about.dart';
 import 'package:housecontractors/providers/agreement_provider.dart';
 import 'package:housecontractors/providers/chat_provider.dart';
 import 'package:housecontractors/providers/comments_provider.dart';
@@ -92,6 +93,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ServiceLogsProvider()),
         ChangeNotifierProvider(create: (_) => InventoryProvider()),
         ChangeNotifierProvider(create: (_) => CommentsProvider()),
+        
+        ChangeNotifierProvider(create: (_) => AboutProvider()),
       ],
       child: MaterialApp(
         title: "HouseContractors",

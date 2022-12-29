@@ -15,9 +15,9 @@ class Post extends StatelessWidget {
     final postModel = Provider.of<PostModel>(context);
     final userProvider = Provider.of<ContractorsProvider>(context);
     final user = userProvider.getUserByID(postModel.userID!);
-     final commentsProvider =
-        Provider.of<CommentsProvider>(context);
-        commentsProvider.fetch(postModel.postID!);
+    final commentsProvider =
+        Provider.of<CommentsProvider>(context, listen: false);
+    commentsProvider.fetch(postModel.postID!);
     return Card(
       color: const Color.fromARGB(255, 255, 230, 149),
       child: Column(
@@ -29,7 +29,7 @@ class Post extends StatelessWidget {
               date: postModel.postedTime,
               profilePicURL: user.profileImageURL!),
           PostItem(imageURL: postModel.imageURL, caption: postModel.caption),
-          PostBottom(postModel: postModel,commentsProvider:commentsProvider ),
+          PostBottom(postModel: postModel, commentsProvider: commentsProvider),
         ],
       ),
     );

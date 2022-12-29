@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/login.dart';
+import 'package:housecontractors/providers/about.dart';
 import 'package:housecontractors/providers/agreement_provider.dart';
 import 'package:housecontractors/providers/comments_provider.dart';
 import 'package:housecontractors/providers/customer_provider.dart';
@@ -75,23 +76,29 @@ class _FlashScreenState extends State<FlashScreen> {
         final messageProvider =
             Provider.of<MessageProvider>(context, listen: false);
 
-        messageProvider.fetch();
+        await messageProvider.fetch();
       } catch (e) {}
       try {
         final aggrementProvider =
             Provider.of<AgreementProvider>(context, listen: false);
 
-        aggrementProvider.fetch();
+        await aggrementProvider.fetch();
       } catch (e) {}
       try {
         OrdersProvider orderProvider =
             Provider.of<OrdersProvider>(context, listen: false);
-        orderProvider.fetch();
+        await orderProvider.fetch();
 
         Provider.of<ServiceLogsProvider>(context, listen: false);
 
         Provider.of<InventoryProvider>(context, listen: false);
       } catch (e) {}
+      try {
+        AboutProvider aboutProvider =
+            Provider.of<AboutProvider>(context, listen: false);
+        await aboutProvider.fetchAboutData();
+      } catch (e) {}
+
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(

@@ -55,6 +55,8 @@ dependencies:
   email_validator: ^2.0.1
   flutter_datetime_picker: ^1.5.1
   shimmer: ^2.0.0
+  url_launcher: ^6.1.7
+  font_awesome_flutter: ^10.3.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

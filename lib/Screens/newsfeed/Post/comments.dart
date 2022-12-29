@@ -21,24 +21,21 @@ class Comments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async{
-        try {
-          
-          showModalBottomSheet(
-            context: context,
-            builder: (context) => MyContainer(
-                padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom),
-                color: const Color.fromARGB(255, 255, 230, 149),
-                width: setWidth(100),
-                height: setHeight(60),
-                child: OpenComments(
-                  commentsProvider: commentsProvider,
-                  postModel: postModel,
-                  postProvider: postProvider,
-                )),
-          );
-        } catch (e) {}
+      onTap: () async {
+        showCupertinoModalPopup(
+          context: context,
+          builder: (context) => MyContainer(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              color: const Color.fromARGB(255, 255, 230, 149),
+              width: setWidth(100),
+              height: setHeight(60),
+              child: OpenComments(
+                commentsProvider: commentsProvider,
+                postModel: postModel,
+                postProvider: postProvider,
+              )),
+        );
       },
       child: Container(
         color: Colors.transparent,

@@ -49,15 +49,6 @@ class _ChatMenuState extends State<ChatMenu> {
             fontSize: (kToolbarHeight / 100) * 40,
           ),
         ),
-        actions: [
-          IconButton(
-            color: Colors.black,
-            onPressed: () {},
-            icon: const Icon(
-              Icons.search,
-            ),
-          ),
-        ],
         centerTitle: true,
         elevation: 1,
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),

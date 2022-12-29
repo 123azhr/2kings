@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/login.dart';
+import 'package:housecontractors/Screens/menu/aboutus/aboutus.dart';
 import 'package:housecontractors/Screens/profile/edit_profile.dart';
 import 'package:housecontractors/Screens/profile/edit_services.dart';
 import 'package:housecontractors/providers/authentication_provider.dart';
@@ -142,6 +143,26 @@ class Menu extends StatelessWidget {
             endIndent: 0,
             color: Colors.black,
             height: 0,
+          ),
+          ListTile(
+            visualDensity: const VisualDensity(vertical: 4),
+            dense: true,
+            leading: const CircleAvatar(
+              child: Icon(Icons.construction),
+            ),
+            title: const Text(
+              "About us",
+              style: TextStyle(
+                fontSize: 18,
+              ),
+            ),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AboutUs(),
+                  ));
+            },
           ),
           const Divider(
             thickness: 0.05,

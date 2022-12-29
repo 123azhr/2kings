@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:housecontractors/models/comments_model.dart';
 import 'package:housecontractors/providers/comments_provider.dart';

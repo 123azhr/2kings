@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../widgets/are_you_sure.dart';
 import '../../profile/profile_view.dart';
 import '../../../helper/size_configuration.dart';
 
@@ -47,23 +49,22 @@ class PostHeader extends StatelessWidget {
         subtitle: Text(date.toString()),
         trailing: PopupMenuButton(itemBuilder: (context) {
           return [
-            const PopupMenuItem<int>(
+            PopupMenuItem<int>(
               value: 0,
-              child: Text("Remove this post"),
-            ),
-            const PopupMenuItem<int>(
-              value: 1,
-              child: Text("Edit this post."),
-            ),
-            const PopupMenuItem<int>(
-              value: 2,
-              child: Text("report"),
+              child: Row(
+                children: const [
+                  Icon(Icons.delete),
+                  Text("Delete this post"),
+                ],
+              ),
             ),
           ];
         }, onSelected: (value) {
           if (value == 0) {
-          } else if (value == 1) {
-          } else if (value == 2) {
+            showCupertinoDialog(
+              context: context,
+              builder: (context) => AreYouSure(title: "Are Sure You?"),
+            );
           }
         }),
       ),
