@@ -156,7 +156,7 @@ class _AddItemState extends State<AddServiceItem> {
                               final orderProvider = Provider.of<OrdersProvider>(
                                   context,
                                   listen: false);
-                             await orderProvider.updateTotal(
+                              await orderProvider.updateTotal(
                                   widget.ordersModel.orderID!,
                                   widget.ordersModel.inventoryTotal!,
                                   serviceProvider.serviceTotal(),

@@ -1,272 +1,210 @@
-// ignore_for_file: deprecated_member_use
-
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:housecontractors/helper/size_configuration.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:screenshot/screenshot.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
-class ViewAggrement extends StatelessWidget {
-  final ScreenshotController screenshotController = ScreenshotController();
+import '../../../helper/size_configuration.dart';
+import '../../../models/agreement_model.dart';
+import '../../../models/contractor_model.dart';
+import '../../../models/customer_model.dart';
+import '../../../providers/agreement_provider.dart';
+import '../../../providers/contractor_provider.dart';
+import '../../../providers/customer_provider.dart';
+import '../../../providers/inventory_provider.dart';
+import '../../../providers/order_provider.dart';
+import '../../../providers/service_log_provider.dart';
 
-  shareImage() async {
-    final uint8List = await screenshotController.capture();
-    String tempPath = (await getTemporaryDirectory()).path;
-    String fileName = "myFile";
-    if (await Permission.storage.request().isGranted) {
-      File file = await File('$tempPath/$fileName.png').create();
-      file.writeAsBytesSync(uint8List!);
-      await Share.shareFiles([file.path]);
-    }
-  }
-
-  ViewAggrement({super.key});
+class ViewAgreement extends StatelessWidget {
+  const ViewAgreement({super.key, required this.agreementID});
+  final String agreementID;
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
+    AgreementProvider agreementProvider =
+        Provider.of<AgreementProvider>(context);
+    AgreementModel agreementModel =
+        agreementProvider.getAgreementByID(agreementID);
+    OrdersProvider ordersProvider = Provider.of<OrdersProvider>(context);
+    ServiceLogsProvider servicelogsProvider =
+        Provider.of<ServiceLogsProvider>(context);
+    InventoryProvider inventoryProvider =
+        Provider.of<InventoryProvider>(context);
+    CustomerProvider userProvider = Provider.of<CustomerProvider>(context);
+    CustomerModel customerModel =
+        userProvider.getUserByID(agreementModel.customerID!);
+
+    ContractorsProvider currentUserProvider =
+        Provider.of<ContractorsProvider>(context);
+    ContractorsModel contractorModel =
+        currentUserProvider.getUserByID(agreementModel.contractorID!);
     return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            "Aggrement",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: (kToolbarHeight / 100) * 40,
-            ),
-          ),
-          centerTitle: true,
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-        ),
-        body: SizedBox(
-          height: setHeight(100),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Screenshot(
-              controller: screenshotController,
-              child: SingleChildScrollView(
-                child: Container(
-                  color: Colors.white,
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Divider(
-                          thickness: 0.4,
-                        ),
-                        const Center(
-                          child: Text(
-                            "Customer details",
-                            style: TextStyle(color: Colors.black, fontSize: 16),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          children: const [
-                            Text(
-                              "Name: Areeb uz Zaman",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 16),
-                            ),
-                            Spacer(),
-                            Text(
-                              "ID: HSGduidiusa894asddad45",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 16),
-                            ),
-                          ],
-                        ),
-                        const Text(
-                          "CNIC: 412856448156",
-                          style: TextStyle(color: Colors.black, fontSize: 16),
-                        ),
-                        const Divider(thickness: 0.4),
-                        const Center(
-                          child: Text(
-                            "Contractor details",
-                            style: TextStyle(color: Colors.black, fontSize: 16),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          children: const [
-                            Text(
-                              "Name: Arsalan Ahmed",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 16),
-                            ),
-                            Spacer(),
-                            Text(
-                              "ID: HSGd4d5s6f46ds5f5",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 16),
-                            ),
-                          ],
-                        ),
-                        const Text(
-                          "CNIC: 894684867",
-                          style: TextStyle(color: Colors.black, fontSize: 16),
-                        ),
-                        const Divider(thickness: 0.4),
-                        Row(
-                          children: const [
-                            Text(
-                              "Start Date: 9/8/2022",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 16),
-                            ),
-                            Spacer(),
-                            Text(
-                              "End Date: 9/9/2022",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 16),
-                            ),
-                          ],
-                        ),
-                        const Divider(thickness: 0.4),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: const [
-                            Text("service name"),
-                            Text("service Price"),
-                            Text("service days"),
-                          ],
-                        ),
-                        const Divider(thickness: 0.4),
-                        // ListView.builder(
-                        //   physics: const NeverScrollableScrollPhysics(),
-                        //   shrinkWrap: true,
-                        //   itemCount: 50,
-                        //   itemBuilder: (context, index) => Row(
-                        //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        //     children: [
-                        //       Text("name "),
-                        //       Text("S4865 "),
-                        //       Text("20 "),
-                        //     ],
-                        //   ),
-                        // ),
-                        // Divider(thickness: 0.4),
-                        const SizedBox(
-                          height: 50,
-                          child: Center(
-                            child: Text(
-                              "Aggrement details",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 16),
-                            ),
-                          ),
-                        ),
-                        TextFormField(
-                          keyboardType: TextInputType.multiline,
-                          maxLines: null,
-                          textAlign: TextAlign.start,
-                          style: const TextStyle(
-                            fontSize: 18,
-                          ),
-                          decoration: InputDecoration(
-                            contentPadding:
-                                EdgeInsets.all(getProportionateScreenWidth(10)),
-                            isCollapsed: true,
-                            hintText: "Type here..",
-                          ),
-                        ),
-                      ]),
+        child: Scaffold(
+            appBar: AppBar(
+              leadingWidth: getProportionateScreenWidth(40),
+              leading: Image.asset(
+                "assets/images/logo-black-half.png",
+                fit: BoxFit.contain,
+              ),
+              title: const Text(
+                "Agreement",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: (kToolbarHeight / 100) * 40,
                 ),
               ),
+              centerTitle: true,
+              elevation: 0,
+              backgroundColor: Colors.transparent,
             ),
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: const Icon(Icons.share),
-        ),
-      ),
-    );
+            body: SizedBox(
+              height: setHeight(100),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SingleChildScrollView(
+                  child: Container(
+                    color: Colors.white,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Divider(
+                            thickness: 0.4,
+                          ),
+                          const Center(
+                            child: Text(
+                              "Customer details",
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 20),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            softWrap: true,
+                            "Name: " + customerModel.name!,
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 16),
+                          ),
+                          Text(
+                            softWrap: true,
+                            "ID: " + customerModel.userID!,
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 16),
+                          ),
+                          Text(
+                            softWrap: true,
+                            "CNIC: " + customerModel.cnic!,
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 16),
+                          ),
+                          const Divider(thickness: 0.4),
+                          const Center(
+                            child: Text(
+                              "Contractor details",
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 20),
+                            ),
+                          ),
+                          SizedBox(height: getProportionateScreenHeight(10)),
+                          Text(
+                            softWrap: true,
+                            "Name: " + contractorModel.name!,
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 16),
+                          ),
+                          Text(
+                            softWrap: true,
+                            "ID: " + contractorModel.userID!,
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 16),
+                          ),
+                          Text(
+                            softWrap: true,
+                            "CNIC: " + contractorModel.cnic!,
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 16),
+                          ),
+                          const Divider(thickness: 0.4),
+                          Text(
+                            "Start Date:" + agreementModel.startDate.toString(),
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 16),
+                          ),
+                          Text(
+                            "End Date: " + agreementModel.startDate.toString(),
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 16),
+                          ),
+                          const Divider(thickness: 0.4),
+                          const Center(
+                            child: Text(
+                              "Services",
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 20),
+                            ),
+                          ),
+                          const Divider(thickness: 0.4),
+                          SizedBox(
+                            child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount:
+                                  agreementModel.services!.toList().length,
+                              itemBuilder: (context, int index) => Text(
+                                (index + 1).toString() +
+                                    ".  " +
+                                    agreementModel.services!.elementAt(index),
+                                style: const TextStyle(
+                                    color: Colors.black, fontSize: 14),
+                              ),
+                            ),
+                          ),
+                          const Divider(thickness: 0.4),
+                          const SizedBox(
+                            height: 50,
+                            child: Center(
+                              child: Text(
+                                "Agreement details",
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 16),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            agreementModel.details!,
+                            softWrap: true,
+                          ),
+                          Visibility(
+                            visible: !agreementModel.status!,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                      const Color.fromARGB(255, 18, 18, 18),
+                                    ),
+                                    fixedSize: MaterialStateProperty.all(
+                                      Size(setWidth(30), setHeight(6)),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text("Decline",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color:
+                                            Color.fromARGB(255, 255, 210, 32),
+                                      )),
+                                ),
+                                const Text("Accept",
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.black87)),
+                              ],
+                            ),
+                          ),
+                        ]),
+                  ),
+                ),
+              ),
+            )));
   }
 }
-// Padding(
-//           padding: const EdgeInsets.all(8.0),
-//           child: SizedBox(
-//             height: setHeight(100),
-//             child:
-//                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-//               Divider(
-//                 thickness: 0.4,
-//               ),
-//               Center(
-//                 child: Text(
-//                   "Customer details",
-//                   style: TextStyle(color: Colors.black, fontSize: 16),
-//                 ),
-//               ),
-//               SizedBox(height: 10),
-//               Row(
-//                 children: [
-//                   Text(
-//                     "Name: Areeb uz Zaman",
-//                     style: TextStyle(color: Colors.black, fontSize: 16),
-//                   ),
-//                   Spacer(),
-//                   Text(
-//                     "ID: HSGduidiusa894asddad45",
-//                     style: TextStyle(color: Colors.black, fontSize: 16),
-//                   ),
-//                 ],
-//               ),
-//               Text(
-//                 "CNIC: 412856448156",
-//                 style: TextStyle(color: Colors.black, fontSize: 16),
-//               ),
-//               Divider(thickness: 0.4),
-//               Center(
-//                 child: Text(
-//                   "Contractor details",
-//                   style: TextStyle(color: Colors.black, fontSize: 16),
-//                 ),
-//               ),
-//               SizedBox(height: 10),
-//               Row(
-//                 children: [
-//                   Text(
-//                     "Name: Arsalan Ahmed",
-//                     style: TextStyle(color: Colors.black, fontSize: 16),
-//                   ),
-//                   Spacer(),
-//                   Text(
-//                     "ID: HSGd4d5s6f46ds5f5",
-//                     style: TextStyle(color: Colors.black, fontSize: 16),
-//                   ),
-//                 ],
-//               ),
-//               Text(
-//                 "CNIC: 894684867",
-//                 style: TextStyle(color: Colors.black, fontSize: 16),
-//               ),
-//               Divider(thickness: 0.4),
-//               Row(
-//                 children: [
-//                   Text(
-//                     "Start Date: 9/8/2022",
-//                     style: TextStyle(color: Colors.black, fontSize: 16),
-//                   ),
-//                   Spacer(),
-//                   Text(
-//                     "End Date: 9/9/2022",
-//                     style: TextStyle(color: Colors.black, fontSize: 16),
-//                   ),
-//                 ],
-//               ),
-//               Divider(thickness: 0.4),
-//               ListView.builder(
-//                 physics: const NeverScrollableScrollPhysics(),
-//                 shrinkWrap: true,
-//                 itemBuilder: (context, index) =>
-//                     Text("service name: service price"),
-//               )
-//             ]),
-//           ),
-//         ),

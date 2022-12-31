@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:housecontractors/models/orders_model.dart';
+import 'package:housecontractors/widgets/are_you_sure.dart';
 import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
 import '../../models/agreement_model.dart';
@@ -52,6 +53,7 @@ class ActiveOrderTile extends StatelessWidget {
     CustomerProvider userProvider = Provider.of<CustomerProvider>(context);
     CustomerModel customerModel =
         userProvider.getUserByID(aggrementModel.customerID!);
+    OrdersProvider ordersProvider = Provider.of<OrdersProvider>(context);
     return ListTile(
       onTap: () =>
           orderDetails(context, aggrementModel, customerModel, ordersModel),
@@ -77,24 +79,19 @@ class ActiveOrderTile extends StatelessWidget {
         return [
           const PopupMenuItem<int>(
             value: 0,
-            child: Text("Remove this notification"),
-          ),
-          const PopupMenuItem<int>(
-            value: 1,
-            child: Text("Turn off notification about this."),
-          ),
-          const PopupMenuItem<int>(
-            value: 2,
-            child: Text("report"),
+            child: Text("End This Order"),
           ),
         ];
       }, onSelected: (value) {
         if (value == 0) {
-          print("Remove this notification menu is selected.");
-        } else if (value == 1) {
-          print("Turn off notification about this. menu is selected.");
-        } else if (value == 2) {
-          print("report menu is selected.");
+          showDialog(
+            context: context,
+            builder: (context) => AreYouSure(
+              title: "Are you sure?",
+              onPressed: () async => await ordersProvider.updateStatus(
+                  ordersModel.orderID!, "Completed", customerModel.userID!),
+            ),
+          );
         }
       }),
     );

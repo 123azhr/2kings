@@ -68,7 +68,7 @@ class ActiveOrderTile extends StatelessWidget {
         Provider.of<AgreementProvider>(context);
     AgreementModel aggrementModel =
         aggrementProvider.getAgreementByID(ordersModel.aggrementID!);
-      CustomerProvider userProvider = Provider.of<CustomerProvider>(context);
+    CustomerProvider userProvider = Provider.of<CustomerProvider>(context);
     CustomerModel customerModel =
         userProvider.getUserByID(aggrementModel.customerID!);
     return ListTile(
@@ -92,30 +92,30 @@ class ActiveOrderTile extends StatelessWidget {
           ),
         ],
       ),
-      trailing: PopupMenuButton(itemBuilder: (context) {
-        return [
-          const PopupMenuItem<int>(
-            value: 0,
-            child: Text("Remove this notification"),
-          ),
-          const PopupMenuItem<int>(
-            value: 1,
-            child: Text("Turn off notification about this."),
-          ),
-          const PopupMenuItem<int>(
-            value: 2,
-            child: Text("report"),
-          ),
-        ];
-      }, onSelected: (value) {
-        if (value == 0) {
-          print("Remove this notification menu is selected.");
-        } else if (value == 1) {
-          print("Turn off notification about this. menu is selected.");
-        } else if (value == 2) {
-          print("report menu is selected.");
-        }
-      }),
+      // trailing: PopupMenuButton(itemBuilder: (context) {
+      //   return [
+      //     const PopupMenuItem<int>(
+      //       value: 0,
+      //       child: Text("Remove this notification"),
+      //     ),
+      //     const PopupMenuItem<int>(
+      //       value: 1,
+      //       child: Text("Turn off notification about this."),
+      //     ),
+      //     const PopupMenuItem<int>(
+      //       value: 2,
+      //       child: Text("report"),
+      //     ),
+      //   ];
+      // }, onSelected: (value) {
+      //   if (value == 0) {
+      //     print("Remove this notification menu is selected.");
+      //   } else if (value == 1) {
+      //     print("Turn off notification about this. menu is selected.");
+      //   } else if (value == 2) {
+      //     print("report menu is selected.");
+      //   }
+      // }),
     );
   }
 }

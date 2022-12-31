@@ -5,7 +5,6 @@ import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:provider/provider.dart';
 import '../../providers/post_provider.dart';
 import '../../providers/contractor_provider.dart';
-import '../../widgets/chat_call_bottom_bar.dart';
 import '../Dashboard/dashboard.dart';
 
 class ProfileView extends StatelessWidget {
@@ -51,6 +50,7 @@ class ProfileView extends StatelessWidget {
               child: ListView(
                 children: [
                   ProfileHeader(
+                    rating: user.rating,
                     title: user.name!,
                     email: user.email!,
                     phoneNumber: user.contactNumber!,

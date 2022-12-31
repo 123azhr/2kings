@@ -9,48 +9,64 @@ import 'package:provider/provider.dart';
 import '../../../models/post_model.dart';
 import '../../../providers/post_provider.dart';
 
-// ignore: must_be_immutable
-class OpenComments extends StatelessWidget {
-  OpenComments(
-      {super.key,
-      required this.postModel,
-      required this.postProvider,
-      required this.commentsProvider});
-  TextEditingController commentController = TextEditingController();
-
+class OpenComments extends StatefulWidget {
+  const OpenComments({
+    super.key,
+    required this.postModel,
+    required this.postProvider,
+    required this.commentsProvider,
+  });
   final PostModel postModel;
   final PostProvider postProvider;
   final CommentsProvider commentsProvider;
 
   @override
-  Widget build(BuildContext context) {
-    final commentsList = commentsProvider.getList;
+  State<OpenComments> createState() => _OpenCommentsState();
+}
 
-    return SingleChildScrollView(
-      child: SizedBox(
-        height: setHeight(60),
-        child: Column(
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 255, 230, 149),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20),
-                ),
-              ),
-              height: setHeight(52),
-              child: ListView.separated(
-                separatorBuilder: (context, index) => const Divider(),
-                scrollDirection: Axis.vertical,
-                itemCount: commentsList.length,
-                itemBuilder: (context, int index) {
-                  return ChangeNotifierProvider.value(
-                      value: commentsList[index],
-                      child: CommentTile(commentsModel: commentsList[index]));
-                },
-                physics: const BouncingScrollPhysics(),
-              ),
-            ),
+class _OpenCommentsState extends State<OpenComments> {
+  TextEditingController commentController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    final commentsProvider = Provider.of<CommentsProvider>(context);
+    commentsProvider.fetch();
+    final commentsList =
+        widget.commentsProvider.getCommentByPostID(widget.postModel.postID!);
+    final customerProvider = Provider.of<CustomerProvider>(context);
+    return SafeArea(
+      child: Scaffold(
+        body: SizedBox(
+          height: setHeight(90),
+          child: ListView.separated(
+            separatorBuilder: (context, index) => const Divider(),
+            shrinkWrap: true,
+            reverse: true,
+            scrollDirection: Axis.vertical,
+            itemCount: commentsList.length,
+            itemBuilder: (context, int index) => ChangeNotifierProvider.value(
+                value: commentsList[index],
+                child: ListTile(
+                  minLeadingWidth: 50,
+                  leading: SizedBox(
+                    height: setHeight(10),
+                    width: setWidth(10),
+                    child: ClipOval(
+                      child: CachedNetworkImage(
+                        imageUrl: customerProvider
+                            .getUserByID(commentsList[index].userID!)
+                            .profileImageURL!,
+                      ),
+                    ),
+                  ),
+                  title: Text(customerProvider
+                      .getUserByID(commentsList[index].userID!)
+                      .name!),
+                  subtitle: Text(commentsList[index].text!),
+                )),
+
+            physics: const BouncingScrollPhysics(),
+
             // SizedBox(
             //   height: setHeight(7),
             //   child: MyTextField(
@@ -62,8 +78,9 @@ class OpenComments extends StatelessWidget {
             //       radius: getProportionateScreenWidth(20),
             //       controller: commentController),
             // ),
-          ],
+          ),
         ),
+        
       ),
     );
   }
@@ -72,16 +89,15 @@ class OpenComments extends StatelessWidget {
 class CommentTile extends StatelessWidget {
   const CommentTile({
     Key? key,
-    required this.commentsModel,
   }) : super(key: key);
-
-  final CommentsModel commentsModel;
 
   @override
   Widget build(BuildContext context) {
     final customerProvider = Provider.of<CustomerProvider>(context);
+    final commentsModel = Provider.of<CommentsModel>(context);
     final user = customerProvider.getUserByID(commentsModel.userID!);
     return ListTile(
+      minLeadingWidth: 50,
       leading: ClipOval(
         child: CachedNetworkImage(
           imageUrl: user.profileImageURL!,

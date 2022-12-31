@@ -141,7 +141,7 @@ class _UserFormState extends State<UserForm> {
           status: true,
           createdDate: date,
           profileImageURL: imageURL,
-          rating: [],
+          rating: ["0 1"],
           services: []);
     } on FirebaseException catch (e) {
       print(e.message);

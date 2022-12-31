@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/orders/Logs/view_aggrement.dart';
 import 'package:housecontractors/Screens/orders/Logs/logs.dart';
@@ -59,11 +60,57 @@ Future<dynamic> orderDetails(
                 margin: EdgeInsets.all(setHeight(1)),
                 color: Colors.greenAccent,
                 height: setHeight(10),
-                child: ProfileHeader(
-                  title: customerModel.name!,
-                  imageURL: customerModel.profileImageURL!,
-                  email: customerModel.email!,
-                  phoneNumber: customerModel.contactNumber!,
+                child: Container(
+                  color: const Color.fromARGB(255, 255, 255, 255),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: getProportionateScreenHeight(60),
+                          width: getProportionateScreenWidth(60),
+                          child: CircleAvatar(
+                            child: ClipOval(
+                              child: CachedNetworkImage(
+                                imageUrl: customerModel.profileImageURL!,
+                                fit: BoxFit.cover,
+                                height: getProportionateScreenHeight(60),
+                                width: getProportionateScreenHeight(60),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              EdgeInsets.all(getProportionateScreenHeight(8)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                customerModel.name!,
+                                style: TextStyle(
+                                    fontSize: getProportionateScreenHeight(20),
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              Text(
+                                customerModel.email!,
+                                style: TextStyle(
+                                  fontSize: getProportionateScreenHeight(14),
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                              Text(
+                                customerModel.contactNumber!,
+                                style: TextStyle(
+                                  fontSize: getProportionateScreenHeight(14),
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Spacer(),
+                      ]),
                 ),
               ),
               Container(
@@ -226,7 +273,8 @@ Future<dynamic> orderDetails(
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ViewAggrement(),
+                              builder: (context) => ViewAgreement(
+                                  agreementID: aggrementModel.agreementID!),
                             ),
                           );
                         },

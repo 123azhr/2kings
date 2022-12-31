@@ -13,10 +13,8 @@ class PostBottom extends StatefulWidget {
   const PostBottom({
     required this.postModel,
     Key? key,
-    required this.commentsProvider,
   }) : super(key: key);
   final PostModel postModel;
-  final CommentsProvider commentsProvider;
   @override
   State<PostBottom> createState() => _PostBottomState();
 }
@@ -51,8 +49,7 @@ class _PostBottomState extends State<PostBottom> {
                     children: [
                       Text(
                           widget.postModel.likes!.length.toString() + " Likes"),
-                      Text(widget.commentsProvider.getList.length.toString() +
-                          " Comments"),
+                  
                     ]),
               )),
           Row(
@@ -88,7 +85,7 @@ class _PostBottomState extends State<PostBottom> {
               Comments(
                   postModel: widget.postModel,
                   postProvider: postProvider,
-                  commentsProvider: widget.commentsProvider),
+                 ),
             ],
           ),
         ],

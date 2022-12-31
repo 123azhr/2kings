@@ -54,6 +54,7 @@ class MyProfileView extends StatelessWidget {
               child: ListView(
                 children: [
                   ProfileHeader(
+                    rating: loggedInUser.rating,
                     title: loggedInUser.name!,
                     email: loggedInUser.email!,
                     phoneNumber: loggedInUser.contactNumber!,

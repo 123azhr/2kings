@@ -21,7 +21,7 @@ class ViewInventoryLogs extends StatelessWidget {
   Widget build(BuildContext context) {
     final inventoryProvider = Provider.of<InventoryProvider>(context);
     final inventoryList = inventoryProvider.getInventoryList;
-    
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -82,37 +82,41 @@ class ViewInventoryLogs extends StatelessWidget {
         child: BottomAppBar(
             child: Container(
           color: Colors.yellow,
-          height: setHeight(14),
+          height:
+              ordersModel.status == "Completed" ? setHeight(7) : setHeight(14),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: setHeight(7),
-                child: Row(
-                  children: [
-                    const Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            fixedSize: Size(setWidth(40), setHeight(5)),
-                            side: const BorderSide(
-                              width: 0,
+              Visibility(
+                visible: ordersModel.status != "Completed",
+                child: SizedBox(
+                  height: setHeight(7),
+                  child: Row(
+                    children: [
+                      const Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              fixedSize: Size(setWidth(40), setHeight(5)),
+                              side: const BorderSide(
+                                width: 0,
+                              ),
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30)),
                             ),
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30)),
-                          ),
-                          onPressed: () {
-                            showModalBottomSheet(
-                                context: context,
-                                builder: (context) => AddItem(
-                                      ordersModel: ordersModel,
-                                    ));
-                          },
-                          child: const Text("Add Item")),
-                    ),
-                  ],
+                            onPressed: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) => AddItem(
+                                        ordersModel: ordersModel,
+                                      ));
+                            },
+                            child: const Text("Add Item")),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(

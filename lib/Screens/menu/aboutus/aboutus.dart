@@ -85,7 +85,7 @@ class BuildTitleWithDescription extends StatelessWidget {
         Text(
           _title!,
           style: TextStyle(
-            color: Color.fromARGB(255, 11, 11, 11).withOpacity(0.8),
+            color: const Color.fromARGB(255, 11, 11, 11).withOpacity(0.8),
             fontWeight: FontWeight.bold,
             fontSize: getProportionateScreenWidth(25),
           ),
@@ -95,7 +95,7 @@ class BuildTitleWithDescription extends StatelessWidget {
           _description!,
           textAlign: TextAlign.center,
           style: TextStyle(
-            color: Color.fromARGB(255, 11, 11, 11).withOpacity(0.8),
+            color: const Color.fromARGB(255, 11, 11, 11).withOpacity(0.8),
             fontSize: getProportionateScreenWidth(15),
           ),
         ),

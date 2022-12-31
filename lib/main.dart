@@ -97,6 +97,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AboutProvider()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: "HouseContractors",
         theme: MyTheme.Mytheme(),
         home: const FlashScreen(),
