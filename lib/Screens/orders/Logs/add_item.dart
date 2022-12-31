@@ -136,7 +136,7 @@ class _AddItemState extends State<AddItem> {
                                 context: context,
                                 barrierDismissible: false,
                                 builder: ((context) => WillPopScope(
-                                      onWillPop: () async => false,
+                                      onWillPop: () async => true,
                                       child: const Center(
                                           child: CircularProgressIndicator()),
                                     )),
@@ -153,11 +153,11 @@ class _AddItemState extends State<AddItem> {
                               final orderProvider = Provider.of<OrdersProvider>(
                                   context,
                                   listen: false);
-                              await orderProvider.updateTotal(
-                                  widget.ordersModel.orderID!,
-                                  inventoryProvider.inventoryTotal(),
-                                  widget.ordersModel.serviceTotal!,
-                                  agreementModel.customerID!);
+                              await orderProvider.updateInventoryTotal(
+                                  orderID: widget.ordersModel.orderID!,
+                                  inventoryTotal:
+                                      inventoryProvider.inventoryTotal(),
+                                  customerID: agreementModel.customerID!);
                               Navigator.pop(context);
                               Navigator.pop(context);
                             }

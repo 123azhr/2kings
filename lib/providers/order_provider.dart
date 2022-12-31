@@ -44,18 +44,18 @@ class OrdersProvider with ChangeNotifier {
         .doc(orderID)
         .update({"status": status});
     await FirebaseFirestore.instance
-        .collection("chats")
+        .collection("orders")
         .doc(customerID)
-        .collection("agreements")
+        .collection("orderDetails")
         .doc(orderID)
         .update({"status": status});
     fetch();
   }
 
-  updateTotal(String orderID, String inventoryTotal, String serviceTotal,
-      String customerID) async {
-    double grandTotal =
-        double.parse(inventoryTotal) + double.parse(serviceTotal);
+  updateInventoryTotal(
+      {required String orderID,
+      required String inventoryTotal,
+      required String customerID}) async {
     await FirebaseFirestore.instance
         .collection("orders")
         .doc(loggedInUser!.uid)
@@ -63,18 +63,57 @@ class OrdersProvider with ChangeNotifier {
         .doc(orderID)
         .update({
       "inventoryTotal": inventoryTotal,
-      "serviceTotal": serviceTotal,
-      "grandTotal": grandTotal.toString()
     });
     await FirebaseFirestore.instance
-        .collection("chats")
+        .collection("orders")
         .doc(customerID)
-        .collection("agreements")
+        .collection("orderDetails")
         .doc(orderID)
         .update({
       "inventoryTotal": inventoryTotal,
+    });
+    fetch();
+  }
+
+  updateServiceTotal(
+      {required String orderID,
+      required String serviceTotal,
+      required String customerID}) async {
+    await FirebaseFirestore.instance
+        .collection("orders")
+        .doc(loggedInUser!.uid)
+        .collection("orderDetails")
+        .doc(orderID)
+        .update({
       "serviceTotal": serviceTotal,
-      "grandTotal": grandTotal.toString()
+    });
+    await FirebaseFirestore.instance
+        .collection("orders")
+        .doc(customerID)
+        .collection("orderDetails")
+        .doc(orderID)
+        .update({
+      "serviceTotal": serviceTotal,
+    });
+    fetch();
+  }
+
+  updateGrandTotal(String orderID, String grandTotal, String customerID) async {
+    await FirebaseFirestore.instance
+        .collection("orders")
+        .doc(loggedInUser!.uid)
+        .collection("orderDetails")
+        .doc(orderID)
+        .update({
+      "grandTotal": grandTotal,
+    });
+    await FirebaseFirestore.instance
+        .collection("orders")
+        .doc(customerID)
+        .collection("orderDetails")
+        .doc(orderID)
+        .update({
+      "grandTotal": grandTotal,
     });
     fetch();
   }

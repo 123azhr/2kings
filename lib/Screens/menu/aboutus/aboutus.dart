@@ -29,9 +29,8 @@ class AboutUs extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const BuildTitleWithDescription(
-                    title: "2Kings House Contractors",
-                    description:
-                        "For latest update please follow us on our social media platforms.",
+                    title: "About Us",
+                    description: "",
                   ),
                   ListView.separated(
                     physics: const NeverScrollableScrollPhysics(),

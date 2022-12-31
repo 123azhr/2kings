@@ -156,11 +156,11 @@ class _AddItemState extends State<AddServiceItem> {
                               final orderProvider = Provider.of<OrdersProvider>(
                                   context,
                                   listen: false);
-                              await orderProvider.updateTotal(
-                                  widget.ordersModel.orderID!,
-                                  widget.ordersModel.inventoryTotal!,
-                                  serviceProvider.serviceTotal(),
-                                  agreementModel.customerID!);
+                              await orderProvider.updateServiceTotal(
+                                  orderID: widget.ordersModel.orderID!,
+                                  serviceTotal: serviceProvider.serviceTotal(),
+                                  customerID: agreementModel.customerID!);
+
                               Navigator.pop(context);
                               Navigator.pop(context);
                             }
