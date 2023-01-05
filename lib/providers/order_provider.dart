@@ -11,6 +11,7 @@ class OrdersProvider with ChangeNotifier {
   final loggedInUser = FirebaseAuth.instance.currentUser;
   void clearList() {
     _list.clear();
+    notifyListeners();
   }
 
   Future<void> fetch() async {
@@ -34,6 +35,27 @@ class OrdersProvider with ChangeNotifier {
           );
       notifyListeners();
     }
+  }
+
+  Future<void> fetchnew(String? userID) async {
+    await FirebaseFirestore.instance
+        .collection("orders")
+        .doc(userID)
+        .collection("orderDetails")
+        .get()
+        .then(
+          (QuerySnapshot<Map<String, dynamic>> snapshot) => {
+            _list = [],
+            for (var doc in snapshot.docs)
+              {
+                _list.insert(
+                  0,
+                  OrdersModel.fromMap(map: doc.data(), orderID: doc.id),
+                ),
+              },
+          },
+        );
+    notifyListeners();
   }
 
   updateStatus(String orderID, String status, String customerID) async {

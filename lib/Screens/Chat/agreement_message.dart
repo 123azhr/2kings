@@ -52,8 +52,7 @@ class SendAgreement extends StatelessWidget {
 
     ContractorsProvider currentUserProvider =
         Provider.of<ContractorsProvider>(context);
-    ContractorsModel contractorModel = currentUserProvider
-        .getUserByID(FirebaseAuth.instance.currentUser!.uid.trim());
+    ContractorsModel contractorModel = currentUserProvider.getCurrentUser();
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(

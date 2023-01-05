@@ -46,6 +46,27 @@ class MessageProvider with ChangeNotifier {
     }
   }
 
+  Future<void> fetchnew(String? userID) async {
+    await FirebaseFirestore.instance
+        .collection("chats")
+        .doc(userID)
+        .collection("messages")
+        .get()
+        .then(
+          (QuerySnapshot<Map<String, dynamic>> snapshot) => {
+            _list = [],
+            for (var doc in snapshot.docs)
+              {
+                _list.insert(
+                  0,
+                  MessageModel.fromMap(map: doc.data(), messageID: doc.id),
+                ),
+              },
+          },
+        );
+    notifyListeners();
+  }
+
   Future<void> uploadMessageDataToFireStore({
     bool? type,
     String? chatWith,

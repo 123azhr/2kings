@@ -32,8 +32,7 @@ class _FillAgreementState extends State<FillAgreement> {
 
     ContractorsProvider currentUserProvider =
         Provider.of<ContractorsProvider>(context);
-    ContractorsModel contractorModel = currentUserProvider
-        .getUserByID(FirebaseAuth.instance.currentUser!.uid.trim());
+    ContractorsModel contractorModel = currentUserProvider.getCurrentUser();
     List<dynamic>? myServices = contractorModel.services;
     AgreementProvider aggrementProvider =
         Provider.of<AgreementProvider>(context);

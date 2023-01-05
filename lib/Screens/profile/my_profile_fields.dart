@@ -3,31 +3,28 @@ import '../../helper/size_configuration.dart';
 import '../../widgets/bottom_modal_sheet.dart';
 
 class MyProfileFields extends StatefulWidget {
-  const MyProfileFields({
-    Key? key,
-    required this.contact,
-    required this.email,
-    required this.gender,
-    required this.name,
-    required this.password,
-  }) : super(key: key);
-  final String name, gender, password, contact, email;
+  MyProfileFields(
+      {Key? key,
+      required this.contactController,
+      required this.emailController,
+      required this.genderController,
+      required this.nameController,
+      required this.passwordController})
+      : super(key: key);
+  TextEditingController nameController;
 
+  TextEditingController genderController;
+
+  TextEditingController passwordController;
+
+  TextEditingController contactController;
+
+  TextEditingController emailController;
   @override
   State<MyProfileFields> createState() => _MyProfileFieldsState();
 }
 
 class _MyProfileFieldsState extends State<MyProfileFields> {
-  TextEditingController nameController = TextEditingController();
-
-  TextEditingController genderController = TextEditingController();
-
-  TextEditingController passwordController = TextEditingController();
-
-  TextEditingController contactController = TextEditingController();
-
-  TextEditingController emailController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -44,7 +41,7 @@ class _MyProfileFieldsState extends State<MyProfileFields> {
                 fontWeight: FontWeight.bold),
           ),
           title: Text(
-            nameController.text.isEmpty ? widget.name : nameController.text,
+            widget.nameController.text,
             style: TextStyle(
               fontSize: getProportionateScreenHeight(20),
             ),
@@ -61,7 +58,7 @@ class _MyProfileFieldsState extends State<MyProfileFields> {
                 icon: const Icon(Icons.arrow_forward_rounded)),
             context: context,
             hight: getProportionateScreenHeight(400),
-            controller: nameController,
+            controller: widget.nameController,
             title: "Change Name",
             hintText: "Name",
           ),
@@ -78,7 +75,7 @@ class _MyProfileFieldsState extends State<MyProfileFields> {
                 fontWeight: FontWeight.bold),
           ),
           title: Text(
-            widget.gender == "true" ? "Male" : "Female",
+            widget.genderController.text == "true" ? "Male" : "Female",
             style: TextStyle(
               fontSize: getProportionateScreenHeight(20),
             ),
@@ -90,12 +87,14 @@ class _MyProfileFieldsState extends State<MyProfileFields> {
           onTap: () => customBottomModalSheet(
             button: IconButton(
                 onPressed: () {
+                  
+                  setState(() {});
                   Navigator.pop(context);
                 },
                 icon: const Icon(Icons.arrow_forward_rounded)),
             context: context,
             hight: 356,
-            controller: genderController,
+            controller: widget.genderController,
             title: "Change Gender",
             hintText: "male/female",
           ),
@@ -112,9 +111,7 @@ class _MyProfileFieldsState extends State<MyProfileFields> {
                 fontWeight: FontWeight.bold),
           ),
           title: Text(
-            contactController.text.isEmpty
-                ? widget.contact
-                : contactController.text,
+            widget.contactController.text,
             style: TextStyle(
               fontSize: getProportionateScreenHeight(20),
             ),
@@ -131,7 +128,7 @@ class _MyProfileFieldsState extends State<MyProfileFields> {
                 icon: const Icon(Icons.arrow_forward_rounded)),
             context: context,
             hight: getProportionateScreenHeight(356),
-            controller: contactController,
+            controller: widget.contactController,
             title: "Change Contact",
             hintText: "Contact ",
           ),
@@ -148,7 +145,7 @@ class _MyProfileFieldsState extends State<MyProfileFields> {
                 fontWeight: FontWeight.bold),
           ),
           title: Text(
-            emailController.text.isEmpty ? widget.email : emailController.text,
+            widget.emailController.text,
             style: TextStyle(
               fontSize: getProportionateScreenHeight(20),
             ),
@@ -165,7 +162,7 @@ class _MyProfileFieldsState extends State<MyProfileFields> {
                 icon: const Icon(Icons.arrow_forward_rounded)),
             context: context,
             hight: 356,
-            controller: emailController,
+            controller: widget.emailController,
             title: "Change Email",
             hintText: "example@xyz.com",
           ),
@@ -182,9 +179,7 @@ class _MyProfileFieldsState extends State<MyProfileFields> {
                 fontWeight: FontWeight.bold),
           ),
           title: Text(
-            passwordController.text.isEmpty
-                ? widget.password
-                : passwordController.text,
+            widget.passwordController.text,
             style: TextStyle(
               fontSize: getProportionateScreenHeight(20),
             ),
@@ -201,7 +196,7 @@ class _MyProfileFieldsState extends State<MyProfileFields> {
                 icon: const Icon(Icons.arrow_forward_rounded)),
             context: context,
             hight: getProportionateScreenHeight(356),
-            controller: passwordController,
+            controller: widget.passwordController,
             title: "Change Password",
             hintText: "New Password",
           ),

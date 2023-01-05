@@ -35,6 +35,27 @@ class ChatProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> fetchnew(String? user) async {
+    await FirebaseFirestore.instance
+        .collection("chats")
+        .doc(user)
+        .collection("with")
+        .get()
+        .then(
+          (QuerySnapshot<Map<String, dynamic>> snapshot) => {
+            _list = [],
+            for (var doc in snapshot.docs)
+              {
+                _list.insert(
+                  0,
+                  ChatModel.fromMap(otherID: doc.id),
+                ),
+              },
+          },
+        );
+    notifyListeners();
+  }
+
   List<ChatModel> getChatByID(String otherID) {
     return _list
         .where((element) => element.otherID!.trim() == otherID.trim())

@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:housecontractors/Screens/loginSignup/loading_screen.dart';
 import 'package:housecontractors/Screens/loginSignup/login.dart';
 import 'package:housecontractors/providers/about.dart';
 import 'package:housecontractors/providers/agreement_provider.dart';
@@ -39,11 +40,6 @@ class _FlashScreenState extends State<FlashScreen> {
 
   loadData() async {
     await Future.delayed(const Duration(milliseconds: 0)).then((value) async {
-      try {
-        final workersProvider =
-            Provider.of<WorkerProvider>(context, listen: false);
-        workersProvider.fetch();
-      } catch (e) {}
       final postProvider = Provider.of<PostProvider>(context, listen: false);
       await postProvider.fetch();
 
@@ -58,41 +54,11 @@ class _FlashScreenState extends State<FlashScreen> {
         final cProvider = Provider.of<CustomerProvider>(context, listen: false);
         await cProvider.fetch();
       } catch (e) {}
-
+      final storyProvider = Provider.of<StoryProvider>(context, listen: false);
+      await storyProvider.fetch();
       final serviceProvider =
           Provider.of<ServiceProvider>(context, listen: false);
       await serviceProvider.fetch();
-      final ordersProvider =
-          Provider.of<OrdersProvider>(context, listen: false);
-      await ordersProvider.fetch();
-      try {
-        final chatProvider = Provider.of<ChatProvider>(context, listen: false);
-        await chatProvider.fetch();
-      } catch (e) {}
-      final storyProvider = Provider.of<StoryProvider>(context, listen: false);
-      await storyProvider.fetch();
-
-      try {
-        final messageProvider =
-            Provider.of<MessageProvider>(context, listen: false);
-
-        await messageProvider.fetch();
-      } catch (e) {}
-      try {
-        final aggrementProvider =
-            Provider.of<AgreementProvider>(context, listen: false);
-
-        await aggrementProvider.fetch();
-      } catch (e) {}
-      try {
-        OrdersProvider orderProvider =
-            Provider.of<OrdersProvider>(context, listen: false);
-        await orderProvider.fetch();
-
-        Provider.of<ServiceLogsProvider>(context, listen: false);
-
-        Provider.of<InventoryProvider>(context, listen: false);
-      } catch (e) {}
       try {
         AboutProvider aboutProvider =
             Provider.of<AboutProvider>(context, listen: false);
@@ -127,7 +93,8 @@ class AuthenticationWrapper extends StatelessWidget {
 
     if (firebaseUser != null) {
       if (FirebaseAuth.instance.currentUser!.emailVerified) {
-        return const Dashboard();
+        currentUserID = FirebaseAuth.instance.currentUser!.uid;
+        return const Loading();
       } else {
         return const VerifyEmail();
       }

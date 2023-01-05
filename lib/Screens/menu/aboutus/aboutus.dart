@@ -14,7 +14,6 @@ class AboutUs extends StatelessWidget {
     List<AboutModel> aboutDataList = aboutProvider.getAboutList;
     return SafeArea(
         child: Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -28,8 +27,11 @@ class AboutUs extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  SizedBox(
+                    height: getProportionateScreenHeight(10),
+                  ),
                   const BuildTitleWithDescription(
-                    title: "About Us",
+                    title: "About us",
                     description: "",
                   ),
                   ListView.separated(

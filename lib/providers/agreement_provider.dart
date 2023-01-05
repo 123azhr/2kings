@@ -38,6 +38,27 @@ class AgreementProvider with ChangeNotifier {
     }
   }
 
+  Future<void> fetchnew(String? userID) async {
+    await FirebaseFirestore.instance
+        .collection("chats")
+        .doc(userID)
+        .collection("agreements")
+        .get()
+        .then(
+          (QuerySnapshot<Map<String, dynamic>> snapshot) => {
+            _list = [],
+            for (var doc in snapshot.docs)
+              {
+                _list.insert(
+                  0,
+                  AgreementModel.fromMap(map: doc.data(), agreementID: doc.id),
+                ),
+              },
+          },
+        );
+    notifyListeners();
+  }
+
   AgreementModel getAgreementByID(String agreementID) {
     return _list
         .where((element) => element.agreementID!.trim() == agreementID.trim())

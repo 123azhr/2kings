@@ -1,46 +1,58 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: empty_catches
 
 import 'package:flutter/material.dart';
+import 'package:housecontractors/providers/agreement_provider.dart';
+import 'package:housecontractors/providers/inventory_provider.dart';
+import 'package:housecontractors/providers/message_provider.dart';
+import 'package:housecontractors/providers/worker_provider.dart';
 import 'package:provider/provider.dart';
-import '../../providers/contractor_provider.dart';
-import '../../providers/worker_provider.dart';
+import '../../providers/chat_provider.dart';
+import '../../providers/service_log_provider.dart';
+import '../../providers/order_provider.dart';
 import '../Dashboard/dashboard.dart';
 
-class LoadingScreen extends StatefulWidget {
-  const LoadingScreen({Key? key}) : super(key: key);
-
+class Loading extends StatefulWidget {
+  const Loading({Key? key, this.userID}) : super(key: key);
+  final String? userID;
   @override
-  State<LoadingScreen> createState() => _LoadingScreenState();
+  State<Loading> createState() => _LoadingState();
 }
 
-class _LoadingScreenState extends State<LoadingScreen> {
+class _LoadingState extends State<Loading> {
   @override
   void initState() {
     try {
       loadData();
-    } catch (e) {
-      print("cannot load data");
-    }
+    } catch (e) {}
     super.initState();
   }
 
   loadData() async {
     await Future.delayed(const Duration(milliseconds: 0)).then((value) async {
       try {
-        final currentUserProvider =
-            Provider.of<ContractorsProvider>(context, listen: false);
-        currentUserProvider
-            .fetch();
-      } catch (e) {
-        print(e);
-      }
-      try {
         final workersProvider =
             Provider.of<WorkerProvider>(context, listen: false);
-        workersProvider.fetch();
-      } catch (e) {
-        print(e);
-      }
+        workersProvider.fetchnew(widget.userID);
+
+        final chatProvider = Provider.of<ChatProvider>(context, listen: false);
+        await chatProvider.fetchnew(widget.userID);
+
+        final messageProvider =
+            Provider.of<MessageProvider>(context, listen: false);
+
+        await messageProvider.fetchnew(widget.userID);
+        final aggrementProvider =
+            Provider.of<AgreementProvider>(context, listen: false);
+
+        await aggrementProvider.fetchnew(widget.userID);
+        OrdersProvider orderProvider =
+            Provider.of<OrdersProvider>(context, listen: false);
+        await orderProvider.fetchnew(widget.userID);
+
+        Provider.of<ServiceLogsProvider>(context, listen: false);
+
+        Provider.of<InventoryProvider>(context, listen: false);
+      } catch (e) {}
 
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const Dashboard()));

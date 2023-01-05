@@ -5,6 +5,7 @@ import 'package:housecontractors/models/customer_model.dart';
 import 'package:housecontractors/providers/customer_provider.dart';
 import 'package:housecontractors/providers/message_provider.dart';
 import 'package:housecontractors/widgets/are_you_sure.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
 import '../../models/chat_model.dart';
@@ -122,7 +123,13 @@ class ChatMenuTile extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Inbox(user: user)),
+          PageTransition(
+              type: PageTransitionType.leftToRight,
+              alignment: Alignment.center,
+              child: Inbox(user: user),
+              duration: const Duration(milliseconds: 290),
+              inheritTheme: true,
+              ctx: context),
         );
       },
       title: Text(user.name!),

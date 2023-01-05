@@ -14,12 +14,13 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   int _selectedIndex = 0;
+
   static final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
     const ChatMenu(),
     const Newsfeed(),
     const MyOrders(),
-    const Menu(),
+    Menu(),
   ];
   void _onItemTapped(int index) {
     setState(() {

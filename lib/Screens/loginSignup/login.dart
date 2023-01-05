@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/Dashboard/dashboard.dart';
+import 'package:housecontractors/Screens/loginSignup/loading_screen.dart';
 import 'package:housecontractors/Screens/loginSignup/signup.dart';
 import 'package:housecontractors/Screens/loginSignup/verify_email.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
@@ -11,6 +12,7 @@ import 'package:provider/provider.dart';
 import '../../providers/agreement_provider.dart';
 import '../../providers/authentication_provider.dart';
 import '../../providers/chat_provider.dart';
+import '../../providers/inventory_provider.dart';
 import '../../providers/service_log_provider.dart';
 import '../../providers/message_provider.dart';
 import '../../providers/order_provider.dart';
@@ -41,6 +43,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<ContractorsProvider>(context);
+
     userProvider.fetch();
     SizeConfig().init(context);
     return GestureDetector(
@@ -124,11 +127,11 @@ class _LoginState extends State<Login> {
                       }
                     }
                     if (isAvailable == true) {
-                      showDialog(
-                          barrierDismissible: true,
-                          context: context,
-                          builder: (context) =>
-                              const Center(child: CircularProgressIndicator()));
+                      // showDialog(
+                      //     barrierDismissible: true,
+                      //     context: context,
+                      //     builder: (context) =>
+                      //         const Center(child: CircularProgressIndicator()));
                       String isSignedin = await context
                           .read<AuthenticationService>()
                           .signIn(
@@ -136,68 +139,18 @@ class _LoginState extends State<Login> {
                               password: passController.text.trim());
                       if (isSignedin == "signed in") {
                         await FirebaseAuth.instance.currentUser!.reload();
+
                         if (FirebaseAuth.instance.currentUser!.emailVerified) {
-                          try {
-                            final currentUserProvider =
-                                Provider.of<ContractorsProvider>(context,
-                                    listen: false);
-                            await currentUserProvider.fetch();
-                          } catch (e) {
-                            print(e);
-                          }
-                          try {
-                            final workersProvider = Provider.of<WorkerProvider>(
-                                context,
-                                listen: false);
-                            await workersProvider.fetch();
-                          } catch (e) {
-                            print(e);
-                          }
-
-                          final ordersProvider = Provider.of<OrdersProvider>(
-                              context,
-                              listen: false);
-                          await ordersProvider.fetch();
-                          try {
-                            final chatProvider = Provider.of<ChatProvider>(
-                                context,
-                                listen: false);
-                            await chatProvider.fetch();
-                          } catch (e) {
-                            print(e);
-                          }
-
-                          try {
-                            final messageProvider =
-                                Provider.of<MessageProvider>(context,
-                                    listen: false);
-
-                            await messageProvider.fetch();
-                          } catch (e) {
-                            print(e);
-                          }
-                          try {
-                            final aggrementProvider =
-                                Provider.of<AgreementProvider>(context,
-                                    listen: false);
-
-                            await aggrementProvider.fetch();
-                          } catch (e) {
-                            print(e);
-                          }
-                          try {
-                            Provider.of<ServiceLogsProvider>(context,
-                                listen: false);
-                          } catch (e) {
-                            print(e);
-                          }
+                          currentUserID =
+                              FirebaseAuth.instance.currentUser!.uid;
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const Dashboard(),
+                                builder: (context) => Loading(
+                                    userID:
+                                        FirebaseAuth.instance.currentUser!.uid),
                               ));
                         } else {
-                          Navigator.pop(context);
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
@@ -205,7 +158,6 @@ class _LoginState extends State<Login> {
                               ));
                         }
                       } else {
-                        Navigator.pop(context);
                         showModalBottomSheet(
                           backgroundColor: Colors.transparent,
                           context: context,

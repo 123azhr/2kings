@@ -32,8 +32,7 @@ class _InboxState extends State<Inbox> {
     final messageList = messageProvider.getSortedList(widget.user.userID);
     messageProvider.fetch();
     final userProvider = Provider.of<ContractorsProvider>(context);
-    final loggedinUser =
-        userProvider.getUserByID(FirebaseAuth.instance.currentUser!.uid.trim());
+    final loggedinUser = userProvider.getCurrentUser();
     final chatProvider = Provider.of<ChatProvider>(context);
     // String selectedValue = "Services";
     List<DropdownMenuItem<String>> menuItems = [

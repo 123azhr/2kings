@@ -4,34 +4,38 @@ import 'package:housecontractors/Screens/loginSignup/login.dart';
 import 'package:housecontractors/Screens/menu/aboutus/aboutus.dart';
 import 'package:housecontractors/Screens/profile/edit_profile.dart';
 import 'package:housecontractors/Screens/profile/edit_services.dart';
+import 'package:housecontractors/models/contractor_model.dart';
 import 'package:housecontractors/providers/authentication_provider.dart';
 import 'package:housecontractors/providers/message_provider.dart';
+import 'package:housecontractors/widgets/are_you_sure.dart';
 import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
 import '../../providers/chat_provider.dart';
+import '../../providers/inventory_provider.dart';
 import '../../providers/order_provider.dart';
-import '../../providers/service_provider.dart';
 import '../../providers/contractor_provider.dart';
+import '../../providers/service_log_provider.dart';
 import '../../providers/worker_provider.dart';
 import '../profile/my_profile_view.dart';
+import 'logout.dart';
 
 class Menu extends StatelessWidget {
-  const Menu({
+  Menu({
     Key? key,
   }) : super(key: key);
+
+  final loggedInUserID = currentUserID;
   @override
   Widget build(BuildContext context) {
-    final serviceProvider = Provider.of<ServiceProvider>(context);
-    final chatProvider = Provider.of<ChatProvider>(context);
-    final currentProvider = Provider.of<ContractorsProvider>(context);
-
-    final userProvider = Provider.of<ContractorsProvider>(context);
     final orderstProvider = Provider.of<OrdersProvider>(context);
     final messageProvider = Provider.of<MessageProvider>(context);
     final workerProvider = Provider.of<WorkerProvider>(context);
+    final slog = Provider.of<ServiceLogsProvider>(context);
 
-    final loggedInUser = currentProvider
-        .getUserByID(FirebaseAuth.instance.currentUser!.uid.trim());
+    final ilog = Provider.of<InventoryProvider>(context);
+    final currentProvider = Provider.of<ContractorsProvider>(context);
+    final loggedInUser = currentProvider.getUserByID(loggedInUserID);
+    final chatProvider = Provider.of<ChatProvider>(context);
     return Scaffold(
       appBar: AppBar(
         leadingWidth: getProportionateScreenWidth(40),
@@ -171,33 +175,13 @@ class Menu extends StatelessWidget {
             color: Colors.black,
             height: 0,
           ),
-          ListTile(
-            visualDensity: const VisualDensity(vertical: 4),
-            dense: true,
-            leading: const CircleAvatar(
-              child: Icon(Icons.logout),
-            ),
-            title: const Text(
-              "Logout",
-              style: TextStyle(
-                fontSize: 18,
-              ),
-            ),
-            onTap: () async {
-              await context.read<AuthenticationService>().signOut();
-              chatProvider.clearList();
-              messageProvider.clearList();
-              serviceProvider.clearList();
-              currentProvider.clearList();
-              orderstProvider.clearList();
-              workerProvider.clearList();
-              userProvider.clearList();
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const Login()),
-              );
-            },
-          ),
+          Logout(
+              chatProvider: chatProvider,
+              messageProvider: messageProvider,
+              orderstProvider: orderstProvider,
+              workerProvider: workerProvider,
+              slog: slog,
+              ilog: ilog),
           const Divider(
             thickness: 0.05,
             indent: 0,

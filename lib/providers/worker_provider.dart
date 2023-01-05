@@ -38,6 +38,26 @@ class WorkerProvider with ChangeNotifier {
     }
   }
 
+  Future<void> fetchnew(String? userID) async {
+    await FirebaseFirestore.instance
+        .collection("c_workers")
+        .where("userID", isEqualTo: userID)
+        .get()
+        .then(
+          (QuerySnapshot<Map<String, dynamic>> snapshot) => {
+            _list = [],
+            for (var doc in snapshot.docs)
+              {
+                _list.insert(
+                  0,
+                  WorkerModel.fromMap(map: doc.data(), userID: doc.id),
+                ),
+              },
+          },
+        );
+    notifyListeners();
+  }
+
   List<WorkerModel> getWorkerByserviceName(String serviceName) {
     return _list
         .where((element) => element.service!.trim() == serviceName)
