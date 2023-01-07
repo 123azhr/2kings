@@ -7,11 +7,14 @@ import '../../../../models/contractor_model.dart';
 class StoryView extends StatefulWidget {
   final ContractorsModel? userModel;
   final String? itemURL;
-  const StoryView({
-    super.key,
-    required this.userModel,
-    this.itemURL,
-  });
+  final String? postTime;
+  final String? caption;
+  const StoryView(
+      {super.key,
+      required this.postTime,
+      required this.userModel,
+      required this.itemURL,
+      required this.caption});
 
   @override
   State<StoryView> createState() => _StoryViewState();
@@ -30,7 +33,7 @@ class _StoryViewState extends State<StoryView>
       duration: const Duration(seconds: 5),
     )..addListener(() {
         setState(() {
-          if (controller.value >= 0.999) {
+          if (controller.value >= 0.998) {
             controller.reset();
           }
         });
@@ -78,43 +81,67 @@ class _StoryViewState extends State<StoryView>
               ),
               Padding(
                   padding: const EdgeInsets.all(12),
-                  child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      GestureDetector(
-                        onTap: () => Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ProfileView(userID: widget.userModel!.userID),
-                            )),
-                        child: CircleAvatar(
-                            foregroundImage: CachedNetworkImageProvider(
-                                widget.userModel!.profileImageURL!)),
-                      ),
-                      SizedBox(
-                        width: getProportionateScreenWidth(10),
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () => Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ProfileView(
+                                      userID: widget.userModel!.userID),
+                                )),
+                            child: CircleAvatar(
+                                foregroundImage: CachedNetworkImageProvider(
+                                    widget.userModel!.profileImageURL!)),
+                          ),
+                          SizedBox(
+                            width: getProportionateScreenWidth(10),
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                widget.userModel!.name!,
+                                style: const TextStyle(
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    fontSize: 18),
+                              ),
+                              Text(
+                                widget.postTime!,
+                                style: const TextStyle(
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    fontSize: 18),
+                              ),
+                            ],
+                          ),
+                          const Spacer(),
+                          IconButton(
+                              icon: const Icon(Icons.close,
+                                  color: Color.fromARGB(255, 0, 0, 0)),
+                              onPressed: () {
+                                controller.reset();
+                              })
+                        ],
                       ),
                       Text(
-                        widget.userModel!.name!,
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 0, 0, 0), fontSize: 18),
-                      ),
-                      const Spacer(),
-                      IconButton(
-                          icon: const Icon(Icons.close,
-                              color: Color.fromARGB(255, 0, 0, 0)),
-                          onPressed: () {
-                            controller.reset();
-                          })
+                        widget.caption!,
+                        style: const TextStyle(fontSize: 20),
+                      )
                     ],
                   )),
               SizedBox(
                 width: setWidth(100),
-                child: Center(
-                  child: Image.network(
-                    widget.itemURL!,
-                    fit: BoxFit.contain,
-                  ),
+                child: Stack(
+                  children: [
+                    Center(
+                      child: CachedNetworkImage(
+                        imageUrl: widget.itemURL!,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ]),

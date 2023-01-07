@@ -59,7 +59,7 @@ class _CreatePostState extends State<CreatePost> {
         userID: loggedInUser.userID,
         userName: loggedInUser.name,
         date: date,
-        caption: "",
+        caption: captionController.text,
       );
 
       await postProvider.fetch();
@@ -77,6 +77,7 @@ class _CreatePostState extends State<CreatePost> {
     }
   }
 
+  TextEditingController captionController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<ContractorsProvider>(context);
@@ -174,6 +175,7 @@ class _CreatePostState extends State<CreatePost> {
                         width: setWidth(100),
                       ),
                 TextFormField(
+                  controller: captionController,
                   maxLines: 20,
                   textAlign: TextAlign.start,
                   style: const TextStyle(

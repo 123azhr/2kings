@@ -15,13 +15,14 @@ class Post extends StatelessWidget {
     final postModel = Provider.of<PostModel>(context);
     final userProvider = Provider.of<ContractorsProvider>(context);
     final user = userProvider.getUserByID(postModel.userID!);
- 
+
     return Card(
       color: const Color.fromARGB(255, 255, 230, 149),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           PostHeader(
+              postID: postModel.postID,
               userID: user.userID!,
               title: user.name!,
               date: postModel.postedTime,

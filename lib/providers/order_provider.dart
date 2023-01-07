@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:housecontractors/providers/contractor_provider.dart';
 import '../models/orders_model.dart';
 
 class OrdersProvider with ChangeNotifier {
@@ -8,39 +8,16 @@ class OrdersProvider with ChangeNotifier {
 
   List<OrdersModel> get getList => _list;
 
-  final loggedInUser = FirebaseAuth.instance.currentUser;
+  final loggedInUser = currentUserID;
   void clearList() {
     _list.clear();
     notifyListeners();
   }
 
   Future<void> fetch() async {
-    if (loggedInUser != null) {
-      await FirebaseFirestore.instance
-          .collection("orders")
-          .doc(loggedInUser!.uid)
-          .collection("orderDetails")
-          .get()
-          .then(
-            (QuerySnapshot<Map<String, dynamic>> snapshot) => {
-              _list = [],
-              for (var doc in snapshot.docs)
-                {
-                  _list.insert(
-                    0,
-                    OrdersModel.fromMap(map: doc.data(), orderID: doc.id),
-                  ),
-                },
-            },
-          );
-      notifyListeners();
-    }
-  }
-
-  Future<void> fetchnew(String? userID) async {
     await FirebaseFirestore.instance
         .collection("orders")
-        .doc(userID)
+        .doc(loggedInUser)
         .collection("orderDetails")
         .get()
         .then(
@@ -61,7 +38,7 @@ class OrdersProvider with ChangeNotifier {
   updateStatus(String orderID, String status, String customerID) async {
     await FirebaseFirestore.instance
         .collection("orders")
-        .doc(loggedInUser!.uid)
+        .doc(loggedInUser)
         .collection("orderDetails")
         .doc(orderID)
         .update({"status": status});
@@ -80,7 +57,7 @@ class OrdersProvider with ChangeNotifier {
       required String customerID}) async {
     await FirebaseFirestore.instance
         .collection("orders")
-        .doc(loggedInUser!.uid)
+        .doc(loggedInUser)
         .collection("orderDetails")
         .doc(orderID)
         .update({
@@ -103,7 +80,7 @@ class OrdersProvider with ChangeNotifier {
       required String customerID}) async {
     await FirebaseFirestore.instance
         .collection("orders")
-        .doc(loggedInUser!.uid)
+        .doc(loggedInUser)
         .collection("orderDetails")
         .doc(orderID)
         .update({
@@ -123,7 +100,7 @@ class OrdersProvider with ChangeNotifier {
   updateGrandTotal(String orderID, String grandTotal, String customerID) async {
     await FirebaseFirestore.instance
         .collection("orders")
-        .doc(loggedInUser!.uid)
+        .doc(loggedInUser)
         .collection("orderDetails")
         .doc(orderID)
         .update({

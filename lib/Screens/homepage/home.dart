@@ -66,19 +66,10 @@ class HomePage extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          "Home Services",
+                          "Workers",
                           style: Theme.of(context).textTheme.displaySmall,
                         ),
                         const Spacer(),
-                        IconButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const EditServices(),
-                                  ));
-                            },
-                            icon: const Icon(Icons.edit))
                       ],
                     ),
                     Divider(
@@ -94,32 +85,24 @@ class HomePage extends StatelessWidget {
                       thickness: getProportionateScreenHeight(0.1),
                       color: Colors.black,
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          "Construction Services",
-                          style: Theme.of(context).textTheme.displaySmall,
-                        ),
-                        const Spacer(),
-                        IconButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const EditServices(),
-                                  ));
-                            },
-                            icon: const Icon(Icons.edit))
-                      ],
-                    ),
-                    Divider(
-                      height: getProportionateScreenHeight(20),
-                      thickness: getProportionateScreenHeight(0.05),
-                      indent: 0,
-                      endIndent: 0,
-                      color: Colors.black,
-                    ),
-                    const ConstructionServices(),
+                    // Row(
+                    //   children: [
+                    //     Text(
+                    //       "Construction Services",
+                    //       style: Theme.of(context).textTheme.displaySmall,
+                    //     ),
+                    //     const Spacer(),
+                    //     IconButton(
+                    //         onPressed: () {
+                    //           Navigator.push(
+                    //               context,
+                    //               MaterialPageRoute(
+                    //                 builder: (context) => const EditServices(),
+                    //               ));
+                    //         },
+                    //         icon: const Icon(Icons.edit))
+                    //   ],
+                    // ),
                   ]),
             ),
           ],

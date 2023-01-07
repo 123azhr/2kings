@@ -141,7 +141,7 @@ class _UserFormState extends State<UserForm> {
           status: true,
           createdDate: date,
           profileImageURL: imageURL,
-          rating: ["0 1"],
+          rating: ["xyz 1"],
           services: []);
     } on FirebaseException catch (e) {
       print(e.message);
@@ -153,6 +153,7 @@ class _UserFormState extends State<UserForm> {
 
   @override
   Widget build(BuildContext context) {
+   
     SizeConfig().init(context);
     return SafeArea(
       child: Scaffold(
@@ -351,26 +352,27 @@ class _UserFormState extends State<UserForm> {
                             builder: ((context) => const Center(
                                 child: CircularProgressIndicator())),
                           );
-                          await createAccountandLogin();
-                          final loggedInUser =
-                              FirebaseAuth.instance.currentUser;
-                          await uploadUserData(
-                              cnic: cnicController.text,
-                              contactNumber: contactController.text,
-                              email: loggedInUser!.email!,
-                              gender: genderText == "Male" ? true : false,
-                              name: nameController.text,
-                              userID: loggedInUser.uid);
-                          await loadcurrentUser();
+                            await createAccountandLogin();
+                            final loggedInUser =
+                                FirebaseAuth.instance.currentUser;
+                            await uploadUserData(
+                                cnic: cnicController.text,
+                                contactNumber: contactController.text,
+                                email: loggedInUser!.email!,
+                                gender: genderText == "Male" ? true : false,
+                                name: nameController.text,
+                                userID: loggedInUser.uid);
+                            await loadcurrentUser();
 
-                          Navigator.pop(context);
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const VerifyEmail(),
-                              ));
+                            Navigator.pop(context);
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const VerifyEmail(),
+                                ));
+                          
                         },
-                        child: const Text("Submit"),
+                        child: const Text("Signup"),
                       ),
                     ),
                   ),

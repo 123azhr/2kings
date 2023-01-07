@@ -32,22 +32,22 @@ class _LoadingState extends State<Loading> {
       try {
         final workersProvider =
             Provider.of<WorkerProvider>(context, listen: false);
-        workersProvider.fetchnew(widget.userID);
+        workersProvider.fetch();
 
         final chatProvider = Provider.of<ChatProvider>(context, listen: false);
-        await chatProvider.fetchnew(widget.userID);
+        await chatProvider.fetch();
 
         final messageProvider =
             Provider.of<MessageProvider>(context, listen: false);
 
-        await messageProvider.fetchnew(widget.userID);
+        await messageProvider.fetch();
         final aggrementProvider =
             Provider.of<AgreementProvider>(context, listen: false);
 
-        await aggrementProvider.fetchnew(widget.userID);
+        await aggrementProvider.fetch();
         OrdersProvider orderProvider =
             Provider.of<OrdersProvider>(context, listen: false);
-        await orderProvider.fetchnew(widget.userID);
+        await orderProvider.fetch();
 
         Provider.of<ServiceLogsProvider>(context, listen: false);
 

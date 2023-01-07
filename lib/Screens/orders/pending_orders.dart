@@ -27,7 +27,6 @@ class _PendingOrdersState extends State<PendingOrders> {
     List<OrdersModel> ordersList = ordersProvider.getList
         .where((element) => element.status == "Pending")
         .toList();
-
     return ListView.separated(
       separatorBuilder: (context, index) => SizedBox(
         height: getProportionateScreenHeight(10),

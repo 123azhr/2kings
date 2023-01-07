@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:housecontractors/providers/contractor_provider.dart';
 import '../models/chat_model.dart';
 
 class ChatProvider with ChangeNotifier {
@@ -8,7 +9,7 @@ class ChatProvider with ChangeNotifier {
 
   List<ChatModel> get getList => _list;
 
-  final loggedInUser = FirebaseAuth.instance.currentUser;
+  final loggedInUser = currentUserID;
   void clearList() {
     _list.clear();
     notifyListeners();
@@ -17,28 +18,7 @@ class ChatProvider with ChangeNotifier {
   Future<void> fetch() async {
     await FirebaseFirestore.instance
         .collection("chats")
-        .doc(loggedInUser!.uid.trim())
-        .collection("with")
-        .get()
-        .then(
-          (QuerySnapshot<Map<String, dynamic>> snapshot) => {
-            _list = [],
-            for (var doc in snapshot.docs)
-              {
-                _list.insert(
-                  0,
-                  ChatModel.fromMap(otherID: doc.id),
-                ),
-              },
-          },
-        );
-    notifyListeners();
-  }
-
-  Future<void> fetchnew(String? user) async {
-    await FirebaseFirestore.instance
-        .collection("chats")
-        .doc(user)
+        .doc(loggedInUser)
         .collection("with")
         .get()
         .then(
@@ -67,7 +47,7 @@ class ChatProvider with ChangeNotifier {
   }) async {
     await FirebaseFirestore.instance
         .collection("chats")
-        .doc(loggedInUser!.uid)
+        .doc(loggedInUser)
         .collection("with")
         .doc(otherID)
         .set({});
@@ -86,7 +66,7 @@ class ChatProvider with ChangeNotifier {
         .collection("chats")
         .doc(otherID)
         .collection("with")
-        .doc(loggedInUser!.uid)
+        .doc(loggedInUser)
         .set({});
     notifyListeners();
   }
@@ -96,7 +76,7 @@ class ChatProvider with ChangeNotifier {
   }) async {
     await FirebaseFirestore.instance
         .collection("chats")
-        .doc(loggedInUser!.uid)
+        .doc(loggedInUser)
         .collection("with")
         .doc(otherID)
         .delete();
@@ -105,7 +85,7 @@ class ChatProvider with ChangeNotifier {
     );
     await FirebaseFirestore.instance
         .collection("chats")
-        .doc(loggedInUser!.uid)
+        .doc(loggedInUser)
         .collection("with")
         .doc(otherID)
         .delete();

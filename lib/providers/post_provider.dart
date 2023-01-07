@@ -62,6 +62,11 @@ class PostProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> deletePost({String? postID}) async {
+    await FirebaseFirestore.instance.collection("post").doc(postID).delete();
+    notifyListeners();
+  }
+
   Future<void> updateLikes({
     String? postID,
     List? likes,

@@ -35,13 +35,14 @@ class HomeServices extends StatelessWidget {
     }
 
     return SizedBox(
+      height: setHeight(60),
       child: GridView.builder(
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
             crossAxisSpacing: getProportionateScreenWidth(0),
             mainAxisSpacing: getProportionateScreenHeight(0),
-            mainAxisExtent: getProportionateScreenHeight(120),
+            mainAxisExtent: getProportionateScreenHeight(130),
           ),
           shrinkWrap: true,
           itemCount: _allHomeService().length,
@@ -91,12 +92,14 @@ class WorkerSlide extends StatelessWidget {
             Padding(
               padding:
                   EdgeInsets.only(bottom: getProportionateScreenHeight(10)),
-              child: Text(
-                serviceModel.serviceName!,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w700,
-                  fontSize: getProportionateScreenHeight(17),
+              child: Center(
+                child: Text(
+                  serviceModel.serviceName!,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700,
+                    fontSize: getProportionateScreenHeight(17),
+                  ),
                 ),
               ),
             ),

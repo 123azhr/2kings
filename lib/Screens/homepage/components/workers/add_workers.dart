@@ -417,23 +417,25 @@ class _AddWorkerState extends State<AddWorker> {
                       Size(setWidth(30), setHeight(6)),
                     ),
                   ),
-                  onPressed: () {
-                    // var imageURL = workerProvider.uploadWorkerImageToStorage(
-                    //     imagePath: _imagePath, userID: loggedInUser.userID);
-                    // print(imageURL);
+                  onPressed: _imagePath == ""
+                      ? null
+                      : () {
+                          // var imageURL = workerProvider.uploadWorkerImageToStorage(
+                          //     imagePath: _imagePath, userID: loggedInUser.userID);
+                          // print(imageURL);
 
-                    // workerProvider.uploadWorkerImageToStorage(
-                    //     userID: loggedInUser.userID,
-                    //     imagePath: imageURL.toString());
-                    // Navigator.pop(context);
-                    // Future.delayed(const Duration(milliseconds: 0))
-                    //     .then((value) async {
-                    //   await workerProvider.fetch();
+                          // workerProvider.uploadWorkerImageToStorage(
+                          //     userID: loggedInUser.userID,
+                          //     imagePath: imageURL.toString());
+                          // Navigator.pop(context);
+                          // Future.delayed(const Duration(milliseconds: 0))
+                          //     .then((value) async {
+                          //   await workerProvider.fetch();
 
-                    // }
-                    //   );
-                    uploadWokerData();
-                  },
+                          // }
+                          //   );
+                          uploadWokerData();
+                        },
                   child: const Text("Save",
                       style: TextStyle(fontSize: 18, color: Colors.black87)),
                 ),

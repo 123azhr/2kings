@@ -17,7 +17,7 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
   bool emailError = false;
-  bool emailExist = false;
+  bool emailExistError = false;
   bool passError = false;
   bool confirmError = false;
   bool obsecureText = true;
@@ -25,6 +25,50 @@ class _SignupState extends State<Signup> {
     String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$';
     RegExp regExp = RegExp(pattern);
     return regExp.hasMatch(value);
+  }
+
+  bool _checkvalidations(ContractorsProvider userProvider) {
+    for (var item in userProvider.getList) {
+      if (item.email == emailController.text.trim()) {
+        emailExistError = false;
+      } else {
+        emailExistError = true;
+      }
+    }
+    if (emailController.text.isNotEmpty) {
+      if (!emailExistError) {
+        if (EmailValidator.validate(emailController.text)) {
+          emailError = false;
+          if (validateStructure(passController.text) &&
+              passController.text.isNotEmpty) {
+            passError = false;
+            if (passController.text == cpassController.text &&
+                cpassController.text.isNotEmpty) {
+              confirmError = false;
+              if (emailError && confirmError && passError && emailExistError) {
+                return true;
+              } else {
+                return false;
+              }
+            } else {
+              confirmError = true;
+              return false;
+            }
+          } else {
+            passError = true;
+            return false;
+          }
+        } else {
+          emailError = true;
+          return false;
+        }
+      } else {
+        emailExistError = true;
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   final TextEditingController emailController = TextEditingController();
@@ -73,7 +117,7 @@ class _SignupState extends State<Signup> {
                       color: const Color.fromARGB(255, 255, 239, 63),
                     ),
                     Visibility(
-                      visible: emailError || emailExist,
+                      visible: emailError || emailExistError,
                       child: Text(
                         emailError
                             ? "Invalid Email"
@@ -188,78 +232,17 @@ class _SignupState extends State<Signup> {
                           //content padding inside button
                         ),
                         onPressed: () async {
-                          bool isAvailable = false;
-
-                          for (var item in userProvider.getList) {
-                            if (item.email == emailController.text.trim()) {
-                              isAvailable = true;
-                            }
-                          }
-                          if (EmailValidator.validate(emailController.text) &&
-                              emailController.text.isNotEmpty) {
-                            if (isAvailable) {
-                              emailError = false;
-                              if (validateStructure(passController.text) &&
-                                  passController.text.isNotEmpty) {
-                                passError = false;
-                                if (passController.text ==
-                                        cpassController.text &&
-                                    cpassController.text.isNotEmpty) {
-                                  confirmError = false;
-
-                                  // await context
-                                  //     .read<AuthenticationService>()
-                                  //     .signUp(
-                                  //         email: emailController.text.trim(),
-                                  //         password: passController.text.trim());
-                                  // showDialog(
-                                  //   context: context,
-                                  //   barrierDismissible: false,
-                                  //   builder: ((context) => const Center(
-                                  //       child: CircularProgressIndicator())),
-                                  // ).then((value) async => await Future.delayed(
-                                  //       const Duration(seconds: 5),
-                                  //       () async {
-                                  //         await showDialog(
-                                  //           context: context,
-                                  //           builder: (context) => SizedBox(
-                                  //             height: setHeight(5),
-                                  //             width: setWidth(20),
-                                  //             child: const Card(
-                                  //               child: Center(
-                                  //                   child: Text(
-                                  //                       "Registration Successful")),
-                                  //             ),
-                                  //           ),
-                                  //         );
-                                  //       },
-                                  //     ).then((value) => context
-                                  //         .read<AuthenticationService>()
-                                  //         .signIn(
-                                  //             email: emailController.text.trim(),
-                                  //             password:
-                                  //                 passController.text.trim())));
-
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => UserForm(
-                                            email: emailController.text,
-                                            password: passController.text),
-                                      ));
-                                } else {
-                                  confirmError = true;
-                                }
-                              } else {
-                                passError = true;
-                              }
-                            } else {
-                              emailExist = true;
-                            }
+                          if (_checkvalidations(userProvider)) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => UserForm(
+                                      email: emailController.text,
+                                      password: passController.text),
+                                ));
                           } else {
-                            emailError = true;
+                            setState(() {});
                           }
-                          setState(() {});
                         },
                         child: const Text("Signup"),
                       ),

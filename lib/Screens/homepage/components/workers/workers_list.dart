@@ -20,20 +20,11 @@ class WorkersList extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.black),
         title: Text(
           serviceName,
-          style:const  TextStyle(
+          style: const TextStyle(
             color: Color.fromARGB(255, 0, 0, 0),
             fontSize: (kToolbarHeight / 100) * 40,
           ),
         ),
-        actions: [
-          IconButton(
-            color: Colors.black,
-            onPressed: () {},
-            icon: const Icon(
-              Icons.search,
-            ),
-          ),
-        ],
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,

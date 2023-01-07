@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:housecontractors/providers/contractor_provider.dart';
 
 import '../models/agreement_model.dart';
 
@@ -9,7 +10,7 @@ class AgreementProvider with ChangeNotifier {
 
   List<AgreementModel> get getList => _list;
 
-  final loggedInUser = FirebaseAuth.instance.currentUser;
+  final loggedInUser = currentUserID;
   void clearList() {
     _list.clear();
   }
@@ -18,7 +19,7 @@ class AgreementProvider with ChangeNotifier {
     if (loggedInUser != null) {
       await FirebaseFirestore.instance
           .collection("chats")
-          .doc(loggedInUser!.uid)
+          .doc(loggedInUser  )
           .collection("agreements")
           .get()
           .then(
@@ -36,27 +37,6 @@ class AgreementProvider with ChangeNotifier {
           );
       notifyListeners();
     }
-  }
-
-  Future<void> fetchnew(String? userID) async {
-    await FirebaseFirestore.instance
-        .collection("chats")
-        .doc(userID)
-        .collection("agreements")
-        .get()
-        .then(
-          (QuerySnapshot<Map<String, dynamic>> snapshot) => {
-            _list = [],
-            for (var doc in snapshot.docs)
-              {
-                _list.insert(
-                  0,
-                  AgreementModel.fromMap(map: doc.data(), agreementID: doc.id),
-                ),
-              },
-          },
-        );
-    notifyListeners();
   }
 
   AgreementModel getAgreementByID(String agreementID) {
@@ -77,7 +57,7 @@ class AgreementProvider with ChangeNotifier {
     DocumentReference<Map<String, dynamic>> doc = await FirebaseFirestore
         .instance
         .collection("chats")
-        .doc(loggedInUser!.uid)
+        .doc(loggedInUser  )
         .collection("agreements")
         .add({
       "contractorID": contractorID,

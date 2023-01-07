@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
 import '../../../helper/size_configuration.dart';
 
 class PostItem extends StatelessWidget {

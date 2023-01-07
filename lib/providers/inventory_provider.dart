@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:housecontractors/providers/contractor_provider.dart';
 
 import '../models/inventory_model.dart';
 
 class InventoryProvider with ChangeNotifier {
-  final loggedInUser = FirebaseAuth.instance.currentUser;
+  final loggedInUser = currentUserID;
   List<InventoryModel> _list = [];
 
   List<InventoryModel> get getInventoryList => _list;
@@ -18,7 +18,7 @@ class InventoryProvider with ChangeNotifier {
   Future<void> fetchInventory(String logsID) async {
     await FirebaseFirestore.instance
         .collection("orders")
-        .doc(loggedInUser!.uid)
+        .doc(loggedInUser  )
         .collection("logs")
         .doc(logsID)
         .collection("inventory")
@@ -53,7 +53,7 @@ class InventoryProvider with ChangeNotifier {
     DocumentReference<Map<String, dynamic>> doc = await FirebaseFirestore
         .instance
         .collection("orders")
-        .doc(loggedInUser!.uid)
+        .doc(loggedInUser  )
         .collection("logs")
         .doc(logsID)
         .collection("inventory")
@@ -102,7 +102,7 @@ class InventoryProvider with ChangeNotifier {
       {required String? inventoryID, required String logsID}) async {
     await FirebaseFirestore.instance
         .collection("orders")
-        .doc(loggedInUser!.uid)
+        .doc(loggedInUser  )
         .collection("logs")
         .doc(logsID)
         .collection("inventory")

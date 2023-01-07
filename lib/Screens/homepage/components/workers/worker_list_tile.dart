@@ -14,8 +14,8 @@ class WorkerTile extends StatelessWidget {
     return ListTile(
       onTap: () => worker_tile_details(context, workerModel),
       leading: SizedBox(
-        height: 50,
-        width: 50,
+        height: getProportionateScreenHeight(40),
+        width: getProportionateScreenWidth(50),
         child: CachedNetworkImage(
           imageUrl: workerModel.profileImg!,
         ),
@@ -67,17 +67,32 @@ class WorkerTile extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                    height: setHeight(53),
-                    color: const Color.fromARGB(255, 255, 255, 255),
+                SizedBox(
+                    height: setHeight(52),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(
-                          height: getProportionateScreenHeight(10),
+                          height: setHeight(2),
                         ),
-                        Image.network(workerModel.profileImg!),
+                        SizedBox(
+                            height: setHeight(30),
+                            width: setWidth(40),
+                            child: CachedNetworkImage(
+                                imageUrl: workerModel.profileImg!)),
+                        Text(
+                          "Name: " + workerModel.name!,
+                          style: TextStyle(
+                            fontSize: getProportionateScreenHeight(20),
+                          ),
+                        ),
+                        Text(
+                          "Contact: " + workerModel.number!,
+                          style: TextStyle(
+                            fontSize: getProportionateScreenHeight(20),
+                          ),
+                        ),
                         Text(
                           "Email: " + workerModel.email!,
                           style: TextStyle(
@@ -103,33 +118,10 @@ class WorkerTile extends StatelessWidget {
                             fontSize: getProportionateScreenHeight(20),
                           ),
                         ),
-                        Text(
-                          "Contact: " + workerModel.number!,
-                          style: TextStyle(
-                            fontSize: getProportionateScreenHeight(20),
-                          ),
-                        ),
-                        Text(
-                          "Status: " + workerModel.status.toString(),
-                          style: TextStyle(
-                            fontSize: getProportionateScreenHeight(20),
-                          ),
-                        ),
-                        const Divider(
+                        Divider(
                           thickness: 0.2,
                           color: Colors.black,
-                          height: 0,
-                        ),
-                        Text(
-                          "Bio: ",
-                          style: TextStyle(
-                            fontSize: getProportionateScreenHeight(20),
-                          ),
-                        ),
-                        const Divider(
-                          thickness: 0.2,
-                          color: Colors.black,
-                          height: 0,
+                          height: setHeight(0),
                         ),
                       ],
                     )),

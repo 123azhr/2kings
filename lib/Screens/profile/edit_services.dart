@@ -30,72 +30,66 @@ class EditServices extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: Column(
-        children: [
-          const MyServices(),
-          const Spacer(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                    const Color.fromARGB(255, 18, 18, 18),
-                  ),
-                  fixedSize: MaterialStateProperty.all(
-                    Size(setWidth(30), setHeight(6)),
-                  ),
+      body: const MyServices(),
+      bottomSheet: SizedBox(
+        height: setHeight(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                  const Color.fromARGB(255, 18, 18, 18),
                 ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text("Discard",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Color.fromARGB(255, 255, 210, 32),
-                    )),
+                fixedSize: MaterialStateProperty.all(
+                  Size(setWidth(30), setHeight(6)),
+                ),
               ),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                    const Color.fromARGB(255, 255, 210, 32),
-                  ),
-                  fixedSize: MaterialStateProperty.all(
-                    Size(setWidth(30), setHeight(6)),
-                  ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text("Discard",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Color.fromARGB(255, 255, 210, 32),
+                  )),
+            ),
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                  const Color.fromARGB(255, 255, 210, 32),
                 ),
-                onPressed: () async {
-                  showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: ((context) => WillPopScope(
-                          onWillPop: () async => false,
-                          child:
-                              const Center(child: CircularProgressIndicator()),
-                        )),
-                  );
-                  final userProvider =
-                      Provider.of<ContractorsProvider>(context, listen: false);
-                  await FirebaseFirestore.instance
-                      .collection("users")
-                      .doc("Y1DImckjzK5z2khAEi7o")
-                      .collection("contractors")
-                      .doc(FirebaseAuth.instance.currentUser!.uid.trim())
-                      .update({"services": list});
+                fixedSize: MaterialStateProperty.all(
+                  Size(setWidth(30), setHeight(6)),
+                ),
+              ),
+              onPressed: () async {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: ((context) => WillPopScope(
+                        onWillPop: () async => false,
+                        child: const Center(child: CircularProgressIndicator()),
+                      )),
+                );
+                final userProvider =
+                    Provider.of<ContractorsProvider>(context, listen: false);
+                await FirebaseFirestore.instance
+                    .collection("users")
+                    .doc("Y1DImckjzK5z2khAEi7o")
+                    .collection("contractors")
+                    .doc(FirebaseAuth.instance.currentUser!.uid.trim())
+                    .update({"services": list});
 
-                  await userProvider.fetch();
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                },
-                child: const Text("Save",
-                    style: TextStyle(fontSize: 18, color: Colors.black87)),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: getProportionateScreenHeight(10),
-          )
-        ],
+                await userProvider.fetch();
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+              child: const Text("Save",
+                  style: TextStyle(fontSize: 18, color: Colors.black87)),
+            ),
+          ],
+        ),
       ),
     ));
   }
@@ -129,7 +123,7 @@ class _MyServicesState extends State<MyServices> {
     return SizedBox(
       child: ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
+          // shrinkWrap: true,
           itemCount: _allService().length,
           itemBuilder: (context, int index) => ChangeNotifierProvider.value(
                 value: _allService()[index],
@@ -158,7 +152,7 @@ class _ServiceSlideState extends State<ServiceSlide> {
     ContractorsModel user =
         userProvider.getUserByID(FirebaseAuth.instance.currentUser!.uid.trim());
     bool initialValue =
-        user.services!.contains(serviceModel.serviceName!) ? true : false;
+        user.services!.contains(serviceModel.serviceName) ? true : false;
     return Card(
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
@@ -178,7 +172,7 @@ class _ServiceSlideState extends State<ServiceSlide> {
                 bottom: getProportionateScreenHeight(10),
                 left: getProportionateScreenHeight(10)),
             child: Text(
-              serviceModel.serviceName!,
+              serviceModel.serviceName.toString(),
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w700,

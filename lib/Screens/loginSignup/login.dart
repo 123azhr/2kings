@@ -139,16 +139,13 @@ class _LoginState extends State<Login> {
                               password: passController.text.trim());
                       if (isSignedin == "signed in") {
                         await FirebaseAuth.instance.currentUser!.reload();
-
+                        currentUserID = FirebaseAuth.instance.currentUser!.uid;
                         if (FirebaseAuth.instance.currentUser!.emailVerified) {
-                          currentUserID =
-                              FirebaseAuth.instance.currentUser!.uid;
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Loading(
-                                    userID:
-                                        FirebaseAuth.instance.currentUser!.uid),
+                                builder: (context) =>
+                                    Loading(userID: currentUserID),
                               ));
                         } else {
                           Navigator.pushReplacement(
