@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:housecontractors/models/agreement_model.dart';
 import 'package:housecontractors/providers/service_log_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../helper/size_configuration.dart';
@@ -11,11 +12,13 @@ class ViewServicesLogs extends StatelessWidget {
     required this.ordersModel,
     Key? key,
     this.tog = false,
+    required this.agreementModel,
   }) : super(key: key);
 
   final bool? tog;
 
   final OrdersModel ordersModel;
+  final AgreementModel agreementModel;
 
   TableRow addTableRow(
     String serviceName,
@@ -97,8 +100,8 @@ class ViewServicesLogs extends StatelessWidget {
               height: setHeight(5),
               child: const ServicesTableRow(
                   serviceName: "Service",
-                  perDay: "Per Day",
-                  noOfDays: "Total Days",
+                  perDay: "P/Day",
+                  noOfDays: "Days",
                   totalCharge: "Charges"),
             ),
             SizedBox(
@@ -110,28 +113,31 @@ class ViewServicesLogs extends StatelessWidget {
                 itemBuilder: (context, index) => ChangeNotifierProvider.value(
                   value: serviceList[index],
                   builder: (context, child) => InkWell(
-                    onLongPress: () {
-                      showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        builder: (context) => AreYouSure(
-                          title: "Delete this Item",
-                          onPressed: () async {
+                    onLongPress: ordersModel.status == "Active"
+                        ? () {
                             showDialog(
                               barrierDismissible: false,
                               context: context,
-                              builder: (context) =>
-                                  const CircularProgressIndicator(),
+                              builder: (context) => AreYouSure(
+                                title: "Delete this Item",
+                                onPressed: () async {
+                                  showDialog(
+                                    barrierDismissible: false,
+                                    context: context,
+                                    builder: (context) => const Center(
+                                        child: CircularProgressIndicator()),
+                                  );
+                                  await serviceProvider.deleteItem(
+                                      customerID: agreementModel.customerID,
+                                      logsID: ordersModel.logsID!,
+                                      serviceID: serviceList[index].serviceID);
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                },
+                              ),
                             );
-                            await serviceProvider.deleteItem(
-                                logsID: ordersModel.logsID!,
-                                serviceID: serviceList[index].serviceID);
-                            Navigator.pop(context);
-                            Navigator.pop(context);
-                          },
-                        ),
-                      );
-                    },
+                          }
+                        : null,
                     child: ServicesTableRow(
                         serviceName: serviceList[index].serviceName!,
                         perDay: serviceList[index].perDay!,
@@ -249,8 +255,8 @@ class ServicesTableRow extends StatelessWidget {
     return Table(
       border: TableBorder.all(),
       columnWidths: const <int, TableColumnWidth>{
-        1: FixedColumnWidth(50),
-        2: FixedColumnWidth(70)
+        1: FixedColumnWidth(70),
+        2: FixedColumnWidth(90)
       },
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       children: <TableRow>[

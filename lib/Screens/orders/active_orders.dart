@@ -87,10 +87,21 @@ class ActiveOrderTile extends StatelessWidget {
           showDialog(
             context: context,
             builder: (context) => AreYouSure(
-              title: "Are you sure?",
-              onPressed: () async => await ordersProvider.updateStatus(
-                  ordersModel.orderID!, "Completed", customerModel.userID!),
-            ),
+                title: "Are you sure?",
+                onPressed: () async {
+                  showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (context) => WillPopScope(
+                            onWillPop: () async => false,
+                            child: const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          ));
+                  await ordersProvider.updateStatus(
+                      ordersModel.orderID!, "Completed", customerModel.userID!);
+                  Navigator.pop(context);
+                }),
           );
         }
       }),

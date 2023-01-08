@@ -171,36 +171,6 @@ class ViewAgreement extends StatelessWidget {
                             agreementModel.details!,
                             softWrap: true,
                           ),
-                          Visibility(
-                            visible: !agreementModel.status!,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                      const Color.fromARGB(255, 18, 18, 18),
-                                    ),
-                                    fixedSize: MaterialStateProperty.all(
-                                      Size(setWidth(30), setHeight(6)),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text("Decline",
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color:
-                                            Color.fromARGB(255, 255, 210, 32),
-                                      )),
-                                ),
-                                const Text("Accept",
-                                    style: TextStyle(
-                                        fontSize: 18, color: Colors.black87)),
-                              ],
-                            ),
-                          ),
                         ]),
                   ),
                 ),

@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/login.dart';
 import 'package:housecontractors/Screens/loginSignup/user_form.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
+import 'package:housecontractors/providers/contractor_provider.dart';
+import 'package:housecontractors/providers/customer_provider.dart';
 import 'package:provider/provider.dart';
-import '../../providers/contractor_provider.dart';
 import 'mytextfield.dart';
 import 'package:email_validator/email_validator.dart';
 
@@ -27,48 +28,20 @@ class _SignupState extends State<Signup> {
     return regExp.hasMatch(value);
   }
 
-  bool _checkvalidations(ContractorsProvider userProvider) {
-    for (var item in userProvider.getList) {
-      if (item.email == emailController.text.trim()) {
-        emailExistError = false;
-      } else {
-        emailExistError = true;
+  bool isEmailExist(String email, CustomerProvider customerProvider,
+      ContractorsProvider contractorsProvider) {
+    bool temp = false;
+    for (var customer in customerProvider.getList) {
+      if (customer.email == email) {
+        temp = true;
       }
     }
-    if (emailController.text.isNotEmpty) {
-      if (!emailExistError) {
-        if (EmailValidator.validate(emailController.text)) {
-          emailError = false;
-          if (validateStructure(passController.text) &&
-              passController.text.isNotEmpty) {
-            passError = false;
-            if (passController.text == cpassController.text &&
-                cpassController.text.isNotEmpty) {
-              confirmError = false;
-              if (emailError && confirmError && passError && emailExistError) {
-                return true;
-              } else {
-                return false;
-              }
-            } else {
-              confirmError = true;
-              return false;
-            }
-          } else {
-            passError = true;
-            return false;
-          }
-        } else {
-          emailError = true;
-          return false;
-        }
-      } else {
-        emailExistError = true;
-        return false;
+    for (var contractor in contractorsProvider.getList) {
+      if (contractor.email == email) {
+        temp = true;
       }
-    } else {
-      return false;
     }
+    return temp;
   }
 
   final TextEditingController emailController = TextEditingController();
@@ -79,8 +52,11 @@ class _SignupState extends State<Signup> {
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<ContractorsProvider>(context);
+    final userProvider = Provider.of<CustomerProvider>(context);
     userProvider.fetch();
+    final contractorsProvider = Provider.of<ContractorsProvider>(context);
+    contractorsProvider.fetch();
+
     SizeConfig().init(context);
     return GestureDetector(
       onTap: () {
@@ -117,12 +93,17 @@ class _SignupState extends State<Signup> {
                       color: const Color.fromARGB(255, 255, 239, 63),
                     ),
                     Visibility(
-                      visible: emailError || emailExistError,
-                      child: Text(
-                        emailError
-                            ? "Invalid Email"
-                            : "Already exist an account on this email",
-                        style: const TextStyle(color: Colors.red),
+                      visible: emailError,
+                      child: const Text(
+                        "Invalid Email",
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                    Visibility(
+                      visible: emailExistError,
+                      child: const Text(
+                        "Already exist an account on this email",
+                        style: TextStyle(color: Colors.red),
                       ),
                     ),
                     SizedBox(
@@ -232,7 +213,34 @@ class _SignupState extends State<Signup> {
                           //content padding inside button
                         ),
                         onPressed: () async {
-                          if (_checkvalidations(userProvider)) {
+                          emailError = true;
+                          passError = true;
+                          confirmError = true;
+                          emailExistError = true;
+
+                          emailExistError = isEmailExist(
+                            emailController.text.trim(),
+                            userProvider,
+                            contractorsProvider,
+                          );
+
+                          if (emailController.text.isNotEmpty &&
+                              EmailValidator.validate(emailController.text)) {
+                            emailError = false;
+                          }
+
+                          if (validateStructure(passController.text) &&
+                              passController.text.isNotEmpty) {
+                            passError = false;
+                          }
+
+                          if (passController.text == cpassController.text) {
+                            confirmError = false;
+                          }
+                          if (!emailError &&
+                              !passError &&
+                              !confirmError &&
+                              !emailExistError) {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -240,9 +248,9 @@ class _SignupState extends State<Signup> {
                                       email: emailController.text,
                                       password: passController.text),
                                 ));
-                          } else {
-                            setState(() {});
                           }
+
+                          setState(() {});
                         },
                         child: const Text("Signup"),
                       ),

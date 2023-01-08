@@ -6,14 +6,17 @@ import 'package:housecontractors/widgets/are_you_sure.dart';
 import 'package:provider/provider.dart';
 
 import '../../../helper/size_configuration.dart';
+import '../../../models/agreement_model.dart';
 
 class ViewInventoryLogs extends StatelessWidget {
   const ViewInventoryLogs({
     Key? key,
     required this.ordersModel,
     this.tog = false,
+    required this.agreementModel,
   }) : super(key: key);
 
+  final AgreementModel agreementModel;
   final OrdersModel ordersModel;
   final bool? tog;
 
@@ -43,28 +46,32 @@ class ViewInventoryLogs extends StatelessWidget {
                 itemBuilder: (context, index) => ChangeNotifierProvider.value(
                   value: inventoryList[index],
                   builder: (context, child) => InkWell(
-                    onLongPress: () {
-                      showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        builder: (context) => AreYouSure(
-                          title: "Delete this Item",
-                          onPressed: () async {
+                    onLongPress: ordersModel.status == "Active"
+                        ? () {
                             showDialog(
                               barrierDismissible: false,
                               context: context,
-                              builder: (context) =>
-                                  const CircularProgressIndicator(),
+                              builder: (context) => AreYouSure(
+                                title: "Delete this Item",
+                                onPressed: () async {
+                                  showDialog(
+                                    barrierDismissible: false,
+                                    context: context,
+                                    builder: (context) => const Center(
+                                        child: CircularProgressIndicator()),
+                                  );
+                                  await inventoryProvider.deleteItem(
+                                      customerID: agreementModel.customerID,
+                                      logsID: ordersModel.logsID!,
+                                      inventoryID:
+                                          inventoryList[index].inventoryID);
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                },
+                              ),
                             );
-                            await inventoryProvider.deleteItem(
-                                logsID: ordersModel.logsID!,
-                                inventoryID: inventoryList[index].inventoryID);
-                            Navigator.pop(context);
-                            Navigator.pop(context);
-                          },
-                        ),
-                      );
-                    },
+                          }
+                        : null,
                     child: InventoryTableRow(
                         itemName: inventoryList[index].itemName!,
                         perUnit: inventoryList[index].perItem!,

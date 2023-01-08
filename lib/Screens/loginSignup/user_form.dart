@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/verify_email.dart';
+import 'package:housecontractors/providers/inventory_provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:housecontractors/Screens/loginSignup/mytextfield.dart';
@@ -102,6 +103,7 @@ class _UserFormState extends State<UserForm> {
     }
     try {
       Provider.of<ServiceLogsProvider>(context, listen: false);
+      Provider.of<InventoryProvider>(context, listen: false);
     } catch (e) {
       print(e);
     }
@@ -153,7 +155,6 @@ class _UserFormState extends State<UserForm> {
 
   @override
   Widget build(BuildContext context) {
-   
     SizeConfig().init(context);
     return SafeArea(
       child: Scaffold(
@@ -352,25 +353,24 @@ class _UserFormState extends State<UserForm> {
                             builder: ((context) => const Center(
                                 child: CircularProgressIndicator())),
                           );
-                            await createAccountandLogin();
-                            final loggedInUser =
-                                FirebaseAuth.instance.currentUser;
-                            await uploadUserData(
-                                cnic: cnicController.text,
-                                contactNumber: contactController.text,
-                                email: loggedInUser!.email!,
-                                gender: genderText == "Male" ? true : false,
-                                name: nameController.text,
-                                userID: loggedInUser.uid);
-                            await loadcurrentUser();
+                          await createAccountandLogin();
+                          final loggedInUser =
+                              FirebaseAuth.instance.currentUser;
+                          await uploadUserData(
+                              cnic: cnicController.text,
+                              contactNumber: contactController.text,
+                              email: loggedInUser!.email!,
+                              gender: genderText == "Male" ? true : false,
+                              name: nameController.text,
+                              userID: loggedInUser.uid);
+                          await loadcurrentUser();
 
-                            Navigator.pop(context);
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const VerifyEmail(),
-                                ));
-                          
+                          Navigator.pop(context);
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const VerifyEmail(),
+                              ));
                         },
                         child: const Text("Signup"),
                       ),

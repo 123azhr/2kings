@@ -189,6 +189,7 @@ Future<dynamic> orderDetails(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => Logs(
+                                      agreementModel: aggrementModel,
                                       title: customerModel.name!,
                                       ordersModel: ordersModel,
                                     ),

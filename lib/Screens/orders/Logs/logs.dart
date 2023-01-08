@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/orders/Logs/view_inventory_log.dart';
 import 'package:housecontractors/Screens/orders/Logs/view_services_logs.dart';
+import 'package:housecontractors/models/agreement_model.dart';
 import 'package:housecontractors/models/orders_model.dart';
 import 'package:provider/provider.dart';
 import '../../../helper/size_configuration.dart';
@@ -12,9 +13,12 @@ class Logs extends StatelessWidget {
     super.key,
     required this.title,
     required this.ordersModel,
+    required this.agreementModel,
   });
   final String title;
   final OrdersModel ordersModel;
+
+  final AgreementModel agreementModel;
   @override
   Widget build(BuildContext context) {
     ServiceLogsProvider servicelogsProvider =
@@ -64,7 +68,9 @@ class Logs extends StatelessWidget {
                       ),
                       SizedBox(
                         height: setHeight(33),
-                        child: ViewInventoryLogs(ordersModel: ordersModel),
+                        child: ViewInventoryLogs(
+                            ordersModel: ordersModel,
+                            agreementModel: agreementModel),
                       ),
                     ],
                   ),
@@ -85,6 +91,7 @@ class Logs extends StatelessWidget {
                           backgroundColor: Colors.transparent,
                         ),
                         body: ViewInventoryLogs(
+                          agreementModel: agreementModel,
                           ordersModel: ordersModel,
                           tog: true,
                         ),
@@ -113,7 +120,9 @@ class Logs extends StatelessWidget {
                       ),
                       SizedBox(
                         height: setHeight(33),
-                        child: ViewServicesLogs(ordersModel: ordersModel),
+                        child: ViewServicesLogs(
+                            ordersModel: ordersModel,
+                            agreementModel: agreementModel),
                       ),
                     ],
                   ),
@@ -134,6 +143,7 @@ class Logs extends StatelessWidget {
                           backgroundColor: Colors.transparent,
                         ),
                         body: ViewServicesLogs(
+                          agreementModel: agreementModel,
                           tog: true,
                           ordersModel: ordersModel,
                         ),

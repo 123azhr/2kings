@@ -179,20 +179,21 @@ class _InboxState extends State<Inbox> {
                     height: setHeight(8),
                     child: Row(
                       children: [
-                        SizedBox(
-                          height: setHeight(7),
-                          width: setWidth(10),
-                          child: const Icon(Icons.camera_alt),
-                        ),
-                        SizedBox(
-                          height: setHeight(7),
-                          width: setWidth(14),
-                          child: const Icon(Icons.image),
-                        ),
+                        // SizedBox(
+                        //   height: setHeight(7),
+                        //   width: setWidth(10),
+                        //   child: const Icon(Icons.camera_alt),
+                        // ),
+                        // SizedBox(
+                        //   height: setHeight(7),
+                        //   width: setWidth(14),
+                        //   child: const Icon(Icons.image),
+                        // ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 8, bottom: 10),
+                          padding: const EdgeInsets.only(
+                              top: 8, bottom: 10, left: 10),
                           child: MyTextField(
-                            width: setWidth(70),
+                            width: setWidth(94),
                             height: setHeight(3),
                             radius: 20,
                             controller: _textController,

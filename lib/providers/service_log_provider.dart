@@ -69,7 +69,8 @@ class ServiceLogsProvider with ChangeNotifier {
         .collection("logs")
         .doc(logsID)
         .collection("services")
-        .add({
+        .doc(doc.id)
+        .set({
       "serviceName": serviceName,
       "noOfDays": noOfDays,
       "total": total,
@@ -90,10 +91,20 @@ class ServiceLogsProvider with ChangeNotifier {
   }
 
   Future<void> deleteItem(
-      {required String? serviceID, required String logsID}) async {
+      {required String? serviceID,
+      required String logsID,
+      required customerID}) async {
     await FirebaseFirestore.instance
         .collection("orders")
         .doc(loggedInUser!.uid)
+        .collection("logs")
+        .doc(logsID)
+        .collection("services")
+        .doc(serviceID)
+        .delete();
+    await FirebaseFirestore.instance
+        .collection("orders")
+        .doc(customerID)
         .collection("logs")
         .doc(logsID)
         .collection("services")
@@ -110,7 +121,9 @@ class ServiceLogsProvider with ChangeNotifier {
   String serviceTotal() {
     double _sumofService = 0;
     for (var element in _servicelist) {
-      _sumofService += double.parse(element.total!);
+      if (element.total != "") {
+        _sumofService += double.parse(element.total!);
+      }
     }
     return _sumofService.toString();
   }

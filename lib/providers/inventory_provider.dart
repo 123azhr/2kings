@@ -18,7 +18,7 @@ class InventoryProvider with ChangeNotifier {
   Future<void> fetchInventory(String logsID) async {
     await FirebaseFirestore.instance
         .collection("orders")
-        .doc(loggedInUser  )
+        .doc(loggedInUser)
         .collection("logs")
         .doc(logsID)
         .collection("inventory")
@@ -53,7 +53,7 @@ class InventoryProvider with ChangeNotifier {
     DocumentReference<Map<String, dynamic>> doc = await FirebaseFirestore
         .instance
         .collection("orders")
-        .doc(loggedInUser  )
+        .doc(loggedInUser)
         .collection("logs")
         .doc(logsID)
         .collection("inventory")
@@ -69,7 +69,8 @@ class InventoryProvider with ChangeNotifier {
         .collection("logs")
         .doc(logsID)
         .collection("inventory")
-        .add({
+        .doc(doc.id)
+        .set({
       "itemName": itemName,
       "qty": qty,
       "total": total,
@@ -99,16 +100,26 @@ class InventoryProvider with ChangeNotifier {
   }
 
   Future<void> deleteItem(
-      {required String? inventoryID, required String logsID}) async {
+      {required String? inventoryID,
+      required String logsID,
+      required customerID}) async {
     await FirebaseFirestore.instance
         .collection("orders")
-        .doc(loggedInUser  )
+        .doc(loggedInUser)
         .collection("logs")
         .doc(logsID)
         .collection("inventory")
         .doc(inventoryID)
         .delete();
 
+    await FirebaseFirestore.instance
+        .collection("orders")
+        .doc(customerID)
+        .collection("logs")
+        .doc(logsID)
+        .collection("inventory")
+        .doc(inventoryID)
+        .delete();
     _list.removeWhere(
       (element) => element.inventoryID == inventoryID,
     );
