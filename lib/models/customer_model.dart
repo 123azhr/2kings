@@ -28,11 +28,11 @@ class CustomerModel with ChangeNotifier {
       cnic: map["cnic"],
       name: map["name"],
       email: map["email"],
-      profileImageURL: map["profileImgUrl"],
+      profileImageURL: map["profileImageURL"],
       gender: map["gender"],
-      contactNumber: map["contact"],
+      contactNumber: map["contactNumber"],
       status: map["status"],
-      createdDate: map["createdAt"].toDate(),
+      createdDate: map["createdDate"].toDate(),
     );
   }
 }

@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/orders/Logs/view_aggrement.dart';
 import 'package:housecontractors/Screens/orders/Logs/logs.dart';
-import 'package:housecontractors/components/profile_header.dart';
 import 'package:housecontractors/models/agreement_model.dart';
 import 'package:housecontractors/models/orders_model.dart';
 import 'package:provider/provider.dart';
@@ -252,7 +251,7 @@ Future<dynamic> orderDetails(
                                 }
                               },
                               child: Text(
-                                "Activate Order Now",
+                                "Start Order",
                                 style: TextStyle(
                                     color: Colors.black87,
                                     fontSize: getProportionateScreenHeight(18),

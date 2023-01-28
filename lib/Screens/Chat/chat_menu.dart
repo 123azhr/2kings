@@ -85,10 +85,6 @@ class _ChatMenuState extends State<ChatMenu> {
                     }),
               ),
               chat: chatList[index],
-              // subtitle: userProvider
-              //     .getUserByID(chatList[index].otherID!)
-              //     .services!
-              //     .first,
               user: userProvider.getUserByID(chatList[index].otherID!),
               image: CachedNetworkImageProvider(userProvider
                   .getUserByID(chatList[index].otherID!)
@@ -135,9 +131,6 @@ class ChatMenuTile extends StatelessWidget {
       title: Text(user.name!),
       subtitle: Text(subtitle),
       leading: CircleAvatar(
-        backgroundImage: const AssetImage(
-          "assets/images/logo-black-half.png",
-        ),
         foregroundImage: image,
       ),
     );

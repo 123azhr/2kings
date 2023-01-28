@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/homepage/components/homeservices.dart';
 import 'package:housecontractors/Screens/homepage/components/story/stories.dart';
-import 'package:housecontractors/Screens/homepage/components/search_home.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
-import 'package:page_transition/page_transition.dart';
-import '../profile/edit_services.dart';
-import 'components/construction_services.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

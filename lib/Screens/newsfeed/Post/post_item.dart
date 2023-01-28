@@ -52,7 +52,10 @@ class PostItem extends StatelessWidget {
               SizedBox(
                 height: getProportionateScreenHeight(10),
               ),
-              Text("$caption"),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("$caption"),
+              ),
               SizedBox(
                 height: getProportionateScreenHeight(10),
               ),

@@ -4,7 +4,6 @@ import 'package:housecontractors/Screens/newsfeed/Post/post_header.dart';
 import 'package:housecontractors/Screens/newsfeed/Post/post_item.dart';
 import 'package:housecontractors/models/post_model.dart';
 import 'package:provider/provider.dart';
-import '../../../providers/comments_provider.dart';
 import '../../../providers/contractor_provider.dart';
 
 class Post extends StatelessWidget {

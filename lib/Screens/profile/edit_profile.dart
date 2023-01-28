@@ -10,8 +10,6 @@ import '../../helper/size_configuration.dart';
 import '../../providers/contractor_provider.dart';
 import '../../widgets/bottom_modal_sheet.dart';
 import '../../widgets/mycontainer.dart';
-import '../loginSignup/mytextfield.dart';
-import 'my_profile_fields.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -500,15 +498,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       context: context,
                       barrierDismissible: false,
                       builder: ((context) => WillPopScope(
-                            onWillPop: () async => true,
+                            onWillPop: () async => false,
                             child: const Center(
                                 child: CircularProgressIndicator()),
                           )),
                     );
 
-                    // await userProvider.deleteUserImagefromStorage(
-                    //     imageURL: loggedInUser.profileImageURL,
-                    //     userID: loggedInUser.userID);
                     if (_imagePath.isNotEmpty) {
                       final imgURl =
                           await userProvider.uploadUserImageToStorage(

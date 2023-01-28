@@ -65,198 +65,202 @@ class _SignupState extends State<Signup> {
           currentFocus.unfocus();
         }
       },
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.only(left: setWidth(10)),
-            child: SizedBox(
-              height: setHeight(100),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Image.asset(
-                      "assets/images/logo-black-full.png",
-                      height: setHeight(30),
-                    ),
-                    Text(
-                      "Signup",
-                      style: Theme.of(context).textTheme.displayLarge,
-                    ),
-                    SizedBox(
-                      height: setHeight(5),
-                    ),
-                    MyTextField(
-                      controller: emailController,
-                      width: setWidth(80),
-                      radius: 20,
-                      hintText: "Email",
-                      color: const Color.fromARGB(255, 255, 239, 63),
-                    ),
-                    Visibility(
-                      visible: emailError,
-                      child: const Text(
-                        "Invalid Email",
-                        style: TextStyle(color: Colors.red),
+      child: WillPopScope(
+        onWillPop: () async => false,
+        child: Scaffold(
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(left: setWidth(10)),
+              child: SizedBox(
+                height: setHeight(100),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Image.asset(
+                        "assets/images/logo-black-full.png",
+                        height: setHeight(30),
                       ),
-                    ),
-                    Visibility(
-                      visible: emailExistError,
-                      child: const Text(
-                        "Already exist an account on this email",
-                        style: TextStyle(color: Colors.red),
+                      Text(
+                        "Signup",
+                        style: Theme.of(context).textTheme.displayLarge,
                       ),
-                    ),
-                    SizedBox(
-                      height: setHeight(4),
-                    ),
-                    MyTextField(
-                      controller: passController,
-                      width: setWidth(80),
-                      radius: 20,
-                      hintText: "Password",
-                      color: const Color.fromARGB(255, 255, 239, 63),
-                      leading: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            obsecureText = !obsecureText;
-                          });
-                        },
-                        icon: obsecureText
-                            ? const Icon(Icons.visibility_off)
-                            : const Icon(Icons.visibility),
+                      SizedBox(
+                        height: setHeight(5),
                       ),
-                      obsecure: obsecureText,
-                    ),
-                    Visibility(
-                      visible: passError,
-                      child: const Text(
-                        "length greater than 8 and includes capital & small letter and digit",
-                        style: TextStyle(color: Colors.red),
+                      MyTextField(
+                        controller: emailController,
+                        width: setWidth(80),
+                        radius: 20,
+                        hintText: "Email",
+                        color: const Color.fromARGB(255, 255, 239, 63),
                       ),
-                    ),
-                    SizedBox(
-                      height: setHeight(4),
-                    ),
-                    MyTextField(
-                      controller: cpassController,
-                      width: setWidth(80),
-                      radius: 20,
-                      hintText: "Confirm Password",
-                      color: const Color.fromARGB(255, 255, 239, 63),
-                      leading: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            obsecureText = !obsecureText;
-                          });
-                        },
-                        icon: obsecureText
-                            ? const Icon(Icons.visibility_off)
-                            : const Icon(Icons.visibility),
-                      ),
-                      obsecure: obsecureText,
-                    ),
-                    Visibility(
-                      visible: confirmError,
-                      child: const Text(
-                        "Type same password as above",
-                        style: TextStyle(
-                          color: Colors.red,
+                      Visibility(
+                        visible: emailError,
+                        child: const Text(
+                          "Invalid Email",
+                          style: TextStyle(color: Colors.red),
                         ),
-                        textAlign: TextAlign.left,
                       ),
-                    ),
-                    SizedBox(
-                      height: setHeight(4),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          const TextSpan(
-                            text: 'Already have an account? ',
-                            style: TextStyle(fontSize: 10, color: Colors.grey),
+                      Visibility(
+                        visible: emailExistError,
+                        child: const Text(
+                          "Already exist an account on this email",
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                      SizedBox(
+                        height: setHeight(4),
+                      ),
+                      MyTextField(
+                        controller: passController,
+                        width: setWidth(80),
+                        radius: 20,
+                        hintText: "Password",
+                        color: const Color.fromARGB(255, 255, 239, 63),
+                        leading: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              obsecureText = !obsecureText;
+                            });
+                          },
+                          icon: obsecureText
+                              ? const Icon(Icons.visibility_off)
+                              : const Icon(Icons.visibility),
+                        ),
+                        obsecure: obsecureText,
+                      ),
+                      Visibility(
+                        visible: passError,
+                        child: const Text(
+                          "length greater than 8 and includes capital & small letter and digit",
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                      SizedBox(
+                        height: setHeight(4),
+                      ),
+                      MyTextField(
+                        controller: cpassController,
+                        width: setWidth(80),
+                        radius: 20,
+                        hintText: "Confirm Password",
+                        color: const Color.fromARGB(255, 255, 239, 63),
+                        leading: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              obsecureText = !obsecureText;
+                            });
+                          },
+                          icon: obsecureText
+                              ? const Icon(Icons.visibility_off)
+                              : const Icon(Icons.visibility),
+                        ),
+                        obsecure: obsecureText,
+                      ),
+                      Visibility(
+                        visible: confirmError,
+                        child: const Text(
+                          "Type same password as above",
+                          style: TextStyle(
+                            color: Colors.red,
                           ),
-                          TextSpan(
-                            text: 'login here',
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue),
-                            // ignore: avoid_print
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.pushReplacement(
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      SizedBox(
+                        height: setHeight(4),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            const TextSpan(
+                              text: 'Already have an account? ',
+                              style:
+                                  TextStyle(fontSize: 10, color: Colors.grey),
+                            ),
+                            TextSpan(
+                              text: 'login here',
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue),
+                              // ignore: avoid_print
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const Login()),
+                                  );
+                                },
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: setHeight(4),
+                      ),
+                      SizedBox(
+                        width: setWidth(35),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            //background color of button
+                            side: const BorderSide(
+                              width: 1,
+                            ), //border width and color
+                            elevation: 3, //elevation of button
+                            shape: RoundedRectangleBorder(
+                                //to set border radius to button
+                                borderRadius: BorderRadius.circular(30)),
+                            padding: const EdgeInsets.all(20),
+
+                            //content padding inside button
+                          ),
+                          onPressed: () async {
+                            emailError = true;
+                            passError = true;
+                            confirmError = true;
+                            emailExistError = true;
+
+                            emailExistError = isEmailExist(
+                              emailController.text.trim(),
+                              userProvider,
+                              contractorsProvider,
+                            );
+
+                            if (emailController.text.isNotEmpty &&
+                                EmailValidator.validate(emailController.text)) {
+                              emailError = false;
+                            }
+
+                            if (validateStructure(passController.text) &&
+                                passController.text.isNotEmpty) {
+                              passError = false;
+                            }
+
+                            if (passController.text == cpassController.text) {
+                              confirmError = false;
+                            }
+                            if (!emailError &&
+                                !passError &&
+                                !confirmError &&
+                                !emailExistError) {
+                              Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const Login()),
-                                );
-                              },
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: setHeight(4),
-                    ),
-                    SizedBox(
-                      width: setWidth(35),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          //background color of button
-                          side: const BorderSide(
-                            width: 1,
-                          ), //border width and color
-                          elevation: 3, //elevation of button
-                          shape: RoundedRectangleBorder(
-                              //to set border radius to button
-                              borderRadius: BorderRadius.circular(30)),
-                          padding: const EdgeInsets.all(20),
+                                    builder: (context) => UserForm(
+                                        email: emailController.text,
+                                        password: passController.text),
+                                  ));
+                            }
 
-                          //content padding inside button
+                            setState(() {});
+                          },
+                          child: const Text("Signup"),
                         ),
-                        onPressed: () async {
-                          emailError = true;
-                          passError = true;
-                          confirmError = true;
-                          emailExistError = true;
-
-                          emailExistError = isEmailExist(
-                            emailController.text.trim(),
-                            userProvider,
-                            contractorsProvider,
-                          );
-
-                          if (emailController.text.isNotEmpty &&
-                              EmailValidator.validate(emailController.text)) {
-                            emailError = false;
-                          }
-
-                          if (validateStructure(passController.text) &&
-                              passController.text.isNotEmpty) {
-                            passError = false;
-                          }
-
-                          if (passController.text == cpassController.text) {
-                            confirmError = false;
-                          }
-                          if (!emailError &&
-                              !passError &&
-                              !confirmError &&
-                              !emailExistError) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => UserForm(
-                                      email: emailController.text,
-                                      password: passController.text),
-                                ));
-                          }
-
-                          setState(() {});
-                        },
-                        child: const Text("Signup"),
                       ),
-                    ),
-                    const Spacer()
-                  ]),
+                      const Spacer()
+                    ]),
+              ),
             ),
           ),
         ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../helper/size_configuration.dart';
 import '../../widgets/bottom_modal_sheet.dart';
 
+// ignore: must_be_immutable
 class MyProfileFields extends StatefulWidget {
   MyProfileFields(
       {Key? key,
@@ -87,7 +88,6 @@ class _MyProfileFieldsState extends State<MyProfileFields> {
           onTap: () => customBottomModalSheet(
             button: IconButton(
                 onPressed: () {
-                  
                   setState(() {});
                   Navigator.pop(context);
                 },

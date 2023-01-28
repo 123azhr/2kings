@@ -18,6 +18,7 @@ class MyProfileView extends StatelessWidget {
         userProvider.getUserByID(FirebaseAuth.instance.currentUser!.uid.trim());
 
     final postProvider = Provider.of<PostProvider>(context);
+    
     final postsList = postProvider.getPostByID(loggedInUser.userID!);
     // final postsList = postProvider.getList;
     return SafeArea(

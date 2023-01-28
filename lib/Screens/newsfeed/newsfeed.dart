@@ -62,7 +62,7 @@ class _NewsfeedState extends State<Newsfeed> {
               child: ClipOval(
                 child: CachedNetworkImage(
                   imageUrl: loggedInUser.profileImageURL!,
-                  fit: BoxFit.fill,
+                  fit: BoxFit.cover,
                   height: getProportionateScreenHeight(80),
                   width: getProportionateScreenWidth(80),
                 ),

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:housecontractors/models/agreement_model.dart';
@@ -146,7 +145,7 @@ class SendAgreement extends StatelessWidget {
                                 color: Colors.black, fontSize: 16),
                           ),
                           Text(
-                            "End Date: " + agreementModel.startDate.toString(),
+                            "End Date: " + agreementModel.endDate.toString(),
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 16),
                           ),

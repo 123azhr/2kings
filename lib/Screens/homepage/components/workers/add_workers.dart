@@ -57,7 +57,7 @@ class _AddWorkerState extends State<AddWorker> {
         cnic: cnicController.text,
         email: emailController.text,
         experience: experienceController.text,
-        gender: genderText == "male" ? true : false,
+        gender: genderText == "Male" ? true : false,
         name: nameController.text,
         profileImg: imageURL,
         userID: loggedInUser.userID,
@@ -382,7 +382,7 @@ class _AddWorkerState extends State<AddWorker> {
                 hight: 356,
                 controller: cnicController,
                 title: "Change CNIC",
-                hintText: "425014865186487",
+                hintText: "XXXXX-XXXXXXXXX-X",
               ),
             ),
             Divider(

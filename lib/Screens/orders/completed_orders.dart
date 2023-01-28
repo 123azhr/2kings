@@ -2,8 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:housecontractors/models/orders_model.dart';
-import 'package:housecontractors/models/contractor_model.dart';
-import 'package:housecontractors/providers/contractor_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../helper/size_configuration.dart';

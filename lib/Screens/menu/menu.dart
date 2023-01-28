@@ -1,13 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:housecontractors/Screens/loginSignup/login.dart';
 import 'package:housecontractors/Screens/menu/aboutus/aboutus.dart';
 import 'package:housecontractors/Screens/profile/edit_profile.dart';
 import 'package:housecontractors/Screens/profile/edit_services.dart';
-import 'package:housecontractors/models/contractor_model.dart';
-import 'package:housecontractors/providers/authentication_provider.dart';
 import 'package:housecontractors/providers/message_provider.dart';
-import 'package:housecontractors/widgets/are_you_sure.dart';
 import 'package:provider/provider.dart';
 import '../../helper/size_configuration.dart';
 import '../../providers/chat_provider.dart';
@@ -20,11 +16,9 @@ import '../profile/my_profile_view.dart';
 import 'logout.dart';
 
 class Menu extends StatelessWidget {
-  Menu({
+  const Menu({
     Key? key,
   }) : super(key: key);
-
-  final loggedInUserID = currentUserID;
   @override
   Widget build(BuildContext context) {
     final orderstProvider = Provider.of<OrdersProvider>(context);
@@ -34,7 +28,7 @@ class Menu extends StatelessWidget {
 
     final ilog = Provider.of<InventoryProvider>(context);
     final currentProvider = Provider.of<ContractorsProvider>(context);
-    final loggedInUser = currentProvider.getUserByID(loggedInUserID);
+    final loggedInUser = currentProvider.getUserByID(currentUserID);
     final chatProvider = Provider.of<ChatProvider>(context);
     return Scaffold(
       appBar: AppBar(
@@ -65,9 +59,9 @@ class Menu extends StatelessWidget {
               dense: true,
               leading: CircleAvatar(
                 child: ClipOval(
-                  child: Image.network(
-                    loggedInUser.profileImageURL!,
-                    fit: BoxFit.fill,
+                  child: CachedNetworkImage(
+                    imageUrl: loggedInUser.profileImageURL!,
+                    fit: BoxFit.cover,
                     height: 100,
                     width: 100,
                   ),

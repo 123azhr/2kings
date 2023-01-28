@@ -5,21 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/loginSignup/loading_screen.dart';
 import 'package:housecontractors/Screens/loginSignup/login.dart';
 import 'package:housecontractors/providers/about.dart';
-import 'package:housecontractors/providers/agreement_provider.dart';
 import 'package:housecontractors/providers/comments_provider.dart';
 import 'package:housecontractors/providers/customer_provider.dart';
-import 'package:housecontractors/providers/inventory_provider.dart';
-import 'package:housecontractors/providers/message_provider.dart';
 import 'package:housecontractors/providers/post_provider.dart';
-import 'package:housecontractors/providers/worker_provider.dart';
 import 'package:provider/provider.dart';
-import '../../providers/chat_provider.dart';
-import '../../providers/service_log_provider.dart';
-import '../../providers/order_provider.dart';
 import '../../providers/service_provider.dart';
 import '../../providers/story_provider.dart';
 import '../../providers/contractor_provider.dart';
-import '../Dashboard/dashboard.dart';
 import '../loginSignup/verify_email.dart';
 
 class FlashScreen extends StatefulWidget {
@@ -93,6 +85,7 @@ class AuthenticationWrapper extends StatelessWidget {
 
     if (firebaseUser != null) {
       if (FirebaseAuth.instance.currentUser!.emailVerified) {
+        FirebaseAuth.instance.currentUser!.reload();
         currentUserID = FirebaseAuth.instance.currentUser!.uid;
         return const Loading();
       } else {

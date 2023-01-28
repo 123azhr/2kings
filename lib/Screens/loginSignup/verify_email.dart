@@ -2,11 +2,12 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:housecontractors/Screens/Dashboard/dashboard.dart';
+import 'package:housecontractors/Screens/flashscreen/flashscreen.dart';
 import 'package:housecontractors/Screens/loginSignup/login.dart';
 import 'package:housecontractors/helper/size_configuration.dart';
 import 'package:housecontractors/widgets/mycontainer.dart';
 import 'package:provider/provider.dart';
+import 'package:restart_app/restart_app.dart';
 
 import '../../providers/authentication_provider.dart';
 import '../../providers/contractor_provider.dart';
@@ -18,12 +19,12 @@ class VerifyEmail extends StatefulWidget {
   State<VerifyEmail> createState() => _VerifyEmailState();
 }
 
-bool _isVerified(BuildContext context) {
+Future<bool> _isVerified(BuildContext context) async {
   if (FirebaseAuth.instance.currentUser!.emailVerified) {
     final currentUserProvider =
         Provider.of<ContractorsProvider>(context, listen: false);
 
-    currentUserProvider.fetch();
+    await currentUserProvider.fetch();
     return true;
   } else {
     return false;
@@ -77,16 +78,17 @@ class _VerifyEmailState extends State<VerifyEmail> {
                         borderRadius: BorderRadius.circular(30)),
                   ),
                   onPressed: () {
-                    setState(() {
+                    setState(() async {
                       FirebaseAuth.instance.currentUser!.reload();
-                      if (_isVerified(context)) {
+                      if (await _isVerified(context)) {
+                        Restart.restartApp();
+
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Dashboard(),
+                              builder: (context) => const FlashScreen(),
                             ));
                       } else {
-                        //FirebaseAuth.instance.currentUser!.sendEmailVerification();
                         showModalBottomSheet(
                           backgroundColor: Colors.transparent,
                           context: context,
@@ -113,8 +115,8 @@ class _VerifyEmailState extends State<VerifyEmail> {
                                                 BorderRadius.circular(30)),
                                       ),
                                       onPressed: () {
-                                        // FirebaseAuth.instance.currentUser!.sendEmailVerification();
-                                        print("Email sent Successfully");
+                                        FirebaseAuth.instance.currentUser!
+                                            .sendEmailVerification();
                                         Navigator.pop(context);
                                       },
                                       child: const Text("Resend Email"))

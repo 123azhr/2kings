@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -77,6 +78,7 @@ class _UserFormState extends State<UserForm> {
     }
 
     final ordersProvider = Provider.of<OrdersProvider>(context, listen: false);
+
     await ordersProvider.fetch();
     try {
       final chatProvider = Provider.of<ChatProvider>(context, listen: false);
@@ -182,7 +184,7 @@ class _UserFormState extends State<UserForm> {
               height: setHeight(100),
               child: Column(children: [
                 Container(
-                  height: setHeight(40),
+                  height: setHeight(45),
                   width: setWidth(95),
                   decoration: BoxDecoration(
                     color: Colors.amberAccent,
@@ -218,8 +220,48 @@ class _UserFormState extends State<UserForm> {
                                         MyContainer(
                                             width: setWidth(100),
                                             height: setHeight(40),
-                                            child:
-                                                Image.file(_selectedImageFile!))
+                                            child: Image.file(
+                                                _selectedImageFile!)),
+                                        GestureDetector(
+                                          onTap: () {
+                                            _selectedImageFile = null;
+                                            _imagePath = "";
+                                            setState(() {});
+                                          },
+                                          child: Row(
+                                            children: [
+                                              const Spacer(),
+                                              Card(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                    Radius.circular(
+                                                      getProportionateScreenWidth(
+                                                          100),
+                                                    ),
+                                                  ),
+                                                ),
+                                                color: const Color.fromARGB(
+                                                    255, 255, 210, 32),
+                                                child: SizedBox(
+                                                  height:
+                                                      getProportionateScreenHeight(
+                                                          50),
+                                                  width:
+                                                      getProportionateScreenWidth(
+                                                          50),
+                                                  child: Icon(
+                                                    Icons.cancel,
+                                                    size:
+                                                        getProportionateScreenWidth(
+                                                            40),
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ])
                                 : MyContainer(
                                     height: setHeight(40),
@@ -236,6 +278,7 @@ class _UserFormState extends State<UserForm> {
                     ),
                   ),
                 ),
+                SizedBox(height: setHeight(2)),
                 MyTextField(
                   color: const Color.fromARGB(255, 255, 239, 63),
                   width: setWidth(95),
@@ -243,6 +286,7 @@ class _UserFormState extends State<UserForm> {
                   hintText: "Full Name",
                   controller: nameController,
                 ),
+                SizedBox(height: setHeight(2)),
                 Row(
                   children: [
                     InkWell(
@@ -315,22 +359,25 @@ class _UserFormState extends State<UserForm> {
                       radius: 20,
                       hintText: "Contact",
                       controller: contactController,
+                      inputType: TextInputType.number,
                     ),
                   ],
                 ),
+                SizedBox(height: setHeight(2)),
                 MyTextField(
                   color: const Color.fromARGB(255, 255, 239, 63),
                   width: setWidth(45),
                   radius: 20,
                   hintText: "CNIC",
                   controller: cnicController,
+                  inputType: TextInputType.number,
                 ),
                 SizedBox(
                   height: setHeight(2),
                 ),
                 Center(
                   child: SizedBox(
-                    width: 150,
+                    width: setWidth(40),
                     child: Visibility(
                       visible: nameController.text.isNotEmpty &&
                           cnicController.text.isNotEmpty &&
@@ -350,10 +397,14 @@ class _UserFormState extends State<UserForm> {
                           showDialog(
                             context: context,
                             barrierDismissible: false,
-                            builder: ((context) => const Center(
-                                child: CircularProgressIndicator())),
+                            builder: ((context) => WillPopScope(
+                                  onWillPop: () async => false,
+                                  child: const Center(
+                                      child: CircularProgressIndicator()),
+                                )),
                           );
                           await createAccountandLogin();
+                          FirebaseAuth.instance.currentUser!.reload();
                           final loggedInUser =
                               FirebaseAuth.instance.currentUser;
                           await uploadUserData(
@@ -363,6 +414,18 @@ class _UserFormState extends State<UserForm> {
                               gender: genderText == "Male" ? true : false,
                               name: nameController.text,
                               userID: loggedInUser.uid);
+                          await FirebaseFirestore.instance
+                              .collection("orders")
+                              .doc(loggedInUser.uid)
+                              .collection("orderDetails")
+                              .add({
+                            "aggrementID": "",
+                            "serviceTotal": "",
+                            "inventoryTotal": "",
+                            "grandTotal": "",
+                            "logsID": "",
+                            "status": "",
+                          });
                           await loadcurrentUser();
 
                           Navigator.pop(context);

@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/Screens/Chat/chat_menu.dart';
 import 'package:housecontractors/Screens/menu/menu.dart';
 import 'package:housecontractors/Screens/newsfeed/newsfeed.dart';
+import 'package:housecontractors/providers/contractor_provider.dart';
 import '../../helper/size_configuration.dart';
 import '../homepage/home.dart';
 import '../orders/my_orders.dart';
@@ -20,7 +22,7 @@ class _DashboardState extends State<Dashboard> {
     const ChatMenu(),
     const Newsfeed(),
     const MyOrders(),
-    Menu(),
+    const Menu(),
   ];
   void _onItemTapped(int index) {
     setState(() {
@@ -35,8 +37,8 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    currentUserID = FirebaseAuth.instance.currentUser!.uid;
     SizeConfig().init(context);
-
     return WillPopScope(
       onWillPop: () async => false,
       child: SafeArea(

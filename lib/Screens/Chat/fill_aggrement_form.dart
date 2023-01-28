@@ -53,10 +53,10 @@ class _FillAgreementState extends State<FillAgreement> {
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: SizedBox(
-        height: setHeight(100),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SizedBox(
+          height: setHeight(100),
           child: Screenshot(
             controller: screenshotController,
             child: SingleChildScrollView(
@@ -76,22 +76,17 @@ class _FillAgreementState extends State<FillAgreement> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Text(
-                            softWrap: true,
-                            "Name: " + customerModel.name!,
-                            style: const TextStyle(
-                                color: Colors.black, fontSize: 16),
-                          ),
-                          const Spacer(),
-                          Text(
-                            softWrap: true,
-                            "ID: " + customerModel.userID!,
-                            style: const TextStyle(
-                                color: Colors.black, fontSize: 16),
-                          ),
-                        ],
+                      Text(
+                        softWrap: true,
+                        "Name: " + customerModel.name!,
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 16),
+                      ),
+                      Text(
+                        softWrap: true,
+                        "ID: " + customerModel.userID!,
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 16),
                       ),
                       Text(
                         softWrap: true,
@@ -107,22 +102,17 @@ class _FillAgreementState extends State<FillAgreement> {
                         ),
                       ),
                       SizedBox(height: getProportionateScreenHeight(10)),
-                      Row(
-                        children: [
-                          Text(
-                            softWrap: true,
-                            "Name: " + contractorModel.name!,
-                            style: const TextStyle(
-                                color: Colors.black, fontSize: 16),
-                          ),
-                          const Spacer(),
-                          Text(
-                            softWrap: true,
-                            "ID: " + contractorModel.userID!,
-                            style: const TextStyle(
-                                color: Colors.black, fontSize: 16),
-                          ),
-                        ],
+                      Text(
+                        softWrap: true,
+                        "Name: " + contractorModel.name!,
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 16),
+                      ),
+                      Text(
+                        softWrap: true,
+                        "ID: " + contractorModel.userID!,
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 16),
                       ),
                       Text(
                         softWrap: true,

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/providers/contractor_provider.dart';
 
@@ -16,27 +15,25 @@ class AgreementProvider with ChangeNotifier {
   }
 
   Future<void> fetch() async {
-    if (loggedInUser != null) {
-      await FirebaseFirestore.instance
-          .collection("chats")
-          .doc(loggedInUser  )
-          .collection("agreements")
-          .get()
-          .then(
-            (QuerySnapshot<Map<String, dynamic>> snapshot) => {
-              _list = [],
-              for (var doc in snapshot.docs)
-                {
-                  _list.insert(
-                    0,
-                    AgreementModel.fromMap(
-                        map: doc.data(), agreementID: doc.id),
-                  ),
-                },
-            },
-          );
-      notifyListeners();
-    }
+    await FirebaseFirestore.instance
+        .collection("chats")
+        .doc(loggedInUser  )
+        .collection("agreements")
+        .get()
+        .then(
+          (QuerySnapshot<Map<String, dynamic>> snapshot) => {
+            _list = [],
+            for (var doc in snapshot.docs)
+              {
+                _list.insert(
+                  0,
+                  AgreementModel.fromMap(
+                      map: doc.data(), agreementID: doc.id),
+                ),
+              },
+          },
+        );
+    notifyListeners();
   }
 
   AgreementModel getAgreementByID(String agreementID) {

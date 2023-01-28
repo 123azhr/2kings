@@ -25,14 +25,35 @@ class AboutUs extends StatelessWidget {
                 getProportionateScreenHeight(10),
               ),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
                     height: getProportionateScreenHeight(10),
                   ),
-                  const BuildTitleWithDescription(
-                    title: "About us",
-                    description: "",
+                  Container(
+                    // margin: EdgeInsets.only(top: setHeight(1)),
+                    decoration: const BoxDecoration(
+                      color: Color.fromARGB(102, 243, 215, 33),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(
+                          20,
+                        ),
+                      ),
+                    ),
+                    height: setHeight(5),
+                    width: setWidth(85),
+                    child: Center(
+                      child: Text(
+                        "About us",
+                        style: TextStyle(
+                            fontSize: getProportionateScreenHeight(30),
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(10),
                   ),
                   ListView.separated(
                     physics: const NeverScrollableScrollPhysics(),
@@ -51,12 +72,17 @@ class AboutUs extends StatelessWidget {
                       );
                     }),
                   ),
+                  // const Spacer(),SizedBox(height: setHeight(10)),
+                  SizedBox(
+                    height: setHeight(3),
+                  ),
                   const BuildTitleWithDescription(
                     title: "Follow Us",
                     description:
                         "For latest update please follow us on our social media platforms.",
                   ),
                   SizedBox(height: getProportionateScreenHeight(5)),
+
                   const SocialMediaIconsStrip()
                 ],
               ),
@@ -97,7 +123,7 @@ class BuildTitleWithDescription extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(
             color: const Color.fromARGB(255, 11, 11, 11).withOpacity(0.8),
-            fontSize: getProportionateScreenWidth(15),
+            fontSize: getProportionateScreenWidth(17),
           ),
         ),
       ],

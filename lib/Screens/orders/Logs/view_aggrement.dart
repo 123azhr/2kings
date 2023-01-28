@@ -8,9 +8,6 @@ import '../../../models/customer_model.dart';
 import '../../../providers/agreement_provider.dart';
 import '../../../providers/contractor_provider.dart';
 import '../../../providers/customer_provider.dart';
-import '../../../providers/inventory_provider.dart';
-import '../../../providers/order_provider.dart';
-import '../../../providers/service_log_provider.dart';
 
 class ViewAgreement extends StatelessWidget {
   const ViewAgreement({super.key, required this.agreementID});
@@ -22,11 +19,6 @@ class ViewAgreement extends StatelessWidget {
         Provider.of<AgreementProvider>(context);
     AgreementModel agreementModel =
         agreementProvider.getAgreementByID(agreementID);
-    OrdersProvider ordersProvider = Provider.of<OrdersProvider>(context);
-    ServiceLogsProvider servicelogsProvider =
-        Provider.of<ServiceLogsProvider>(context);
-    InventoryProvider inventoryProvider =
-        Provider.of<InventoryProvider>(context);
     CustomerProvider userProvider = Provider.of<CustomerProvider>(context);
     CustomerModel customerModel =
         userProvider.getUserByID(agreementModel.customerID!);

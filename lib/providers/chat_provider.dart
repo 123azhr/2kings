@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housecontractors/providers/contractor_provider.dart';
 import '../models/chat_model.dart';
@@ -83,12 +82,6 @@ class ChatProvider with ChangeNotifier {
     _list.removeWhere(
       (element) => element.otherID == otherID,
     );
-    await FirebaseFirestore.instance
-        .collection("chats")
-        .doc(loggedInUser)
-        .collection("with")
-        .doc(otherID)
-        .delete();
 
     notifyListeners();
   }

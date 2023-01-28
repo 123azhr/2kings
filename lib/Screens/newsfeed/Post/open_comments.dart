@@ -39,7 +39,7 @@ class _OpenCommentsState extends State<OpenComments> {
         appBar: AppBar(
           leadingWidth: getProportionateScreenWidth(40),
           leading: IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back,
               color: Colors.black,
             ),
@@ -61,7 +61,7 @@ class _OpenCommentsState extends State<OpenComments> {
           child: ListView.separated(
             separatorBuilder: (context, index) => const Divider(),
             shrinkWrap: true,
-            reverse: true,
+            reverse: false,
             scrollDirection: Axis.vertical,
             itemCount: commentsList.length,
             itemBuilder: (context, int index) => ChangeNotifierProvider.value(

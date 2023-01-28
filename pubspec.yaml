@@ -58,6 +58,7 @@ dependencies:
   url_launcher: ^6.1.7
   font_awesome_flutter: ^10.3.0
   video_player: ^2.4.10
+  restart_app: ^1.1.1+1
 dev_dependencies:
   flutter_test:
     sdk: flutter

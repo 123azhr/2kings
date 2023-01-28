@@ -4,7 +4,6 @@ import 'package:housecontractors/models/post_model.dart';
 import 'package:housecontractors/providers/contractor_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../helper/size_configuration.dart';
-import '../../../providers/comments_provider.dart';
 import '../../../providers/post_provider.dart';
 import 'comments.dart';
 import 'like.dart';

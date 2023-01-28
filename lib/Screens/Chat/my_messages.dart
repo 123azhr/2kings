@@ -12,7 +12,6 @@ class MyMessages extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.all(10),
-          height: getProportionateScreenHeight(40),
           decoration: BoxDecoration(
             color: Colors.amberAccent,
             border: Border.all(),

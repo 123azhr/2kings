@@ -15,9 +15,8 @@ class OppositeMessages extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.all(8),
-          height: getProportionateScreenHeight(40),
           decoration: BoxDecoration(
-            color:const  Color.fromARGB(255, 171, 197, 214),
+            color: const Color.fromARGB(255, 123, 178, 214),
             border: Border.all(),
             borderRadius: const BorderRadius.all(
               Radius.circular(20),

@@ -101,6 +101,7 @@ class ActiveOrderTile extends StatelessWidget {
                   await ordersProvider.updateStatus(
                       ordersModel.orderID!, "Completed", customerModel.userID!);
                   Navigator.pop(context);
+                  Navigator.pop(context);
                 }),
           );
         }

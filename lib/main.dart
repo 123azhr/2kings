@@ -93,7 +93,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ServiceLogsProvider()),
         ChangeNotifierProvider(create: (_) => InventoryProvider()),
         ChangeNotifierProvider(create: (_) => CommentsProvider()),
-        
         ChangeNotifierProvider(create: (_) => AboutProvider()),
       ],
       child: MaterialApp(
